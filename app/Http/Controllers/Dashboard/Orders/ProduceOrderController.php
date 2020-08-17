@@ -11,7 +11,7 @@ use App\Models\Organization\Factory;
 
 class ProduceOrderController extends Controller
 {
-        public function getAllPaginate()
+    public function getAllPaginate()
     {
         $data = ProduceOrder::with(
             'cuttingOrder:id',

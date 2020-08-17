@@ -90,8 +90,17 @@ Route::group([
             Route::get('edit/{produce_id}', 'ProduceOrderController@editPage')->name('produce.order.edit_page');
             Route::post('update', 'ProduceOrderController@update')->name('produce.order.update');
             Route::post('delete', 'ProduceOrderController@delete')->name('produce.order.delete');
+        });
 
-
+        Route::group([
+            'prefix' => 'receiving-products'
+        ], function() {
+            Route::get('get-all', 'ReceivingProductController@getAllPaginate')->name('receiving.product.list');
+            Route::get('create', 'ReceivingProductController@createPage')->name('receiving.product.create');
+            Route::post('store', 'ReceivingProductController@store')->name('receiving.product.store');
+            Route::get('edit/{receiving_id}', 'ReceivingProductController@editPage')->name('receiving.product.edit_page');
+            Route::post('update', 'ReceivingProductController@update')->name('receiving.product.update');
+            Route::post('delete', 'ReceivingProductController@delete')->name('receiving.product.delete');
         });
     });
 

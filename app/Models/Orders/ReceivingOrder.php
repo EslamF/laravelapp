@@ -3,8 +3,28 @@
 namespace App\Models\Orders;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Orders\produceOrder;
+use App\Models\Products\ProductType;
+use App\Models\Options\Size;
 
 class ReceivingOrder extends Model
 {
-    protected $fillable = ['produce_order_id', 'product_type_id', 'qty', 'status'];
+    protected $fillable = ['produce_order_id', 'product_type_id', 'qty', 'status', 'size_id', 'receiving_date'];
+
+    public function produceOrder()
+    {
+        return $this->belongsTo(ProduceOrder::class);
+    }
+
+    public function productType()
+    {
+        return $this->belongsTo(ProductType::class);
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
+
+
 }
