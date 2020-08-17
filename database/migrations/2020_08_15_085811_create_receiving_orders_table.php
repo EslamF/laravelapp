@@ -30,7 +30,7 @@ class CreateReceivingOrdersTable extends Migration
             $table->foreign('size_id')
                 ->references('id')->on('sizes')
                 ->onDelete('cascade');
-
+            $table->date('receiving_date');
             $table->string('qty');
             $table->boolean('status');
             $table->timestamps();

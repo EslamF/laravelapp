@@ -16,11 +16,6 @@ class CreateCuttingOrdersTable extends Migration
         Schema::create('cutting_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             
-            $table->unsignedBigInteger('spreading_out_material_order_id');
-            $table->foreign('spreading_out_material_order_id')
-                ->references('id')->on('spreading_out_material_orders')
-                ->onDelete('cascade');
-
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')->on('users')

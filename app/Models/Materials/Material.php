@@ -16,7 +16,8 @@ class Material extends Model
         'qty',
         'weight',
         'bill_number',
-        'description'
+        'description',
+        'color'
     ];
 
     /**
@@ -38,4 +39,6 @@ class Material extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
 }

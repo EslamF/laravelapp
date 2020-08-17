@@ -11,7 +11,6 @@ use App\Models\Options\Size;
 class CuttingOrder extends Model
 {
     protected $fillable = [
-        'spreading_out_material_order_id',
         'user_id',
         'layers',
         'product_type_id',
@@ -25,10 +24,6 @@ class CuttingOrder extends Model
      * relations
      * 
      */
-    public function spreadingOutMaterialOrder()
-    {
-        return $this->belongsTo(SpreadingOutMaterialOrder::class);
-    }
 
     public function user()
     {

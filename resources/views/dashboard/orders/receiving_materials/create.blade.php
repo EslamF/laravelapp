@@ -93,6 +93,10 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="color">Color</label>
+                        <input type="text" class="form-control" name="color" id="color" placeholder="Add Color">
+                    </div>
+                    <div class="form-group">
                         <label for="description">Description</label>
                         <textarea class="form-control" name="description" id="description"
                             placeholder="Add Description"></textarea>

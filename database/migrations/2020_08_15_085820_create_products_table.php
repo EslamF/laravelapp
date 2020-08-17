@@ -25,6 +25,8 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('receiving_orders')
                 ->onDelete('cascade');
 
+            $table->enum('status', ['pending', 'sold', 'available']);
+
             $table->timestamps();
         });
     }

@@ -81,6 +81,18 @@ Route::group([
 
         });
 
+        Route::group([
+            'prefix' => 'produce'
+        ], function() {
+            Route::get('get-all', 'ProduceOrderController@getAllPaginate')->name('produce.order.list');
+            Route::get('create', 'ProduceOrderController@createPage')->name('produce.order.create');
+            Route::post('store', 'ProduceOrderController@store')->name('produce.order.store');
+            Route::get('edit/{produce_id}', 'ProduceOrderController@editPage')->name('produce.order.edit_page');
+            Route::post('update', 'ProduceOrderController@update')->name('produce.order.update');
+            Route::post('delete', 'ProduceOrderController@delete')->name('produce.order.delete');
+
+
+        });
     });
 
 });

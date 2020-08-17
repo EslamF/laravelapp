@@ -17,6 +17,7 @@ class CreateMaterialsTable extends Migration
             $table->bigIncrements('id');
             $table->string('code');
             $table->string('mq_r_code');
+            $table->string('color');
 
             $table->unsignedBigInteger('material_type_id');
             $table->foreign('material_type_id')

@@ -44,21 +44,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">Spreading Code</label>
-                                <select class="form-control" name="spreading_out_material_order_id" id="user">
-                                    <option value="" disabled selected>Select Spreading Code</option>
-                                    @foreach($data['spreading_codes'] as $spreading)
-                                    <option value="{{$spreading->id}}"
-                                        {{$data['records']->spreading_out_material_order_id == $spreading->id? "selected":''}}>
-                                        {{$spreading->spreading_code}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
                                 <label for="mq_r_code">Size</label>
                                 <select class="form-control" name="size_id" id="user">
                                     <option value="" disabled selected>Select Product Size</option>

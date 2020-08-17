@@ -17,8 +17,7 @@ class CuttingOrderController extends Controller
         $data = CuttingOrder::with(
             'user:id,name',
             'productType:id,name',
-            'size:id,name',
-            'spreadingOutMaterialOrder:id,spreading_code'
+            'size:id,name'
             )->paginate();
             
         return view('dashboard.orders.cutting_order.list')->with('data', $data);
@@ -30,7 +29,6 @@ class CuttingOrderController extends Controller
         $data['users'] = User::select('id', 'name')->get();
         $data['productTypes'] = ProductType::select('id', 'name')->get();
         $data['sizes'] = Size::select('id', 'name')->get();
-        $data['spreading_codes'] = SpreadingOutMaterialOrder::select('id', 'spreading_code')->get();
 
         return view('dashboard.orders.cutting_order.create')->with('data', $data);
     }
@@ -40,7 +38,6 @@ class CuttingOrderController extends Controller
         $request->validate([
             'product_type_id'                 => 'required|exists:product_types,id',
             'user_id'                         => 'required|exists:users,id',
-            'spreading_out_material_order_id' => 'required|exists:spreading_out_material_orders,id',
             'size_id'                         => 'required|exists:sizes,id',
             'layers'                          => 'required|min:3',
             'qty'                             => 'required',
@@ -57,7 +54,6 @@ class CuttingOrderController extends Controller
         $data['users'] = User::select('id', 'name')->get();
         $data['productTypes'] = ProductType::select('id', 'name')->get();
         $data['sizes'] = Size::select('id', 'name')->get();
-        $data['spreading_codes'] = SpreadingOutMaterialOrder::select('id', 'spreading_code')->get();
 
         $data['records'] = CuttingOrder::where('id', $cutting_order_id)->first();
 
@@ -70,7 +66,6 @@ class CuttingOrderController extends Controller
             'cutting_order_id'                => 'required|exists:cutting_orders,id',
             'product_type_id'                 => 'exists:product_types,id',
             'user_id'                         => 'exists:users,id',
-            'spreading_out_material_order_id' => 'exists:spreading_out_material_orders,id',
             'size_id'                         => 'exists:sizes,id',
             'layers'                          => 'min:3',
         ]);

@@ -61,7 +61,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/tables/data.html" class="nav-link">
+                                    <a href="{{Route('produce.order.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Produce Order</p>
                                     </a>

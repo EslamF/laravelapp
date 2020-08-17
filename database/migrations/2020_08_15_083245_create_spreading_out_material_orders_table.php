@@ -26,7 +26,6 @@ class CreateSpreadingOutMaterialOrdersTable extends Migration
                 ->references('id')->on('materials')
                 ->onDelete('cascade');
 
-            $table->string('spreading_code');
             $table->double('weight');
             $table->timestamps();
         });
