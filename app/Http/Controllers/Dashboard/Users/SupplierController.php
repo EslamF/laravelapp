@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Organization;
+namespace App\Http\Controllers\Dashboard\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,6 +20,7 @@ class SupplierController extends Controller
             'name' => 'required|min:3'
         ]);
         Supplier::create($request->all());
+        return redirect()->route('supplier.list');
     }
     /**
      * 
@@ -34,6 +35,16 @@ class SupplierController extends Controller
         ]);
 
         Supplier::find($request->supplier_id)->update($request->all());
+    }
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'supplier_id' => 'required|exists:suppliers,id'
+        ]);
+        Supplier::find($request->supplier_id)->delete();
+
+
+        return redirect()->route('supplier.list');
     }
     /**
      * 
@@ -52,7 +63,18 @@ class SupplierController extends Controller
     public function getAllPaginate()
     {
         $suppliers = Supplier::paginate(15);
+        return view('dashboard.personal.supplier.list')->with('suppliers', $suppliers);
     }
+    public function editPage( $supp_id)
+    {
+        $supplier = Supplier::where('id', $supp_id)->first();
+        return view('dashboard.personal.supplier.edit')->with('supplier', $supplier);
+    }
+
+    public function createPage()
+        {
+            return view('dashboard.personal.supplier.create');
+        }
     /**
      * 
      * get Supplier by id
@@ -61,7 +83,6 @@ class SupplierController extends Controller
      */
     public function getSupplierById(Request $request)
     {
-
         $request->validate([
             'supplier_id' => 'required|exists:suppliers,id'
         ]);

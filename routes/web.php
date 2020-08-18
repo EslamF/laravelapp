@@ -21,9 +21,42 @@ Auth::routes();
 Route::get('/home', function() {
     return view('index');
 });
+
+
+
 Route::group([
     'namespace' => 'Dashboard'
 ],function() {
+
+    Route::group([
+        'namespace'=>'Users'
+    ],function (){
+        
+        Route::group([
+            'prefix'=>'customers',
+        ],function(){
+            Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
+            Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
+            Route::post('store', 'CustomerController@create')->name('customer.store');
+            Route::post('delete', 'CustomerController@delete')->name('customer.delete');
+            Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
+            Route::post('update', 'CustomerController@update')->name('customer.update');
+        });
+
+        Route::group([
+            'prefix'=>'suppliers',
+        ],function(){
+            Route::get('get-all', 'SupplierController@getAllPaginate')->name('supplier.list');
+            Route::get('create', 'SupplierController@createPage')->name('supplier.create_page');
+            Route::post('store', 'SupplierController@create')->name('supplier.store');
+            Route::post('delete', 'SupplierController@delete')->name('supplier.delete');
+            Route::get('edit/{type_id}', 'SupplierController@editPage')->name('supplier.edit_page');
+            Route::post('update', 'SupplierController@update')->name('supplier.update');
+        });
+    });
+
+
+
     Route::group([
         'namespace' => 'Materials',
         'prefix' => 'materials'
@@ -37,6 +70,29 @@ Route::group([
             Route::post('delete', 'MaterialTypeController@delete')->name('material.type.delete');
             Route::get('edit/{type_id}', 'MaterialTypeController@editPage')->name('material.type.edit_page');
             Route::post('update', 'MaterialTypeController@update')->name('material.type.update');
+
+        });
+    });Route::group([
+        'namespace' => 'Organization',
+        'prefix' => 'factory'
+
+    ], function() {
+        Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list');
+        Route::get('create', 'FactoryController@createPage')->name('factory.create_page');
+        Route::post('store', 'FactoryController@create')->name('factory.store');
+        Route::post('delete', 'FactoryController@delete')->name('factory.delete');
+        Route::get('edit/{type_id}', 'FactoryController@editPage')->name('factory.edit_page');
+        Route::post('update', 'FactoryController@update')->name('factory.update');
+
+        Route::group([
+            'prefix' => 'type'
+        ], function() {
+            Route::get('get-all', 'FactoryTypeController@getAllPaginate')->name('factory.type.list');
+            Route::get('create', 'FactoryTypeController@createPage')->name('factory.type.create_page');
+            Route::post('store', 'FactoryTypeController@create')->name('factory.type.store');
+            Route::post('delete', 'FactoryTypeController@delete')->name('factory.type.delete');
+            Route::get('edit/{type_id}', 'FactoryTypeController@editPage')->name('factory.type.edit_page');
+            Route::post('update', 'FactoryTypeController@update')->name('factory.type.update');
 
         });
     });
