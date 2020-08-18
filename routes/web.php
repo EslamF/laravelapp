@@ -21,6 +21,7 @@ Auth::routes();
 Route::get('/home', function() {
     return view('index');
 });
+
 Route::group([
     'namespace' => 'Dashboard'
 ],function() {
@@ -102,6 +103,51 @@ Route::group([
             Route::post('update', 'ReceivingProductController@update')->name('receiving.product.update');
             Route::post('delete', 'ReceivingProductController@delete')->name('receiving.product.delete');
         });
+
+        Route::group([
+            'prefix' => 'sort'
+        ],function() {
+            Route::get('get-all', 'SortOrderController@getAllPaginate')->name('sort.order.list');
+            Route::get('create', 'SortOrderController@createPage')->name('sort.order.create_page');
+            Route::post('store', 'SortOrderController@store')->name('sort.order.store');
+            Route::get('edit/{sort_id}', 'SortOrderController@editPage')->name('sort.order.edit_page');
+            Route::post('update', 'SortOrderController@update')->name('sort.order.update');
+            Route::post('delete', 'SortOrderController@delete')->name('sort.order.delete');
+            Route::get('products/{sort_id}', 'SortOrderController@showSortedProducts')->name('sort.product.list');
+            Route::post('product', 'SortOrderController@SortProduct')->name('sort.product');
+            Route::post('remove-product', 'SortOrderController@removeSortedProduct')->name('product.sort.delete');
+            
+        });
+
+        Route::group([
+            'prefix' => 'fix-product'
+        ],function() {
+            Route::get('create', 'FixProductOrderController@createPage')->name('fix.product.create_page');
+            Route::post('store', 'FixProductOrderController@store')->name('fix.product.store');
+            Route::get('get-all', 'FixProductOrderController@getAllPaginate')->name('fix.product.list');
+        });
     });
 
+    Route::group([
+        'namespace' => 'Products',
+        'prefix'    => 'product'
+    ], function() {
+        Route::get('get-all', 'ProductController@getAllPaginate')->name('product.list');
+        Route::get('create', 'ProductController@createPage')->name('product.create_page');
+        Route::post('store', 'ProductController@store')->name('product.store');
+        Route::get('edit/{product_id}', 'ProductController@editPage')->name('product.edit_page');
+        Route::post('update', 'ProductController@update')->name('product.update');
+        Route::post('delete', 'ProductController@delete')->name('product.delete');
+
+        Route::group([
+            'prefix' => 'type'
+        ], function() {
+            Route::get('get-all', 'ProductTypeController@getAllPaginate')->name('product.type.list');
+            Route::get('create', 'ProductTypeController@createPage')->name('product.type.create_page');
+            Route::post('store', 'ProductTypeController@create')->name('product.type.store');
+            Route::post('delete', 'ProductTypeController@delete')->name('product.type.delete');
+            Route::get('edit/{type_id}', 'ProductTypeController@editPage')->name('product.type.edit_page');
+            Route::post('update', 'ProductTypeController@update')->name('product.type.update');
+        });
+    });
 });

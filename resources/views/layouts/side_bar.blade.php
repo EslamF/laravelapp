@@ -72,6 +72,18 @@
                                         <p>Receiving Product Order</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('sort.order.list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Sort Order</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('fix.product.list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Fix Product Order</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item has-treeview">
@@ -84,13 +96,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="pages/tables/simple.html" class="nav-link">
+                                    <a href="{{Route('product.type.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Product Type</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/tables/data.html" class="nav-link">
+                                    <a href="{{Route('product.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Product</p>
                                     </a>

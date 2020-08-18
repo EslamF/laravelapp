@@ -16,16 +16,21 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('prod_code');
-            $table->boolean('damaged')->nullable();
             $table->boolean('sorted')->default(0);
             $table->text('description')->nullable();
+            $table->date('sort_date')->nullable();
+            $table->enum('damage_type', ['ironing', 'tailoring', 'Dyeing'])->nullable();
+            $table->unsignedBigInteger('sort_id')->nullable();
+            $table->foreign('sort_id')
+                ->references('id')->on('sort_orders')
+                ->onDelete('cascade');
 
             $table->unsignedBigInteger('receiving_order_id');
             $table->foreign('receiving_order_id')
                 ->references('id')->on('receiving_orders')
                 ->onDelete('cascade');
 
-            $table->enum('status', ['pending', 'sold', 'available']);
+            $table->enum('status', ['pending', 'sold', 'available', 'damaged'])->default('available');
 
             $table->timestamps();
         });
