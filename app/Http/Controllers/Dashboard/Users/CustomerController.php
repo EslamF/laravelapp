@@ -24,9 +24,17 @@ class CustomerController extends Controller
             'link' => 'required|min:3',
             'type' => 'required|in:individual,wholesaler,retailer'
         ]);
+
+        
         
         Customer::create($request->all());
+
+        return redirect()->route('customer.list');
     }
+    public function createPage()
+        {
+            return view('dashboard.personal.customer.create');
+        }
     /**
      * 
      * update customer 
@@ -47,6 +55,15 @@ class CustomerController extends Controller
 
         Customer::find($request->customer_id)->update($request->all());
     }
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id'
+        ]);
+        Customer::find($request->customer_id)->delete();
+
+        return redirect()->route('customer.list');
+    }
     /**
      * 
      * get all for select
@@ -64,7 +81,16 @@ class CustomerController extends Controller
     public function getAllPaginate()
     {
         $customers = Customer::paginate(15);
+        return view('dashboard.personal.customer.list')->with('customers', $customers);
     }
+
+    public function editPage( $cust_id)
+    {
+        $customer = Customer::where('id', $cust_id)->first();
+        return view('dashboard.personal.customer.edit')->with('customer', $customer);
+    }
+
+
     /**
      * 
      * get customer by id
@@ -73,7 +99,6 @@ class CustomerController extends Controller
      */
     public function getCustomerById(Request $request)
     {
-
         $request->validate([
             'customer_id' => 'required|exists:customers,id'
         ]);

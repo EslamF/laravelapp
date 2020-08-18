@@ -1,11 +1,13 @@
+
+
 @extends('index')
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Material Type Table</h3>
-                <a href="{{Route('material.type.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">Factory Type Table</h3>
+                <a href="{{Route('factory.type.create_page')}}" class="btn btn-success float-right">Add</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -26,9 +28,9 @@
                                 <td class="col-md-1">{{$type->id}}</td>
                                 <td class="col-md-9">{{$type->name}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('material.type.edit_page', $type->id)}}"
+                                    <a href="{{Route('factory.type.edit_page', $type->id)}}"
                                         class="btn btn-primary">Edit</a>
-                                    <form style="display:inline" action="{{Route('material.type.delete')}}"
+                                    <form style="display:inline" action="{{Route('factory.type.delete')}}"
                                         method="POST">
                                         @csrf
                                         <input type="hidden" name="type_id" value="{{$type->id}}">
@@ -50,6 +52,7 @@
     </div>
 </div>
 @endsection
+
 
 
 

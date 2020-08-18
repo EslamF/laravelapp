@@ -6,7 +6,7 @@ use App\Models\Organization\FactoryType;
 
 class Factory extends Model
 {
-    protected $fillable = ['name', 'factory_type_id'];
+    protected $fillable = ['name', 'factory_type_id','phone','address'];
 
     /**
      * 

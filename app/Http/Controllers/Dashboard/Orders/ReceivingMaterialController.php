@@ -47,7 +47,6 @@ class ReceivingMaterialController extends Controller
         $data['users'] = User::select('id', 'name')->get();
         $data['suppliers'] = Supplier::select('id', 'name')->get();
         $data['material_types'] = MaterialType::select('id', 'name')->get();
-        
         $data['material'] = Material::where('id', $material_id)
                             ->first();
                             

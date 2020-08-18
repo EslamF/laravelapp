@@ -1,11 +1,13 @@
+
+
 @extends('index')
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Material Type Table</h3>
-                <a href="{{Route('material.type.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">Suppliers Table</h3>
+                <a href="{{Route('supplier.create_page')}}" class="btn btn-success float-right">Add</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,25 +15,24 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-9">Name</th>
-                                <th class="col-md-2">Action</th>
+                                <th class="col-md-2">Supplire id</th>
+                                <th class="col-md-4">Supplire Name</th>
+                                <th class="col-md-6">Action</th>
                             </div>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($types as $type)
+                        @foreach($suppliers as $supplier)
                         <tr class="row">
                             <div class="col-md-12">
-                                <td class="col-md-1">{{$type->id}}</td>
-                                <td class="col-md-9">{{$type->name}}</td>
-                                <td class="col-md-2">
-                                    <a href="{{Route('material.type.edit_page', $type->id)}}"
+                                <td class="col-md-2">{{$supplier->id}}</td>
+                                <td class="col-md-4">{{$supplier->name}}</td>
+                                <td class="col-md-6">
+                                    <a href="{{Route('supplier.edit_page', $supplier->id)}}"
                                         class="btn btn-primary">Edit</a>
-                                    <form style="display:inline" action="{{Route('material.type.delete')}}"
-                                        method="POST">
+                                    <form style="display:inline" action="{{Route('supplier.delete')}}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="type_id" value="{{$type->id}}">
+                                        <input type="hidden" name="supplier_id" value="{{$supplier->id}}">
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
                                 </td>
@@ -43,13 +44,14 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                {{$types->links()}}
+                {{$suppliers->links()}}
             </div>
         </div>
         <!-- /.card -->
     </div>
 </div>
 @endsection
+
 
 
 

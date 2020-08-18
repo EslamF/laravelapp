@@ -16,6 +16,8 @@ class CreateFactoriesTable extends Migration
         Schema::create('factories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->text('phone')->nullable();
+            $table->string('address')->nullable();
             
             $table->unsignedBigInteger('factory_type_id');
             $table->foreign('factory_type_id')

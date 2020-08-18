@@ -20,6 +20,8 @@ class FactoryTypeController extends Controller
             'name' => 'required|min:3'
         ]);
         FactoryType::create($request->all());
+
+        return redirect()->route('factory.type.list');
     }
     /**
      * 
@@ -30,10 +32,11 @@ class FactoryTypeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'factory_type_id' => 'required|exists:factory_types,id'
+            'type_id' => 'required|exists:factory_types,id'
         ]);
 
-        FactoryType::find($request->factory_type_id)->update($request->all());
+        FactoryType::find($request->type_id)->update($request->all());
+        return redirect()->route('factory.type.list');
     }
     /**
      * 
@@ -51,7 +54,8 @@ class FactoryTypeController extends Controller
      */
     public function getAllPaginate()
     {
-        $type = FactoryType::paginate(15);
+        $types = FactoryType::paginate(15);
+        return view('dashboard.factories.type.list')->with('types', $types);
     }
     /**
      * 
@@ -61,10 +65,29 @@ class FactoryTypeController extends Controller
      */
     public function getFactoryTypeById(Request $request)
     {
-
         $request->validate([
             'factory_type_id' => 'required|exists:factory_types,id'
         ]);
         $type = FactoryType::where('id', $request->factory_type_id)->first();
+    }
+    
+    public function createPage()
+    {
+        return view('dashboard.factories.type.create');
+    }
+  
+    public function editPage( $type_id)
+    {
+        $type = FactoryType::where('id', $type_id)->first();
+        return view('dashboard.factories.type.edit')->with('type', $type);
+    }
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'type_id' => 'required|exists:factory_types,id'
+        ]);
+        FactoryType::find($request->type_id)->delete();
+
+        return redirect()->route('factory.type.list');
     }
 }
