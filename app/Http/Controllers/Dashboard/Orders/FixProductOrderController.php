@@ -23,13 +23,19 @@ class FixProductOrderController extends Controller
             'factory_id' => 'required|exists:factories,id'
         ]);
 
-        $product = Product::where('prod_code', $request->prod_code)->first();
-        $record =  new DamagedProductFixOrder();
-        $record->product_id = $product->id;
-        $record->factory_id = $request->factory_id;
-        $record->save();
-
+        $product = Product::where('prod_code', $request->prod_code)
+                            ->where('status', 'damaged')
+                            ->where('sorted', 1)
+                            ->first();
+        if(isset($product)) {
+            $record =  new DamagedProductFixOrder();
+            $record->product_id = $product->id;
+            $record->factory_id = $request->factory_id;
+            $record->save();
+            
+        }
         return redirect()->route('fix.product.list');
+
     }
 
     public function getAllPaginate()
@@ -38,5 +44,16 @@ class FixProductOrderController extends Controller
             $q->where('damage_type' ,'!=', null);
         }], 'factory:id,name')->paginate();
         return view('dashboard.orders.fix_product.list')->with('data', $data);
+    }
+
+
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:damaged_product_fix_orders,id'
+        ]);
+
+        DamagedProductFixOrder::find($request->id)->delete();
+        return redirect()->route('fix.product.list');
     }
 }

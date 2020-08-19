@@ -44,12 +44,10 @@ class FactoryController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'phone' => 'min:11|max:11',
+            'phone' => 'min:11',
             'address' => 'max:100',
             'factory_type_id' => 'required|exists:factory_types,id'
         ]);
-
-        //  return dd($request->All());
         Factory::create($request->all());
 
         return redirect()->route('factory.list');

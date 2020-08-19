@@ -20,8 +20,9 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->date('sort_date')->nullable();
             $table->enum('damage_type', ['ironing', 'tailoring', 'Dyeing'])->nullable();
-            $table->unsignedBigInteger('sort_id')->nullable();
-            $table->foreign('sort_id')
+
+            $table->unsignedBigInteger('sort_order_id')->nullable();
+            $table->foreign('sort_order_id')
                 ->references('id')->on('sort_orders')
                 ->onDelete('cascade');
 

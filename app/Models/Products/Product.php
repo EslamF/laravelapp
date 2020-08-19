@@ -21,6 +21,6 @@ class Product extends Model
 
     public function sortOrder()
     {
-        return $this->belongsTo(SortOrder::class);
+        return $this->belongsTo(SortOrder::class, 'sort_order_id');
     }
 }
