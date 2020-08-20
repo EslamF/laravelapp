@@ -94,6 +94,12 @@
                                         <p>Send Product to Repository</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('store.end_product.list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Store Product Order</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item has-treeview">

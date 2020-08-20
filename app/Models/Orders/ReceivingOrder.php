@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Orders\produceOrder;
 use App\Models\Products\ProductType;
 use App\Models\Options\Size;
+use App\Models\Products\Product;
 
 class ReceivingOrder extends Model
 {
@@ -26,5 +27,8 @@ class ReceivingOrder extends Model
         return $this->belongsTo(Size::class);
     }
 
-
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

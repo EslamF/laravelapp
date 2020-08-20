@@ -196,6 +196,22 @@ Route::group([
             Route::post('edit/{product_id}', 'SendEndProductController@edit')->name('send.end_product.edit_page');
             Route::post('update', 'SendEndProductController@update')->name('send.end_product.update');
             Route::post('delete', 'SendEndProductController@delete')->name('send.end_product.delete');
+            Route::get('get-order/{order_code}', 'SendEndProductController@getOrder')->name('send.end_product.get_order');
+            Route::post('delete', 'SendEndProductController@delete')->name('send.end_product.delete');
+        });
+
+        Route::group([
+            'prefix' => 'store-end-product'
+        ], function () {
+            Route::get('get-all', 'StoreProductOrderController@getAllPaginate')->name('store.end_product.list');
+            Route::get('create', 'StoreProductOrderController@create')->name('store.end_product.create_page');
+            Route::get('order/{id}', 'StoreProductOrderController@getShippingOrder')->name('store.end_product.shipping_list');
+            Route::post('store', 'StoreProductOrderController@store')->name('store.end_product.store');
+            Route::post('edit/{product_id}', 'StoreProductOrderController@edit')->name('store.end_product.edit_page');
+            Route::post('update', 'StoreProductOrderController@update')->name('store.end_product.update');
+            Route::post('delete', 'StoreProductOrderController@delete')->name('store.end_product.delete');
+            Route::get('get-order/{order_code}', 'StoreProductOrderController@getOrder')->name('store.end_product.get_order');
+            Route::post('delete', 'StoreProductOrderController@delete')->name('store.end_product.delete');
         });
     });
 

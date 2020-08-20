@@ -2,8 +2,11 @@
 
 namespace App\Models\Products;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Orders\ReceivingOrder;
+use App\User;
 use App\Models\Orders\SortOrder;
+use App\Models\Products\ProductType;
+use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
@@ -15,12 +18,24 @@ class Product extends Model
         'description',
         'status',
         'sort_order_id',
-        'sort_date'
+        'sort_date',
+        'save_order_id',
+        'user_id'
     ];
 
 
     public function sortOrder()
     {
         return $this->belongsTo(SortOrder::class, 'sort_order_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function receivingOrder()
+    {
+        return $this->belongsTo(ReceivingOrder::class);
     }
 }

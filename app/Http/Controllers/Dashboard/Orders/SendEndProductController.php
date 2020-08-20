@@ -2,35 +2,91 @@
 
 namespace App\Http\Controllers\Dashboard\Orders;
 
-use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
+use App\Models\Orders\SaveOrder;
+use App\Models\Products\Product;
 use App\Models\Options\Repository;
-use App\Models\Organization\ShippingCompany;
+use App\Http\Controllers\Controller;
+
 
 class SendEndProductController extends Controller
 {
     public function getAllPaginate()
     {
-        $repository = Repository::select('id', 'shipping_company_id', 'product_id')->paginate();
+        $orders = SaveOrder::whereHas('products', function ($q) {
+            $q->where('save_order_id', '!=', null);
+        })->paginate();
 
-        return view('dashboard.orders.send_end_product.list')->with('repository', $repository);
+        return view('dashboard.orders.send_end_product.list')->with('orders', $orders);
     }
 
+
+    public function getOrder($order_code)
+    {
+        $data = Product::where('save_order_id', $order_code)
+            ->select('id', 'save_order_id', 'user_id', 'prod_code')
+            ->with('user:id,name')
+            ->paginate();
+        return view('dashboard.orders.send_end_product.product_order.list')->with('data', $data);
+    }
     public function create()
     {
-        $shipping_companies = ShippingCompany::select('id', 'name')->get();
-        return view('dashboard.orders.send_end_product.create')->with('shipping_companies', $shipping_companies);
+        $employees = User::select('id', 'name')->get();
+        return view('dashboard.orders.send_end_product.create')->with('employees', $employees);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'products' => 'required|array',
-            'products.*.product_id' => 'required|exists:products,id',
-            'shipping_company_id' => 'required|exists:shipping_companies,id'
+            'products' => 'required',
+            'user_id' => 'required|exists:users,id'
         ]);
 
-        $shipping_company = ShippingCompany::where('id', $request->shipping_company_id)->first();
-        // $shipping_companies->products()->attach($request->products);
+        $order = SaveOrder::create([
+            'code' => $this->generateCode()
+        ]);
+
+        $temp = explode(',', $request->products);
+        $data = [];
+
+        foreach ($temp as $value) {
+            $product = Product::where('prod_code', $value)->first();
+            if ($product) {
+                $product->update([
+                    'save_order_id' => $order->id,
+                    'user_id'       => $request->user_id,
+                ]);
+            } else {
+                continue;
+            }
+        }
+        return redirect()->route('send.end_product.list');
+    }
+
+    public function generateCode()
+    {
+        $code = rand(0, 6000000000000);
+        $check = SaveOrder::where('code', $code)->exists();
+        if ($check) {
+            $this->generateCode();
+        } else {
+            return $code;
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'save_order_id' => 'required|exists:save_orders,id'
+        ]);
+        $product = Product::where('save_order_id', $request->save_order_id)->first();
+        $product->update([
+            'save_order_id' => null,
+            'user_id' => null
+        ]);
+
+        SaveOrder::find($request->save_order_id)->delete();
+        return redirect()->route('send.end_product.list');
     }
 }

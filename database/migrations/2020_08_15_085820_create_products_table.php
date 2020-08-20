@@ -26,6 +26,17 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('sort_orders')
                 ->onDelete('cascade');
 
+            $table->unsignedBigInteger('save_order_id')->nullable();
+            $table->foreign('save_order_id')
+                ->references('id')->on('save_orders')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
+
             $table->unsignedBigInteger('receiving_order_id');
             $table->foreign('receiving_order_id')
                 ->references('id')->on('receiving_orders')
