@@ -36,7 +36,7 @@
                                 <select class="form-control" name="product_type_id" id="user">
                                     <option value="" disabled selected>Select Product Type</option>
                                     @foreach($data['product_types'] as $type)
-                                    <option value="{{$type->id}}">{{$type->id}}</option>
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -79,8 +79,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="weight">Receiving Date</label>
-                                <input type="date" class="form-control" name="receiving_date" id="weight"
-                                    placeholder="Add Receiving Date">
+                                <input type="date" class="form-control" name="receiving_date" id="weight" placeholder="Add Receiving Date">
                             </div>
                         </div>
                     </div>

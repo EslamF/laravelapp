@@ -46,6 +46,7 @@ class FactoryTypeController extends Controller
     public function getAll()
     {
         $types = FactoryType::all();
+        return response()->json($types, 200);
     }
     /**
      * 
@@ -70,13 +71,13 @@ class FactoryTypeController extends Controller
         ]);
         $type = FactoryType::where('id', $request->factory_type_id)->first();
     }
-    
+
     public function createPage()
     {
         return view('dashboard.factories.type.create');
     }
-  
-    public function editPage( $type_id)
+
+    public function editPage($type_id)
     {
         $type = FactoryType::where('id', $type_id)->first();
         return view('dashboard.factories.type.edit')->with('type', $type);

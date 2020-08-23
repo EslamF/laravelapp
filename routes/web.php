@@ -87,6 +87,7 @@ Route::group([
         Route::group([
             'prefix' => 'type'
         ], function () {
+            Route::get('api/get-all', 'FactoryTypeController@getAll')->name('factory.type.list_api');
             Route::get('get-all', 'FactoryTypeController@getAllPaginate')->name('factory.type.list');
             Route::get('create', 'FactoryTypeController@createPage')->name('factory.type.create_page');
             Route::post('store', 'FactoryTypeController@create')->name('factory.type.store');

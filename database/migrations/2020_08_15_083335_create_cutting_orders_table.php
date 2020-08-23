@@ -15,27 +15,20 @@ class CreateCuttingOrdersTable extends Migration
     {
         Schema::create('cutting_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
-            $table->unsignedBigInteger('user_id');
+
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('product_type_id');
-            $table->foreign('product_type_id')
-                ->references('id')->on('product_types')
+            $table->unsignedBigInteger('factory_id')->nullable();
+            $table->foreign('factory_id')
+                ->references('id')->on('factories')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('size_id');
-            $table->foreign('size_id')
-                ->references('id')->on('sizes')
-                ->onDelete('cascade');
-            
-            $table->string('qty');
+            $table->string('layers')->nullable();
+            $table->string('extra_returns_weight')->nullable();
 
-            $table->string('layers');
-            $table->string('extra_returns_weight');
-                
             $table->timestamps();
         });
     }

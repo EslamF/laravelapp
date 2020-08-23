@@ -19,6 +19,7 @@ class ProductTypeController extends Controller
         $request->validate([
             'name' => 'required|min:3'
         ]);
+        Product::select('id', 'name', 'category_id')->with('category:id,name')->where('id', 1)->get();
         ProductType::create($request->all());
         return redirect()->route('product.type.list');
     }
@@ -90,5 +91,4 @@ class ProductTypeController extends Controller
 
         return redirect()->route('product.type.list');
     }
-
 }

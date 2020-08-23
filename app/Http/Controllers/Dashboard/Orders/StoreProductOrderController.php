@@ -24,7 +24,9 @@ class StoreProductOrderController extends Controller
 
     public function create()
     {
-        $orders = SaveOrder::select('id', 'code')->where('stored', 0)->get();
+        $orders = SaveOrder::select('id', 'code')->whereHas('products', function ($q) {
+            $q->where('stored', 1);
+        })->get();
         return view('dashboard.orders.store_product_to_repository.create')->with('orders', $orders);
     }
 
@@ -33,13 +35,29 @@ class StoreProductOrderController extends Controller
 
         $products = ProductType::whereHas('products', function ($q) use ($id) {
             $q->where('save_order_id', $id);
-        })->get();
+        })->with(array('products' => function ($query) use ($id) {
+            $query->where('save_order_id', $id);
+        }))->get();
 
         return response()->json($products, 200);
     }
 
     public function store(Request $request)
     {
+        // dd($request->all());
+
+        StoreProductOrder::create([
+            'code' => $this->generateCode(),
+            'save_order_id' => $request['save_order_id']
+        ]);
+
+        $order = SaveOrder::find($request['save_order_id'])->update([
+            'stored' => 1
+
+        ]);
+
+
+        return response()->json('success', 200);
     }
 
     public function generateCode()

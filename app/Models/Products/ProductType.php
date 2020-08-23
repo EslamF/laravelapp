@@ -14,4 +14,9 @@ class ProductType extends Model
     {
         return $this->hasManyThrough(Product::class, ReceivingOrder::class, 'product_type_id', 'receiving_order_id');
     }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class);
+    }
 }

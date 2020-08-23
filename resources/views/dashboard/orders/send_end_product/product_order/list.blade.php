@@ -9,27 +9,26 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table ">
-                    <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-6">Shipping User</th>
-                                <th class="col-md-6">Product code</th>
-                            </div>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <h3 style="display: block;">Shipped by {{$data[0]->user->name}}</h6>
+                    <table class="table ">
+                        <thead>
+                            <tr class="row">
+                                <div class="col-md-12">
+                                    <th class="col-md-12">Product code</th>
+                                </div>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        @foreach($data as $order)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-6">{{$order->user->name}}</td>
-                                <td class="col-md-6">{{$order->prod_code}}</td>
-                            </div>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            @foreach($data as $order)
+                            <tr class="row">
+                                <div class="col-md-12">
+                                    <td class="col-md-12">{{$order->prod_code}}</td>
+                                </div>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">

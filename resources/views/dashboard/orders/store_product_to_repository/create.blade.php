@@ -3,49 +3,58 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
+            @csrf
             <div class="card-header">
                 <h3 class="card-title">Store Order To Repository Table</h3>
-                <a href="{{Route('store.end_product.create_page')}}" class="btn btn-success float-right">Add</a>
+                <button type="button" class="btn btn-success float-right submit-form">Add</button>
             </div>
             <div>
-                <form action="{{Route('')}}" method="POST">
-                    <div class="row ml-3 mr-3 mt-3">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="tags" style="display:block">Products</label>
-                                <input style="display: block;" type="text" class="form-control" id="tags" class="form-control" name="products" placeholder="Add Product Code" data-role="tagsinput" />
-                                <div class="mt-4 parent-count" style="display: none;">
-                                    <span class="count"></span> of Total <span class="totat-count"></span> are received
-                                </div>
-                            </div>
+                <div class="row ml-3 mr-3 mt-3">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="tags">Products</label>
+                            <span class="error" style="display:none;color:red;font-weight:500"> * Invalid Product</span>
+                            <input style="display: block;" type="text" class="form-control code" class="form-control" name="products" placeholder="Add Product Code" />
+
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Select Order</label>
-                                <select id="order" class="form-control order">
-                                    <option value="" selected disabled>Choose Order</option>
-                                    @foreach($orders as $order)
-                                    <option value="{{$order->id}}">{{$order->code}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <div class="parent-count" style="display: none;">
+                            <span class="mt-3" style="font-weight:bold;display:inline">Products need to be add(</span>
+                            <span style="color:red" class="count"></span>
+                            <span style="font-weight:bold;display:inline">)</span>
+
                         </div>
                     </div>
-                </form>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Select Order</label>
+                            <span class="select-error" style="display:none;color:red;font-weight:500"> * Select Order first</span>
+                            <select id="order" name="save_order_id" class="form-control order">
+                                <option value="" selected disabled>Choose Order</option>
+                                @foreach($orders as $order)
+                                <option value="{{$order->id}}">{{$order->code}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr class="row" style="display: none;">
-                            <th class="col-md-6">id</td>
-                            <th class="col-md-6">Product Name</td>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr class="row" style="display: none;">
+                                    <th class="col-md-12">Product Code</td>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
@@ -59,9 +68,13 @@
 </script>
 <script>
     var totalLength;
+    var products = [];
+    var addProducts = [];
+    var count = 0;
+    var save_order_id;
     $(document).ready(function() {
-
         $('select#order').on('change', function() {
+            $('.select-error').css('display', 'none');
             var selected = $(this).children("option:selected").val();
             $.ajaxSetup({
                 headers: {
@@ -74,16 +87,17 @@
                 dataType: 'json', // added data type
                 success: function(res) {
                     totalLength = res.length;
-
                     $('thead .row').css('display', 'flex');
+                    $('.parent-count').css('display', 'block');
+
                     $.each(res, function(index, value) {
-                        $("tbody").append(
-                            '<tr class="row">' +
-                            '<td class="col-md-6">' + value.id + '</td>' +
-                            '<td class="col-md-6">' + value.name + '</td>' +
-                            '</tr>'
-                        )
+                        $.each(value.products, function(index, product) {
+                            products.push(product.prod_code);
+                            save_order_id = product.save_order_id;
+                            count++;
+                        });
                     });
+                    $('span.count').append(count);
                 }
             });
 
@@ -91,18 +105,57 @@
 
     });
     $(document).keypress(function(event) {
-        $('.parent-count').css('display', 'block')
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
-            console.log(totalLength)
-            var inputV = $('#tags').val();
-            var list = inputV.split(",");
-            console.log(list);
-            $(".count").empty();
-            $(".count").append(list.length);
-            $(".totat-count").empty();
-            $(".totat-count").append(totalLength);
+            if (products.length > 0) {
+                if (products.includes($('.code').val())) {
+                    $('.error').css('display', 'none');
+                    $("tbody").empty();
+                    addProducts.push($('.code').val());
+                    count--;
+                    $('span.count').empty();
+                    $('span.count').append(count);
+                    $.each(addProducts, function(index, value) {
+                        $("tbody").append(
+                            '<tr class="row">' +
+                            '<td class="col-md-12">' + value + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                    $('.code').val('');
+                } else {
+                    $('.error').css('display', 'inline');
+                }
+            } else {
+                $('.select-error').css('display', 'inline')
+            }
         }
     });
+
+    $(document).ready(function() {
+        $('.submit-form').on('click', function() {
+            if (products.length != 0 && products.length == addProducts.length) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "/orders/store-end-product/store",
+                    dataType: "json",
+                    data: {
+                        'data': addProducts,
+                        'save_order_id': save_order_id
+                    },
+                    success: function(msg) {
+                        window.location.href = "/orders/store-end-product/get-all";
+                    }
+                });
+            } else {
+
+            }
+        })
+    })
 </script>
 @endsection

@@ -20,7 +20,8 @@ class Product extends Model
         'sort_order_id',
         'sort_date',
         'save_order_id',
-        'user_id'
+        'user_id',
+        'stored'
     ];
 
 

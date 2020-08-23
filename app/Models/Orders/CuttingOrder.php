@@ -7,15 +7,14 @@ use App\User;
 use App\Models\Orders\SpreadingOutMaterialOrder;
 use App\Models\Products\ProductType;
 use App\Models\Options\Size;
+use App\Models\Organization\Factory;
 
 class CuttingOrder extends Model
 {
     protected $fillable = [
         'user_id',
         'layers',
-        'product_type_id',
-        'size_id',
-        'qty',
+        'factory_id',
         'extra_returns_weight'
     ];
 
@@ -30,13 +29,8 @@ class CuttingOrder extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function productType()
+    public function factory()
     {
-        return $this->belongsTo(ProductType::class);
-    }
-
-    public function size()
-    {
-        return $this->belongsTo(Size::class);
+        return $this->belongsTo(Factory::class);
     }
 }

@@ -14,8 +14,7 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <th class="col-md-1">id</th>
-                                <th class="col-md-4">Order Code</th>
-                                <th class="col-md-4">Created At</th>
+                                <th class="col-md-8">Order Code</th>
                                 <th class="col-md-3">Action</th>
                             </div>
                         </tr>
@@ -25,8 +24,7 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <td class="col-md-1">{{$order->id}}</td>
-                                <td class="col-md-4">{{$order->code}}</td>
-                                <td class="col-md-4">{{$order->created_at}}</td>
+                                <td class="col-md-8">{{$order->code}}</td>
                                 <td class="col-md-3">
                                     <a href="{{Route('send.end_product.get_order', $order->id)}}" class="btn btn-info">Show</a>
                                     <form style="display:inline" action="{{Route('send.end_product.delete')}}" method="POST">
