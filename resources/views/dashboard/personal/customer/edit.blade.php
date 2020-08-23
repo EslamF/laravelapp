@@ -14,6 +14,8 @@
                     <div class="form-group">
                         <label for="name">Customer Name</label>
                         <input type="text" class="form-control" value="{{$customer->name}}" name="name" id="name" placeholder="Add customer Name">
+                        <input type="hidden" name="customer_id" value="{{$customer->id}}">
+
                     </div>
             <div class="row ">
                 <div class="col-md-6">

@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Edit Produce Order</h3>
+                <h3 class="card-title">تعديل في اذن التصنيع</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="factory">Factory</label>
+                                <label for="factory">المصنع</label>
                                 <select class="form-control" name="factory_id" id="factory">
                                     <option value="" disabled selected>Select Factory</option>
                                     @foreach($data['factories'] as $factory)
@@ -34,9 +34,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">Cutting Order</label>
+                                <label for="mq_r_code">اذن القص</label>
                                 <select class="form-control" name="cutting_order_id" id="user">
-                                    <option value="" disabled selected>Select Order id</option>
+                                    <option value="" disabled selected>حدد اذن القص</option>
                                     @foreach($data['cutting_orders'] as $order)
                                     <option value="{{$order->id}}"
                                         {{$data['records']->cutting_order_id == $order->id?'selected':''}}>
@@ -49,9 +49,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="material">Materials</label>
+                                <label for="material">الخامه</label>
                                 <select class="form-control" name="material_id" id="material">
-                                    <option value="" disabled selected>Select Material</option>
+                                    <option value="" disabled selected>حدد نوع الخامه</option>
                                     @foreach($data['materials'] as $material)
                                     <option value="{{$material->id}}"
                                         {{$data['records']->material_id == $material->id?'selected':''}}>
@@ -85,8 +85,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تعديل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

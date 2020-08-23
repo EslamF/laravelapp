@@ -2,9 +2,9 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Sort Order Table</h3>
+                <h3 class="card-title">جدول اذونات الفرز</h3>
                 <a href="{{Route('sort.order.create_page')}}" class="btn btn-success float-right">Add</a>
             </div>
             <!-- /.card-header -->
@@ -13,11 +13,11 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-2">Code</th>
-                                <th class="col-md-2">Empolyee</th>
-                                <th class="col-md-4">Date</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-2">كود</th>
+                                <th class="col-md-2">موظف الفرز</th>
+                                <th class="col-md-4">تاريخ الفرز</th>
+                                <th class="col-md-3">امكانيه</th>
                             </div>
                         </tr>
                     </thead>
@@ -31,14 +31,14 @@
                                 <td class="col-md-4">{{$order->created_at}}</td>
                                 <td class="col-md-3">
                                     <a href="{{Route('sort.product.list', $order->id)}}"
-                                            class="btn btn-info">Show</a>
+                                            class="btn btn-info">رؤيه</a>
                                     <a href="{{Route('sort.order.edit_page', $order->id)}}"
-                                        class="btn btn-primary">Edit</a>
+                                        class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('sort.order.delete')}}"
                                         method="POST">
                                         @csrf
                                         <input type="hidden" name="sort_id" value="{{$order->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>

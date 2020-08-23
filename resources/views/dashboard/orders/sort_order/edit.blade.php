@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Edit Sort Order</h3>
+                <h3 class="card-title">تعديل في اذن الفرز</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -12,25 +12,25 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">موزف الفرز</label>
                         <select class="form-control" name="user_id" id="">
-                            <option value="" disabled selected>Select Employee</option>
+                            <option value="" disabled selected>حدد اسم موظف الفرز</option>
                             @foreach($data['users'] as $user)
                             <option value="{{$user->id}}" {{$data['sort']->user_id == $user->id ? "selected": ""}}>{{$user->name}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="name">Code</label>
+                        <label for="name">الكميه</label>
                         <input type="text" class="form-control" value="{{$data['sort']->code}}" name="code" id="">
                         <input type="hidden" value="{{$data['sort']->id}}" name="sort_id">
-                    </div>
+                    </div>ذ
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تأكيد التعديل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

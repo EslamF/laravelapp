@@ -4,8 +4,8 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
+    <div class="content-header" >
+        <div class="container-fluid" >
             <div class="row mb-2">
 
             </div><!-- /.row -->
@@ -14,7 +14,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content"  style="direction: rtl">
         <div class="container-fluid">
             @yield('content')
         </div><!-- /.container-fluid -->

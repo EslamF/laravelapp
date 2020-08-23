@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Create Factory</h3>
+                <h3 class="card-title">صفحه انشاء المصنع</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -12,22 +12,22 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Factory Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Add Factory Name">
+                        <label for="name">اسم المصنع</label>
+                        <input type="text" class="form-control" name="name" id="name" >
                     </div>
                     
             <div class="row ">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="phone">Factory Phone</label>
-                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Add Factory phone">
+                        <label for="phone">رقم التيليفون</label>
+                        <input type="text" class="form-control" name="phone" id="phone" >
                     </div>
                     </div>
                 <div class="col-md-8">
                     <div class="form-group ">
-                        <label for="type">Factory Type</label>
+                        <label for="type">نوع المصنع</label>
                         <select class="form-control" name="factory_type_id" id="factory_type_id">
-                            <option value="" disabled selected>Select Factory Type</option>
+                            <option value="" disabled selected>اختر نوع المصنع </option>
                             @foreach($types as $type)
                             <option value="{{$type->id}}">{{$type->name}}</option>
                             @endforeach
@@ -37,8 +37,8 @@
             </div>
 
                     <div class="form-group">
-                        <label for="address">Factory Address</label>
-                        <input type="text" class="form-control" name="address" id="address" placeholder="Add Factory Address">
+                        <label for="address">عنوان الصنع</label>
+                        <input type="text" class="form-control" name="address" id="address" >
                     </div>
                 
                    
@@ -46,8 +46,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

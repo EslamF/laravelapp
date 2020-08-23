@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Add Product</h3>
+                <h3 class="card-title">تعديل في بيانات المنتج</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -19,9 +19,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="factory">Receiving Order id</label>
+                                <label for="factory">اذن الاستلام</label>
                                 <select class="form-control" name="receiving_order_id" id="factory">
-                                    <option value="" disabled selected>Select Receiving Order Number</option>
+                                    <option value="" disabled selected>حدد رقم اذن الاستلام</option>
                                     @foreach($data['receiving_orders'] as $order)
                                     <option value="{{$order->id}}">{{$order->id}}</option>
                                     @endforeach
@@ -30,17 +30,17 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="weight">Product Code</label>
-                                <input type="text" class="form-control" value="{{$data['product']->prod_code}}" name="prod_code" id="weight" placeholder="Add Product Code">
+                                <label for="weight">كود المنتج</label>
+                                <input type="text" class="form-control" value="{{$data['product']->prod_code}}" name="prod_code" id="weight" placeholder="كود المنتج">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Sorted</label>
+                                <label for="weight">حاله الفرز</label>
                                 <select class="form-control" name="sorted" id="material">
-                                    <option value="" disabled selected>Choose Product Status</option>
+                                    <option value="" disabled selected>حدد حاله الفرز</option>
                                     <option value="1" {{$data['product']->sorted == 1? 'selected' : ''}}>True</option>
                                     <option value="0" {{$data['product']->sorted == 0? 'selected' : ''}}>False</option>
                                 </select>
@@ -50,11 +50,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="weight">Damaged</label>
+                                <label for="weight"> حاله المنتج الفرز</label>
                                 <select class="form-control" name="damaged" id="material">
-                                    <option value="" disabled selected>Choose Product Status</option>
-                                    <option value="1" {{$data['product']->damaged == 1? 'selected' : ''}}>True</option>
-                                    <option value="0" {{$data['product']->damaged == 0? 'selected' : ''}}>False</option>
+                                    <option value="" disabled selected>حاجه المنتج</option>
+                                    <option value="1" {{$data['product']->damaged == 1? 'selected' : ''}}>صالح</option>
+                                    <option value="0" {{$data['product']->damaged == 0? 'selected' : ''}}>تالف</option>
                                 </select>
                             </div>
                         </div>
@@ -62,10 +62,10 @@
                             <div class="form-group">
                                 <label for="weight">Stock</label>
                                 <select class="form-control" name="status" id="material">
-                                    <option value="" disabled selected>Choose Product Status</option>
-                                    <option value="available" {{$data['product']->status == 'available'? 'selected' : ''}}>Available</option>
-                                    <option value="pending" {{$data['product']->status == 'pending'? 'selected' : ''}}>Pending</option>
-                                    <option value="sold" {{$data['product']->status == 'sold'? 'selected' : ''}}>Sold</option>
+                                    <option value="" disabled selected>جدد حاله المنتج</option>
+                                    <option value="available" {{$data['product']->status == 'available'? 'selected' : ''}}>متاح</option>
+                                    <option value="pending" {{$data['product']->status == 'pending'? 'selected' : ''}}>انتظار</option>
+                                    <option value="sold" {{$data['product']->status == 'sold'? 'selected' : ''}}>مباع</option>
                                 </select>
                             </div>
                         </div>
@@ -73,9 +73,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="description">Description</label>
+                                <label for="description">التفاصيل</label>
                                 <textarea class="form-control" name="description"  id="description"
-                                    placeholder="Add Description">{{$data['product']->description}}</textarea>
+                                    placeholder="ادخل التفاصيل">{{$data['product']->description}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -84,8 +84,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

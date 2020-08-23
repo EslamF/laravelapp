@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Add Produce Order</h3>
+                <h3 class="card-title">انشاء اذن تصنيع </h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -19,9 +19,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="factory">Factory</label>
+                                <label for="factory">المصنع</label>
                                 <select class="form-control" name="factory_id" id="factory">
-                                    <option value="" disabled selected>Select Factory</option>
+                                    <option value="" disabled selected>حدداسم المصنع</option>
                                     @foreach($data['factories'] as $factory)
                                     <option value="{{$factory->id}}">{{$factory->name}}</option>
                                     @endforeach
@@ -32,9 +32,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">Cutting Order</label>
+                                <label for="mq_r_code">اذن القص</label>
                                 <select class="form-control" name="cutting_order_id" id="user">
-                                    <option value="" disabled selected>Select Order id</option>
+                                    <option value="" disabled selected>حدد رقم اذن القص</option>
                                     @foreach($data['cutting_orders'] as $order)
                                     <option value="{{$order->id}}">{{$order->id}}</option>
                                     @endforeach
@@ -45,9 +45,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="material">Materials</label>
+                                <label for="material">الخامه</label>
                                 <select class="form-control" name="material_id" id="material">
-                                    <option value="" disabled selected>Select Material</option>
+                                    <option value="" disabled selected>حدد اذن الخامه</option>
                                     @foreach($data['materials'] as $material)
                                     <option value="{{$material->id}}">{{$material->mq_r_code}}</option>
                                     @endforeach
@@ -58,17 +58,17 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Qty</label>
-                                <input type="number" class="form-control" name="qty" id="weight" placeholder="Add Qty">
+                                <label for="qty">الكميه</label>
+                                <input type="number" class="form-control" name="qty" id="qty" >
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Receiving Date</label>
-                                <input type="date" class="form-control" name="receiving_date" id="weight"
-                                    placeholder="Add Receiving Date">
+                                <label for="receiving_date">تاريخ الاستلام</label>
+                                <input type="date" class="form-control" name="receiving_date" id="receiving_date"
+                                >
                             </div>
                         </div>
                     </div>
@@ -77,8 +77,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

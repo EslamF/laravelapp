@@ -6,8 +6,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Factories Table</h3>
-                <a href="{{Route('factory.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">جدول المصانع المسجله</h3>
+                <a href="{{Route('factory.create_page')}}" class="btn btn-success float-right">انشاء مصنع جديد</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -15,12 +15,12 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-3">Name</th>
-                                <th class="col-md-2">Phone</th>
-                                <th class="col-md-2">Address</th>
-                                <th class="col-md-2">FactoryType</th>
-                                <th class="col-md-2">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-3">اسم</th>
+                                <th class="col-md-2">تيليفون</th>
+                                <th class="col-md-2">عنوان</th>
+                                <th class="col-md-2">نوع</th>
+                                <th class="col-md-2">امكانيه</th>
                             </div>
                         </tr>
                     </thead>
@@ -35,11 +35,11 @@
                                 <td class="col-md-2">{{$factory->factory_type_id}}</td>
                                 <td class="col-md-2">
                                     <a href="{{Route('factory.edit_page', $factory->id)}}"
-                                        class="btn btn-primary">Edit</a>
+                                        class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('factory.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="factory_type_id" value="{{$factory->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>

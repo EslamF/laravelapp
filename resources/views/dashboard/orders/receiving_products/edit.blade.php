@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Edit Receiving Products Order</h3>
+                <h3 class="card-title">تعديل في اذن استلام الخامات</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -19,9 +19,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="factory">Produce Order</label>
+                                <label for="factory">اذن التصنيع</label>
                                 <select class="form-control" name="produce_order_id" id="factory">
-                                    <option value="" disabled selected>Select Produce Order</option>
+                                    <option value="" disabled selected> حدد رقم اذن التصنيع</option>
                                     @foreach($data['produce_orders'] as $order)
                                     <option value="{{$order->id}}"
                                         {{$data['records']->produce_order_id == $order->id ? "selected":''}}>
@@ -34,9 +34,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">Product</label>
+                                <label for="mq_r_code">المنتج</label>
                                 <select class="form-control" name="product_type_id" id="user">
-                                    <option value="" disabled selected>Select Product Type</option>
+                                    <option value="" disabled selected>حدد نوع المنتج</option>
                                     @foreach($data['product_types'] as $type)
                                     <option value="{{$type->id}}"
                                         {{$data['records']->product_type_id == $type->id ? "selected":''}}>{{$type->id}}
@@ -49,9 +49,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="material">Size</label>
+                                <label for="material">المقاس</label>
                                 <select class="form-control" name="size_id" id="material">
-                                    <option value="" disabled selected>Select Size</option>
+                                    <option value="" disabled selected>حدد مقاس المنتج</option>
                                     @foreach($data['sizes'] as $size)
                                     <option value="{{$size->id}}"
                                         {{$data['records']->size_id == $size->id ? "selected":''}}>{{$size->name}}
@@ -64,21 +64,21 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Qty</label>
+                                <label for="weight">الكميه</label>
                                 <input type="number" class="form-control" value="{{$data['records']->qty}}" name="qty"
-                                    id="weight" placeholder="Add Qty">
+                                    id="weight" >
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Order Status</label>
-                                <select class="form-control" name="status" id="material">
-                                    <option value="" disabled selected>Chose Status</option>
-                                    <option value="1" {{$data['records']->status == 1 ? "selected":''}}>Approved
+                                <label for="status">حاله الاذن</label>
+                                <select class="form-control" name="status" id="status">
+                                    <option value="" disabled selected>حدد حاله المنتج</option>
+                                    <option value="1" {{$data['records']->status == 1 ? "selected":''}}>تم 
                                     </option>
-                                    <option value="0" {{$data['records']->status == 0 ? "selected":''}}>Not Approved
+                                    <option value="0" {{$data['records']->status == 0 ? "selected":''}}>لم يتم بعد
                                     </option>
                                 </select>
                             </div>
@@ -87,9 +87,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Receiving Date</label>
+                                <label for="weight">تاريخ الاستلام</label>
                                 <input type="date" class="form-control" value="{{$data['records']->receiving_date}}"
-                                    name="receiving_date" id="weight" placeholder="Add Receiving Date">
+                                    name="receiving_date" id="weight" >
                             </div>
                         </div>
                     </div>
@@ -98,8 +98,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تأكيد التعديل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

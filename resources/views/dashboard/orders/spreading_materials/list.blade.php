@@ -2,9 +2,9 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Spreading Material Order Table</h3>
+                <h3 class="card-title">جدول اذونات الفرش</h3>
                 <a href="{{Route('spreading.material.create_page')}}" class="btn btn-success float-right">Add</a>
             </div>
             <!-- /.card-header -->
@@ -13,11 +13,11 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-3">MQ_R_CODE</th>
-                                <th class="col-md-3">Employee</th>
-                                <th class="col-md-3">Weight</th>
-                                <th class="col-md-2">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-3">كود الخامه</th>
+                                <th class="col-md-3">موظف الفرش</th>
+                                <th class="col-md-3">الوزن</th>
+                                <th class="col-md-2">امكانيه</th>
                             </div>
                         </tr>
                     </thead>
@@ -31,12 +31,12 @@
                                 <td class="col-md-3">{{$value->weight}}</td>
                                 <td class="col-md-2">
                                     <a href="{{Route('spreading.material.edit_page', $value->id)}}"
-                                        class="btn btn-primary">Edit</a>
+                                        class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('spreading.material.delete')}}"
                                         method="POST">
                                         @csrf
                                         <input type="hidden" name="spreading_id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>

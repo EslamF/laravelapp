@@ -2,10 +2,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">Cutting Order Table</h3>
-                <a href="{{Route('cutting.material.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">جدول اذونات القص</h3>
+                <a href="{{Route('cutting.material.create_page')}}" class="btn btn-success float-right"> انشاء</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,14 +13,14 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-2">Employee</th>
-                                <th class="col-md-1">Layers</th>
-                                <th class="col-md-2">Product Type</th>
-                                <th class="col-md-1">Qty</th>
-                                <th class="col-md-1">Size</th>
-                                <th class="col-md-1">Returns</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-2">الموظف</th>
+                                <th class="col-md-1">الراقات</th>
+                                <th class="col-md-2">المنتج</th>
+                                <th class="col-md-1">الكميه</th>
+                                <th class="col-md-1">المقاس</th>
+                                <th class="col-md-1">الزياده المرتجعه</th>
+                                <th class="col-md-3">الامكانيه</th>
                             </div>
                         </tr>
                     </thead>
@@ -37,12 +37,12 @@
                                 <td class="col-md-1">{{$value->extra_returns_weight}}</td>
                                 <td class="col-md-3">
                                     <a href="{{Route('cutting.material.edit_page', $value->id)}}"
-                                        class="btn btn-primary">Edit</a>
+                                        class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('cutting.material.delete')}}"
                                         method="POST">
                                         @csrf
                                         <input type="hidden" name="cutting_order_id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>

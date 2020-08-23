@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Create Fix Product Order</h3>
+                <h3 class="card-title">اذن خروج منتج تالف</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,15 +14,15 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="weight">Product Code</label>
-                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="Add Product Code">
+                                <label for="weight">رقم المنتج</label>
+                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="ادخل رقم المنتج">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="name">Factory</label>
+                                <label for="name">المصنع</label>
                                 <select class="form-control" name="factory_id" id="">
-                                    <option value="" disabled selected>Select Factory</option>
+                                    <option value="" disabled selected>حدد المصنع</option>
                                     @foreach($factories as $factory)
                                     <option value="{{$factory->id}}">{{$factory->name}}</option>
                                     @endforeach
@@ -34,11 +34,12 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
+    
     </div>
 </div>
 @endsection
