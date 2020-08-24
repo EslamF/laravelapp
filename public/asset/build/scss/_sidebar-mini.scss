@@ -135,5 +135,5 @@
 .main-sidebar .logo-xs,
 .main-sidebar .logo-xl,
 .sidebar .user-panel .info {
-  @include transition(margin-left $transition-speed linear, opacity $transition-speed ease, visibility $transition-speed ease)
+  @include transition(margin-right $transition-speed linear, opacity $transition-speed ease, visibility $transition-speed ease)
 }
