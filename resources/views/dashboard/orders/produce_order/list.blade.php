@@ -2,9 +2,9 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">Produce Order Table</h3>
+                <h3 class="card-title">جدول اذونات التصنيع</h3>
                 <a href="{{Route('produce.order.create')}}" class="btn btn-success float-right">Add</a>
             </div>
             <!-- /.card-header -->
@@ -13,13 +13,13 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-2">Cutting Order ID</th>
-                                <th class="col-md-1">Material MQ_R_Code</th>
-                                <th class="col-md-2">Factory</th>
-                                <th class="col-md-1">Qty</th>
-                                <th class="col-md-2">Receiving Date</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-2">رقم اذن القص</th>
+                                <th class="col-md-1">كود الخامه</th>
+                                <th class="col-md-2">المصنع</th>
+                                <th class="col-md-1">الكميه</th>
+                                <th class="col-md-2">تاريخ الاستلام</th>
+                                <th class="col-md-3">المكانيه</th>
                             </div>
                         </tr>
                     </thead>
@@ -35,12 +35,12 @@
                                 <td class="col-md-2">{{$value->receiving_date}}</td>
                                 <td class="col-md-3">
                                     <a href="{{Route('produce.order.edit_page', $value->id)}}"
-                                        class="btn btn-primary">Edit</a>
+                                        class="btn">التعديل</a>
                                     <form style="display:inline" action="{{Route('produce.order.delete')}}"
                                         method="POST">
                                         @csrf
                                         <input type="hidden" name="produce_id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>
@@ -57,4 +57,4 @@
         <!-- /.card -->
     </div>
 </div>
-@endsection
+@endsection 

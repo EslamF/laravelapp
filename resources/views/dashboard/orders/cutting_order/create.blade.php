@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Add Cutting Material Order</h3>
+                <h3 class="card-title">انشاء اذن القص</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -16,18 +16,19 @@
                             <div class="form-group">
                                 <label for="">Order By</label>
                                 <select v-model="type" @change="" class="form-control" id="">
-                                    <option value="" disabled seelcted>Choose Type</option>
-                                    <option value="company">Company</option>
-                                    <option value="employee">Employee</option>
+                                    <option value="" disabled seelcted>اختر النوع</option>
+                                    <option value="company">شركة</option>
+                                    <option value="employee">موظف</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-4" v-if="type == 'employee'">
                             <div class="form-group">
-                                <label for="">Employee Name</label>
-                                <select v-model="employee" class="form-control" id="">
-                                    <option value="" disabled seelcted>Choose Employee</option>
-                                    <option value="company">Company</option>
+                                <label for="employee">اسم الموظف
+                                </label>
+                                <select v-model="employee" class="form-control" id="employee">
+                                    <option value="" disabled seelcted>اختر اسم الموظف</option>
+                                    <option value="company">شركة</option>
                                 </select>
                             </div>
                         </div>
@@ -36,11 +37,11 @@
                         <div class="row" v-for="(item,index) in items">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Product Type</label>
+                                    <label for=""></label>
                                     <select v-model="type" class="form-control" @change="getOrderBy()">
-                                        <option value="" disabled seelcted>Choose Type</option>
-                                        <option value="company">Company</option>
-                                        <option value="employee">Employee</option>
+                                        <option value="" disabled seelcted>اختر النوع</option>
+                                        <option value="company">شركة</option>
+                                        <option value="employee">موظف</option>
                                     </select>
                                 </div>
                             </div>
@@ -48,24 +49,24 @@
                                 <div class="form-group">
                                     <label for="">Size</label>
                                     <select v-model="type" class="form-control" @change="getOrderBy()" id="">
-                                        <option value="" disabled seelcted>Choose Type</option>
-                                        <option value="company">Company</option>
-                                        <option value="employee">Employee</option>
+                                        <option value="" disabled seelcted>اختر النوع</option>
+                                        <option value="company">شركة</option>
+                                        <option value="employee">موظف</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Qty</label>
+                                    <label for="">الكميه</label>
                                     <input class="form-control" type="number">
                                 </div>
                             </div>
                             <div class="form-group mt-2">
                                 <button type="button" @click="addRow" class='btn btn-success mt-4'>
-                                    Add
+                                    اضافه
                                 </button>
                                 <button type="button" @click="deleteRow(index)" class='btn btn-danger mt-4'>
-                                    remove
+                                    حذف
                                 </button>
                             </div>
                         </div>
@@ -76,11 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
-                </div>
+                
             </form>
         </div>
     </div>

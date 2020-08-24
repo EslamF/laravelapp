@@ -34,7 +34,7 @@
                 position: relative;
             }
 
-            .top-right {
+            .top-left {
                 position: absolute;
                 right: 10px;
                 top: 18px;
@@ -62,18 +62,19 @@
                 margin-bottom: 30px;
             }
         </style>
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     </head>
     <body>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">الصفحه الرئيسيه</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">تسجيل دخول</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">انشاء حساب جديد</a>
                         @endif
                     @endauth
                 </div>

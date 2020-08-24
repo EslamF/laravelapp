@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Create Fix Product Order</h3>
+                <h3 class="card-title">اذن استلام منتج تالف</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,19 +14,19 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="weight">Product Code</label>
-                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="Add Product Code">
+                                <label for="weight">كود المنتج</label>
+                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="ادخل كود المنتج" >
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="name">Status</label>
+                                <label for="name">الحاله</label>
                                 <select class="form-control" name="damage_type" id="">
-                                    <option value="" disabled selected>Choose status</option>
-                                            <option value="">Fixed</option>
-                                            <option value="ironing">Ironing</option>
-                                            <option value="tailoring">Tailoring</option>
-                                            <option value="dyeing">Dyeing</option>
+                                    <option value="" disabled selected>تحديد الجوده</option>
+                                            <option value="">عادي</option>
+                                            <option value="ironing">كي</option>
+                                            <option value="tailoring">خياطه</option>
+                                            <option value="dyeing">صباغه</option>
                                 </select>
                             </div>
                         </div>
@@ -35,8 +35,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

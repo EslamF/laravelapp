@@ -2,10 +2,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">Fix Product Order</h3>
-                <a href="{{Route('fix.product.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">جدول اذونات المنتجات التالفه</h3>
+                <a href="{{Route('fix.product.create_page')}}" class="btn btn-success float-right">انشاء</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,10 +13,10 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-5">Product Code</th>
-                                <th class="col-md-5">Factory</th>
-                                <th class="col-md-1">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-5">كود المنتج</th>
+                                <th class="col-md-5">المصنع</th>
+                                <th class="col-md-1">الامكانيه</th>
                             </div>
                         </tr>
                     </thead>
@@ -32,7 +32,7 @@
                                         method="POST">
                                         @csrf
                                         <input type="hidden" name="id" value="{{$order->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>

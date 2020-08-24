@@ -50,13 +50,25 @@ class FactoryTypeController extends Controller
     }
     /**
      * 
-     * get all for pagination
-     * 
+     * get all for 
+     * pagination
+     * & createpage
+     * $ editpage
      */
     public function getAllPaginate()
     {
         $types = FactoryType::paginate(15);
         return view('dashboard.factories.type.list')->with('types', $types);
+    }
+    public function createPage()
+    {
+        return view('dashboard.factories.type.create');
+    }
+  
+    public function editPage( $type_id)
+    {
+        $type = FactoryType::where('id', $type_id)->first();
+        return view('dashboard.factories.type.edit')->with('type', $type);
     }
     /**
      * 
@@ -72,16 +84,16 @@ class FactoryTypeController extends Controller
         $type = FactoryType::where('id', $request->factory_type_id)->first();
     }
 
-    public function createPage()
-    {
-        return view('dashboard.factories.type.create');
-    }
+    // public function createPage()
+    // {
+    //     return view('dashboard.factories.type.create');
+    // }
 
-    public function editPage($type_id)
-    {
-        $type = FactoryType::where('id', $type_id)->first();
-        return view('dashboard.factories.type.edit')->with('type', $type);
-    }
+    // public function editPage($type_id)
+    // {
+    //     $type = FactoryType::where('id', $type_id)->first();
+    //     return view('dashboard.factories.type.edit')->with('type', $type);
+    // }
     public function delete(Request $request)
     {
         $request->validate([

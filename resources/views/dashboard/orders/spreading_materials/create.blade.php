@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Add Spreading Material Order</h3>
+                <h3 class="card-title">انشاء اذن الفرش</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,9 +14,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="user">Employee</label>
+                                <label for="user">موظف الفرش</label>
                                 <select class="form-control" name="user_id" id="user">
-                                    <option value="" disabled selected>Select Employee</option>
+                                    <option value="" disabled selected>موظف الفرش</option>
                                     @foreach($data['users'] as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
@@ -27,9 +27,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">Material MQ_R_Code</label>
+                                <label for="mq_r_code">كود الخامه</label>
                                 <select class="form-control" name="material_id" id="user">
-                                    <option value="" disabled selected>Select Material code</option>
+                                    <option value="" disabled selected>حدد كود الخامه</option>
                                     @foreach($data['material'] as $material)
                                     <option value="{{$material->id}}">{{$material->mq_r_code}}</option>
                                     @endforeach
@@ -40,9 +40,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Weight</label>
+                                <label for="weight">الوزن</label>
                                 <input type="number" class="form-control" name="weight" id="weight"
-                                    placeholder="Add Weight">
+                                    placeholder="ادخل الوزن">
                             </div>
                         </div>
                     </div>
@@ -50,8 +50,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رحوع</a>
                 </div>
             </form>
         </div>

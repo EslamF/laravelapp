@@ -54,6 +54,9 @@ class CustomerController extends Controller
         ]);
 
         Customer::find($request->customer_id)->update($request->all());
+        return redirect()->route('customer.list');
+
+
     }
     public function delete(Request $request)
     {

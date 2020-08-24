@@ -29,9 +29,43 @@ Route::group([
 ], function () {
 
     Route::group([
+        'namespace' => 'Options'
+    ],function(){
+        Route::group([
+        'namespace' => 'size'
+        ],function(){
+            Route::get('get-all', 'SizeController@getAllPaginate')->name('size.list');
+            Route::get('create', 'SizeController@createPage')->name('size.create_page');
+            Route::post('store', 'SizeController@create')->name('size.store');
+            Route::post('delete', 'SizeController@delete')->name('size.delete');
+            Route::get('edit/{type_id}', 'SizeController@editPage')->name('size.edit_page');
+            Route::post('update', 'SizeController@update')->name('size.update');
+        });
+        Route::group([
+            'namespace' => 'color'
+            ],function(){
+                Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
+                Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
+                Route::post('store', 'CustomerController@create')->name('customer.store');
+                Route::post('delete', 'CustomerController@delete')->name('customer.delete');
+                Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
+                Route::post('update', 'CustomerController@update')->name('customer.update');
+            });
+    });
+    Route::group([
         'namespace' => 'Users'
     ], function () {
 
+        Route::group([
+            'prefix' => 'employees',
+        ], function () {
+            Route::get('get-all', 'EmployeeController@getAllPaginate')->name('employee.list');
+            Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
+            Route::post('store', 'EmployeeController@create')->name('employee.store');
+            Route::post('delete', 'EmployeeController@delete')->name('employee.delete');
+            Route::get('edit/{type_id}', 'EmployeeController@editPage')->name('employee.edit_page');
+            Route::post('update', 'EmployeeController@update')->name('employee.update');
+        });
         Route::group([
             'prefix' => 'customers',
         ], function () {
@@ -74,26 +108,41 @@ Route::group([
     });
     Route::group([
         'namespace' => 'Organization',
-        'prefix' => 'factory'
 
-    ], function () {
-        Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list');
-        Route::get('create', 'FactoryController@createPage')->name('factory.create_page');
-        Route::post('store', 'FactoryController@create')->name('factory.store');
-        Route::post('delete', 'FactoryController@delete')->name('factory.delete');
-        Route::get('edit/{type_id}', 'FactoryController@editPage')->name('factory.edit_page');
-        Route::post('update', 'FactoryController@update')->name('factory.update');
+    ],function(){
 
         Route::group([
-            'prefix' => 'type'
+            'prefix' => 'shipping'
+
+        ],function(){
+            Route::get('get-all', 'ShippingCompanyController@getAllPaginate')->name('shipping.list');
+            Route::get('create', 'ShippingCompanyController@createPage')->name('shipping.create_page');
+            Route::post('store', 'ShippingCompanyController@create')->name('shipping.store');
+            Route::post('delete', 'ShippingCompanyController@delete')->name('shipping.delete');
+            Route::get('edit/{type_id}', 'ShippingCompanyController@editPage')->name('shipping.edit_page');
+            Route::post('update', 'ShippingCompanyController@update')->name('shipping.update');
+        });
+    
+        Route::group([
+            'prefix' => 'factory'
         ], function () {
-            Route::get('api/get-all', 'FactoryTypeController@getAll')->name('factory.type.list_api');
-            Route::get('get-all', 'FactoryTypeController@getAllPaginate')->name('factory.type.list');
-            Route::get('create', 'FactoryTypeController@createPage')->name('factory.type.create_page');
-            Route::post('store', 'FactoryTypeController@create')->name('factory.type.store');
-            Route::post('delete', 'FactoryTypeController@delete')->name('factory.type.delete');
-            Route::get('edit/{type_id}', 'FactoryTypeController@editPage')->name('factory.type.edit_page');
-            Route::post('update', 'FactoryTypeController@update')->name('factory.type.update');
+            Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list');
+            Route::get('create', 'FactoryController@createPage')->name('factory.create_page');
+            Route::post('store', 'FactoryController@create')->name('factory.store');
+            Route::post('delete', 'FactoryController@delete')->name('factory.delete');
+            Route::get('edit/{type_id}', 'FactoryController@editPage')->name('factory.edit_page');
+            Route::post('update', 'FactoryController@update')->name('factory.update');
+    
+            Route::group([
+                'prefix' => 'type'
+            ], function () {
+                Route::get('get-all', 'FactoryTypeController@getAllPaginate')->name('factory.type.list');
+                Route::get('create', 'FactoryTypeController@createPage')->name('factory.type.create_page');
+                Route::post('store', 'FactoryTypeController@create')->name('factory.type.store');
+                Route::post('delete', 'FactoryTypeController@delete')->name('factory.type.delete');
+                Route::get('edit/{type_id}', 'FactoryTypeController@editPage')->name('factory.type.edit_page');
+                Route::post('update', 'FactoryTypeController@update')->name('factory.type.update');
+            });
         });
     });
 
@@ -239,3 +288,7 @@ Route::group([
         });
     });
 });
+
+
+
+?>
