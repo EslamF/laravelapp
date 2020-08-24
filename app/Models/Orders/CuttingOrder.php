@@ -5,8 +5,8 @@ namespace App\Models\Orders;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Models\Orders\SpreadingOutMaterialOrder;
-use App\Models\Products\ProductType;
-use App\Models\Options\Size;
+use App\Models\Orders\CuttingOrderProduct;
+use App\Models\Orders\ProduceOrder;
 use App\Models\Organization\Factory;
 
 class CuttingOrder extends Model
@@ -15,7 +15,8 @@ class CuttingOrder extends Model
         'user_id',
         'layers',
         'factory_id',
-        'extra_returns_weight'
+        'extra_returns_weight',
+        'spreading_out_material_order_id'
     ];
 
     /**
@@ -32,5 +33,20 @@ class CuttingOrder extends Model
     public function factory()
     {
         return $this->belongsTo(Factory::class);
+    }
+
+    public function produceOrders()
+    {
+        return $this->hasMany(ProduceOrder::class);
+    }
+
+    public function CuttingOrderProducts()
+    {
+        return $this->hasMany(CuttingOrderProduct::class);
+    }
+
+    public function spreadingOutMaterialOrder()
+    {
+        return $this->belongsTo(SpreadingOutMaterialOrder::class);
     }
 }

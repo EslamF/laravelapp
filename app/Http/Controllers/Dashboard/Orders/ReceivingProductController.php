@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Orders\ProduceOrder;
 use App\Models\Products\ProductType;
 use App\Http\Controllers\Controller;
+use App\Models\Orders\CuttingOrder;
+use App\Models\Orders\CuttingOrderProduct;
 use App\Models\Orders\ReceivingOrder;
 
 class ReceivingProductController extends Controller
@@ -16,8 +18,8 @@ class ReceivingProductController extends Controller
         $data = ReceivingOrder::with(
             'productType:id,name',
             'size:id,name'
-            )->paginate();
-            
+        )->paginate();
+
         return view('dashboard.orders.receiving_products.list')->with('data', $data);
     }
 
@@ -66,7 +68,7 @@ class ReceivingProductController extends Controller
             'status'           => 'in:0,1',
             'receiving_date'   => 'date',
         ]);
-        
+
         ReceivingOrder::find($request->receiving_id)->update($request->all());
         return redirect()->route('receiving.product.list');
     }
@@ -77,8 +79,77 @@ class ReceivingProductController extends Controller
         $request->validate([
             'receiving_id' => 'required|exists:receiving_orders,id',
         ]);
-        
+
         ReceivingOrder::find($request->receiving_id)->delete();
         return redirect()->route('receiving.product.list');
+    }
+
+    public function orderProduct($id)
+    {
+        $order = CuttingOrderProduct::where('cutting_order_id', $id)->with('productType', 'size')->get();
+        return response()->json($order, 200);
+    }
+
+    public function productsToReceive($id)
+    {
+        $produce = ProduceOrder::where('id', $id)->first();
+        $products = CuttingOrderProduct::where('cutting_order_id', $produce->cutting_order_id)
+            ->where('received', 0)
+            ->with('productType:id,name', 'size:id,name')->get();
+        return response()->json($products, 200);
+    }
+
+    public function productsReceived($id)
+    {
+        $produce = ProduceOrder::where('id', $id)->first();
+        $products = CuttingOrderProduct::where('cutting_order_id', $produce->cutting_order_id)
+            ->where('received', 1)
+            ->with('productType:id,name', 'size:id,name')->get();
+        return response()->json($products, 200);
+    }
+
+    public function approveOrUnapprove(Request $request)
+    {
+        $product = CuttingOrderProduct::where('id', $request->id)->first();
+        $produce = ProduceOrder::where('cutting_order_id', $product->cutting_order_id)->first();
+        $product->update([
+            'received' => $request->status
+        ]);
+        $check = CuttingOrder::where('id', $product->cutting_order_id)->whereHas('CuttingOrderProducts', function ($q) {
+            $q->where('received', 0);
+        })->first();
+        $received = ReceivingOrder::where('produce_order_id', $produce->id)->first();
+        dd($received);
+        if ($check) {
+            $received->update([
+                'status' => 0
+            ]);
+        } else {
+            $received->update([
+                'status' => 1
+            ]);
+        }
+        return response()->json('update', 200);
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $receiveOrder = ReceivingOrder::updateOrCreate(['produce_order_id' => $request->produce_order_id], $request->all());
+        $cutting_id = $receiveOrder->produceOrder->cutting_order_id;
+
+        $check = CuttingOrder::where('id', $cutting_id)->whereHas('CuttingOrderProducts', function ($q) {
+            $q->where('received', 0);
+        })->first();
+
+        if ($check) {
+            $receiveOrder->update([
+                'status' => '0'
+            ]);
+        } else {
+            $receiveOrder->update([
+                'status' => '1'
+            ]);
+        }
+        return response()->json('success', 200);
     }
 }

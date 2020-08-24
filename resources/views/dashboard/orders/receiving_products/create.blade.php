@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div id="app" class="row">
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
@@ -8,92 +8,84 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <ul>
-                @foreach($errors as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
             <form role="form" action="{{Route('receiving.product.store')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="factory">Produce Order</label>
-                                <select class="form-control" name="produce_order_id" id="factory">
+                                <select class="form-control" @change="listProducts(produce_order_id)" v-model="produce_order_id">
                                     <option value="" disabled selected>Select Produce Order</option>
-                                    @foreach($data['produce_orders'] as $order)
-                                    <option value="{{$order->id}}">{{$order->id}}</option>
-                                    @endforeach
+                                    <option :value="order.id" v-for="order in produce_orders">@{{order.id}}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="mq_r_code">Product</label>
-                                <select class="form-control" name="product_type_id" id="user">
-                                    <option value="" disabled selected>Select Product Type</option>
-                                    @foreach($data['product_types'] as $type)
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="material">Size</label>
-                                <select class="form-control" name="size_id" id="material">
-                                    <option value="" disabled selected>Select Size</option>
-                                    @foreach($data['sizes'] as $size)
-                                    <option value="{{$size->id}}">{{$size->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="weight">Qty</label>
-                                <input type="number" class="form-control" name="qty" id="weight" placeholder="Add Qty">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="weight">Order Status</label>
-                                <select class="form-control" name="status" id="material">
-                                    <option value="" disabled selected>Chose Status</option>
-                                    <option value="1">Approved</option>
-                                    <option value="0">Not Approved</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="weight">Receiving Date</label>
-                                <input type="date" class="form-control" name="receiving_date" id="weight" placeholder="Add Receiving Date">
-                            </div>
-                        </div>
-                    </div>
+                    <table class="table" v-if="received_products.length > 0">
+                        <h4 v-if="received_products.length> 0"> Received Products</h4>
+                        <thead>
+                            <tr class="row">
+                                <div class="col-md-12">
+                                    <th class="col-md-1">id</th>
+                                    <th class="col-md-3">Product type</th>
+                                    <th class="col-md-3">Size</th>
+                                    <th class="col-md-3">Qty</th>
+                                    <th class="col-md-2">Action</th>
+                                </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row" v-for="(product,index) in received_products">
+                                <div class="col-md-12">
+                                    <td class="col-md-1">@{{index + 1 }}</td>
+                                    <td class="col-md-3">@{{product.product_type.name}}</td>
+                                    <td class="col-md-3">@{{product.size.name}}</td>
+                                    <td class="col-md-3">@{{product.qty}}</td>
+                                    <td class="col-md-2">
+                                        <button class="btn btn-danger" type="button" @click="changeStatus(0, product.id, index)">UnApprove</button>
+                                    </td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table" v-if="products.length > 0">
+                        <thead>
+                            <tr class="row">
+                                <div class="col-md-12">
+                                    <th class="col-md-1">id</th>
+                                    <th class="col-md-3">Product type</th>
+                                    <th class="col-md-3">Size</th>
+                                    <th class="col-md-3">Qty</th>
+                                    <th class="col-md-2">Action</th>
+                                </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row" v-for="(product,index) in products">
+                                <div class="col-md-12">
+                                    <td class="col-md-1">@{{index + 1 }}</td>
+                                    <td class="col-md-3">@{{product.product_type.name ?? ""}}</td>
+                                    <td class="col-md-3">@{{product.size.name ?? ""}}</td>
+                                    <td class="col-md-3">@{{product.qty}}</td>
+                                    <td class="col-md-2">
+                                        <button class="btn btn-success" type="button" @click="changeStatus(1, product.id, index)">Approve</button>
+                                    </td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="button" @click="goToProduceOrderList()" class="btn btn-primary">Go To List</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+@include('dashboard.orders.receiving_products.v-script.create-script')
 </div>
 @endsection

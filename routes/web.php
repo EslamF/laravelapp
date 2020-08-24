@@ -32,8 +32,9 @@ Route::group([
         'namespace' => 'Options'
     ], function () {
         Route::group([
-            'namespace' => 'size'
+            'prefix' => 'size'
         ], function () {
+            Route::get('get', 'SizeController@getAll')->name('size.get_all');
             Route::get('get-all', 'SizeController@getAllPaginate')->name('size.list');
             Route::get('create', 'SizeController@createPage')->name('size.create_page');
             Route::post('store', 'SizeController@create')->name('size.store');
@@ -42,7 +43,7 @@ Route::group([
             Route::post('update', 'SizeController@update')->name('size.update');
         });
         Route::group([
-            'namespace' => 'color'
+            'prefix' => 'color'
         ], function () {
             Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
             Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
@@ -59,7 +60,8 @@ Route::group([
         Route::group([
             'prefix' => 'employees',
         ], function () {
-            Route::get('get-all', 'EmployeeController@getAllPaginate')->name('employee.list');
+            Route::get('get-all-paginate', 'EmployeeController@getAllPaginate')->name('employee.list');
+            Route::get('get-all', 'EmployeeController@getAll')->name('employee.get_all');
             Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
             Route::post('store', 'EmployeeController@create')->name('employee.store');
             Route::post('delete', 'EmployeeController@delete')->name('employee.delete');
@@ -127,6 +129,9 @@ Route::group([
             'prefix' => 'factory'
         ], function () {
             Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list');
+            Route::get('get', 'FactoryController@getAll')->name('factory_get_all');
+            Route::get('get-by-cutting/{id}', 'FactoryController@getFactoryByCuttingOrder')->name('factory_by_cutting');
+            Route::get('get/{id}', 'FactoryController@getById')->name('factory.get_by_id');
             Route::get('create', 'FactoryController@createPage')->name('factory.create_page');
             Route::post('store', 'FactoryController@create')->name('factory.store');
             Route::post('delete', 'FactoryController@delete')->name('factory.delete');
@@ -136,6 +141,7 @@ Route::group([
             Route::group([
                 'prefix' => 'type'
             ], function () {
+                Route::get('get', 'FactoryTypeController@getAll')->name('factory.type_all');
                 Route::get('get-all', 'FactoryTypeController@getAllPaginate')->name('factory.type.list');
                 Route::get('create', 'FactoryTypeController@createPage')->name('factory.type.create_page');
                 Route::post('store', 'FactoryTypeController@create')->name('factory.type.store');
@@ -166,6 +172,7 @@ Route::group([
             'prefix' => 'spreading-material'
         ], function () {
             Route::get('get-all', 'SpreadingMaterialController@getAllPaginate')->name('spreading.material.list');
+            Route::get('get', 'SpreadingMaterialController@getAll')->name('spreading.get_all');
             Route::get('create', 'SpreadingMaterialController@createPage')->name('spreading.material.create_page');
             Route::post('store', 'SpreadingMaterialController@store')->name('spreading.material.store');
             Route::get('edit/{spreading_id}', 'SpreadingMaterialController@editPage')->name('spreading.material.edit_page');
@@ -177,17 +184,23 @@ Route::group([
             'prefix' => 'cutting'
         ], function () {
             Route::get('get-all', 'CuttingOrderController@getAllPaginate')->name('cutting.material.list');
+            Route::get('get', 'CuttingOrderController@getAll')->name('cutting_order.all');
+            Route::get('get-order-products/{id}', 'CuttingOrderController@getWithProduct')->name('cutting_order.show_products');
+            Route::get('add_to_order/{id}', 'CuttingOrderController@addExtraCreate')->name('cutting_order.add_page');
+            Route::post('store-extra', 'CuttingOrderController@storeExtra')->name('cutting_order.store_extra');
             Route::get('create', 'CuttingOrderController@createPage')->name('cutting.material.create_page');
             Route::post('store', 'CuttingOrderController@store')->name('cutting.material.store');
             Route::get('edit/{cutting_order_id}', 'CuttingOrderController@editPage')->name('cutting.material.edit_page');
             Route::post('update', 'CuttingOrderController@update')->name('cutting.material.update');
             Route::post('delete', 'CuttingOrderController@delete')->name('cutting.material.delete');
+            Route::post('delete-product', 'CuttingOrderController@deleteProduct')->name('cutting.delete_product');
         });
 
         Route::group([
             'prefix' => 'produce'
         ], function () {
             Route::get('get-all', 'ProduceOrderController@getAllPaginate')->name('produce.order.list');
+            Route::get('get', 'ProduceOrderController@getAll')->name('produce_order.get_all');
             Route::get('create', 'ProduceOrderController@createPage')->name('produce.order.create');
             Route::post('store', 'ProduceOrderController@store')->name('produce.order.store');
             Route::get('edit/{produce_id}', 'ProduceOrderController@editPage')->name('produce.order.edit_page');
@@ -199,11 +212,16 @@ Route::group([
             'prefix' => 'receiving-products'
         ], function () {
             Route::get('get-all', 'ReceivingProductController@getAllPaginate')->name('receiving.product.list');
+            Route::get('list/{id}', 'ReceivingProductController@productsToReceive')->name('products_to_receive');
+            Route::post('status', 'ReceivingProductController@changeStatus')->name('order_status');
+            Route::get('/received/list/{id}', 'ReceivingProductController@productsReceived')->name('products_received');
+            Route::get('produce-products/{id}', 'ReceivingProductController@orderProduct')->name('receiving_products');
             Route::get('create', 'ReceivingProductController@createPage')->name('receiving.product.create');
             Route::post('store', 'ReceivingProductController@store')->name('receiving.product.store');
             Route::get('edit/{receiving_id}', 'ReceivingProductController@editPage')->name('receiving.product.edit_page');
             Route::post('update', 'ReceivingProductController@update')->name('receiving.product.update');
             Route::post('delete', 'ReceivingProductController@delete')->name('receiving.product.delete');
+            Route::post('change-status', 'ReceivingProductController@approveOrUnapprove')->name('receiving_product.change_status');
         });
 
         Route::group([
@@ -279,6 +297,7 @@ Route::group([
         Route::group([
             'prefix' => 'type'
         ], function () {
+            Route::get('get', 'ProductTypeController@getAll')->name('product.type.get_all');
             Route::get('get-all', 'ProductTypeController@getAllPaginate')->name('product.type.list');
             Route::get('create', 'ProductTypeController@createPage')->name('product.type.create_page');
             Route::post('store', 'ProductTypeController@create')->name('product.type.store');

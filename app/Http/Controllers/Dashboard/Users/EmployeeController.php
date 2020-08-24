@@ -8,7 +8,7 @@ use App\User;
 
 class EmployeeController extends Controller
 {
-/**
+    /**
      * 
      * create employee 
      * request input name required
@@ -41,7 +41,6 @@ class EmployeeController extends Controller
 
         User::find($request->type_id)->update($request->all());
         return redirect()->route('employee.list');
-
     }
     public function delete(Request $request)
     {
@@ -60,7 +59,8 @@ class EmployeeController extends Controller
      */
     public function getAll()
     {
-        $types = User::all();
+        $employee = User::select('id', 'name')->get();
+        return response()->json($employee, 200);
     }
     /**
      * 
@@ -72,16 +72,16 @@ class EmployeeController extends Controller
         $types = User::paginate(15);
         return view('dashboard.personal.employee.list')->with('types', $types);
     }
-    public function editPage( $type_id)
+    public function editPage($type_id)
     {
         $type = User::where('id', $type_id)->first();
         return view('dashboard.personal.employee.edit')->with('type', $type);
     }
 
     public function createPage()
-        {
-            return view('dashboard.personal.employee.create');
-        }
+    {
+        return view('dashboard.personal.employee.create');
+    }
     /**
      * 
      * get employee by id
@@ -94,4 +94,5 @@ class EmployeeController extends Controller
             'type_id' => 'required|exists:users,id'
         ]);
         $employee = User::where('id', $request->type_id)->first();
-    }}
+    }
+}

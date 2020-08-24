@@ -45,7 +45,7 @@ class FactoryTypeController extends Controller
      */
     public function getAll()
     {
-        $types = FactoryType::all();
+        $types = FactoryType::select('id', 'name')->get();
         return response()->json($types, 200);
     }
     /**
@@ -59,16 +59,6 @@ class FactoryTypeController extends Controller
     {
         $types = FactoryType::paginate(15);
         return view('dashboard.factories.type.list')->with('types', $types);
-    }
-    public function createPage()
-    {
-        return view('dashboard.factories.type.create');
-    }
-
-    public function editPage($type_id)
-    {
-        $type = FactoryType::where('id', $type_id)->first();
-        return view('dashboard.factories.type.edit')->with('type', $type);
     }
     /**
      * 
@@ -94,6 +84,8 @@ class FactoryTypeController extends Controller
         $type = FactoryType::where('id', $type_id)->first();
         return view('dashboard.factories.type.edit')->with('type', $type);
     }
+
+
     public function delete(Request $request)
     {
         $request->validate([

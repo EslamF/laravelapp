@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div id="app" class="row">
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
@@ -8,36 +8,23 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <ul>
-                @foreach($errors as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
+
             <form role="form" action="{{Route('produce.order.store')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="factory">Factory</label>
-                                <select class="form-control" name="factory_id" id="factory">
-                                    <option value="" disabled selected>Select Factory</option>
-                                    @foreach($data['factories'] as $factory)
-                                    <option value="{{$factory->id}}">{{$factory->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="mq_r_code">Cutting Order</label>
-                                <select class="form-control" name="cutting_order_id" id="user">
+                                <span style="color:red" v-if="error.cutting_order_id">*@{{error.cutting_order_id}}</span>
+                                <select class="form-control" @change="getFactoryByCuttingId(cutting_order_id)" v-model="cutting_order_id" id="user">
                                     <option value="" disabled selected>Select Order id</option>
-                                    @foreach($data['cutting_orders'] as $order)
-                                    <option value="{{$order->id}}">{{$order->id}}</option>
-                                    @endforeach
+                                    <option :value="order.id" v-for="order in cutting_orders">@{{order.id}}</option>
                                 </select>
                             </div>
                         </div>
@@ -45,21 +32,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="material">Materials</label>
-                                <select class="form-control" name="material_id" id="material">
-                                    <option value="" disabled selected>Select Material</option>
-                                    @foreach($data['materials'] as $material)
-                                    <option value="{{$material->id}}">{{$material->mq_r_code}}</option>
-                                    @endforeach
+                                <label for="mq_r_code">Factory</label>
+                                <span style="color:red" v-if="error.factory_id">*@{{error.factory_id}}</span>
+                                <select class="form-control" v-model="factory_id" id="user">
+                                    <option value="" disabled selected>Select Order id</option>
+                                    <option :value="factory.id" v-for="factory in factories" :selected="factory_id == factory.id">@{{factory.name}}</option>
+
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="weight">Qty</label>
-                                <input type="number" class="form-control" name="qty" id="weight" placeholder="Add Qty">
                             </div>
                         </div>
                     </div>
@@ -67,8 +46,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="weight">Receiving Date</label>
-                                <input type="date" class="form-control" name="receiving_date" id="weight"
-                                    placeholder="Add Receiving Date">
+                                <span style="color:red" v-if="error.receiving_date">*@{{error.receiving_date}}</span>
+                                <input type="date" class="form-control" v-model="receiving_date" id="weight" placeholder="Add Receiving Date">
                             </div>
                         </div>
                     </div>
@@ -77,12 +56,13 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" @click="store" class="btn btn-primary">Submit</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+@include('dashboard.orders.produce_order.v-script.create-script')
 </div>
 @endsection

@@ -14,13 +14,9 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <th class="col-md-1">id</th>
-                                <th class="col-md-2">Employee</th>
-                                <th class="col-md-1">Layers</th>
-                                <th class="col-md-2">Product Type</th>
-                                <th class="col-md-1">Qty</th>
-                                <th class="col-md-1">Size</th>
-                                <th class="col-md-1">Returns</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-4">Employee</th>
+                                <th class="col-md-5">Company</th>
+                                <th class="col-md-2">Action</th>
                             </div>
                         </tr>
                     </thead>
@@ -29,17 +25,11 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <td class="col-md-1">{{$value->id}}</td>
-                                <td class="col-md-2">{{$value->user->name}}</td>
-                                <td class="col-md-1">{{$value->layers}}</td>
-                                <td class="col-md-2">{{$value->productType->name}}</td>
-                                <td class="col-md-1">{{$value->qty}}</td>
-                                <td class="col-md-1">{{$value->size->name}}</td>
-                                <td class="col-md-1">{{$value->extra_returns_weight}}</td>
-                                <td class="col-md-3">
-                                    <a href="{{Route('cutting.material.edit_page', $value->id)}}"
-                                        class="btn btn-primary">Edit</a>
-                                    <form style="display:inline" action="{{Route('cutting.material.delete')}}"
-                                        method="POST">
+                                <td class="col-md-4">{{$value->user? $value->user->name:'NA'}}</td>
+                                <td class="col-md-5">{{$value->factory ? $value->factory->name: 'NA'}}</td>
+                                <td class="col-md-2">
+                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">Show</a>
+                                    <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="cutting_order_id" value="{{$value->id}}">
                                         <button type="submit" class="btn btn-danger">Delete</button>

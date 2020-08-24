@@ -1,15 +1,18 @@
 <?php
 
 namespace App\Models\Materials;
+
 use App\User;
 use App\Models\Materials\MaterialType;
+use App\Models\Orders\CuttingOrder;
+use App\Models\Orders\SpreadingOutMaterialOrder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Organization\Supplier;
 
 class Material extends Model
 {
     protected $fillable = [
-        'code', 'mq_r_code',
+        'mq_r_code',
         'material_type_id',
         'user_id',
         'supplier_id',
@@ -40,5 +43,8 @@ class Material extends Model
         return $this->belongsTo(User::class);
     }
 
-
+    public function cuttingOrders()
+    {
+        return $this->hasManyThrough(CuttingOrder::class, SpreadingOutMaterialOrder::class, 'material_id', 'spreading_out_material_order_id');
+    }
 }

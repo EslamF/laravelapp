@@ -20,18 +20,12 @@ class CreateProduceOrdersTable extends Migration
             $table->foreign('cutting_order_id')
                 ->references('id')->on('cutting_orders')
                 ->onDelete('cascade');
-            
-            $table->unsignedBigInteger('material_id');
-            $table->foreign('material_id')
-                ->references('id')->on('materials')
-                ->onDelete('cascade');
 
             $table->unsignedBigInteger('factory_id');
             $table->foreign('factory_id')
                 ->references('id')->on('factories')
                 ->onDelete('cascade');
 
-            $table->string('qty');
             $table->date('receiving_date');
             $table->timestamps();
         });

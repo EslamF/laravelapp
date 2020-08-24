@@ -10,12 +10,6 @@ use App\Models\Organization\FactoryType;
 
 class FactoryController extends Controller
 {
-    //
-
-    public function getAll()
-    {
-        $types = Factory::all();
-    }
 
     public function getAllPaginate()
     {
@@ -23,7 +17,8 @@ class FactoryController extends Controller
         //  dd($factories->all());
         return view('dashboard.factories.list')->with('factories', $factories);
     }
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $request->validate([
             'factory_type_id' => 'required|exists:factories,id'
         ]);
@@ -53,21 +48,37 @@ class FactoryController extends Controller
         return redirect()->route('factory.list');
     }
 
-
+    public function getById($id)
+    {
+        $factories = Factory::where('factory_type_id', $id)->get();
+        return response()->json($factories, 200);
+    }
     public function createPage()
     {
         $type = FactoryType::select('id', 'name')->get();
         return view('dashboard.factories.create')->with('types', $type);
     }
-    
-    public function editPage( $fact_id)
+
+    public function editPage($fact_id)
     {
-        $data=[];
+        $data = [];
         $data['factory'] = Factory::where('id', $fact_id)->first();
         $data['type'] = FactoryType::select('id', 'name')->get();
         // dd($data);
         return view('dashboard.factories.edit')->with('data', $data);
     }
 
+    public function getFactoryByCuttingOrder($id)
+    {
+        $factory = Factory::whereHas('cuttingOrder', function ($q) use ($id) {
+            $q->where('id', $id);
+        })->first();
 
+        return response()->json($factory, 200);
+    }
+
+    public function getAll()
+    {
+        return response()->json(Factory::select('id', 'name')->get(), 200);
+    }
 }

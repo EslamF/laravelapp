@@ -12,19 +12,11 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label for="code">Code</label>
-                                <input type="text" class="form-control" name="code" id="code" placeholder="Add code">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
 
                             <div class="form-group">
                                 <label for="mq_r_code">MQ_R_Code</label>
-                                <input type="text" class="form-control" name="mq_r_code" id="mq_r_code"
-                                    placeholder="Add MQ_R_Code">
+                                <input type="text" class="form-control" name="mq_r_code" id="mq_r_code" placeholder="Add MQ_R_Code">
                             </div>
                         </div>
                     </div>
@@ -65,8 +57,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="bill_number">Bill Number</label>
-                                <input type="text" class="form-control" name="bill_number" id="bill_number"
-                                    placeholder="Add Bill Number">
+                                <input type="text" class="form-control" name="bill_number" id="bill_number" placeholder="Add Bill Number">
                             </div>
 
                         </div>
@@ -76,8 +67,7 @@
 
                             <div class="form-group">
                                 <label for="weight">Weight</label>
-                                <input type="number" class="form-control" name="weight" id="weight"
-                                    placeholder="Add Weight">
+                                <input type="number" class="form-control" name="weight" id="weight" placeholder="Add Weight">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -98,8 +88,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea class="form-control" name="description" id="description"
-                            placeholder="Add Description"></textarea>
+                        <textarea class="form-control" name="description" id="description" placeholder="Add Description"></textarea>
                     </div>
                 </div>
                 <!-- /.card-body -->

@@ -10,7 +10,7 @@ class SpreadingOutMaterialOrder extends Model
 {
     protected $fillable = ['user_id', 'material_id', 'weight'];
 
-    
+
     /**
      * 
      * relations

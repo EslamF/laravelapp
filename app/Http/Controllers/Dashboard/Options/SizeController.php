@@ -19,7 +19,7 @@ class SizeController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3'
+            'name' => 'required'
         ]);
         Size::create($request->all());
         return redirect()->route('size.list');
@@ -39,7 +39,7 @@ class SizeController extends Controller
         Size::find($request->type_id)->update($request->all());
         return redirect()->route('size.list');
     }
-     /**
+    /**
      * 
      * delete size 
      * request input type_id required
@@ -53,15 +53,6 @@ class SizeController extends Controller
         Size::find($request->type_id)->delete();
 
         return redirect()->route('size.list');
-    }
-    /**
-     * 
-     * get all for select
-     * 
-     */
-    public function getAll()
-    {
-        $types = Size::all();
     }
     /**
      * 
@@ -82,7 +73,7 @@ class SizeController extends Controller
         return view('dashboard.options.size.create');
     }
 
-    public function editPage( $type_id)
+    public function editPage($type_id)
     {
         $type = Size::where('id', $type_id)->first();
         return view('dashboard.options.size.edit')->with('type', $type);
@@ -99,5 +90,11 @@ class SizeController extends Controller
             'type_id' => 'required|exists:sizes,id'
         ]);
         $type = Size::where('id', $request->type_id)->first();
+    }
+
+    public function getAll()
+    {
+        $sizes = Size::select('id', 'name')->get();
+        return response()->json($sizes, 200);
     }
 }
