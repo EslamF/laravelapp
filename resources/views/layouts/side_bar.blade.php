@@ -100,6 +100,12 @@
                                         <p>Store Product Order</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('buy.list_page')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Buy Order</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item has-treeview">

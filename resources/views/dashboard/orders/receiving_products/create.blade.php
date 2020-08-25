@@ -80,7 +80,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="button" @click="goToProduceOrderList()" class="btn btn-primary">Go To List</button>
+                    <button type="button" @click="goToProduceOrderList()" class="btn btn-primary">Approve</button>
                 </div>
             </form>
         </div>

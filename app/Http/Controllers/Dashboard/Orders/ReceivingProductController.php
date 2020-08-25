@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Orders\CuttingOrder;
 use App\Models\Orders\CuttingOrderProduct;
 use App\Models\Orders\ReceivingOrder;
+use App\Models\Products\Product;
 
 class ReceivingProductController extends Controller
 {
@@ -112,23 +113,27 @@ class ReceivingProductController extends Controller
     {
         $product = CuttingOrderProduct::where('id', $request->id)->first();
         $produce = ProduceOrder::where('cutting_order_id', $product->cutting_order_id)->first();
+
         $product->update([
             'received' => $request->status
         ]);
         $check = CuttingOrder::where('id', $product->cutting_order_id)->whereHas('CuttingOrderProducts', function ($q) {
             $q->where('received', 0);
         })->first();
-        $received = ReceivingOrder::where('produce_order_id', $produce->id)->first();
-        dd($received);
         if ($check) {
-            $received->update([
+            $receive = ReceivingOrder::updateOrCreate(['produce_order_id' => $produce->id], [
                 'status' => 0
             ]);
         } else {
-            $received->update([
+            $receive = ReceivingOrder::updateOrCreate(['produce_order_id' => $produce->id], [
                 'status' => 1
             ]);
         }
+
+        $item = Product::where('cutting_order_product_id', $request->id)->first();
+        $item->update([
+            'receiving_order_id' => $receive->id
+        ]);
         return response()->json('update', 200);
     }
 
@@ -136,7 +141,6 @@ class ReceivingProductController extends Controller
     {
         $receiveOrder = ReceivingOrder::updateOrCreate(['produce_order_id' => $request->produce_order_id], $request->all());
         $cutting_id = $receiveOrder->produceOrder->cutting_order_id;
-
         $check = CuttingOrder::where('id', $cutting_id)->whereHas('CuttingOrderProducts', function ($q) {
             $q->where('received', 0);
         })->first();
@@ -151,5 +155,10 @@ class ReceivingProductController extends Controller
             ]);
         }
         return response()->json('success', 200);
+    }
+
+    public function getAll()
+    {
+        return response()->json(ReceivingOrder::selcet('id')->get(), 200);
     }
 }

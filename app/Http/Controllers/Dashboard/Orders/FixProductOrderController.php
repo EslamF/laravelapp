@@ -24,24 +24,24 @@ class FixProductOrderController extends Controller
         ]);
 
         $product = Product::where('prod_code', $request->prod_code)
-                            ->where('status', 'damaged')
-                            ->where('sorted', 1)
-                            ->first();
-        if(isset($product)) {
+            ->where('status', 'damaged')
+            ->where('sorted', 1)
+            ->first();
+
+        if (isset($product)) {
             $record =  new DamagedProductFixOrder();
             $record->product_id = $product->id;
             $record->factory_id = $request->factory_id;
             $record->save();
-            
+            return redirect()->route('fix.product.list');
         }
-        return redirect()->route('fix.product.list');
-
+        return redirect()->back();
     }
 
     public function getAllPaginate()
     {
-        $data = DamagedProductFixOrder::with(['product' => function($q) {
-            $q->where('damage_type' ,'!=', null);
+        $data = DamagedProductFixOrder::with(['product' => function ($q) {
+            $q->where('damage_type', '!=', null);
         }], 'factory:id,name')->paginate();
         return view('dashboard.orders.fix_product.list')->with('data', $data);
     }

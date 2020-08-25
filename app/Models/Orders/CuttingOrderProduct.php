@@ -5,6 +5,7 @@ namespace App\Models\Orders;
 use App\Models\Products\ProductType;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Options\Size;
+use App\Models\Products\Product;
 
 class CuttingOrderProduct extends Model
 {
@@ -18,5 +19,10 @@ class CuttingOrderProduct extends Model
     public function size()
     {
         return $this->belongsTo(Size::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

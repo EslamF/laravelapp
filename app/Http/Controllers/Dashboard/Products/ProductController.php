@@ -25,18 +25,15 @@ class ProductController extends Controller
     {
         $request->validate([
             'receiving_order_id' => 'required|exists:receiving_orders,id',
-            'prod_code'          => 'required|min:3',
-            'damaged'            => 'required|in:0,1',
-            'sorted'             => 'required|in:0,1',
             'description'        => 'min:3'
         ]);
 
-        Product::create($request->all());
+        Product::create([]);
         return redirect()->route('product.list');
     }
 
     public function editPage($product_id)
-    {   
+    {
         $data = [];
         $data['receiving_orders'] = ReceivingOrder::select('id')->get();
         $data['product'] = Product::where('id', $product_id)->first();
@@ -64,9 +61,8 @@ class ProductController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
         ]);
-        
+
         Product::find($request->product_id)->delete();
         return redirect()->route('product.list');
-
     }
 }

@@ -20,6 +20,7 @@ class ReceivingMaterialController extends Controller
             'supplier_id' => 'required|exists:suppliers,id',
             'bill_number' => 'required',
             'description' => 'required',
+            'color' => 'required'
         ]);
 
         Material::create($request->all());

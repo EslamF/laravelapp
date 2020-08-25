@@ -9,6 +9,7 @@ use App\Models\Orders\CuttingOrder;
 use App\Models\Products\ProductType;
 use App\Http\Controllers\Controller;
 use App\Models\Orders\CuttingOrderProduct;
+use App\Models\Products\Product;
 use Illuminate\Support\Facades\Redirect;
 
 class CuttingOrderController extends Controller
@@ -22,7 +23,7 @@ class CuttingOrderController extends Controller
 
     public function getAll()
     {
-        return response()->json(CuttingOrder::select('id')->whereDoesntHave('produceOrders')->get(), 200);
+        return response()->json(CuttingOrder::select('id')->doesntHave('produceOrders')->get(), 200);
     }
 
     public function createPage()
@@ -40,12 +41,21 @@ class CuttingOrderController extends Controller
         $order = CuttingOrder::create($request->all());
         if (request('items')) {
             foreach ($request->items as $item) {
-                CuttingOrderProduct::create([
+                $count = $item['qty'];
+                $cutting = CuttingOrderProduct::create([
                     'cutting_order_id' => $order->id,
                     'product_type_id' => $item['product_type_id'],
                     'size_id' => $item['size_id'],
                     'qty'   => $item['qty']
                 ]);
+                while ($count > 0) {
+                    Product::create([
+                        'prod_code' => $this->generateCode(),
+                        'cutting_order_product_id' => $cutting->id,
+                        'damage_type' => 'pending'
+                    ]);
+                    $count--;
+                }
             }
         }
         return response()->json('success', 200);
@@ -113,12 +123,21 @@ class CuttingOrderController extends Controller
         $order->save();
         if (request('items')) {
             foreach ($request->items as $item) {
-                CuttingOrderProduct::create([
+                $count = $item['qty'];
+                $cutting = CuttingOrderProduct::create([
                     'cutting_order_id' => $order->id,
                     'product_type_id' => $item['product_type_id'],
                     'size_id' => $item['size_id'],
                     'qty'   => $item['qty']
                 ]);
+                while ($count > 0) {
+                    Product::create([
+                        'prod_code' => $this->generateCode(),
+                        'cutting_order_product_id' => $cutting->id,
+                        'damage_type' => 'pending'
+                    ]);
+                    $count--;
+                }
             }
         }
     }
@@ -132,5 +151,16 @@ class CuttingOrderController extends Controller
     public function getFactoryForOrder($id)
     {
         CuttingOrder::find($id)->with('factory:id,name')->first();
+    }
+
+    public function generateCode()
+    {
+        $code = rand(0, 6000000000000);
+        $check = Product::where('prod_code', $code)->exists();
+        if ($check) {
+            $this->generateCode();
+        } else {
+            return $code;
+        }
     }
 }

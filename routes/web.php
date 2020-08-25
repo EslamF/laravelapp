@@ -77,6 +77,8 @@ Route::group([
             Route::post('delete', 'CustomerController@delete')->name('customer.delete');
             Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
             Route::post('update', 'CustomerController@update')->name('customer.update');
+            Route::get('search/{phone}', 'CustomerController@searchByPhone')->name('customer_search');
+            Route::get('get/{id}', 'CustomerController@getById')->name('customer.get_by_id');
         });
 
         Route::group([
@@ -212,6 +214,7 @@ Route::group([
             'prefix' => 'receiving-products'
         ], function () {
             Route::get('get-all', 'ReceivingProductController@getAllPaginate')->name('receiving.product.list');
+            Route::get('get', 'ReceivingProductController@getAll')->name('receiving_orders.get_all');
             Route::get('list/{id}', 'ReceivingProductController@productsToReceive')->name('products_to_receive');
             Route::post('status', 'ReceivingProductController@changeStatus')->name('order_status');
             Route::get('/received/list/{id}', 'ReceivingProductController@productsReceived')->name('products_received');
@@ -280,6 +283,14 @@ Route::group([
             Route::post('delete', 'StoreProductOrderController@delete')->name('store.end_product.delete');
             Route::get('get-order/{order_code}', 'StoreProductOrderController@getOrder')->name('store.end_product.get_order');
             Route::post('delete', 'StoreProductOrderController@delete')->name('store.end_product.delete');
+        });
+
+        Route::group([
+            'prefix' => 'buy'
+        ], function () {
+            Route::get('create', 'BuyOrderController@createPage')->name('buy.create_page');
+            Route::get('get-all-paginate', 'BuyOrderController@getAllPaginate')->name('buy.list_page');
+            Route::get('get-material/{mq_r_code}', 'BuyOrderController@cuttingOrdersByMaterial')->name('buy_get_cut_ids');
         });
     });
 

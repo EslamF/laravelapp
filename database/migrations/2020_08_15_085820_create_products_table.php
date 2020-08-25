@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->boolean('sorted')->default(0);
             $table->text('description')->nullable();
             $table->date('sort_date')->nullable();
-            $table->enum('damage_type', ['ironing', 'tailoring', 'Dyeing'])->nullable();
+            $table->enum('damage_type', ['ironing', 'tailoring', 'dyeing'])->nullable();
 
             $table->unsignedBigInteger('sort_order_id')->nullable();
             $table->foreign('sort_order_id')
@@ -37,9 +37,14 @@ class CreateProductsTable extends Migration
                 ->onDelete('cascade');
 
 
-            $table->unsignedBigInteger('receiving_order_id');
+            $table->unsignedBigInteger('receiving_order_id')->nullable();
             $table->foreign('receiving_order_id')
                 ->references('id')->on('receiving_orders')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('cutting_order_product_id')->nullable();
+            $table->foreign('cutting_order_product_id')
+                ->references('id')->on('cutting_order_products')
                 ->onDelete('cascade');
 
             $table->enum('status', ['pending', 'sold', 'available', 'damaged'])->default('available');

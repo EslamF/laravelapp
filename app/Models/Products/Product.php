@@ -21,7 +21,8 @@ class Product extends Model
         'sort_date',
         'save_order_id',
         'user_id',
-        'stored'
+        'stored',
+        'cutting_order_product_id'
     ];
 
 

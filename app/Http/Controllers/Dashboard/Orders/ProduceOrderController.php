@@ -17,7 +17,6 @@ class ProduceOrderController extends Controller
             'cuttingOrder:id',
             'factory:id,name',
         )->paginate();
-
         return view('dashboard.orders.produce_order.list')->with('data', $data);
     }
 
@@ -30,18 +29,20 @@ class ProduceOrderController extends Controller
     {
         $data = [];
         $data['materials'] = Material::select('id', 'mq_r_code')->get();
-        $data['cutting_orders'] = CuttingOrder::select('id')->get();
+        $data['cutting_orders'] = CuttingOrder::select('id')->doesntHave('produceOrders')->get();
 
         return view('dashboard.orders.produce_order.create')->with('data', $data);
     }
 
     public function store(Request $request)
     {
-        return response()->json($request->validate([
+        $request->validate([
             'cutting_order_id' => 'required|exists:cutting_orders,id',
             'factory_id' => 'required|exists:factories,id',
             'receiving_date'   => 'required|date',
-        ]), 200);
+        ]);
+
+        return response()->json(ProduceOrder::create($request->all()), 200);
     }
 
     public function editPage($produce_id)

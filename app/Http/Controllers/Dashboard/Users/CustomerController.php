@@ -25,16 +25,16 @@ class CustomerController extends Controller
             'type' => 'required|in:individual,wholesaler,retailer'
         ]);
 
-        
-        
+
+
         Customer::create($request->all());
 
         return redirect()->route('customer.list');
     }
     public function createPage()
-        {
-            return view('dashboard.personal.customer.create');
-        }
+    {
+        return view('dashboard.personal.customer.create');
+    }
     /**
      * 
      * update customer 
@@ -55,8 +55,6 @@ class CustomerController extends Controller
 
         Customer::find($request->customer_id)->update($request->all());
         return redirect()->route('customer.list');
-
-
     }
     public function delete(Request $request)
     {
@@ -87,13 +85,16 @@ class CustomerController extends Controller
         return view('dashboard.personal.customer.list')->with('customers', $customers);
     }
 
-    public function editPage( $cust_id)
+    public function editPage($cust_id)
     {
         $customer = Customer::where('id', $cust_id)->first();
         return view('dashboard.personal.customer.edit')->with('customer', $customer);
     }
 
-
+    public function searchByPhone($phone)
+    {
+        return response()->json(Customer::where('phone', 'LIKE', '%' . $phone . '%')->get(), 200);
+    }
     /**
      * 
      * get customer by id
@@ -106,5 +107,10 @@ class CustomerController extends Controller
             'customer_id' => 'required|exists:customers,id'
         ]);
         $customer = Customer::where('id', $request->customer_id)->first();
+    }
+
+    public function getById($id)
+    {
+        return response()->json(Customer::where('id', $id)->first(), 200);
     }
 }
