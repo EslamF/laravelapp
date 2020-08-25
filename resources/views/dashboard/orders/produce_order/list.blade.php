@@ -5,7 +5,7 @@
         <div class="card ">
             <div class="card-header">
                 <h3 class="card-title">جدول اذونات التصنيع</h3>
-                <a href="{{Route('produce.order.create')}}" class="btn btn-success float-right">Add</a>
+                <a href="{{Route('produce.order.create')}}" class="btn btn-success float-right">اضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

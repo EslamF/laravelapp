@@ -14,7 +14,14 @@
                     <div class="form-group">
                         <label for="name">النوع</label>
                         <input type="text" class="form-control" name="name" value="{{$type->name}}" id="name">
-                        <input type="hidden" name="type_id" value="{{$type->id}}">
+                        <input type="hidden" name="type_id" value="{{$type->id}}"
+                        class="@error('name') is_danger @enderror"
+                        value="{{old('name')}}">
+                    @error('name')
+                    <small class="help is_danger">
+                        {{$errors->first('name')}}
+                    </small>
+                    @enderror
                     </div>
                 </div>
                 <!-- /.card-body -->

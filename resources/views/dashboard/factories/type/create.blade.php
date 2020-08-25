@@ -13,7 +13,19 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">نوع المصنع</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder=" نوع المصنع">
+                        <input 
+                            type="text"
+                            class="form-control"
+                            name="name" id="name"
+                            placeholder=" نوع المصنع"
+                            class="@error('name') is_danger @enderror"
+                            value="{{old('name')}}">
+                        @error('name')
+                        <p class="help is_danger">
+                            {{$errors->first('name')}}
+                        </p>
+                        @enderror
+                            
                     </div>
                 </div>
                 <!-- /.card-body -->

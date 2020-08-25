@@ -47,7 +47,7 @@
                             <div class="form-group">
                                 <label for="material">الخامه</label>
                                 <select class="form-control" name="material_id" id="material">
-                                    <option value="" disabled selected>حدد اذن الخامه</option>
+                                    <option value="" disabled selected>حدد اذن الخامة</option>
                                     @foreach($data['materials'] as $material)
                                     <option value="{{$material->id}}">{{$material->mq_r_code}}</option>
                                     @endforeach
@@ -58,8 +58,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="qty">الكميه</label>
-                                <input type="number" class="form-control" name="qty" id="qty" >
+                                <label for="qty">الكمية</label>
+                                <input type="number" class="form-control" name="qty" id="qty" placeholder="الكمية">
                             </div>
                         </div>
                     </div>
@@ -67,8 +67,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="receiving_date">تاريخ الاستلام</label>
-                                <input type="date" class="form-control" name="receiving_date" id="receiving_date"
-                                >
+                                <input type="date" class="form-control" name="receiving_date" id="receiving_date" placeholder="تاريخ الاستلام">
                             </div>
                         </div>
                     </div>

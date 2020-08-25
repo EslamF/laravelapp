@@ -15,21 +15,36 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Order By</label>
-                                <select v-model="type" @change="" class="form-control" id="">
+                                <select v-model="type" name="type-ce" @change="" class="form-control" id=""
+                                class="@error('type-ce') is-danger @enderror"
+                            value="{{old('type-ce')}}">
+                            
                                     <option value="" disabled seelcted>اختر النوع</option>
                                     <option value="company">شركة</option>
                                     <option value="employee">موظف</option>
                                 </select>
+                                @error('type-ce')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-4" v-if="type == 'employee'">
                             <div class="form-group">
                                 <label for="employee">اسم الموظف
                                 </label>
-                                <select v-model="employee" class="form-control" id="employee">
+                                <select v-model="employee" class="form-control" id="employee"
+                                class="@error('employee') is-danger @enderror"
+                                value="{{old('employee')}}">
                                     <option value="" disabled seelcted>اختر اسم الموظف</option>
                                     <option value="company">شركة</option>
                                 </select>
+                                @error('employee')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -38,7 +53,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for=""></label>
-                                    <select v-model="type" class="form-control" @change="getOrderBy()">
+                                    <select v-model="type" class="form-control" @change="getOrderBy()"
+                                    class="@error('employee') is-danger @enderror"
+                                    value="{{old('employee')}}">    
                                         <option value="" disabled seelcted>اختر النوع</option>
                                         <option value="company">شركة</option>
                                         <option value="employee">موظف</option>
@@ -48,7 +65,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Size</label>
-                                    <select v-model="type" class="form-control" @change="getOrderBy()" id="">
+                                    <select v-model="type" class="form-control" @change="getOrderBy()" id=""
+
                                         <option value="" disabled seelcted>اختر النوع</option>
                                         <option value="company">شركة</option>
                                         <option value="employee">موظف</option>

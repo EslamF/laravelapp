@@ -19,9 +19,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="factory">ازن التصنيع</label>
+                                <label for="factory">اذن التصنيع</label>
                                 <select class="form-control" name="receiving_order_id" id="factory">
-                                    <option value="" disabled selected>حدد ازن التصنيع</option>
+                                    <option value="" disabled selected>حدد اذن التصنيع</option>
                                     @foreach($receiving_orders as $order)
                                     <option value="{{$order->id}}">{{$order->id}}</option>
                                     @endforeach
@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label for="description">التفاصيل</label>
                                 <textarea class="form-control" name="description" id="description"
-                                    placeholder="Add Description"></textarea>
+                                    placeholder="ادخل التفاصيل"></textarea>
                             </div>
                         </div>
                     </div>

@@ -13,7 +13,14 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">اسم النوع</label>
-                        <input type="text" class="form-control" name="name" id="name" >
+                        <input type="text" class="form-control" name="name" id="name" 
+                        class="@error('name') is-danger @enderror"
+                            value="{{old('name')}}">
+                            @error('name')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                     </div>
                 </div>
                 <!-- /.card-body -->

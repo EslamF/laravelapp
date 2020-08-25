@@ -19,7 +19,11 @@ class FactoryTypeController extends Controller
         $request->validate([
             'name' => 'required|min:3'
         ]);
-        FactoryType::create($request->all());
+        FactoryType::create(
+            $request->validate([
+            'name' => 'required|min:3'
+        ])
+    );
 
         return redirect()->route('factory.type.list');
     }

@@ -15,11 +15,11 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview "  >
-                            <a href="" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                        <li class="nav-item has-treeview"  >
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
                                 <p>
-                                    <i class="fas fa-angle-left right" style="margin-right:110px " ></i>
+                                    <i class="fas fa-angle-left right" style="margin-right:110px" ></i>
                                     الخامات
                                 </p>
                             </a>
@@ -32,7 +32,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview ">
+                        <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>
@@ -103,7 +103,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview "  >
+                        <li class="nav-item has-treeview"  >
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-table"></i>
                                 <p>
@@ -126,7 +126,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview "  >
+                        <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-table"></i>
                                 <p>
@@ -149,11 +149,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview "  >
+                        <li class="nav-item has-treeview"  >
                             <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-plus-square"></i>
+                                <i class="nav-icon fas fa-edit"></i>
                                 <p>
-                                    <i class="fas fa-angle-left right"  ></i>
+                                    <i class="fas fa-angle-left right" style="margin-right:110px" ></i>
                                     اختيارات
                                 </p>
                             </a>
@@ -166,7 +166,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview "  >
+                        <li class="nav-item has-treeview"  >
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-plus-square"></i>
                                 <p>

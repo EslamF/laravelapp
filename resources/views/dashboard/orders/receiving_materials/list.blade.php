@@ -5,7 +5,7 @@
         <div class="card ">
             <div class="card-header">
                 <h3 class="card-title">جدوال اذونات استلام الخامات</h3>
-                <a href="{{Route('order.receiving_material.create_page')}}" class="btn btn-success float-right">Add</a>
+                <a href="{{Route('order.receiving_material.create_page')}}" class="btn btn-success float-right">اضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
