@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Create Fix Product Order</h3>
+                <h3 class="card-title">اذن خروج منتج تالف</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,19 +14,34 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="weight">Product Code</label>
-                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="Add Product Code">
+                                <label for="weight">رقم المنتج</label>
+                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="ادخل رقم المنتج"
+                                class="@error('prod_code') is-danger @enderror"
+                                value="{{old('prod_code')}}">
+                            @error('prod_code')
+                            <p class="help is-danger">
+                                {{$message}}
+                            </p>
+                            @enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="name">Factory</label>
-                                <select class="form-control" name="factory_id" id="">
-                                    <option value="" disabled selected>Select Factory</option>
+                                <label for="name">المصنع</label>
+                                <select class="form-control" name="factory_id" id=""
+                                class="@error('factory_id') is-danger @enderror"
+                                value="{{old('factory_id')}}">
+                                    <option value="" disabled selected>حدد المصنع</option>
                                     @foreach($factories as $factory)
                                     <option value="{{$factory->id}}">{{$factory->name}}</option>
                                     @endforeach
                                 </select>
+                                
+                            @error('factory_id')
+                            <p class="help is-danger">
+                                {{$message}}
+                            </p>
+                            @enderror
                             </div>
                         </div>
                     </div>
@@ -34,11 +49,12 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
+    
     </div>
 </div>
 @endsection

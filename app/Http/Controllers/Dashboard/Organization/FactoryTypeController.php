@@ -19,7 +19,11 @@ class FactoryTypeController extends Controller
         $request->validate([
             'name' => 'required|min:3'
         ]);
-        FactoryType::create($request->all());
+        FactoryType::create(
+            $request->validate([
+                'name' => 'required|min:3'
+            ])
+        );
 
         return redirect()->route('factory.type.list');
     }
@@ -60,6 +64,16 @@ class FactoryTypeController extends Controller
         $types = FactoryType::paginate(15);
         return view('dashboard.factories.type.list')->with('types', $types);
     }
+    public function createPage()
+    {
+        return view('dashboard.factories.type.create');
+    }
+
+    public function editPage($type_id)
+    {
+        $type = FactoryType::where('id', $type_id)->first();
+        return view('dashboard.factories.type.edit')->with('type', $type);
+    }
     /**
      * 
      * get FactoryType by id
@@ -73,18 +87,6 @@ class FactoryTypeController extends Controller
         ]);
         $type = FactoryType::where('id', $request->factory_type_id)->first();
     }
-
-    public function createPage()
-    {
-        return view('dashboard.factories.type.create');
-    }
-
-    public function editPage($type_id)
-    {
-        $type = FactoryType::where('id', $type_id)->first();
-        return view('dashboard.factories.type.edit')->with('type', $type);
-    }
-
 
     public function delete(Request $request)
     {

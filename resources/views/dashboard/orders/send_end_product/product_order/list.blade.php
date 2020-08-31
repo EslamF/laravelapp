@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Order To Storage</h3>
-                <a href="{{url()->previous()}}" class="btn btn-info float-right">Back</a>
+                <h3 class="card-title">اذن تخزين</h3>
+                <a href="{{url()->previous()}}" class="btn btn-info float-right">رجوع</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -14,7 +14,7 @@
                         <thead>
                             <tr class="row">
                                 <div class="col-md-12">
-                                    <th class="col-md-12">Product code</th>
+                                    <th class="col-md-12">كود امنتج</th>
                                 </div>
                             </tr>
                         </thead>

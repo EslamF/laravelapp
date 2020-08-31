@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Add Product</h3>
+                <h3 class="card-title">انشاء منتج</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -25,8 +25,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea class="form-control" name="description" id="description" placeholder="Add Description"></textarea>
+                                <label for="description">التفاصيل</label>
+                                <textarea class="form-control" name="description" id="description" placeholder="ادخل التفاصيل"></textarea>
                             </div>
                         </div>
                     </div>
@@ -34,8 +34,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Order To Repository Table</h3>
-                <a href="{{Route('send.end_product.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title"></h3>
+                <a href="{{Route('send.end_product.create_page')}}" class="btn btn-success float-right">اضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,10 +13,10 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-4">Order Code</th>
-                                <th class="col-md-4">Created At</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-1">الكود </th>
+                                <th class="col-md-4">كود الاذن</th>
+                                <th class="col-md-4">تاريخ الانشاء</th>
+                                <th class="col-md-3">امكانيه</th>
                             </div>
                         </tr>
                     </thead>
@@ -28,11 +28,11 @@
                                 <td class="col-md-4">{{$order->code}}</td>
                                 <td class="col-md-4">{{$order->created_at}}</td>
                                 <td class="col-md-3">
-                                    <a href="{{Route('send.end_product.get_order', $order->id)}}" class="btn btn-info">Show</a>
+                                    <a href="{{Route('send.end_product.get_order', $order->id)}}" class="btn btn-info">اظهار</a>
                                     <form style="display:inline" action="{{Route('send.end_product.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="save_order_id" value="{{$order->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>

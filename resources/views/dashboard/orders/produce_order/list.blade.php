@@ -2,10 +2,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">Produce Order Table</h3>
-                <a href="{{Route('produce.order.create')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">جدول اذونات التصنيع</h3>
+                <a href="{{Route('produce.order.create')}}" class="btn btn-success float-right">اضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,11 +13,11 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-2">Cutting Order ID</th>
-                                <th class="col-md-3">Factory</th>
-                                <th class="col-md-3">Receiving Date</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-2">رقم اذن القص</th>
+                                <th class="col-md-3">المصنع</th>
+                                <th class="col-md-3">تاريخ الاستلام</th>
+                                <th class="col-md-3">المكانيه</th>
                             </div>
                         </tr>
                     </thead>
@@ -30,11 +30,11 @@
                                 <td class="col-md-3">{{$value->factory->name}}</td>
                                 <td class="col-md-3">{{$value->receiving_date}}</td>
                                 <td class="col-md-3">
-                                    <a href="{{Route('produce.order.edit_page', $value->id)}}" class="btn btn-primary">Edit</a>
+                                    <a href="{{Route('produce.order.edit_page', $value->id)}}" class="btn">التعديل</a>
                                     <form style="display:inline" action="{{Route('produce.order.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="produce_id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>

@@ -16,6 +16,7 @@ class ShippingCompanyController extends Controller
      */
     public function create(Request $request)
     {
+        // dd($request->all());N
         $request->validate([
             'name' => 'required|min:3'
         ]);
@@ -48,9 +49,8 @@ class ShippingCompanyController extends Controller
         $request->validate([
             'type_id' => 'required|exists:shipping_companies,id'
         ]);
+
         ShippingCompany::find($request->type_id)->delete();
-
-
         return redirect()->route('shipping.list');
     }
     /**

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{asset('asset/')}}/plugins/jqvmap/jqvmap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('asset/')}}/dist/css/adminlte.css">
+    {{-- <link rel="stylesheet" href="{{asset('asset/')}}/dist/css/style.css"> --}}
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{asset('asset/')}}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
@@ -29,7 +30,10 @@
     <link rel="stylesheet" href="{{asset('asset/')}}/plugins/summernote/summernote-bs4.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/bootstrap-tagsinput.css')}}">
+    
+</div>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed"   style="text-align: right" dir="rtl">
     <div class="wrapper">

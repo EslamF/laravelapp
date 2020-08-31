@@ -53,6 +53,7 @@ class SpreadingMaterialController extends Controller
             'spreading_id' => 'exists:spreading_out_material_orders,id',
             'material_id' => 'exists:materials,id',
             'user_id'     => 'exists:users,id',
+            'weight'=>'required'
         ]);
 
         SpreadingOutMaterialOrder::find($request->spreading_id)->update($request->all());

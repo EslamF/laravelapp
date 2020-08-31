@@ -6,8 +6,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Customers Table</h3>
-                <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">جدول العملاء</h3>
+                <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">اضافه عميل</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -15,14 +15,14 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-2">Name</th>
-                                <th class="col-md-1">Phone</th>
-                                <th class="col-md-2">Address</th>
-                                <th class="col-md-1">Source</th>
-                                <th class="col-md-1">Link</th>
-                                <th class="col-md-1">Type</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-2">الاسم</th>
+                                <th class="col-md-1">رقم الهاتف</th>
+                                <th class="col-md-2">العنوان</th>
+                                <th class="col-md-1">المصدر</th>
+                                <th class="col-md-1">الوصول</th>
+                                <th class="col-md-1">الصفه</th>
+                                <th class="col-md-3">امكانيه</th>
                             </div>
                         </tr>
                     </thead>

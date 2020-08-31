@@ -11,6 +11,8 @@
 |
 */
 
+use App\Models\Users\Role;
+
 Route::get('/', function () {
     return view('home');
 });
@@ -19,13 +21,36 @@ Auth::routes();
 
 
 Route::get('/home', function () {
-    return view('index');
+    return view('home');
 });
 
 Route::group([
     'namespace' => 'Dashboard'
-], function () {
-
+],  function () {
+    Route::group([
+        'namespace' => 'Options'
+    ], function () {
+        Route::group([
+            'namespace' => 'size'
+        ], function () {
+            Route::get('get-all', 'SizeController@getAllPaginate')->name('size.list');
+            Route::get('create', 'SizeController@createPage')->name('size.create_page');
+            Route::post('store', 'SizeController@create')->name('size.store');
+            Route::post('delete', 'SizeController@delete')->name('size.delete');
+            Route::get('edit/{type_id}', 'SizeController@editPage')->name('size.edit_page');
+            Route::post('update', 'SizeController@update')->name('size.update');
+        });
+        Route::group([
+            'namespace' => 'color'
+        ], function () {
+            Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
+            Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
+            Route::post('store', 'CustomerController@create')->name('customer.store');
+            Route::post('delete', 'CustomerController@delete')->name('customer.delete');
+            Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
+            Route::post('update', 'CustomerController@update')->name('customer.update');
+        });
+    });
     Route::group([
         'namespace' => 'Options'
     ], function () {
@@ -40,56 +65,80 @@ Route::group([
             Route::get('edit/{type_id}', 'SizeController@editPage')->name('size.edit_page');
             Route::post('update', 'SizeController@update')->name('size.update');
         });
-        Route::group([
-            'prefix' => 'color'
-        ], function () {
-            // Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
-            // Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
-            // Route::post('store', 'CustomerController@create')->name('customer.store');
-            // Route::post('delete', 'CustomerController@delete')->name('customer.delete');
-            // Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
-            // Route::post('update', 'CustomerController@update')->name('customer.update');
-        });
+        // Route::group([
+        //     'prefix' => 'color'
+        // ], function () {
+        //     Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
+        //     Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
+        //     Route::post('store', 'CustomerController@create')->name('customer.store');
+        //     Route::post('delete', 'CustomerController@delete')->name('customer.delete');
+        //     Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
+        //     Route::post('update', 'CustomerController@update')->name('customer.update');
+        // });
     });
-    Route::group([
-        'namespace' => 'Users'
-    ], function () {
+    Route::group(
+        [
+            'namespace' => 'Users'
+        ],
+        function () {
 
-        Route::group([
-            'prefix' => 'employees',
-        ], function () {
-            Route::get('get-all-paginate', 'EmployeeController@getAllPaginate')->name('employee.list');
-            Route::get('get-all', 'EmployeeController@getAll')->name('employee.get_all');
-            Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
-            Route::post('store', 'EmployeeController@create')->name('employee.store');
-            Route::post('delete', 'EmployeeController@delete')->name('employee.delete');
-            Route::get('edit/{type_id}', 'EmployeeController@editPage')->name('employee.edit_page');
-            Route::post('update', 'EmployeeController@update')->name('employee.update');
-        });
-        Route::group([
-            'prefix' => 'customers',
-        ], function () {
-            Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
-            Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
-            Route::post('store', 'CustomerController@create')->name('customer.store');
-            Route::post('delete', 'CustomerController@delete')->name('customer.delete');
-            Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
-            Route::post('update', 'CustomerController@update')->name('customer.update');
-            Route::get('search/{phone}', 'CustomerController@searchByPhone')->name('customer_search');
-            Route::get('get/{id}', 'CustomerController@getById')->name('customer.get_by_id');
-        });
 
-        Route::group([
-            'prefix' => 'suppliers',
-        ], function () {
-            Route::get('get-all', 'SupplierController@getAllPaginate')->name('supplier.list');
-            Route::get('create', 'SupplierController@createPage')->name('supplier.create_page');
-            Route::post('store', 'SupplierController@create')->name('supplier.store');
-            Route::post('delete', 'SupplierController@delete')->name('supplier.delete');
-            Route::get('edit/{type_id}', 'SupplierController@editPage')->name('supplier.edit_page');
-            Route::post('update', 'SupplierController@update')->name('supplier.update');
-        });
-    });
+            Route::group([
+                'prefix' => 'roles',
+            ], function () {
+                Route::get('get-all', 'RoleController@getAllPaginate')->name('role.list');
+                Route::get('create', 'RoleController@createPage')->name('role.create_page');
+                Route::post('store', 'RoleController@create')->name('role.store');
+                Route::post('delete', 'RoleController@delete')->name('role.delete');
+                Route::get('edit/{type_id}', 'RoleController@editPage')->name('role.edit_page');
+                Route::post('update', 'RoleController@update')->name('role.update');
+            });
+            Route::group([
+                'prefix' => 'employees',
+            ], function () {
+                Route::get('get-all', 'EmployeeController@getAllPaginate')->name('employee.list');
+                Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
+                Route::post('store', 'EmployeeController@create')->name('employee.store');
+                Route::post('delete', 'EmployeeController@delete')->name('employee.delete');
+                Route::get('edit/{type_id}', 'EmployeeController@editPage')->name('employee.edit_page');
+                Route::post('update', 'EmployeeController@update')->name('employee.update');
+            });
+            Route::group([
+                'prefix' => 'employees',
+            ], function () {
+                Route::get('get-all-paginate', 'EmployeeController@getAllPaginate')->name('employee.list');
+                Route::get('get-all', 'EmployeeController@getAll')->name('employee.get_all');
+                Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
+                Route::post('store', 'EmployeeController@create')->name('employee.store');
+                Route::post('delete', 'EmployeeController@delete')->name('employee.delete');
+                Route::get('edit/{type_id}', 'EmployeeController@editPage')->name('employee.edit_page');
+                Route::post('update', 'EmployeeController@update')->name('employee.update');
+            });
+            Route::group([
+                'prefix' => 'customers',
+            ], function () {
+                Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
+                Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
+                Route::post('store', 'CustomerController@create')->name('customer.store');
+                Route::post('delete', 'CustomerController@delete')->name('customer.delete');
+                Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
+                Route::post('update', 'CustomerController@update')->name('customer.update');
+                Route::get('search/{phone}', 'CustomerController@searchByPhone')->name('customer_search');
+                Route::get('get/{id}', 'CustomerController@getById')->name('customer.get_by_id');
+            });
+
+            Route::group([
+                'prefix' => 'suppliers',
+            ], function () {
+                Route::get('get-all', 'SupplierController@getAllPaginate')->name('supplier.list');
+                Route::get('create', 'SupplierController@createPage')->name('supplier.create_page');
+                Route::post('store', 'SupplierController@create')->name('supplier.store');
+                Route::post('delete', 'SupplierController@delete')->name('supplier.delete');
+                Route::get('edit/{type_id}', 'SupplierController@editPage')->name('supplier.edit_page');
+                Route::post('update', 'SupplierController@update')->name('supplier.update');
+            });
+        }
+    );
 
 
 
@@ -261,6 +310,7 @@ Route::group([
             'prefix' => 'send-end-product'
         ], function () {
             Route::get('get-all', 'SendEndProductController@getAllPaginate')->name('send.end_product.list');
+            Route::get('get-all-saved/{save_order}', 'SendEndProductController@getSavedProdacts')->name('send.end_product.get_order');
             Route::get('create', 'SendEndProductController@create')->name('send.end_product.create_page');
             Route::post('store', 'SendEndProductController@store')->name('send.end_product.store');
             Route::post('edit/{product_id}', 'SendEndProductController@edit')->name('send.end_product.edit_page');

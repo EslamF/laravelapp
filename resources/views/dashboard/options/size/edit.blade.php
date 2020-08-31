@@ -4,25 +4,25 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Edit Sizes</h3>
+                <h3 class="card-title">تعديل المقاس</h3>
                 <!-- /.card-header  -->
             </div>
-                <!-- form start -->
+            <!-- form start -->
             <form role="form" action="{{Route('size.update')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Size Name</label>
-                        <input type="text" class="form-control" value="{{$type->name}}" name="name" id="name" placeholder="Add size Name">
+                        <label for="name">المقاس</label>
+                        <input type="text" class="form-control" value="{{$type->name}}" name="name" id="name" placeholder="ادخل المقاس">
                         <input type="hidden" name="type_id" value="{{$type->id}}">
-                    
-                    </div> 
+
+                    </div>
                     <!-- /.card-body -->
-                    
+
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

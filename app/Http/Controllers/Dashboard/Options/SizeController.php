@@ -56,6 +56,21 @@ class SizeController extends Controller
     }
     /**
      * 
+     * delete size 
+     * request input type_id required
+     * 
+     */
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'type_id' => 'required|exists:sizes,id'
+        ]);
+        Size::find($request->type_id)->delete();
+
+        return redirect()->route('size.list');
+    }
+    /**
+     * 
      * get all for
      *    pagination
      *  & createPage

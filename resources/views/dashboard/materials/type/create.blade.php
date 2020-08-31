@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Create Material type</h3>
+                <h3 class="card-title">ادخل نوع الخامه</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -12,15 +12,22 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Add type">
+                        <label for="name">اسم النوع</label>
+                        <input type="text" class="form-control" name="name" id="name" 
+                        class="@error('name') is-danger @enderror"
+                            value="{{old('name')}}">
+                            @error('name')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                     </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

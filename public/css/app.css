@@ -73,6 +73,7 @@ body {
   color: #212529;
   text-align: left;
   background-color: #f8fafc;
+
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -10903,4 +10904,15 @@ a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+lable {
+float: right;}
+
+
+
+
+
+
+
+
 

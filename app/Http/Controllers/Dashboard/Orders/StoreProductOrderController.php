@@ -19,6 +19,19 @@ class StoreProductOrderController extends Controller
     }
 
 
+    public function getOrder($order_code)
+    {
+    }
+
+
+    public function getSavedProdacts($save_order)
+    {
+        $saved_prodact = Product::select('id', ',prodact_code', 'save_order_id')->whereHas('saveOrder', function ($q) use ($save_order) {
+            $q->where('id', $save_order);
+        });
+        return view('dashboard.orders.store_product_to_repository.edit')->with('saved_prodact', $saved_prodact);
+    }
+
     public function create()
     {
         $orders = SaveOrder::select('id', 'code')->where('stored', 0)->get();

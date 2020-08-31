@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Users;
 
 use App\Http\Controllers\Controller;
+use App\Models\Users\Role;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -21,10 +22,12 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'email' => 'required|min:3',
+            'email' => 'required|email|min:3|unique:users,email',
             'password' => 'required|confirmed',
+            'role_id' => 'required|exists:roles,id'
         ]);
-        User::create($request->all());
+        $user = User::create($request->all());
+        $user->assignRole($request->role_id);
         return redirect()->route('employee.list');
     }
     /**
@@ -35,11 +38,15 @@ class EmployeeController extends Controller
      */
     public function update(Request $request)
     {
-        $request->validate([
-            'type_id' => 'required|exists:users,id'
-        ]);
+        // $request->validate([
+        //     'type_id' => 'required|exists:users,id',
+        //     'role_id' => 'required|exists:role,id'
+        // ]);
 
-        User::find($request->type_id)->update($request->all());
+        $user = User::find($request->type_id);
+        $user->update($request->all());
+        $user->assignRole($request->role_id);
+
         return redirect()->route('employee.list');
     }
     public function delete(Request $request)
@@ -48,8 +55,6 @@ class EmployeeController extends Controller
             'type_id' => 'required|exists:users,id'
         ]);
         User::find($request->type_id)->delete();
-
-
         return redirect()->route('employee.list');
     }
     /**
@@ -69,18 +74,22 @@ class EmployeeController extends Controller
      */
     public function getAllPaginate()
     {
-        $types = User::paginate(15);
-        return view('dashboard.personal.employee.list')->with('types', $types);
+        $data['user'] = User::with('roles')->paginate(15);
+        return view('dashboard.personal.employee.list')->with('data', $data);
     }
     public function editPage($type_id)
     {
-        $type = User::where('id', $type_id)->first();
-        return view('dashboard.personal.employee.edit')->with('type', $type);
+        $data['user'] = User::where('id', $type_id)->with('roles')->first();
+
+        $data['roles'] = Role::select('id', 'label')->get();
+
+        return view('dashboard.personal.employee.edit')->with('data', $data);
     }
 
     public function createPage()
     {
-        return view('dashboard.personal.employee.create');
+        $roles = Role::select('id', 'label')->get();
+        return view('dashboard.personal.employee.create')->with('roles', $roles);;
     }
     /**
      * 

@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Product Type Table</h3>
-                <a href="{{Route('product.type.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">جدوال انواع المنتجات</h3>
+                <a href="{{Route('product.type.create_page')}}" class="btn btn-success float-right">انشاء</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,9 +13,9 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-9">Name</th>
-                                <th class="col-md-2">Action</th>
+                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-9">النوع</th>
+                                <th class="col-md-2">امكانيه </th>
                             </div>
                         </tr>
                     </thead>
@@ -27,12 +27,12 @@
                                 <td class="col-md-9">{{$type->name}}</td>
                                 <td class="col-md-2">
                                     <a href="{{Route('product.type.edit_page', $type->id)}}"
-                                        class="btn btn-primary">Edit</a>
+                                        class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('product.type.delete')}}"
                                         method="POST">
                                         @csrf
                                         <input type="hidden" name="type_id" value="{{$type->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>

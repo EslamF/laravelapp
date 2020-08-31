@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Add Cutting Material Order</h3>
+                <h3 class="card-title">انشاء اذن القص</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -16,9 +16,9 @@
                             <div class="form-group">
                                 <label for="">Order By</label>
                                 <select v-model="type" @change="getOrderBy()" class="form-control" id="" required>
-                                    <option value="" disabled seelcted>Choose Type</option>
-                                    <option value="company">Company</option>
-                                    <option value="employee">Employee</option>
+                                    <option value="" disabled seelcted>اختر النوع</option>
+                                    <option value="company">شركة</option>
+                                    <option value="employee">موظف</option>
                                 </select>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-md-3" v-if="type == 'employee'">
                             <div class="form-group">
-                                <label for="">Employee Name</label>
+                                <label for="">اسم الموظف</label>
                                 <span style="color:red" v-if="employee_error">@{{employee_error}}</span>
                                 <select v-model="employee_id" class="form-control" id="" required>
                                     <option value="" disabled seelcted>Choose Employee</option>
@@ -59,6 +59,11 @@
                                     <option value="" disabled seelcted>Choose Company</option>
                                     <option :value="factory.id" v-for="factory in factories">@{{factory.name}}</option>
                                 </select>
+                                @error('employee')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -93,10 +98,10 @@
                             </div>
                             <div class="form-group mt-2">
                                 <button type="button" @click="addRow" class='btn btn-success mt-4'>
-                                    Add
+                                    اضافه
                                 </button>
                                 <button type="button" @click="deleteRow(index)" class='btn btn-danger mt-4'>
-                                    remove
+                                    حذف
                                 </button>
                             </div>
                         </div>

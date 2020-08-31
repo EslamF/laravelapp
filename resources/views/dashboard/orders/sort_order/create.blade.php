@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Create Sort Order</h3>
+                <h3 class="card-title">انشاء اذن فرز</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -12,9 +12,9 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">موظف الفرز</label>
                         <select class="form-control" name="user_id" id="">
-                            <option value="" disabled selected>Select Employee</option>
+                            <option value="" disabled selected>حدد موظف الفرز</option>
                             @foreach($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
@@ -24,8 +24,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

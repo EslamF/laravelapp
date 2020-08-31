@@ -16,8 +16,14 @@ class CreatePeremissionsTable extends Migration
         Schema::create('peremissions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('lable')->nullable();
             $table->timestamps();
         });
+
+     
+        
+
+
     }
 
     /**

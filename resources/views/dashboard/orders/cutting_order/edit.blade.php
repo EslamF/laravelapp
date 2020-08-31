@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Add Cutting Material Order</h3>
+                <h3 class="card-title">تعديل في اذن القص</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,12 +14,21 @@
                     <div class="row" v-for="(item,index) in items">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="">Product Type</label>
-                                <span style="color:red" v-if="errors[index].product_type_id">*@{{errors[index].product_type_id}}</span>
-                                <select v-model="item.product_type_id" class="form-control" id="">
-                                    <option value="" disabled seelcted>Choose Type</option>
-                                    <option :value="type.id" v-for="type in productTypes">@{{type.name}}</option>
-                                </select>
+                                <<<<<<< HEAD <label for="">Product Type</label>
+                                    <span style="color:red" v-if="errors[index].product_type_id">*@{{errors[index].product_type_id}}</span>
+                                    <select v-model="item.product_type_id" class="form-control" id="">
+                                        <option value="" disabled seelcted>Choose Type</option>
+                                        <option :value="type.id" v-for="type in productTypes">@{{type.name}}</option>
+                                        =======
+                                        <label for="user">الموظف</label>
+                                        <select class="form-control" name="user_id" id="user">
+                                            <option value="" disabled selected>حدد اسم الموظف</option>
+                                            @foreach($data['users'] as $user)
+                                            <option value="{{$user->id}}" {{$data['records']->user_id == $user->id? 'selected':''}}>{{$user->name}}
+                                            </option>
+                                            @endforeach
+                                            >>>>>>> ad9a21abecff8f6f57fa5df91d1e5732d502f3b3
+                                        </select>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -59,8 +68,8 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <button type="button" @click="addToOrder" class="btn btn-primary">Submit</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">Back</a>
+                    <button type="button" @click="addToOrder" class="btn btn-primary">تأكيد التعديل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
