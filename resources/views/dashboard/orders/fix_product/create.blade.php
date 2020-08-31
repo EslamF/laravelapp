@@ -15,18 +15,33 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="weight">رقم المنتج</label>
-                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="ادخل رقم المنتج">
+                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="ادخل رقم المنتج"
+                                class="@error('prod_code') is-danger @enderror"
+                                value="{{old('prod_code')}}">
+                            @error('prod_code')
+                            <p class="help is-danger">
+                                {{$message}}
+                            </p>
+                            @enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="name">المصنع</label>
-                                <select class="form-control" name="factory_id" id="">
+                                <select class="form-control" name="factory_id" id=""
+                                class="@error('factory_id') is-danger @enderror"
+                                value="{{old('factory_id')}}">
                                     <option value="" disabled selected>حدد المصنع</option>
                                     @foreach($factories as $factory)
                                     <option value="{{$factory->id}}">{{$factory->name}}</option>
                                     @endforeach
                                 </select>
+                                
+                            @error('factory_id')
+                            <p class="help is-danger">
+                                {{$message}}
+                            </p>
+                            @enderror
                             </div>
                         </div>
                     </div>

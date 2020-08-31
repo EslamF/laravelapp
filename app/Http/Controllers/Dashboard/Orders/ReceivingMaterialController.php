@@ -20,6 +20,7 @@ class ReceivingMaterialController extends Controller
             'supplier_id' => 'required|exists:suppliers,id',
             'bill_number' => 'required',
             'description' => 'required',
+            "color"=>'required'
         ]);
         
         Material::create($request->all());
@@ -47,8 +48,7 @@ class ReceivingMaterialController extends Controller
         $data['users'] = User::select('id', 'name')->get();
         $data['suppliers'] = Supplier::select('id', 'name')->get();
         $data['material_types'] = MaterialType::select('id', 'name')->get();
-        $data['material'] = Material::where('id', $material_id)
-                            ->first();
+        $data['material'] = Material::where('id', $material_id)->first();
                             
         return view('dashboard.orders.receiving_materials.edit')->with('data',$data);
     }
@@ -65,6 +65,8 @@ class ReceivingMaterialController extends Controller
             'supplier_id' => 'exists:suppliers,id',
             'bill_number' => 'min:3',
             'description' => 'min:3',
+            'color' => 'required',
+
         ]);
 
         Material::find($request->material_id)->update($request->all());

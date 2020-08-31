@@ -64,9 +64,10 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Size</label>
+                                    <label for="">المقاسات</label>
                                     <select v-model="type" class="form-control" @change="getOrderBy()" id=""
-
+                                    class="@error('type-ce') is-danger @enderror"
+                                    value="{{old('type-ce')}}">
                                         <option value="" disabled seelcted>اختر النوع</option>
                                         <option value="company">شركة</option>
                                         <option value="employee">موظف</option>

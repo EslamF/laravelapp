@@ -20,14 +20,21 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="factory">المصنع</label>
-                                <select class="form-control" name="factory_id" id="factory">
-                                    <option value="" disabled selected>Select Factory</option>
+                                <select class="form-control" name="factory_id" id="factory"
+                                class="@error('factory_id') is-danger @enderror"
+                                value="{{old('factory_id')}}">
+                                    <option value="" disabled selected>حدد المصنع</option>
                                     @foreach($data['factories'] as $factory)
                                     <option value="{{$factory->id}}"
                                         {{$data['records']->factory_id == $factory->id?'selected':''}}>
                                         {{$factory->name}}</option>
                                     @endforeach
                                 </select>
+                                @error('factory_id')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -35,7 +42,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="mq_r_code">اذن القص</label>
-                                <select class="form-control" name="cutting_order_id" id="user">
+                                <select class="form-control" name="cutting_order_id" id="user"
+                                class="@error('cutting_order_id') is-danger @enderror"
+                                value="{{old('cutting_order_id')}}">
                                     <option value="" disabled selected>حدد اذن القص</option>
                                     @foreach($data['cutting_orders'] as $order)
                                     <option value="{{$order->id}}"
@@ -43,6 +52,11 @@
                                         {{$order->id}}</option>
                                     @endforeach
                                 </select>
+                                @error('cutting_order_id')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -50,7 +64,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="material">الخامه</label>
-                                <select class="form-control" name="material_id" id="material">
+                                <select class="form-control" name="material_id" id="material"
+                                class="@error('material_id') is-danger @enderror"
+                                value="{{old('material_id')}}">
                                     <option value="" disabled selected>حدد نوع الخامه</option>
                                     @foreach($data['materials'] as $material)
                                     <option value="{{$material->id}}"
@@ -58,25 +74,44 @@
                                         {{$material->mq_r_code}}</option>
                                     @endforeach
                                 </select>
+                                @error('material_id')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Qty</label>
+                                <label for="weight">الكميه</label>
                                 <input type="number" class="form-control" value="{{$data['records']->qty}}" name="qty"
-                                    id="weight" placeholder="Add Qty">
+                                    id="weight" placeholder="الكمية"
+                                    class="@error('qty') is-danger @enderror"
+                                value="{{old('qty')}}">
+                                    @error('qty')
+                                    <p class="help is-danger">
+                                        {{$message}}
+                                    </p>
+                                    @enderror
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">Receiving Date</label>
+                                <label for="weight">تاريخ الاستلام</label>
                                 <input type="date" class="form-control" name="receiving_date"
                                     value="{{$data['records']->receiving_date}}" id="weight"
-                                    placeholder="Add Receiving Date">
+                                    placeholder="تاريخ الاستلام"
+                                    class="@error('receiving_date') is-danger @enderror"
+                                value="{{old('receiving_date')}}">
+                                    @error('receiving_date')
+                                    <p class="help is-danger">
+                                        {{$message}}
+                                    </p>
+                                    @enderror
                             </div>
                         </div>
                     </div>

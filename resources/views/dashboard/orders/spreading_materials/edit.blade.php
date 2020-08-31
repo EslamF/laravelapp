@@ -15,7 +15,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="user">موظف الفرش</label>
-                                <select class="form-control" name="user_id" id="user">
+                                <select class="form-control" name ="user_id" id="user">
                                     <option value="" disabled selected>حدد موظف الفرش</option>
                                     @foreach($data['users'] as $user)
                                     <option value="{{$user->id}}"
@@ -23,6 +23,11 @@
                                     </option>
                                     @endforeach
                                 </select>
+                                 @error('user_id')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -30,14 +35,22 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="mq_r_code">كود الخامه</label>
-                                <select class="form-control" name="material_id" id="user">
+                                <select class="form-control" name="material_id" id="user"
+                                class="@error('material_id') is-danger @enderror">
                                     <option value="" disabled selected>حدد كود الخامه</option>
                                     @foreach($data['material'] as $material)
                                     <option value="{{$material->id}}"
                                         {{$data['spreading']->material_id == $material->id ? 'selected':'' }}>
                                         {{$material->mq_r_code}}</option>
+                                        <option value="{{$material->id}}" {{old('material_id') == $material->id ? 'selected':'' }}>
+                                            {{$material->mq_r_code}}</option>
                                     @endforeach
                                 </select>
+                                @error('material_id')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -45,9 +58,16 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="weight">الوزن</label>
-                                <input type="number" class="form-control" value="{{$data['spreading']->weight}}"
-                                    name="weight" id="weight" placeholder="Add Weight">
-                                <input type="hidden" name="spreading_id" value="{{$data['spreading']->id}}">
+                                <input type="number" class="form-control" value="{{old('weight') ??  $data['spreading']->weight}}"
+                                    name="weight" id="weight" placeholder="ادخل الوزن"
+                                    class="@error('weight') is-danfer @enderror " >
+                                    @error('weight')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                                <input type="hidden" name="spreading_id" value="{{  $data['spreading']->id }}">
+                                
                             </div>
                         </div>
                     </div>

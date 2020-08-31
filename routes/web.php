@@ -11,23 +11,39 @@
 |
 */
 
+use App\Models\Users\Role;
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', function () {
-    return view('index');
+    return view('home');
 });
+// Route::group([
+//     'namespace' => 'Auth'
+// ],function (){
+//     Route::group([
+//         'prefix' => 'role'
+//             ],function(){
+//                 Route::get('get-all', 'RoleController@getAllPaginate')->name('role.list');
+//                 Route::get('create', 'RoleController@createPage')->name('role.create_page');
+//                 Route::post('store', 'RoleController@create')->name('role.store');
+//                 Route::post('delete', 'RoleController@delete')->name('role.delete');
+//                 Route::get('edit/{type_id}', 'RoleController@editPage')->name('role.edit_page');
+//                 Route::post('update', 'RoleController@update')->name('role.update');
+//             })
+//         });
 
 
+       
 
 Route::group([
     'namespace' => 'Dashboard'
-], function () {
-
+],  function () {
     Route::group([
         'namespace' => 'Options'
     ],function(){
@@ -54,8 +70,20 @@ Route::group([
     });
     Route::group([
         'namespace' => 'Users'
-    ], function () {
+    ]
+    , function () {
 
+      
+        Route::group([
+            'prefix' => 'roles',
+        ], function () {
+            Route::get('get-all', 'RoleController@getAllPaginate')->name('role.list');
+            Route::get('create', 'RoleController@createPage')->name('role.create_page');
+            Route::post('store', 'RoleController@create')->name('role.store');
+            Route::post('delete', 'RoleController@delete')->name('role.delete');
+            Route::get('edit/{type_id}', 'RoleController@editPage')->name('role.edit_page');
+            Route::post('update', 'RoleController@update')->name('role.update');
+        });
         Route::group([
             'prefix' => 'employees',
         ], function () {
@@ -241,6 +269,7 @@ Route::group([
             'prefix' => 'send-end-product'
         ], function () {
             Route::get('get-all', 'SendEndProductController@getAllPaginate')->name('send.end_product.list');
+            Route::get('get-all-saved/{save_order}', 'SendEndProductController@getSavedProdacts')->name('send.end_product.get_order');
             Route::get('create', 'SendEndProductController@create')->name('send.end_product.create_page');
             Route::post('store', 'SendEndProductController@store')->name('send.end_product.store');
             Route::post('edit/{product_id}', 'SendEndProductController@edit')->name('send.end_product.edit_page');
@@ -289,6 +318,6 @@ Route::group([
     });
 });
 
-
+ 
 
 ?>

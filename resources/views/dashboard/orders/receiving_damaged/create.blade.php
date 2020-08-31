@@ -21,13 +21,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="name">الحاله</label>
-                                <select class="form-control" name="damage_type" id="">
+                                <select class="form-control" name="damage_type" id=""
+                                class="@error('damage_type') is-danger @enderror">
                                     <option value="" disabled selected>تحديد الجوده</option>
                                             <option value="">عادي</option>
                                             <option value="ironing">كي</option>
                                             <option value="tailoring">خياطه</option>
                                             <option value="dyeing">صباغه</option>
                                 </select>
+                                @error('damage_type')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>

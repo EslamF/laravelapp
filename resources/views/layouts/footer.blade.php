@@ -54,10 +54,7 @@
         
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="{{asset('asset/')}}/dist/js/pages/dashboard.js"></script>
-        <script src="{{asset('asset/')}}/dist/js/pages/jquery.form.js"></script>
-        <script src="{{asset('asset/')}}/dist/js/jquery/jquery.validate.min.js"></script>
-        <script src="{{asset('asset/')}}/dist/js/jquery/additional-methods.min.js"></script>
-        <script src="{{asset('asset/')}}/dist/js/jquery/messages_ar.js"></script>
+       
         <!-- AdminLTE for demo purposes -->
         <script src="{{asset('asset/')}}/dist/js/demo.js"></script>
         <script src="{{asset('/js/bootstrap-tagsinput.min.js')}}"></script>
