@@ -30,7 +30,7 @@
                                 <td class="col-md-3">{{$value->factory->name}}</td>
                                 <td class="col-md-3">{{$value->receiving_date}}</td>
                                 <td class="col-md-3">
-                                    <a href="{{Route('produce.order.edit_page', $value->id)}}" class="btn">التعديل</a>
+                                    <a href="{{Route('produce.order.edit_page', $value->id)}}" class="btn btn-primary">التعديل</a>
                                     <form style="display:inline" action="{{Route('produce.order.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="produce_id" value="{{$value->id}}">

@@ -14,21 +14,12 @@
                     <div class="row" v-for="(item,index) in items">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <<<<<<< HEAD <label for="">Product Type</label>
-                                    <span style="color:red" v-if="errors[index].product_type_id">*@{{errors[index].product_type_id}}</span>
-                                    <select v-model="item.product_type_id" class="form-control" id="">
-                                        <option value="" disabled seelcted>Choose Type</option>
-                                        <option :value="type.id" v-for="type in productTypes">@{{type.name}}</option>
-                                        =======
-                                        <label for="user">الموظف</label>
-                                        <select class="form-control" name="user_id" id="user">
-                                            <option value="" disabled selected>حدد اسم الموظف</option>
-                                            @foreach($data['users'] as $user)
-                                            <option value="{{$user->id}}" {{$data['records']->user_id == $user->id? 'selected':''}}>{{$user->name}}
-                                            </option>
-                                            @endforeach
-                                            >>>>>>> ad9a21abecff8f6f57fa5df91d1e5732d502f3b3
-                                        </select>
+                                <label for="">Product Type</label>
+                                <span style="color:red" v-if="errors[index].product_type_id">*@{{errors[index].product_type_id}}</span>
+                                <select v-model="item.product_type_id" class="form-control" id="">
+                                    <option value="" disabled seelcted>Choose Type</option>
+                                    <option :value="type.id" v-for="type in productTypes">@{{type.name}}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-3">
