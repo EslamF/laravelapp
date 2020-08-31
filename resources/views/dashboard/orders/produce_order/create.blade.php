@@ -18,7 +18,7 @@
                                 <label for="mq_r_code">اذن القص</label>
                                 <span style="color:red" v-if="error.cutting_order_id">*@{{error.cutting_order_id}}</span>
                                 <select class="form-control" @change="getFactoryByCuttingId(cutting_order_id)" v-model="cutting_order_id" id="user">
-                                    <option value="" disabled selected>Select Order id</option>
+                                    <option value="" disabled selected>اختر اذن القص</option>
                                     <option :value="order.id" v-for="order in cutting_orders">@{{order.id}}</option>
                                 </select>
                                 @error('cutting_order_id')
@@ -35,7 +35,7 @@
                                 <label for="mq_r_code">المصنع</label>
                                 <span style="color:red" v-if="error.factory_id">*@{{error.factory_id}}</span>
                                 <select class="form-control" v-model="factory_id" id="user">
-                                    <option value="" disabled selected>حدداسم المصنع</option>
+                                    <option value="" disabled selected>حدد اسم المصنع</option>
                                     <option :value="factory.id" v-for="factory in factories" :selected="factory_id == factory.id">@{{factory.name}}</option>
 
                                 </select>

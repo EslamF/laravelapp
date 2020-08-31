@@ -20,6 +20,8 @@ class CreateProductsTable extends Migration
             $table->boolean('received')->default(0);
             $table->text('description')->nullable();
             $table->date('sort_date')->nullable();
+            $table->string('produce_code');
+
             $table->enum('damage_type', ['ironing', 'tailoring', 'dyeing'])->nullable();
 
             $table->unsignedBigInteger('sort_order_id')->nullable();

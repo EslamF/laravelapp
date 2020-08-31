@@ -15,11 +15,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="user">موظف الفرش</label>
-                                <select class="form-control" name="user_id" id="user"
-                                class="@error('user_id') is-danger @enderror">
+                                <select class="form-control" name="user_id" id="user" class="@error('user_id') is-danger @enderror">
                                     <option value="" disabled selected>موظف الفرش</option>
                                     @foreach($data['users'] as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
                                     <option value="{{$user->id}}" {{old('user_id') == $user->id? 'selected':'' }}>{{$user->name}}</option>
                                     @endforeach
                                 </select>
@@ -35,11 +33,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="mq_r_code">كود الخامة</label>
-                                <select class="form-control" name="material_id" id="user"
-                                    class="@error('material_id') is-danger @enderror">
+                                <select class="form-control" name="material_id" id="user" class="@error('material_id') is-danger @enderror">
                                     <option value="" disabled selected>حدد كود الخامة</option>
                                     @foreach($data['material'] as $material)
-                                    <option value="{{$material->id}}">{{$material->mq_r_code}}</option>
                                     <option value="{{$material->id}}" {{old('material_id') == $material->id ? 'selected':'' }}>
                                         {{$material->mq_r_code}}</option>
                                     @endforeach
@@ -56,9 +52,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="weight">الوزن</label>
-                                <input type="number" class="form-control" value="{{old('weight')}}" name="weight" id="weight"
-                                    placeholder="ادخل الوزن" class="@error('weight') is-danfer @enderror " >
-                                    @error('weight')
+                                <input type="number" class="form-control" value="{{old('weight')}}" name="weight" id="weight" placeholder="ادخل الوزن" class="@error('weight') is-danfer @enderror ">
+                                @error('weight')
                                 <p class="help is-danger">
                                     {{$message}}
                                 </p>

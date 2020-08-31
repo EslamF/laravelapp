@@ -24,5 +24,4 @@ class SortOrder extends Model
     {
         return $this->belongsToMany(Product::class, 'product_sort_order');
     }
-
 }
