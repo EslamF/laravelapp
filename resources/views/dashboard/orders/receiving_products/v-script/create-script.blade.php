@@ -7,15 +7,6 @@
             produce_order_id: '',
             produce_orders: [],
             products: [],
-            product: {
-                product_type: {
-                    name: ''
-                },
-                size: {
-                    name: ''
-                },
-                qty: ''
-            },
             received_products: [],
         },
         mounted() {
@@ -62,10 +53,10 @@
 
                 });
             },
-            changeStatus(status, id, index) {
+            changeStatus(received, produce_code, index) {
                 var data = {};
-                data.id = id;
-                data.status = status;
+                data.produce_code = produce_code;
+                data.received = received;
                 const metas = document.getElementsByTagName('meta');
                 axios.defaults.headers = {
                     'Content-Type': 'application/json',
@@ -73,7 +64,8 @@
                     'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                 };
                 axios.post('{{route("receiving_product.change_status")}}', data).then(res => {
-                    if (status == 1) {
+                    console.log(this.received_products, this.products);
+                    if (received == 1) {
                         this.received_products.push(this.products[index]);
                         this.products.splice(index, 1);
                     } else {
@@ -87,6 +79,8 @@
             goToProduceOrderList() {
                 var data = {};
                 data.produce_order_id = this.produce_order_id;
+                data.received_products = this.received_products;
+                data.products = this.products;
                 const metas = document.getElementsByTagName('meta');
                 axios.defaults.headers = {
                     'Content-Type': 'application/json',

@@ -12,17 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/home', function () {
     return view('index');
 });
-
-
 
 Route::group([
     'namespace' => 'Dashboard'
@@ -45,12 +43,12 @@ Route::group([
         Route::group([
             'prefix' => 'color'
         ], function () {
-            Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
-            Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
-            Route::post('store', 'CustomerController@create')->name('customer.store');
-            Route::post('delete', 'CustomerController@delete')->name('customer.delete');
-            Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
-            Route::post('update', 'CustomerController@update')->name('customer.update');
+            // Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
+            // Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
+            // Route::post('store', 'CustomerController@create')->name('customer.store');
+            // Route::post('delete', 'CustomerController@delete')->name('customer.delete');
+            // Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
+            // Route::post('update', 'CustomerController@update')->name('customer.update');
         });
     });
     Route::group([
@@ -125,6 +123,7 @@ Route::group([
             Route::post('delete', 'ShippingCompanyController@delete')->name('shipping.delete');
             Route::get('edit/{type_id}', 'ShippingCompanyController@editPage')->name('shipping.edit_page');
             Route::post('update', 'ShippingCompanyController@update')->name('shipping.update');
+            Route::get('get', 'ShippingCompanyController@getAll')->name('shipping.get_all');
         });
 
         Route::group([
@@ -291,6 +290,52 @@ Route::group([
             Route::get('create', 'BuyOrderController@createPage')->name('buy.create_page');
             Route::get('get-all-paginate', 'BuyOrderController@getAllPaginate')->name('buy.list_page');
             Route::get('get-material/{mq_r_code}', 'BuyOrderController@cuttingOrdersByMaterial')->name('buy_get_cut_ids');
+            Route::post('receive-order', 'BuyOrderController@receiveOrder')->name('buy.receive_order');
+            Route::post('delete-order', 'BuyOrderController@deleteOrder')->name('buy.delete_order');
+            Route::get('show-order/{id}', 'BuyOrderController@showOrderPage')->name('buy.show_order');
+            Route::get('show/{id}', 'BuyOrderController@showOrder')->name('buy.show');
+            Route::post('update', 'BuyOrderController@updateOrder')->name('buy.update_order');
+            Route::post('remove-item', 'BuyOrderController@removeItem')->name('buy.remove_item');
+            Route::get('by-shipping/{id}', 'BuyOrderController@buyOrdersWithShippingId')->name('buy.get_buy_shipping');
+        });
+
+
+        Route::group([
+            'prefix' => 'process'
+        ], function () {
+            Route::get('get-list', 'OrderProcessController@getAllPaginate')->name('process.get_list');
+            Route::get('get', 'OrderProcessController@getNewOrders')->name('process.orders_list');
+            Route::get('get-to-prepare/{id}', 'OrderProcessController@getToPrepare')->name('process.prepare_order_page');
+            Route::get('get-order/{id}', 'OrderProcessController@prepareOrder')->name('process.order');
+            Route::post('validate-prod', 'OrderProcessController@validateProduct')->name('process.validate_product');
+            Route::post('save-order', 'OrderProcessController@saveOrder')->name('process.save_order');
+            Route::get('ready-orders-page', 'OrderProcessController@readyOrderPage')->name('process.ready_orders_page');
+            Route::get('ready-order-page/{id}', 'OrderProcessController@readySingleOrderPage')->name('process.ready_order_page');
+            Route::get('ready-order/{id}', 'OrderProcessController@readyOrder')->name('process.ready_order');
+            Route::get('done-orders', 'OrderProcessController@doneOrder')->name('process.done_orders_page');
+            Route::get('done-order-page/{id}', 'OrderProcessController@doneOrderPage')->name('process.done_order_page');
+            Route::group([
+                'prefix' => 'ready-orders'
+            ], function () {
+                Route::get('get-all-packaged', 'ShippingOrderController@packagedList')->name('shipping.list_packaged_orders');
+                Route::get('create-package', 'ShippingOrderController@packagePage')->name('shipping.create_package_page');
+                Route::get('can-package', 'ShippingOrderController@canPackage')->name('shipping.can_package');
+                Route::post('package-orders', 'ShippingOrderController@packageOrders')->name('shipping.package_orders');
+            });
+        });
+
+        Route::group([
+            'prefix' => 'shipping'
+        ], function () {
+            Route::get('get-all-paginate', 'ShippingOrderController@index')->name('shipping.get_list');
+            Route::get('add-order', 'ShippingOrderController@create')->name('shipping.create_page');
+            Route::post('create-order', 'ShippingOrderController@store')->name('shipping.store_order');
+            Route::get('get/{id}', 'ShippingOrderController@get')->name('shipping.get');
+            Route::get('get-order/{id}', 'ShippingOrderController@getShippingOrder')->name('shipping.get_order');
+            Route::get('ready-orders', 'ShippingOrderController@readyToShip')->name('shipping.ready_orders');
+            Route::post('save-to-order', 'ShippingOrderController@saveToOrder')->name('shipping.save_to_order');
+            Route::post('delete', 'ShippingOrderController@deleteOrder')->name('delete_shipping_order');
+            Route::post('update', 'ShippingOrderController@update')->name('shipping.update_order');
         });
     });
 

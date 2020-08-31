@@ -8,7 +8,7 @@ use App\Models\Organization\ShippingCompany;
 
 class ShippingCompanyController extends Controller
 {
-   /**
+    /**
      * 
      * create shipping 
      * request input name required
@@ -16,7 +16,6 @@ class ShippingCompanyController extends Controller
      */
     public function create(Request $request)
     {
-        // dd($request->all());N
         $request->validate([
             'name' => 'required|min:3'
         ]);
@@ -61,7 +60,8 @@ class ShippingCompanyController extends Controller
      */
     public function getAll()
     {
-        $types = ShippingCompany::all();
+        $companies = ShippingCompany::select('id', 'name')->get();
+        return response()->json($companies, 200);
     }
     /**
      * 
@@ -75,15 +75,13 @@ class ShippingCompanyController extends Controller
     {
         $types = ShippingCompany::paginate(15);
         return view('dashboard.shipping.list')->with('types', $types);
-
-
     }
     public function createPage()
     {
         return view('dashboard.shipping.create');
     }
 
-    public function editPage( $type_id)
+    public function editPage($type_id)
     {
         $type = ShippingCompany::where('id', $type_id)->first();
         return view('dashboard.shipping.edit')->with('type', $type);

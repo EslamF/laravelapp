@@ -13,7 +13,7 @@ class ProductType extends Model
 
     public function products()
     {
-        return $this->hasManyThrough(Product::class, CuttingOrderProduct::class, 'product_type_id', 'cutting_order_product_id');
+        return $this->hasMany(Product::class);
     }
 
     public function sizes()

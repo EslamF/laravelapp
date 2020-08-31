@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('prod_code');
             $table->boolean('sorted')->default(0);
+            $table->boolean('received')->default(0);
             $table->text('description')->nullable();
             $table->date('sort_date')->nullable();
             $table->enum('damage_type', ['ironing', 'tailoring', 'dyeing'])->nullable();
@@ -31,9 +32,29 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('save_orders')
                 ->onDelete('cascade');
 
+            $table->unsignedBigInteger('material_id')->nullable();
+            $table->foreign('material_id')
+                ->references('id')->on('materials')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('product_type_id')->nullable();
+            $table->foreign('product_type_id')
+                ->references('id')->on('product_types')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('size_id')->nullable();
+            $table->foreign('size_id')
+                ->references('id')->on('sizes')
+                ->onDelete('cascade');
+
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')
                 ->references('id')->on('users')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('cutting_order_id')->nullable();
+            $table->foreign('cutting_order_id')
+                ->references('id')->on('cutting_orders')
                 ->onDelete('cascade');
 
 
@@ -47,7 +68,7 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('cutting_order_products')
                 ->onDelete('cascade');
 
-            $table->enum('status', ['pending', 'sold', 'available', 'damaged'])->default('available');
+            $table->enum('status', ['pending', 'sold', 'available', 'damaged', 'reserved'])->default('available');
 
             $table->timestamps();
         });

@@ -39,11 +39,11 @@
                             <tr class="row" v-for="(product,index) in received_products">
                                 <div class="col-md-12">
                                     <td class="col-md-1">@{{index + 1 }}</td>
-                                    <td class="col-md-3">@{{product.product_type.name}}</td>
-                                    <td class="col-md-3">@{{product.size.name}}</td>
-                                    <td class="col-md-3">@{{product.qty}}</td>
+                                    <td class="col-md-3">@{{product.product_type}}</td>
+                                    <td class="col-md-3">@{{product.size}}</td>
+                                    <td class="col-md-3">@{{product.count}}</td>
                                     <td class="col-md-2">
-                                        <button class="btn btn-danger" type="button" @click="changeStatus(0, product.id, index)">UnApprove</button>
+                                        <button class="btn btn-danger" type="button" @click="changeStatus(0, product.produce_code, index)">UnApprove</button>
                                     </td>
                                 </div>
                             </tr>
@@ -65,11 +65,11 @@
                             <tr class="row" v-for="(product,index) in products">
                                 <div class="col-md-12">
                                     <td class="col-md-1">@{{index + 1 }}</td>
-                                    <td class="col-md-3">@{{product.product_type.name ?? ""}}</td>
-                                    <td class="col-md-3">@{{product.size.name ?? ""}}</td>
-                                    <td class="col-md-3">@{{product.qty}}</td>
+                                    <td class="col-md-3">@{{product.product_type}}</td>
+                                    <td class="col-md-3">@{{product.size}}</td>
+                                    <td class="col-md-3">@{{product.count}}</td>
                                     <td class="col-md-2">
-                                        <button class="btn btn-success" type="button" @click="changeStatus(1, product.id, index)">Approve</button>
+                                        <button class="btn btn-success" type="button" @click="changeStatus(1, product.produce_code, index)">Approve</button>
                                     </td>
                                 </div>
                             </tr>

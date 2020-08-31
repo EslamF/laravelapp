@@ -91,12 +91,16 @@
                     $('.parent-count').css('display', 'block');
 
                     $.each(res, function(index, value) {
+                        count = 0;
+                        products = [];
+                        addProducts = [];
                         $.each(value.products, function(index, product) {
                             products.push(product.prod_code);
                             save_order_id = product.save_order_id;
                             count++;
                         });
                     });
+                    $('span.count').empty();
                     $('span.count').append(count);
                 }
             });
@@ -108,7 +112,8 @@
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             if (products.length > 0) {
-                if (products.includes($('.code').val())) {
+                console.log(products);
+                if (products.includes($('.code').val()) && !addProducts.includes($('.code').val())) {
                     $('.error').css('display', 'none');
                     $("tbody").empty();
                     addProducts.push($('.code').val());
@@ -149,7 +154,7 @@
                         'save_order_id': save_order_id
                     },
                     success: function(msg) {
-                        window.location.href = "/orders/store-end-product/get-all";
+                        // window.location.href = "/orders/store-end-product/get-all";
                     }
                 });
             } else {

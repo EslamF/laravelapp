@@ -25,4 +25,20 @@ class CuttingOrderProduct extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function buyOrderProducts()
+    {
+        return $this->hasMany(BuyOrderProduct::class);
+    }
+
+    public function unSortedCount()
+    {
+        $count = (int)$this->products()->where('status', 'available')->where('save_order_id', null)->count() / 100 * 90;
+        return intval($count);
+    }
+
+    public function unSorted()
+    {
+        return $this->hasMany(Product::class)->where('status', 'available')->where('sorted', 0)->select('cutting_order_product_id', 'id');
+    }
 }

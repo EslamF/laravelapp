@@ -106,6 +106,18 @@
                                         <p>Buy Order</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('process.get_list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Buy Order Proccess</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('shipping.get_list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Shipping Order</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item has-treeview">

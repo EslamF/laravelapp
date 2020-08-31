@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products\Product;
 use App\Models\Orders\ReceivingOrder;
+use App\Policies\ProductPolicy;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+
     public function getAllPaginate()
     {
         $products = Product::paginate();

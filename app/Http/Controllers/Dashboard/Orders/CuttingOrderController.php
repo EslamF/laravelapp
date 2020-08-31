@@ -8,6 +8,7 @@ use App\Models\Options\Size;
 use App\Models\Orders\CuttingOrder;
 use App\Models\Products\ProductType;
 use App\Http\Controllers\Controller;
+use App\Models\Materials\Material;
 use App\Models\Orders\CuttingOrderProduct;
 use App\Models\Products\Product;
 use Illuminate\Support\Facades\Redirect;
@@ -39,20 +40,30 @@ class CuttingOrderController extends Controller
     public function store(Request $request)
     {
         $order = CuttingOrder::create($request->all());
+        $material = Material::whereHas('spreadingOutMaterialOrders', function ($q) use ($order) {
+            $q->whereHas('cuttingOrders', function ($query) use ($order) {
+                $query->where('id', $order->id);
+            });
+        })->first();
+
         if (request('items')) {
             foreach ($request->items as $item) {
                 $count = $item['qty'];
-                $cutting = CuttingOrderProduct::create([
-                    'cutting_order_id' => $order->id,
-                    'product_type_id' => $item['product_type_id'],
-                    'size_id' => $item['size_id'],
-                    'qty'   => $item['qty']
-                ]);
                 while ($count > 0) {
+
+                    $product = Product::where('product_type_id', $item['product_type_id'])
+                        ->where('size_id', $item['size_id'])
+                        ->where('material_id', $material->id)
+                        ->first();
+
                     Product::create([
                         'prod_code' => $this->generateCode(),
-                        'cutting_order_product_id' => $cutting->id,
-                        'damage_type' => 'pending'
+                        'cutting_order_id' => $order->id,
+                        'damage_type' => 'pending',
+                        'material_id' => $material->id,
+                        'product_type_id' => $item['product_type_id'],
+                        'size_id' => $item['size_id'],
+                        'produce_code' => $product->produce_code ?? $this->generateOrderCode()
                     ]);
                     $count--;
                 }
@@ -157,6 +168,17 @@ class CuttingOrderController extends Controller
     {
         $code = rand(0, 6000000000000);
         $check = Product::where('prod_code', $code)->exists();
+        if ($check) {
+            $this->generateCode();
+        } else {
+            return $code;
+        }
+    }
+
+    public function generateOrderCode()
+    {
+        $code = rand(0, 6000000000000);
+        $check = Product::where('produce_code', $code)->exists();
         if ($check) {
             $this->generateCode();
         } else {

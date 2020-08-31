@@ -47,4 +47,9 @@ class Material extends Model
     {
         return $this->hasManyThrough(CuttingOrder::class, SpreadingOutMaterialOrder::class, 'material_id', 'spreading_out_material_order_id');
     }
+
+    public function spreadingOutMaterialOrders()
+    {
+        return $this->hasMany(SpreadingOutMaterialOrder::class);
+    }
 }

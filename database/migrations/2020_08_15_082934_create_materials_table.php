@@ -15,7 +15,7 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('mq_r_code');
+            $table->string('mq_r_code')->unique();
             $table->string('color');
 
             $table->unsignedBigInteger('material_type_id');

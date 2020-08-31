@@ -37,12 +37,8 @@ class ReceivingProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_type_id'  => 'required|exists:product_types,id',
-            'size_id'          => 'required|exists:sizes,id',
             'produce_order_id' => 'required|exists:produce_orders,id',
             'status'           => 'required|in:0,1',
-            'receiving_date'   => 'required|date',
-            'qty'              => 'required',
         ]);
 
         ReceivingOrder::create($request->all());
@@ -93,59 +89,67 @@ class ReceivingProductController extends Controller
 
     public function productsToReceive($id)
     {
-        $produce = ProduceOrder::where('id', $id)->first();
-        $products = CuttingOrderProduct::where('cutting_order_id', $produce->cutting_order_id)
-            ->where('received', 0)
-            ->with('productType:id,name', 'size:id,name')->get();
-        return response()->json($products, 200);
+        return response()->json($this->products($id, 0), 200);
     }
 
     public function productsReceived($id)
     {
+        return response()->json($this->products($id, 1), 200);
+    }
+
+    public function products($id, $received)
+    {
         $produce = ProduceOrder::where('id', $id)->first();
-        $products = CuttingOrderProduct::where('cutting_order_id', $produce->cutting_order_id)
-            ->where('received', 1)
-            ->with('productType:id,name', 'size:id,name')->get();
-        return response()->json($products, 200);
+        $products = Product::select('id', 'prod_code', 'produce_code', 'product_type_id', 'size_id')
+            ->with('productType:id,name', 'size:id,name')
+            ->where('cutting_order_id', $produce->cutting_order_id)
+            ->where('received', $received)
+            ->get()->groupBy('produce_code');
+
+        $data = [];
+
+        foreach ($products as $key => $product) {
+            $data[$key]['produce_code'] = $key;
+            $data[$key]['count'] = $product->count();
+            $data[$key]['size'] = $product->first()->size->name;
+            $data[$key]['product_type'] = $product->first()->productType->name;
+        }
+
+        return array_values($data);
     }
 
     public function approveOrUnapprove(Request $request)
     {
-        $product = CuttingOrderProduct::where('id', $request->id)->first();
-        $produce = ProduceOrder::where('cutting_order_id', $product->cutting_order_id)->first();
-
-        $product->update([
-            'received' => $request->status
-        ]);
-        $check = CuttingOrder::where('id', $product->cutting_order_id)->whereHas('CuttingOrderProducts', function ($q) {
-            $q->where('received', 0);
-        })->first();
-        if ($check) {
-            $receive = ReceivingOrder::updateOrCreate(['produce_order_id' => $produce->id], [
-                'status' => 0
-            ]);
-        } else {
-            $receive = ReceivingOrder::updateOrCreate(['produce_order_id' => $produce->id], [
-                'status' => 1
-            ]);
-        }
-
-        $item = Product::where('cutting_order_product_id', $request->id)->first();
-        $item->update([
-            'receiving_order_id' => $receive->id
-        ]);
-        return response()->json('update', 200);
+        Product::where('produce_code', $request->produce_code)->update(['received' => $request->received]);
+        return response()->json('updated', 200);
     }
 
     public function changeStatus(Request $request)
     {
+
         $receiveOrder = ReceivingOrder::updateOrCreate(['produce_order_id' => $request->produce_order_id], $request->all());
-        $cutting_id = $receiveOrder->produceOrder->cutting_order_id;
-        $check = CuttingOrder::where('id', $cutting_id)->whereHas('CuttingOrderProducts', function ($q) {
+        if ($request->products) {
+            foreach ($request->products as $product) {
+                Product::where('produce_code', $product['produce_code'])->update([
+                    'receiving_order_id' => $receiveOrder->id,
+                    'received' => 0
+                ]);
+            }
+        }
+        if ($request->received_products) {
+            foreach ($request->received_products as $product) {
+                Product::where('produce_code', $product['produce_code'])->update([
+                    'receiving_order_id' => $receiveOrder->id,
+                    'received' => 1
+                ]);
+            }
+        }
+        $check = ReceivingOrder::whereHas('products', function ($q) {
             $q->where('received', 0);
         })->first();
 
         if ($check) {
+
             $receiveOrder->update([
                 'status' => '0'
             ]);

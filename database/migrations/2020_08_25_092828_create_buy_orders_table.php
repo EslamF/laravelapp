@@ -16,15 +16,18 @@ class CreateBuyOrdersTable extends Migration
         Schema::create('buy_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')
                 ->references('id')->on('customers')
                 ->onDelete('cascade');
 
-            $table->double('price');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->enum('confrimation', ['pending', 'canceled', 'confirmed'])->default('pending');
+            $table->enum('preparation', ['need_prepare', 'prepared', 'shipped'])->default('need_prepare');
             $table->string('bar_code');
+            $table->boolean('status')->default(0);
+            $table->date('delivery_date');
+            $table->date('pending_date')->nullable();
 
             $table->timestamps();
         });

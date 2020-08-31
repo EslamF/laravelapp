@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Orders;
 
 use App\Http\Controllers\Controller;
+use App\Models\Orders\BuyOrderProduct;
 use App\Models\Orders\SaveOrder;
 use App\Models\Orders\StoreProductOrder;
 use Illuminate\Http\Request;
@@ -18,21 +19,14 @@ class StoreProductOrderController extends Controller
     }
 
 
-    public function getOrder($order_code)
-    {
-    }
-
     public function create()
     {
-        $orders = SaveOrder::select('id', 'code')->whereHas('products', function ($q) {
-            $q->where('stored', 1);
-        })->get();
+        $orders = SaveOrder::select('id', 'code')->where('stored', 0)->get();
         return view('dashboard.orders.store_product_to_repository.create')->with('orders', $orders);
     }
 
     public function getShippingOrder($id)
     {
-
         $products = ProductType::whereHas('products', function ($q) use ($id) {
             $q->where('save_order_id', $id);
         })->with(array('products' => function ($query) use ($id) {
@@ -44,8 +38,6 @@ class StoreProductOrderController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-
         StoreProductOrder::create([
             'code' => $this->generateCode(),
             'save_order_id' => $request['save_order_id']
@@ -56,8 +48,35 @@ class StoreProductOrderController extends Controller
 
         ]);
 
-
+        $this->addQtyToOrders($request['save_order_id']);
         return response()->json('success', 200);
+    }
+
+    public function addQtyToOrders($save_order_id)
+    {
+        $products = Product::where('save_order_id', $save_order_id)->get()->groupBy('produce_code');
+        $products = $products->map->count();
+        foreach ($products as $key => $count) {
+
+            $orders = BuyOrderProduct::where('produce_code', $key)
+                ->where('factory_qty', '>', 0)
+                ->get();
+
+            if ($count > 0) {
+                foreach ($orders as $order) {
+                    if ($order->factory_qty <= $count) {
+                        $order->company_qty += $order->factory_qty;
+                        $order->factory_qty = 0;
+                        $order->save();
+                    } else {
+                        $order->factory_qty -= $count;
+                        $order->company_qty += $count;
+                        $order->save();
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public function generateCode()
@@ -69,9 +88,5 @@ class StoreProductOrderController extends Controller
         } else {
             return $code;
         }
-    }
-
-    public function delete(Request $request)
-    {
     }
 }
