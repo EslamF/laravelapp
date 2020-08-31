@@ -35,10 +35,20 @@ class ShippingOrderController extends Controller
 
     public function readyToShip()
     {
-        $orders = BuyOrder::select('id', 'bar_code')
+        $orders = BuyOrder::select('id', 'delivery_date', 'customer_id')
+            ->with('customer:id,address')
             ->where('preparation', 'prepared')
             ->doesntHave('shippingOrders')
             ->get();
+
+        $orders = $orders->map(function ($item) {
+            return [
+                'id'            => $item->id,
+                'delivery_date' => $item->delivery_date,
+                'address'       => $item->customer->address
+            ];
+        });
+
         return response()->json($orders, 200);
     }
 
@@ -50,6 +60,7 @@ class ShippingOrderController extends Controller
             'shipping_date' => $request->shipping_date,
             'shipping_company_id' => $request->shipping_company_id
         ]);
+
         $ids = collect($request->orders);
         $shipping->buyOrders()->attach($ids->pluck('id'));
 
@@ -88,7 +99,7 @@ class ShippingOrderController extends Controller
 
     public function packagedList()
     {
-        $orders = ShippingOrder::where('status', 1)->with('factory:id,name')->paginate();
+        $orders = ShippingOrder::where('status', 1)->with('shippingCompany:id,name')->paginate();
         return view('dashboard.orders.shipping_order.ready-to-ship.list', ['orders' => $orders]);
     }
 
@@ -99,7 +110,15 @@ class ShippingOrderController extends Controller
 
     public function canPackage()
     {
-        $orders = ShippingOrder::where('status', 0)->get();
+        $orders = ShippingOrder::with('shippingCompany:id,name')->where('status', 0)->get();
+        $orders = $orders->map(function ($item) {
+            return [
+                'id'            => $item->id,
+                'company_name'  => $item->shippingCompany->name,
+                'shipping_date' => $item->shipping_date
+            ];
+        });
+
         return response()->json($orders, 200);
     }
 

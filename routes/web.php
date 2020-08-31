@@ -11,7 +11,6 @@
 |
 */
 
-use App\Models\Users\Role;
 
 Route::get('/', function () {
     return view('home');
@@ -21,7 +20,7 @@ Auth::routes();
 
 
 Route::get('/home', function () {
-    return view('home');
+    return view('index');
 });
 
 Route::group([

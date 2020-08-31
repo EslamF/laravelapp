@@ -9,7 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class BuyOrder extends Model
 {
-    protected $fillable = ['customer_id', 'description', 'bar_code', 'status', 'confirmation', 'preparation', 'delivery_date'];
+    protected $fillable = [
+        'customer_id',
+        'description',
+        'bar_code',
+        'status',
+        'confirmation',
+        'preparation',
+        'delivery_date',
+        'source',
+        'pending_date'
+    ];
 
     /**
      * 

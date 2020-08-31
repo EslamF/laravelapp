@@ -20,11 +20,6 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="name">الكميه</label>
-                        <input type="text" class="form-control" value="{{$data['sort']->code}}" name="code" id="">
-                        <input type="hidden" value="{{$data['sort']->id}}" name="sort_id">
-                    </div>
                 </div>
                 <!-- /.card-body -->
 

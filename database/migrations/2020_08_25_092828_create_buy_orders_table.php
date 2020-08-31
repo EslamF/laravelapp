@@ -20,6 +20,7 @@ class CreateBuyOrdersTable extends Migration
             $table->foreign('customer_id')
                 ->references('id')->on('customers')
                 ->onDelete('cascade');
+            $table->string('source');
 
             $table->text('description')->nullable();
             $table->enum('confrimation', ['pending', 'canceled', 'confirmed'])->default('pending');

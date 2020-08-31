@@ -32,6 +32,12 @@
 
                     });
             },
+            dateWithAddress({
+                delivery_date,
+                address
+            }) {
+                return `${delivery_date} — ${address}`
+            },
             getShippingCompanies() {
                 axios.get('{{Route("shipping.get_all")}}')
                     .then(res => {

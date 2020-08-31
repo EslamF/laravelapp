@@ -7,18 +7,18 @@
             <li v-if="errors.tags">@{{errors.tags}}</li>
         </ul>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
         <div class="form-group">
             <label for="">Add Orders</label>
             <input-tag v-model="tags" @change="checkIfExist()"></input-tag>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="form-group">
             <label for="">Shipping Orders</label>
             <select name="" class="form-control" @change="getBuyOrders" v-model="order.id" id="">
                 <option value="" disabled selected>Choose Order</option>
-                <option :value="order.id" v-for="order in orders">@{{order.shipping_code}}</option>
+                <option :value="order.id" v-for="order in orders">Company: @{{order.company_name}} --- Date: @{{order.shipping_date}} </option>
             </select>
         </div>
     </div>

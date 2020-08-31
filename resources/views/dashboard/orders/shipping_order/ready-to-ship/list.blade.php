@@ -28,7 +28,7 @@
                                 <td class="col-md-1">{{$order->id}}</td>
                                 <td class="col-md-2">{{$order->shipping_code}}</td>
                                 <td class="col-md-3">{{$order->shipping_date}}</td>
-                                <td class="col-md-3">{{$order->shipping_company->name}}</td>
+                                <td class="col-md-3">{{$order->shippingCompany->name}}</td>
 
                                 <td class="col-md-3">
                                     <form style="display:inline" action="{{Route('shipping.package_orders')}}" method="POST">

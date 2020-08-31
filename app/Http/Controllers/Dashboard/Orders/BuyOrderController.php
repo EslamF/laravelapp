@@ -65,17 +65,14 @@ class BuyOrderController extends Controller
 
     public function receiveOrder(Request $request)
     {
-        if (!isset($request->customer['id'])) {
-            $customer_id = Customer::create($request->customer);
-        } else {
-            $customer_id = $request->customer['id'];
-        }
+        $customer = Customer::updateOrCreate(['phone' => $request->customer['phone']], $request->customer);
 
         $order = BuyOrder::create([
-            'customer_id' => $customer_id,
+            'customer_id' => $customer->id,
             'description' => $request->description,
             'bar_code' => $this->generateCode(),
-            'delivery_date' => $request->delivery_date
+            'delivery_date' => $request->delivery_date,
+            'source'        => $customer->source
         ]);
         foreach ($request->products as $product) {
             if (!isset($product['qty'])) {
@@ -153,7 +150,6 @@ class BuyOrderController extends Controller
 
     public function updateOrder(Request $request)
     {
-
         BuyOrder::find($request->data['order']['id'])->update([
             'confirmation' => $request->data['order']['confirmation'],
             'pending_date' => $request->data['order']['pending_date'] ?? null
