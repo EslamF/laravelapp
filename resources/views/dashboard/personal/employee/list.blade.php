@@ -36,7 +36,7 @@
                                     <a href="{{Route('employee.edit_page', $employee->id)}}"
                                         class="btn btn-primary">تعديل</a>
                                         @endcan
-                                    @can('delet-employee')
+                                    @can('delete-employee')
                                     <form style="display:inline" action="{{Route('employee.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type_id" value="{{$employee->id}}">

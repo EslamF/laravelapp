@@ -19,16 +19,7 @@ class RoleController extends Controller
      */
     public function create(UsersRequest $request)
     {
-        // foreach ($peremissions as $peremission){
-        //         $p_id_valid[ $peremission->id]= 'exists:peremission,id';
-        // }
-        // // // dd($peremissions->all());
-        // $request->validate([
-        //     'name' => 'required|min:3',
-        //     'description' => 'required',
-        //     'peremissions.*' => 'exists|peremission,id',             
-        // ]);
-            // dd($request->all());
+
 
         $role=Role::create($request->all());
         $role->peremissions()->attach($request->peremissions);
@@ -43,6 +34,7 @@ class RoleController extends Controller
     public function update(UsersRequest $request)
     {
         // dd($request->all());
+        // dd($request->all());
         $request->validate([
                  'type_id' => 'required|exists:roles,id',
                 //  ' name' => 'required|min:3',
@@ -53,7 +45,7 @@ class RoleController extends Controller
         $role->update($request->all());
         // $role->peremissions()->detach();
         $role->allowTo($request->peremissions);
-        // dd($role);
+
         return redirect()->route('role.list');
     }
     /**

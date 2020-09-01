@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::before(function($user ,$peremission){
-            return $user->peremission()->contains($peremission);
+            return $user->peremissions()->contains($peremission);
         });
     }
 }

@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $fillable = ['id','name','label',''];
+    protected $fillable = ['id','name','label','description'];
 
     public function  peremissions(){
         return $this->belongsToMany(peremission::class);
     }
     
     public function  allowTo($peremission){
-     return $this->peremissions()->sync($peremission,false);
+        // dd($peremission);
+     return $this->peremissions()->sync($peremission);
    }
+
+   public function  users(){
+    return $this->belongsToMany(User::class);
+}
 
 }

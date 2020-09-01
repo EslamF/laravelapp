@@ -49,7 +49,7 @@ class User extends Authenticatable
     }
 
     public function  assignRole($role){
-         $this->roles()->sync($role,false);
+         return $this->roles()->sync($role);
     }
 
     public function  peremissions(){

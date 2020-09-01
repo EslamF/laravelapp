@@ -40,7 +40,7 @@
                     <option value="" disabled selected>
                         اختر نوع الوظيية</option>
                         @foreach($data['roles'] as $role)
-                        <option value="{{$role->id}}" {{ isset($data['user']->roles) ?'':  $data['user']->roles == $role->id  ? 'selected' : '' }}>{{$role->label}}</option>
+                        <option value="{{$role->id}}" {{ isset($data['user']->roles) ??  $data['user']->roles == $role->id  ? 'selected' : ''  }}>{{$role->label}}</option>
                         @endforeach
                     </select>
                     {{--
