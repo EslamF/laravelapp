@@ -154,7 +154,7 @@
                         'save_order_id': save_order_id
                     },
                     success: function(msg) {
-                        // window.location.href = "/orders/store-end-product/get-all";
+                        window.location.href = "/orders/store-end-product/get-all";
                     }
                 });
             } else {

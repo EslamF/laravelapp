@@ -16,7 +16,7 @@
                         <div class="col-md-3">
                             <select name="damage_type" class="form-control" id="">
                                 <option value="" disabled selected>حدد حاله المنتج</option>
-                                <option value="">صالح</option>
+                                <option value="fine">صالح</option>
                                 <option value="ironing">كي</option>
                                 <option value="tailoring">خياطه </option>
                                 <option value="dyeing">صباغه</option>

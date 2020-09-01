@@ -24,6 +24,7 @@
             description: '',
             mq_r_code: '',
             products: [],
+            data: [],
             errors: [],
             delivery_date: '',
             error: '',
@@ -80,17 +81,46 @@
                     'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                 };
                 axios.get('{{url("orders/buy/get-material")}}' + '/' + this.mq_r_code).then(res => {
-                    this.products = res.data;
-
+                    this.data = res.data;
+                    this.addToProduct();
                 }).catch(err => {
 
                 });
+            },
+            addToProduct() {
+                for (i = 0; i < this.data.length; i++) {
+                    this.checkIfExistsInProduct(this.data[i]);
+                }
+            },
+            checkIfExistsInProduct(item) {
+                if (this.products.length > 0) {
+                    var checker = false;
+                    for (i = 0; i < this.products.length; i++) {
+                        if (this.products[i].produce_code == item.produce_code &&
+                            this.products[i].product_type == item.product_type &&
+                            this.products[i].size == item.size) {
+                            continue;
+                        } else {
+                            checker = true;
+                        }
+                    }
+                    if (checker) {
+                        console.log(checker);
+                        console.log('test');
+                        this.products.push(item);
+                    }
+                } else {
+                    console.log(checker);
+                    this.products.push(item);
+
+                }
+
             },
             updateStock(index, qty) {
                 this.have_error = false;
                 this.products[index].err = '';
                 if (this.products[index].company_count + this.products[index].factory_count < qty) {
-                    this.products[index].err = "you can't add more";
+                    this.products[index].err = "You can't use this amount";
                     this.have_error = true;
                 }
             },
@@ -119,6 +149,7 @@
 
                 this.have_error = false;
                 this.customer_errors = {}
+
                 if (!this.customer.name) {
                     this.customer_errors.name = "* field is required";
                     this.have_error = true;
@@ -146,6 +177,9 @@
                     qty: '',
                     price: ''
                 };
+
+                var reg = new RegExp('^(?:0|00)\d+$')
+
                 for (i = 0; i < this.products.length; i++) {
                     let error = {}
                     this.products[i].error_qty = '';
@@ -156,21 +190,25 @@
                         this.setDate(7);
                     }
 
-                    if (this.products[i].qty <= 0 && this.products[i].qty !== "") {
+                    if ((this.products[i].qty <= 0 && this.products[i].qty !== "")) {
+                        console.log('test1');
                         this.products[i].error_qty = "* this field is required";
                         this.have_error = true;
                     }
 
-                    if (this.products[i].price <= 0) {
-                        this.products[i].error_price = "* this field is required";
+                    if (this.products[i].price > 0 && !this.products[i].qty || reg.test(this.products[i].qty)) {
+                        console.log('test2');
+                        this.products[i].error_qty = "* this field is required";
                         this.have_error = true;
                     }
 
-
-                    if (this.products[i].qty > 0 && !this.products[i].price) {
+                    if ((this.products[i].qty > 0 && !this.products[i].price) || this.products[i].price <= 0) {
                         this.products[i].price_err = "* this field is required";
+                        console.log('test3');
+
                         this.have_error = true;
                     }
+
                 }
             }
 

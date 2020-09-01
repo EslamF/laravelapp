@@ -100,13 +100,13 @@
                                         <td class="col-md-2">@{{product.factory_count}}</td>
                                         <td class="col-md-2">
                                             <span v-if="have_error" style="color:red">@{{product.err}}</span>
-                                            <span v-if="have_error" style="color:red">@{{product.error_qty}}</span>
-                                            <input type="number" style="width:40%" @keyup.enter="updateStock(index, product.qty)" class="form-control" v-model="product.qty" id="">
+                                            <span v-if="have_error" style="color:red">@{{products[index].error_qty}}</span>
+                                            <input type="number" min="1" style="width:60%" @keyup="updateStock(index, product.qty)" class="form-control" v-model="product.qty" id="">
                                         </td>
                                         <td class="col-md-2">
                                             <span v-if="have_error" style="color:red">@{{product.price_err}}</span>
                                             <span v-if="have_error" style="color:red">@{{product.error_price}}</span>
-                                            <input type="number" class="form-control" style="width:60%" v-model="product.price">
+                                            <input type="number" min="1" class="form-control" style="width:60%" v-model="product.price">
                                         </td>
                                     </div>
                                 </tr>

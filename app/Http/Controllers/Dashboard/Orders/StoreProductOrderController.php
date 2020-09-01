@@ -14,7 +14,7 @@ class StoreProductOrderController extends Controller
 {
     public function getAllPaginate()
     {
-        $orders = StoreProductOrder::select('id', 'code')->paginate();
+        $orders = StoreProductOrder::paginate();
         return view('dashboard.orders.store_product_to_repository.list')->with('orders', $orders);
     }
 
