@@ -38,24 +38,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-    /**
-     * The .
-     *
-     */
-
     public function  roles(){
         return $this->belongsToMany(Role::class);
     }
 
     public function  assignRole($role){
-         return $this->roles()->sync($role);
+
+         return $this->roles()->sync($role,true);
     }
 
     public function  peremissions(){
         return $this->roles->map->peremissions->flatten()->pluck('name')->unique();
     }
-
-
-
 }

@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل في اذن استلام الخامات</h3>
+                <h3 class="card-title">تعديل في إذن إستلام الخامات</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,10 +14,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="factory">اذن التصنيع</label>
+                                <label for="factory">إذن التصنيع</label>
                                 <select class="form-control" name="produce_order_id" id="factory"
                                 class="@error('produce_order_id') is-danger @enderror">
-                                    <option value="" disabled selected> حدد رقم اذن التصنيع</option>
+                                    <option value="" disabled selected> حدد  الرقم المرجعي إذن التصنيع</option>
                                     @foreach($data['produce_orders'] as $order)
                                     <option value="{{$order->id}}"
                                         {{$data['records']->produce_order_id == $order->id ? "selected":''}}>
@@ -92,7 +92,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="status">حاله الاذن</label>
+                                <label for="status">حاله الإذن</label>
                                 <select class="form-control" name="status" id="status"
                                 class="@error('status') is-danger @enderror">
                                     <option value="" disabled selected>حدد حاله المنتج</option>
@@ -113,7 +113,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">تاريخ الاستلام</label>
+                                <label for="weight">تاريخ الإستلام</label>
                                 <input type="date" class="form-control"  value="{{$data['records']->receiving_date}}"
                                     name="receiving_date" id="weight" 
                                 class="@error('receiving_date') is-danger @enderror">

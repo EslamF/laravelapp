@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">جدوال اذونات استلام الخامات</h3>
-                <a href="{{Route('order.receiving_material.create_page')}}" class="btn btn-success float-right">اضافة</a>
+                <h3 class="card-title">جدوال اذونات إستلام الخامات</h3>
+                <a href="{{Route('order.receiving_material.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,13 +13,13 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-2">كود الخامه</th>
                                 <th class="col-md-2">نوع الخامه</th>
                                 <th class="col-md-2">المورد</th>
-                                <th class="col-md-2">رقم الفاتوره</th>
+                                <th class="col-md-2"> الرقم المرجعي الفاتوره</th>
                                 <th class="col-md-1">الموظف المستلم</th>
-                                <th class="col-md-2">امكانيه</th>
+                                <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
                     </thead>

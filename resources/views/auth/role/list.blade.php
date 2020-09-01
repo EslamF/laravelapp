@@ -6,8 +6,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">جدول الصلحيات </h3>
-                <a href="{{Route('role.create_page')}}" class="btn btn-success float-right">اضافة</a>
+                <h3 class="card-title">الوظائف </h3>
+                <a href="{{Route('role.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -15,10 +15,10 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
-                                <th class="col-md-3">اسم الصلاحيه</th>
-                                <th class="col-md-6">تفاصيل الصلاحيه</th>
-                                <th class="col-md-2">امكانيه</th>
+                                <th class="col-md-1">الرقم المرجعي</th>
+                                <th class="col-md-3">الاسم الوظيفة</th>
+                                <th class="col-md-6">الوصف</th>
+                                <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
                     </thead>

@@ -15,14 +15,14 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-2">الاسم</th>
-                                <th class="col-md-1">رقم الهاتف</th>
+                                <th class="col-md-1"> الرقم المرجعي الهاتف</th>
                                 <th class="col-md-2">العنوان</th>
                                 <th class="col-md-1">المصدر</th>
                                 <th class="col-md-1">الوصول</th>
                                 <th class="col-md-1">الصفه</th>
-                                <th class="col-md-3">امكانيه</th>
+                                <th class="col-md-3">الخيارات</th>
                             </div>
                         </tr>
                     </thead>

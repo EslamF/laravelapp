@@ -19,9 +19,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="factory">اذن الاستلام</label>
+                                <label for="factory">إذن الإستلام</label>
                                 <select class="form-control" name="receiving_order_id" id="factory">
-                                    <option value="" disabled selected>حدد رقم اذن الاستلام</option>
+                                    <option value="" disabled selected>حدد  الرقم المرجعي إذن الإستلام</option>
                                     @foreach($data['receiving_orders'] as $order)
                                     <option value="{{$order->id}}">{{$order->id}}</option>
                                     @endforeach

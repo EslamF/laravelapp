@@ -95,7 +95,7 @@ Route::group([
             Route::group([
                 'prefix' => 'employees',
             ], function () {
-                Route::get('get-all', 'EmployeeController@getAllPaginate')->name('employee.list');
+                Route::get('get-all-paginate', 'EmployeeController@getAllPaginate')->name('employee.list');
                 Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
                 Route::post('store', 'EmployeeController@create')->name('employee.store');
                 Route::post('delete', 'EmployeeController@delete')->name('employee.delete');

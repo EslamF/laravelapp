@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">اذن خروج منتج تالف</h3>
+                <h3 class="card-title">إذن خروج منتج تالف</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,8 +14,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="weight">رقم المنتج</label>
-                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="ادخل رقم المنتج"
+                                <label for="weight"> الرقم المرجعي المنتج</label>
+                                <input type="text" class="form-control" name="prod_code" id="weight" placeholder="ادخل  الرقم المرجعي المنتج"
                                 class="@error('prod_code') is-danger @enderror"
                                 value="{{old('prod_code')}}">
                             @error('prod_code')

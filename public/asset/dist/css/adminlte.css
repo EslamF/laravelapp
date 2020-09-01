@@ -18832,7 +18832,7 @@ html.maximized-card {
 .small-box .icon>i {
     font-size: 90px;
     position: absolute;
-    right: 15px;
+    left: 15px;
     top: 15px;
     transition: all 0.3s linear;
 }

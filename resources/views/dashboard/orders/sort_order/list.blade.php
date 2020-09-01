@@ -5,7 +5,7 @@
         <div class="card ">
             <div class="card-header">
                 <h3 class="card-title">جدول اذونات الفرز</h3>
-                <a href="{{Route('sort.order.create_page')}}" class="btn btn-success float-right">اضافة</a>
+                <a href="{{Route('sort.order.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,11 +13,11 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-2">كود</th>
                                 <th class="col-md-2">موظف الفرز</th>
                                 <th class="col-md-4">تاريخ الفرز</th>
-                                <th class="col-md-3">امكانيه</th>
+                                <th class="col-md-3">الخيارات</th>
                             </div>
                         </tr>
                     </thead>

@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">جدول اذونات الاستلام</h3>
+                <h3 class="card-title">جدول اذونات الإستلام</h3>
                 <a href="{{Route('receiving.product.create')}}" class="btn btn-success float-right">Add</a>
             </div>
             <!-- /.card-header -->
@@ -13,11 +13,11 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
-                                <th class="col-md-3">اذن اتصنيع</th>
-                                <th class="col-md-4">تاريخ الاستلام</th>
-                                <th class="col-md-2">حاله الاذن</th>
-                                <th class="col-md-2">الامكانيه</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
+                                <th class="col-md-3">إذن اتصنيع</th>
+                                <th class="col-md-4">تاريخ الإستلام</th>
+                                <th class="col-md-2">حاله الإذن</th>
+                                <th class="col-md-2">الالخيارات</th>
                             </div>
                         </tr>
                     </thead>

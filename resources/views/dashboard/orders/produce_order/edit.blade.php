@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل في اذن التصنيع</h3>
+                <h3 class="card-title">تعديل في إذن التصنيع</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -38,9 +38,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">اذن القص</label>
+                                <label for="mq_r_code">إذن القص</label>
                                 <select class="form-control" name="cutting_order_id" id="user" class="@error('cutting_order_id') is-danger @enderror" value="{{old('cutting_order_id')}}">
-                                    <option value="" disabled selected>حدد اذن القص</option>
+                                    <option value="" disabled selected>حدد إذن القص</option>
                                     @foreach($data['cutting_orders'] as $order)
                                     <option value="{{$order->id}}" {{$data['records']->cutting_order_id == $order->id?'selected':''}}>
                                         {{$order->id}}</option>
@@ -89,8 +89,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">تاريخ الاستلام</label>
-                                <input type="date" class="form-control" name="receiving_date" value="{{$data['records']->receiving_date}}" id="weight" placeholder="تاريخ الاستلام" class="@error('receiving_date') is-danger @enderror" value="{{old('receiving_date')}}">
+                                <label for="weight">تاريخ الإستلام</label>
+                                <input type="date" class="form-control" name="receiving_date" value="{{$data['records']->receiving_date}}" id="weight" placeholder="تاريخ الإستلام" class="@error('receiving_date') is-danger @enderror" value="{{old('receiving_date')}}">
                                 @error('receiving_date')
                                 <p class="help is-danger">
                                     {{$message}}

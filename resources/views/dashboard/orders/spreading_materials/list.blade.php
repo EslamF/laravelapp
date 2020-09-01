@@ -5,7 +5,7 @@
         <div class="card ">
             <div class="card-header">
                 <h3 class="card-title">جدول اذونات الفرش</h3>
-                <a href="{{Route('spreading.material.create_page')}}" class="btn btn-success float-right">اضافة</a>
+                <a href="{{Route('spreading.material.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -13,11 +13,11 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-3">كود الخامه</th>
                                 <th class="col-md-3">موظف الفرش</th>
                                 <th class="col-md-3">الوزن</th>
-                                <th class="col-md-2">امكانيه</th>
+                                <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
                     </thead>

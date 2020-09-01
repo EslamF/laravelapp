@@ -13,10 +13,10 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-5">كود المنتج</th>
                                 <th class="col-md-5">المصنع</th>
-                                <th class="col-md-1">الامكانيه</th>
+                                <th class="col-md-1">الالخيارات</th>
                             </div>
                         </tr>
                     </thead>

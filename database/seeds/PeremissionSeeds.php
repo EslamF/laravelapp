@@ -13,11 +13,11 @@ class PeremissionSeeds extends Seeder
     public function run()
     {
 
-        DB::table('peremissions')->insert(
+        DB::table('peremissions')->insert([
 
             [
                 'name' => 'add-employee',
-                'lable' => 'اضافة موظف'
+                'lable' => 'إضافة موظف'
             ],
             [
                 'name' => 'edit-employee',
@@ -33,7 +33,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-factory',
-                'lable' => 'اضافة مصنع'
+                'lable' => 'إضافة مصنع'
             ],
             [
                 'name' => 'edit-factory',
@@ -50,7 +50,7 @@ class PeremissionSeeds extends Seeder
 
             [
                 'name' => 'add-typefactory',
-                'lable' => 'اضافة نوع مصنع'
+                'lable' => 'إضافة نوع مصنع'
             ],
             [
                 'name' => 'edit-typefactory',
@@ -66,7 +66,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-typefactory',
-                'lable' => 'اضافة نوع مصنع'
+                'lable' => 'إضافة نوع مصنع'
             ],
             [
                 'name' => 'edit-typefactory',
@@ -82,7 +82,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-materials',
-                'lable' => 'اضافة خامات'
+                'lable' => 'إضافة خامات'
             ],
             [
                 'name' => 'edit-materials',
@@ -98,7 +98,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-supplier',
-                'lable' => 'اضافة موردين'
+                'lable' => 'إضافة موردين'
             ],
             [
                 'name' => 'edit-supplier',
@@ -114,7 +114,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-customer',
-                'lable' => 'اضافة عملاء'
+                'lable' => 'إضافة عملاء'
             ],
             [
                 'name' => 'edit-customer',
@@ -130,7 +130,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-prodact',
-                'lable' => 'اضافة منتجات'
+                'lable' => 'إضافة منتجات'
             ],
             [
                 'name' => 'edit-prodact',
@@ -146,7 +146,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-prodacttype',
-                'lable' => 'اضافة وصف المنتجات'
+                'lable' => 'إضافة وصف المنتجات'
             ],
             [
                 'name' => 'edit-prodacttype',
@@ -162,7 +162,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-shapping',
-                'lable' => 'اضافة شركات الشحن'
+                'lable' => 'إضافة شركات الشحن'
             ],
             [
                 'name' => 'edit-shapping',
@@ -176,6 +176,7 @@ class PeremissionSeeds extends Seeder
                 'name' => 'delete-shapping',
                 'lable' => 'حذف شركات الشحن'
             ]
+        ]
 );
     }
 
@@ -185,5 +186,4 @@ class PeremissionSeeds extends Seeder
 
 
 
-    DB::table('peremissions')->insert();
-        }
+}

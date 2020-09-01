@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل في اذن القص</h3>
+                <h3 class="card-title">تعديل في إذن القص</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->

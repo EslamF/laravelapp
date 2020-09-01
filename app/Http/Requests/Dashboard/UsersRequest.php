@@ -24,7 +24,7 @@ class UsersRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','min:3'],
+            'label' => ['required','min:3'],
             'description' => ['required'],
             'peremissions.*' => ['exists:peremissions,id']           
         ];
@@ -38,7 +38,7 @@ class UsersRequest extends FormRequest
 public function messages()
 {
     return [
-        'peremissions.*' => 'خطاء',
+        'peremissions.*' => 'خ',
     ];
 }
 }

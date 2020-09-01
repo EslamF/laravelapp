@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">انشاءاذن استلام الخامات</h3>
+                <h3 class="card-title">انشاءإذن إستلام الخامات</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -73,8 +73,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="bill_number">رقم الفتوره</label>
-                                <input type="text" class="form-control" name="bill_number" id="bill_number" placeholder="رقم الفتوره" class="@error('bill_number') is-danger @enderror" value="{{old('bill_number')}}">
+                                <label for="bill_number"> الرقم المرجعي الفتوره</label>
+                                <input type="text" class="form-control" name="bill_number" id="bill_number" placeholder=" الرقم المرجعي الفتوره" class="@error('bill_number') is-danger @enderror" value="{{old('bill_number')}}">
                                 @error('bill_number')
                                 <p class="help is-danger">
                                     {{$message}}

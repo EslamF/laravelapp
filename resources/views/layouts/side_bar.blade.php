@@ -37,62 +37,62 @@
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>
                                     <i class="fas fa-angle-left right" style="margin-right:110px" ></i>
-                                    الاذونات
+                                    الأذونات
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{Route('order.receiving.material')}}" class="nav-link"">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>اذن استلام خامات</p>
+                                        <p>إذن إستلام خامات</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('spreading.material.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>اذن الفرش</p>
+                                        <p>إذن الفرش</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('cutting.material.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>اذن القص</p>
+                                        <p>إذن القص</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('produce.order.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>اذن تصنيع</p>
+                                        <p>إذن تصنيع</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('receiving.product.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>اذن استلام منتجات</p>
+                                        <p>إذن إستلام منتجات</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('sort.order.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>اذن فرز</p>
+                                        <p>إذن فرز</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('fix.product.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>اذن استلام منتج تالف</p>
+                                        <p>إذن إستلام منتج تالف</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('receiving.damaged_product.create_page')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>اذن استلام تالف</p>
+                                        <p>إذن إستلام تالف</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('send.end_product.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>ارسال المنتج الي المخزن</p>
+                                        <p>إرسال المنتج الي المخزن</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

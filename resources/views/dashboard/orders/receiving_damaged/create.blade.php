@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">اذن استلام منتج تالف</h3>
+                <h3 class="card-title">إذن إستلام منتج تالف</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->

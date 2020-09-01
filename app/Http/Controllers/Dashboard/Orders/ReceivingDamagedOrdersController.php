@@ -16,9 +16,9 @@ class ReceivingDamagedOrdersController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $this->validate($request,[
             'prod_code' => 'required|exists:products,prod_code'
-        ]);
+        ],['prod_code'=>'المنتج غير موجود']);
         
         if(!$request->damage_type) {
             $request->merge([

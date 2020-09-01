@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">انشاء اذن تصنيع </h3>
+                <h3 class="card-title">انشاء إذن تصنيع </h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -15,10 +15,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">اذن القص</label>
+                                <label for="mq_r_code">إذن القص</label>
                                 <span style="color:red" v-if="error.cutting_order_id">*@{{error.cutting_order_id}}</span>
                                 <select class="form-control" @change="getFactoryByCuttingId(cutting_order_id)" v-model="cutting_order_id" id="user">
-                                    <option value="" disabled selected>اختر اذن القص</option>
+                                    <option value="" disabled selected>اختر إذن القص</option>
                                     <option :value="order.id" v-for="order in cutting_orders">@{{order.id}}</option>
                                 </select>
                                 @error('cutting_order_id')
@@ -50,9 +50,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">تاريخ الاستلام</label>
+                                <label for="weight">تاريخ الإستلام</label>
                                 <span style="color:red" v-if="error.receiving_date">*@{{error.receiving_date}}</span>
-                                <input type="date" class="form-control" v-model="receiving_date" id="weight" placeholder="تاريخ الاستلام">
+                                <input type="date" class="form-control" v-model="receiving_date" id="weight" placeholder="تاريخ الإستلام">
                             </div>
                         </div>
                     </div>

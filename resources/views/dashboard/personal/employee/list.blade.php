@@ -13,11 +13,11 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-3">اسم</th>
                                 <th class="col-md-3">البريد الالكتروني</th>
                                 <th class="col-md-2">صلحية الموظف</th>
-                                <th class="col-md-3">امكانيه</th>
+                                <th class="col-md-3">الخيارات</th>
                             </div>
                         </tr>
                     </thead>
@@ -33,7 +33,7 @@
                                     @can('edit-employee')
                                     <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
                                     @endcan
-                                    @can('delet-employee')
+                                    @can('delete-employee')
                                     <form style="display:inline" action="{{Route('employee.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type_id" value="{{$employee->id}}">

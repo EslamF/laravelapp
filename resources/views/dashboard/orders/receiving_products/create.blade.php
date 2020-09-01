@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">انشاء اذن استلام المنتجات</h3>
+                <h3 class="card-title">انشاء إذن إستلام المنتجات</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,9 +14,9 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="factory">اذن التصنيع</label>
+                                <label for="factory">إذن التصنيع</label>
                                 <select class="form-control" @change="listProducts(produce_order_id)" v-model="produce_order_id">
-                                    <option value="" disabled selected>حدد اذن التصنيع</option>
+                                    <option value="" disabled selected>حدد إذن التصنيع</option>
                                     <option :value="order.id" v-for="order in produce_orders">@{{order.id}}</option>
                                 </select>
                                 @error('produce_order_id')

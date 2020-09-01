@@ -13,7 +13,7 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-4">الموظف</th>
                                 <th class="col-md-5">الشركة</th>
                                 <th class="col-md-2">Action</th>

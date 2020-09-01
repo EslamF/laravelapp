@@ -13,9 +13,9 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">رقم</th>
+                                <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-8">المقاسات</th>
-                                <th class="col-md-3">الامكانيه</th>
+                                <th class="col-md-3">الالخيارات</th>
                             </div>
                         </tr>
                     </thead>

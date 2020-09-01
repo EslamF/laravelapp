@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل اذن استلام الخامه</h3>
+                <h3 class="card-title">تعديل إذن إستلام الخامه</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -102,7 +102,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="bill_number">رقم الفتوره</label>
+                                <label for="bill_number"> الرقم المرجعي الفتوره</label>
                                 <input type="text" class="form-control" value="{{$data['material']->bill_number}}"
                                     name="bill_number" id="bill_number" class="@error('bill_number') is-danger @enderror"
                                     value="{{old('bill_number')}}">

@@ -19,8 +19,8 @@
             <div class="row ">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="phone">رقم الهاتف</label>
-                        <input type="text" class="form-control" name="phone" id="phone" placeholder="اخل رقم الهاتف">
+                        <label for="phone"> الرقم المرجعي الهاتف</label>
+                        <input type="text" class="form-control" name="phone" id="phone" placeholder="اخل  الرقم المرجعي الهاتف">
                     </div>
                 </div>
                     <div class="col-md-6">

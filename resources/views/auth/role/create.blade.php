@@ -11,26 +11,18 @@
             <form role="form" action="{{Route('role.store')}}" method="POST">
                 @csrf
                 <div class="card-body " style="height: 100%">
+                
                     <div class="form-group">
-                        <label for="name">اسم الصلاحيه</label>
-                        <input type="text"
-                         class="form-control @error('name') is-danger @enderror"
-                            name="name" id="name"  placeholder="ادخل اسم الصلاحية" value="{{old('name')}}">
-                        @error('name')
-                    <p class=" is-danger">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="label">اسم الصلاحيه</label>
+                        <label for="label"></label>
                         <input type="text"
                          class="form-control @error('label') is-danger @enderror"
-                            name="label" id="label"  placeholder="ادخل اسم الصلاحية" value="{{old('label')}}">
+                            name="label" id="label"  placeholder="ادخل اسم الوظيفة" value="{{old('label')}}">
                         @error('label')
                     <p class=" is-danger">{{$message}}</p>
                         @enderror
                     </div>
                     <div class="form-group ">
-                        <label for="desc">التفاصيل</label>
+                        <label for="desc">وصف</label>
                         {{-- @if(count($errors->toArray()))
                             @foreach($errors[peremissions]->toArray())
                             @endif
@@ -45,8 +37,8 @@
                     <div class="row">
                         @foreach($peremissions as $peremission)
                     <div class="form-check col-3 ">
-                    <input type="checkbox" class="form-check-input" name="peremissions[]" id="exampleCheck1" value="{{$peremission->id}}">
-                    <label class="form-check-label" for="exampleCheck1"  >{{$peremission->lable}}</label>
+                    <input type="checkbox" class="form-check-input" name="peremissions[]" id="{{$peremission->id}}" value="{{$peremission->id}}">
+                    <label class="form-check-label" for="{{$peremission->id}}"  >{{$peremission->lable}}</label>
                       </div>
                       @endforeach
                 </div>

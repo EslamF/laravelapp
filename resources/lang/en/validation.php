@@ -34,8 +34,8 @@ return [
     'date_equals'    => 'يجب أن يكون :attribute مطابقاً للتاريخ :date.',
     'date_format'    => 'لا يتوافق :attribute مع الشكل :format.',
     'different'      => 'يجب أن يكون الحقلان :attribute و :other مُختلفين.',
-    'digits'         => 'يجب أن يحتوي :attribute على :digits رقمًا/أرقام.',
-    'digits_between' => 'يجب أن يحتوي :attribute بين :min و :max رقمًا/أرقام .',
+    'digits'         => 'يجب أن يحتوي :attribute على :digits  الرقم المرجعيًا/أرقام.',
+    'digits_between' => 'يجب أن يحتوي :attribute بين :min و :max  الرقم المرجعيًا/أرقام .',
     'dimensions'     => 'الـ :attribute يحتوي على أبعاد صورة غير صالحة.',
     'distinct'       => 'للحقل :attribute قيمة مُكرّرة.',
     'email'          => 'يجب أن يكون :attribute عنوان بريد إلكتروني صحيح البُنية.',
@@ -91,7 +91,7 @@ return [
     ],
     'not_in'               => 'العنصر :attribute غير صحيح.',
     'not_regex'            => 'صيغة :attribute غير صحيحة.',
-    'numeric'              => 'يجب على :attribute أن يكون رقمًا.',
+    'numeric'              => 'يجب على :attribute أن يكون  الرقم المرجعيًا.',
     'password'             => 'كلمة المرور غير صحيحة.',
     'present'              => 'يجب تقديم :attribute.',
     'regex'                => 'صيغة :attribute .غير صحيحة.',
@@ -175,5 +175,11 @@ return [
         'time'                  => 'الوقت',
         'available'             => 'مُتاح',
         'size'                  => 'الحجم',
+        'prod_code'                  => 'الكود المنتج',
+        'factory_id'                  => 'الرقم المرجعي الخاص بلمصنع',
+        // 'prod_code'                  => 'الكود المنتج',
+        // 'prod_code'                  => 'الكود المنتج',
+        
+        
     ],
 ];

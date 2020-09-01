@@ -15,9 +15,9 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-2">رقم المورد</th>
+                                <th class="col-md-2"> الرقم المرجعي المورد</th>
                                 <th class="col-md-4">اسم المورد</th>
-                                <th class="col-md-6">امكانيه</th>
+                                <th class="col-md-6">الخيارات</th>
                             </div>
                         </tr>
                     </thead>
