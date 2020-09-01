@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">جدوال اذونات إستلام الخامات</h3>
-                <a href="{{Route('order.receiving_material.create_page')}}" class="btn btn-success float-right">إضافة</a>
+                <h3 class="card-title"> أذونات إستلام الخامات</h3>
+                <a href="{{Route('order.receiving_material.create_page')}}" class="btn btn-success float-right">انشاء إذن إستلام </a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -14,10 +14,11 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-2">كود الخامه</th>
-                                <th class="col-md-2">نوع الخامه</th>
+                                <th class="col-md-2">كود الخامة</th>
+                                <th class="col-md-2">نوع الخامة</th>
                                 <th class="col-md-2">المورد</th>
-                                <th class="col-md-2"> الرقم المرجعي الفاتوره</th>
+                                <th class="col-md-1">الرقم المرجعي الفاتورة</th>
+                                <th class="col-md-1">الموظف المستلم</th>
                                 <th class="col-md-1">الموظف المستلم</th>
                                 <th class="col-md-2">الخيارات</th>
                             </div>

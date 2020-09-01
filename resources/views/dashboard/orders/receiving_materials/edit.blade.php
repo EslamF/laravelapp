@@ -88,7 +88,7 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label for="qty">الكميه</label>
+                                <label for="qty">الكمية</label>
                                 <input type="text" value="{{$data['material']->qty}}" class="form-control" name="qty"
                                     id="qty"
                                     class="@error('qty') is-danger @enderror"
@@ -102,7 +102,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="bill_number"> الرقم المرجعي الفتوره</label>
+                                <label for="bill_number"> الرقم المرجعي الفتورة</label>
                                 <input type="text" class="form-control" value="{{$data['material']->bill_number}}"
                                     name="bill_number" id="bill_number" class="@error('bill_number') is-danger @enderror"
                                     value="{{old('bill_number')}}">

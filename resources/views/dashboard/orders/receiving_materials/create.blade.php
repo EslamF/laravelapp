@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">انشاءإذن إستلام الخامات</h3>
+                <h3 class="card-title">إذن إستلام الخامات</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">كود الخامه</label>
+                                <label for="mq_r_code">كود الخامة</label>
                                 <input type="text" class="form-control" name="mq_r_code" id="mq_r_code" placeholder="كود الخامة" class="@error('mq_r_code') is-danger @enderror" value="{{old('mq_r_code')}}">
                                 @error('mq_r_code')
                                 <p class="help is-danger">
@@ -27,9 +27,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="user">الموظف المستلم</label>
+                                <label for="user">الموظف المشتري</label>
                                 <select class="form-control" name="user_id" id="user" class="@error('user_id') is-danger @enderror">
-                                    <option disabled selected>حدد اسم الموظف المستلم</option>
+                                    <option disabled selected>حدد اسم الموظف المشتري</option>
                                     @foreach($data['users'] as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
@@ -62,7 +62,7 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label for="qty">الكميه</label>
+                                <label for="qty">الكمية</label>
                                 <input type="number" class="form-control" name="qty" id="qty" placeholder="الكميه" class="@error('qty') is-danger @enderror" value="{{old('qty')}}">
                                 @error('qty')
                                 <p class="help is-danger">
@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="bill_number"> الرقم المرجعي الفتوره</label>
+                                <label for="bill_number"> الرقم المرجعي الفتورة</label>
                                 <input type="text" class="form-control" name="bill_number" id="bill_number" placeholder=" الرقم المرجعي الفتوره" class="@error('bill_number') is-danger @enderror" value="{{old('bill_number')}}">
                                 @error('bill_number')
                                 <p class="help is-danger">
@@ -99,14 +99,13 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="material_types">نوع الخامه</label>
+                                <label for="material_types">نوع الخامة</label>
                                 <select class="form-control" name="material_type_id" id="material_types" class="@error('material_type_id') is-danger @enderror">
-                                    <option value="" disabled selected>اختر نوع الخامه</option>
+                                    <option value="" disabled selected>اختر نوع الخامة</option>
                                     @foreach($data['material_types'] as $type)
                                     <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
-
                                 @error('material_type_id')
                                 <p class="help is-danger">
                                     {{$message}}
@@ -125,9 +124,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="description">التفاصيل</label>
-                        <textarea class="form-control" name="description" id="description" class="@error('description') is-danger @enderror" value="{{old('description')}}">س
-                        </textarea>
+                        <label for="description">ملاحظات</label>
+                        <textarea class="form-control" name="description" id="description" class="@error('description') is-danger @enderror" value="{{old('description')}}">                  </textarea>
                         @error('description')
                         <p class="help is-danger">
                             {{$message}}

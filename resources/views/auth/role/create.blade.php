@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">انشاء صلاحيات</h3>
+                <h3 class="card-title">الوظائف</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start  -->
@@ -24,17 +24,20 @@
                     <div class="form-group ">
                         <label for="desc">وصف</label>
                         {{-- @if(count($errors->toArray()))
-                            @foreach($errors[peremissions]->toArray())
+                            @foreach($errors[peremissions]->toArray() as $peremission_error)
                             @endif
-                            @endforeach --}}
-                            {{-- {{dd($peremissions)}} --}}
-                        <input type="text" class="form-control" name="description" id="description"  placeholder="ادخل التفاصيل">
+                            @endforeach  --}}
+                             {{-- {{dd($peremissions)}} --}}
+                        <input type="text" class="form-control" name="description" id="description"  placeholder="ادخل الوصف">
                         @error('description')
                         <p class=" is-danger">{{$message}}</p>
                             @enderror
                     </div>
                     
-                    <div class="row">
+                    <div class="row ">
+                        <h4> 
+                            الصلحيات
+                        </h4>
                         @foreach($peremissions as $peremission)
                     <div class="form-check col-3 ">
                     <input type="checkbox" class="form-check-input" name="peremissions[]" id="{{$peremission->id}}" value="{{$peremission->id}}">

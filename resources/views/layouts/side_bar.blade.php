@@ -27,7 +27,7 @@
                                 <li class="nav-item">
                                     <a href="{{Route('material.type.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>انواع الخامات</p>
+                                        <p>أنواع الخامات</p>
                                     </a>
                                 </li>
                             </ul>
@@ -133,7 +133,7 @@
                                 <li class="nav-item">
                                     <a href="{{Route('product.type.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>انواع المنتجات</p>
+                                        <p>أنواع المنتجات</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -156,7 +156,7 @@
                                 <li class="nav-item">
                                     <a href="{{Route('factory.type.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>انواع المصانع</p>
+                                        <p>أنواع المصانع</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
