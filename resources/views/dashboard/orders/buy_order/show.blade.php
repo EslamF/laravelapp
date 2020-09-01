@@ -34,7 +34,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Factory Qty</th>
                                         <th style="width: 12%;" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Price</th>
                                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Total</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Remove</th>
+                                        <!-- <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Remove</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,13 +44,14 @@
                                         <td>@{{product.company_qty}}</td>
                                         <td>@{{product.factory_qty}}</td>
                                         <td>
-                                            <span style="color:red" v-if="have_error">@{{errors[index].price_err}}</span>
-                                            <input type="number" @keyup="getGrandTotal()" class="form-control" v-model="product.price">
+                                            @{{product.price}}
+                                            <!-- <span style="color:red" v-if="have_error">@{{errors[index].price_err}}</span> -->
+                                            <!-- <input type="number" @keyup="getGrandTotal()" class="form-control" v-model="product.price"> -->
                                         </td>
                                         <td>@{{product.price * (product.company_qty + product.factory_qty)}}</td>
-                                        <td>
+                                        <!-- <td>
                                             <button type="button" @click="removeItem(index, product.id)" class="btn btn-danger">Remove</button>
-                                        </td>
+                                        </td> -->
 
                                     </tr>
                                 </tbody>
@@ -62,7 +63,7 @@
                                         <th rowspan="1" colspan="1"></th>
                                         <th rowspan="1" colspan="1">Grand Total</th>
                                         <th rowspan="1" colspan="1">@{{grand_total}}</th>
-                                        <th rowspan="1" colspan="1"></th>
+                                        <!-- <th rowspan="1" colspan="1"></th> -->
                                     </tr>
                                 </tfoot>
                             </table>
