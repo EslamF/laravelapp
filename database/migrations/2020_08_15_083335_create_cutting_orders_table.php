@@ -26,6 +26,11 @@ class CreateCuttingOrdersTable extends Migration
                 ->references('id')->on('factories')
                 ->onDelete('cascade');
 
+            $table->unsignedBigInteger('spreading_out_material_order_id');
+            $table->foreign('spreading_out_material_order_id')
+                ->references('id')->on('spreading_out_material_orders')
+                ->onDelete('cascade');
+
             $table->string('layers')->nullable();
             $table->string('extra_returns_weight')->nullable();
 

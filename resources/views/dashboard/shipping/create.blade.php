@@ -7,24 +7,24 @@
                 <!-- /.card-header -->
                 <h3 class="card-title"></h3>
             </div>
-                <!-- form start  -->
-                <form role="form" action="{{Route('shipping.store')}}" method="POST">
-                    @csrf
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="name">اسم الشركه</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="ادخل اسم الشركه">
-                        </div>
+            <!-- form start  -->
+            <form role="form" action="{{Route('shipping.store')}}" method="POST">
+                @csrf
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">اسم الشركه</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="ادخل اسم الشركه">
                     </div>
-                    <!-- /.card-body -->
-                    
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">تسجيل</button>
-                        <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 @endsection

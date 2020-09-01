@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 @extends('index')
 @section('content')
 <div class="row">
@@ -34,8 +26,7 @@
                                 <td class="col-md-1">{{$size->id}}</td>
                                 <td class="col-md-9">{{$size->name}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('size.edit_page', $size->id)}}"
-                                        class="btn btn-primary">تعديل</a>
+                                    <a href="{{Route('size.edit_page', $size->id)}}" class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('size.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type_id" value="{{$size->id}}">
@@ -57,8 +48,3 @@
     </div>
 </div>
 @endsection
-
-
-
-
-

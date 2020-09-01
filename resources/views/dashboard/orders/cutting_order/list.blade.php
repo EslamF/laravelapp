@@ -14,13 +14,9 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <th class="col-md-1">رقم</th>
-                                <th class="col-md-2">الموظف</th>
-                                <th class="col-md-1">الراقات</th>
-                                <th class="col-md-2">المنتج</th>
-                                <th class="col-md-1">الكميه</th>
-                                <th class="col-md-1">المقاس</th>
-                                <th class="col-md-1">الزياده المرتجعه</th>
-                                <th class="col-md-3">الامكانيه</th>
+                                <th class="col-md-4">الموظف</th>
+                                <th class="col-md-5">الشركة</th>
+                                <th class="col-md-2">Action</th>
                             </div>
                         </tr>
                     </thead>
@@ -29,17 +25,11 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <td class="col-md-1">{{$value->id}}</td>
-                                <td class="col-md-2">{{$value->user->name}}</td>
-                                <td class="col-md-1">{{$value->layers}}</td>
-                                <td class="col-md-2">{{$value->productType->name}}</td>
-                                <td class="col-md-1">{{$value->qty}}</td>
-                                <td class="col-md-1">{{$value->size->name}}</td>
-                                <td class="col-md-1">{{$value->extra_returns_weight}}</td>
-                                <td class="col-md-3">
-                                    <a href="{{Route('cutting.material.edit_page', $value->id)}}"
-                                        class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('cutting.material.delete')}}"
-                                        method="POST">
+                                <td class="col-md-4">{{$value->user? $value->user->name:'غير متاح'}}</td>
+                                <td class="col-md-5">{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
+                                <td class="col-md-2">
+                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">Show</a>
+                                    <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="cutting_order_id" value="{{$value->id}}">
                                         <button type="submit" class="btn btn-danger">حذف</button>

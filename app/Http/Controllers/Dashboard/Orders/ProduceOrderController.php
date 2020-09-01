@@ -15,19 +15,21 @@ class ProduceOrderController extends Controller
     {
         $data = ProduceOrder::with(
             'cuttingOrder:id',
-            'material:id,mq_r_code',
-            'factory:id,name'
-            )->paginate();
-            
+            'factory:id,name',
+        )->paginate();
         return view('dashboard.orders.produce_order.list')->with('data', $data);
+    }
+
+    public function getAll()
+    {
+        return response()->json(ProduceOrder::select('id', 'cutting_order_id')->get(), 200);
     }
 
     public function createPage()
     {
         $data = [];
-        $data['factories'] = Factory::select('id', 'name')->get();
         $data['materials'] = Material::select('id', 'mq_r_code')->get();
-        $data['cutting_orders'] = CuttingOrder::select('id')->get();
+        $data['cutting_orders'] = CuttingOrder::select('id')->doesntHave('produceOrders')->get();
 
         return view('dashboard.orders.produce_order.create')->with('data', $data);
     }
@@ -35,15 +37,12 @@ class ProduceOrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'factory_id'       => 'required|exists:factories,id',
-            'material_id'      => 'required|exists:materials,id',
             'cutting_order_id' => 'required|exists:cutting_orders,id',
+            'factory_id' => 'required|exists:factories,id',
             'receiving_date'   => 'required|date',
-            'qty'              => 'required',
         ]);
 
-        ProduceOrder::create($request->all());
-        return redirect()->route('produce.order.list');
+        return response()->json(ProduceOrder::create($request->all()), 200);
     }
 
     public function editPage($produce_id)
@@ -61,11 +60,10 @@ class ProduceOrderController extends Controller
         $request->validate([
             'produce_id'       => 'exists:produce_orders,id',
             'factory_id'       => 'exists:factories,id',
-            'material_id'      => 'exists:materials,id',
             'cutting_order_id' => 'exists:cutting_orders,id',
             'receiving_date'   => 'date',
         ]);
-        
+
         ProduceOrder::find($request->produce_id)->update($request->all());
         return redirect()->route('produce.order.list');
     }
@@ -76,7 +74,7 @@ class ProduceOrderController extends Controller
         $request->validate([
             'produce_id' => 'required|exists:produce_orders,id',
         ]);
-        
+
         ProduceOrder::find($request->produce_id)->delete();
         return redirect()->route('produce.order.list');
     }

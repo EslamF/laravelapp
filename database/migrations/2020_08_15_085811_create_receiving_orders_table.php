@@ -21,17 +21,6 @@ class CreateReceivingOrdersTable extends Migration
                 ->references('id')->on('produce_orders')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('product_type_id');
-            $table->foreign('product_type_id')
-                ->references('id')->on('product_types')
-                ->onDelete('cascade');
-
-            $table->unsignedBigInteger('size_id');
-            $table->foreign('size_id')
-                ->references('id')->on('sizes')
-                ->onDelete('cascade');
-            $table->date('receiving_date');
-            $table->string('qty');
             $table->boolean('status');
             $table->timestamps();
         });

@@ -8,7 +8,7 @@ use App\Models\Organization\ShippingCompany;
 
 class ShippingCompanyController extends Controller
 {
-   /**
+    /**
      * 
      * create shipping 
      * request input name required
@@ -49,9 +49,8 @@ class ShippingCompanyController extends Controller
         $request->validate([
             'type_id' => 'required|exists:shipping_companies,id'
         ]);
+
         ShippingCompany::find($request->type_id)->delete();
-
-
         return redirect()->route('shipping.list');
     }
     /**
@@ -61,7 +60,8 @@ class ShippingCompanyController extends Controller
      */
     public function getAll()
     {
-        $types = ShippingCompany::all();
+        $companies = ShippingCompany::select('id', 'name')->get();
+        return response()->json($companies, 200);
     }
     /**
      * 
@@ -75,15 +75,13 @@ class ShippingCompanyController extends Controller
     {
         $types = ShippingCompany::paginate(15);
         return view('dashboard.shipping.list')->with('types', $types);
-
-
     }
     public function createPage()
     {
         return view('dashboard.shipping.create');
     }
 
-    public function editPage( $type_id)
+    public function editPage($type_id)
     {
         $type = ShippingCompany::where('id', $type_id)->first();
         return view('dashboard.shipping.edit')->with('type', $type);

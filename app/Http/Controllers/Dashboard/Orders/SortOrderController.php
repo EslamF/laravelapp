@@ -35,7 +35,7 @@ class SortOrderController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'code'    => 'unique:sort_orders,code,'. $request->sort_id
+            'code'    => 'unique:sort_orders,code,' . $request->sort_id
         ]);
 
         SortOrder::find($request->sort_id)->update([
@@ -73,19 +73,19 @@ class SortOrderController extends Controller
 
     public function generateCode()
     {
-        $code = rand(0,6000000000000);
+        $code = rand(0, 6000000000000);
         $check = SortOrder::where('code', $code)->exists();
-        if($check){
+        if ($check) {
             $this->generateCode();
-        }else {
+        } else {
             return $code;
         }
     }
 
     public function showSortedProducts($sort_id)
     {
-        $data=[];
-        $data['records'] = Product::whereHas('sortOrder', function($q) use ($sort_id) {
+        $data = [];
+        $data['records'] = Product::whereHas('sortOrder', function ($q) use ($sort_id) {
             return $q->where('id', $sort_id);
         })->orderBy('sort_date', 'DESC')->paginate();
         $data['sort_id'] = $sort_id;
@@ -94,23 +94,24 @@ class SortOrderController extends Controller
 
     public function sortProduct(Request $request)
     {
+        $request->validate([
+            'prod_code' => 'required|exists:products,prod_code',
+            'damage_type' => 'required|in:ironing,tailoring,dyeing,fine'
+        ]);
 
-        
         $dateNow = Carbon::now();
         $product = Product::where('prod_code', $request->prod_code)->first();
-        $request->merge([
-            'status' => 'damaged',
-            'sort_date' => $dateNow->toDateTimeString(),
-            'sort_order_id' => $request->sort_id,
-            'sorted'    => 1
-        ]);
-        if(!$request->damage_type) {
-            $request->merge([
-                'status' => 'damaged'
+
+        if (isset($product)) {
+
+            $product->update([
+                'damage_type' => $request->damage_type == 'fine' ? '' : $request->damage_type,
+                'sort_date' => $dateNow->toDateTimeString(),
+                'sort_order_id' => $request->sort_id,
+                'sorted' => 1,
+                'status' => $request->damage_type == 'fine' ? 'available' : 'damaged',
             ]);
         }
-
-        $product->update($request->all());
         return redirect()->route('sort.product.list', $request->sort_id);
     }
 

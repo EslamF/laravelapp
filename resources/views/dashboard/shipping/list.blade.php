@@ -26,8 +26,7 @@
                                 <td class="col-md-1">{{$shipping->id}}</td>
                                 <td class="col-md-8">{{$shipping->name}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('shipping.edit_page', $shipping->id)}}"
-                                        class="btn btn-primary">تعديل</a>
+                                    <a href="{{Route('shipping.edit_page', $shipping->id)}}" class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('shipping.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type_id" value="{{$shipping->id}}">
@@ -49,8 +48,3 @@
     </div>
 </div>
 @endsection
-
-
-
-
-

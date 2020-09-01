@@ -26,35 +26,33 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1"> تأكيد كلمه المرور</label>
-                        <input type="password" class="form-control" value="{{$data['user']->password}}" name="password_confirmation"  id="exampleInputPassword1" placeholder="تأكيد كلمه المرور">
-                </div>
-                
-                <div class="form-group ">
-                    
-                    {{-- {{dd($data['user']->roles)}} --}}
-                    <label for="type">نوع الوظيفة</label>
-                    <select class="form-control" name="role_id" id="role_id"
-                    class="@error('role_id') is-danger @enderror"
-                    value="{{old('role_id')}}"> 
-                    
-                    <option value="" disabled selected>
-                        اختر نوع الوظيية</option>
-                        @foreach($data['roles'] as $role)
-                        <option value="{{$role->id}}" {{ isset($data['user']->roles) ??  $data['user']->roles == $role->id  ? 'selected' : ''  }}>{{$role->label}}</option>
-                        @endforeach
-                    </select>
-                    {{--
+                        <input type="password" class="form-control" value="{{$data['user']->password}}" name="password_confirmation" id="exampleInputPassword1" placeholder="تأكيد كلمه المرور">
+                    </div>
+
+                    <div class="form-group ">
+
+                        {{-- {{dd($data['user']->roles)}} --}}
+                        <label for="type">نوع الوظيفة</label>
+                        <select class="form-control" name="role_id" id="role_id" class="@error('role_id') is-danger @enderror" value="{{old('role_id')}}">
+
+                            <option value="" disabled selected>
+                                اختر نوع الوظيية</option>
+                            @foreach($data['roles'] as $role)
+                            <option value="{{$role->id}}" {{ isset($data['user']->roles) ?'':  $data['user']->roles == $role->id  ? 'selected' : '' }}>{{$role->label}}</option>
+                            @endforeach
+                        </select>
+                        {{--
                     @error('role_id')
                     <p class="help is-danger">
                         {{$message}}
-                    </p>
-                    @enderror
-                </div>  --}}
+                        </p>
+                        @enderror
+                    </div> --}}
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">تأكيد كلمه المرور</button>
+                    <button type="submit" class="btn btn-primary">تأكيد </button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

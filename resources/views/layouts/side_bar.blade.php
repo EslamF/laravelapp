@@ -101,6 +101,24 @@
                                         <p>Store Product Order</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('buy.list_page')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Buy Order</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('process.get_list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Buy Order Proccess</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{Route('shipping.get_list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Shipping Order</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item has-treeview"  >
@@ -159,7 +177,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="pages/tables/simple.html" class="nav-link">
+                                    <a href="{{Route('size.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>المقاسات</p>
                                     </a>

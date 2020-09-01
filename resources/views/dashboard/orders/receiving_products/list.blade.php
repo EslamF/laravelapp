@@ -14,12 +14,9 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <th class="col-md-1">رقم</th>
-                                <th class="col-md-1">اذن اتصنيع</th>
-                                <th class="col-md-2">المنتج</th>
-                                <th class="col-md-1">مقاس</th>
-                                <th class="col-md-1">الكميه</th>
-                                <th class="col-md-3">تاريخ الاستلام</th>
-                                <th class="col-md-1">حاله الاذن</th>
+                                <th class="col-md-3">اذن اتصنيع</th>
+                                <th class="col-md-4">تاريخ الاستلام</th>
+                                <th class="col-md-2">حاله الاذن</th>
                                 <th class="col-md-2">الامكانيه</th>
                             </div>
                         </tr>
@@ -29,17 +26,11 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <td class="col-md-1">{{$value->id}}</td>
-                                <td class="col-md-1">{{$value->produce_order_id}}</td>
-                                <td class="col-md-2">{{$value->productType->name}}</td>
-                                <td class="col-md-1">{{$value->size->name}}</td>
-                                <td class="col-md-1">{{$value->qty}}</td>
-                                <td class="col-md-3">{{$value->receiving_date}}</td>
-                                <td class="col-md-1">{{$value->status == 1 ? "Approved":"Not Approved"}}</td>
+                                <td class="col-md-3">{{$value->produce_order_id}}</td>
+                                <td class="col-md-4">{{substr($value->created_at,0,10)}}</td>
+                                <td class="col-md-2">{{$value->status == 1 ? "Approved":"Not Approved"}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('receiving.product.edit_page', $value->id)}}"
-                                        class="btn btn-primary"> تعديل</a>
-                                    <form style="display:inline" action="{{Route('receiving.product.delete')}}"
-                                        method="POST">
+                                    <form style="display:inline" action="{{Route('receiving.product.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="receiving_id" value="{{$value->id}}">
                                         <button type="submit" class="btn btn-danger">حذف</button>

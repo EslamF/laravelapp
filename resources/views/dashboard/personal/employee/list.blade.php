@@ -1,5 +1,3 @@
-
-
 @extends('index')
 @section('content')
 <div class="row">
@@ -33,10 +31,9 @@
                                 <td class="col-md-3">{{isset($employee->roles->label) ? $employee->roles->label: "لا يوجد له صلاحيه" }}</td>
                                 <td class="col-md-3">
                                     @can('edit-employee')
-                                    <a href="{{Route('employee.edit_page', $employee->id)}}"
-                                        class="btn btn-primary">تعديل</a>
-                                        @endcan
-                                    @can('delete-employee')
+                                    <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
+                                    @endcan
+                                    @can('delet-employee')
                                     <form style="display:inline" action="{{Route('employee.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type_id" value="{{$employee->id}}">
@@ -59,8 +56,3 @@
     </div>
 </div>
 @endsection
-
-
-
-
-

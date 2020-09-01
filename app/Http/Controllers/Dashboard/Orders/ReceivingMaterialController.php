@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Dashboard\Orders;
+
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,16 +14,15 @@ class ReceivingMaterialController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'code' => 'required',
             'mq_r_code' => 'required',
             'material_type_id' => 'required|exists:material_types,id',
             'user_id' => 'required|exists:users,id',
             'supplier_id' => 'required|exists:suppliers,id',
             'bill_number' => 'required',
             'description' => 'required',
-            "color"=>'required'
+            'color' => 'required'
         ]);
-        
+
         Material::create($request->all());
         return redirect()->route('order.receiving.material');
     }
@@ -38,7 +38,7 @@ class ReceivingMaterialController extends Controller
 
     public function getAllPaginate()
     {
-        $receiving = Material::with('materialType:id,name','supplier:id,name','user:id,name')->paginate();
+        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'user:id,name')->paginate();
         return view('dashboard.orders.receiving_materials.list')->with('receiving', $receiving);
     }
 
@@ -49,13 +49,13 @@ class ReceivingMaterialController extends Controller
         $data['suppliers'] = Supplier::select('id', 'name')->get();
         $data['material_types'] = MaterialType::select('id', 'name')->get();
         $data['material'] = Material::where('id', $material_id)->first();
-                            
-        return view('dashboard.orders.receiving_materials.edit')->with('data',$data);
+
+        return view('dashboard.orders.receiving_materials.edit')->with('data', $data);
     }
 
     public function update(Request $request)
     {
-        
+
         $request->validate([
             'material_id' => 'required|exists:materials,id',
             'code' => 'min:3',

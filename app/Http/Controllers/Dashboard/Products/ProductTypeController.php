@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Products;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products\ProductType;
+use App\Models\Products\Product;
 
 class ProductTypeController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductTypeController extends Controller
         $request->validate([
             'name' => 'required|min:3'
         ]);
-        Product::select('id', 'name', 'category_id')->with('category:id,name')->where('id', 1)->get();
+
         ProductType::create($request->all());
         return redirect()->route('product.type.list');
     }
@@ -37,15 +38,6 @@ class ProductTypeController extends Controller
 
         ProductType::find($request->type_id)->update($request->all());
         return redirect()->route('product.type.list');
-    }
-    /**
-     * 
-     * get all for select
-     * 
-     */
-    public function getAll()
-    {
-        $types = ProductType::all();
     }
     /**
      * 
@@ -90,5 +82,11 @@ class ProductTypeController extends Controller
         ProductType::find($request->type_id)->delete();
 
         return redirect()->route('product.type.list');
+    }
+
+    public function getAll()
+    {
+        $productType =  ProductType::select('id', 'name')->get();
+        return response()->json($productType, 200);
     }
 }

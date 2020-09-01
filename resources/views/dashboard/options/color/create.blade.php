@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">اللون</label>
-                        <input type="text" class="form-control" name="name" id="name"  placeholder="ادخل اللون">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="ادخل اللون">
                     </div>
                 </div>
                 <!-- /.card-body -->

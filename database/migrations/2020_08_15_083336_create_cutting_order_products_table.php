@@ -33,6 +33,8 @@ class CreateCuttingOrderProductsTable extends Migration
 
             $table->string('qty');
 
+            $table->boolean('received')->default(0);
+
             $table->timestamps();
         });
     }

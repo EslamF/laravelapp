@@ -12,7 +12,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">موزف الفرز</label>
+                        <label for="name">موظف الفرز</label>
                         <select class="form-control" name="user_id" id="">
                             <option value="" disabled selected>حدد اسم موظف الفرز</option>
                             @foreach($data['users'] as $user)
@@ -20,11 +20,6 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="name">الكميه</label>
-                        <input type="text" class="form-control" value="{{$data['sort']->code}}" name="code" id="">
-                        <input type="hidden" value="{{$data['sort']->id}}" name="sort_id">
-                    </div>ذ
                 </div>
                 <!-- /.card-body -->
 

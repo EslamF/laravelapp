@@ -10,7 +10,7 @@ use App\Models\Products\Product;
 
 class ReceivingOrder extends Model
 {
-    protected $fillable = ['produce_order_id', 'product_type_id', 'qty', 'status', 'size_id', 'receiving_date'];
+    protected $fillable = ['produce_order_id', 'status',];
 
     public function produceOrder()
     {

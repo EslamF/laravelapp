@@ -42,8 +42,8 @@ class SpreadingMaterialController extends Controller
         $data['users'] = User::select('id', 'name')->get();
         $data['material'] = Material::select('id', 'mq_r_code')->get();
         $data['spreading'] = SpreadingOutMaterialOrder::where('id', $spreading_id)
-                                                    ->with('user:id,name', 'material:id,mq_r_code')
-                                                    ->first();
+            ->with('user:id,name', 'material:id,mq_r_code')
+            ->first();
         return view('dashboard.orders.spreading_materials.edit')->with('data', $data);
     }
 
@@ -55,7 +55,7 @@ class SpreadingMaterialController extends Controller
             'user_id'     => 'exists:users,id',
             'weight'=>'required'
         ]);
-        
+
         SpreadingOutMaterialOrder::find($request->spreading_id)->update($request->all());
         return redirect()->route('spreading.material.list');
     }
@@ -66,8 +66,13 @@ class SpreadingMaterialController extends Controller
         $request->validate([
             'spreading_id' => 'exists:spreading_out_material_orders,id',
         ]);
-        
+
         SpreadingOutMaterialOrder::find($request->spreading_id)->delete();
         return redirect()->route('spreading.material.list');
+    }
+
+    public function getAll()
+    {
+        return response()->json(SpreadingOutMaterialOrder::select('id')->get(), 200);
     }
 }

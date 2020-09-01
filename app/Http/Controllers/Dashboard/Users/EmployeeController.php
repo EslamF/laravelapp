@@ -9,7 +9,7 @@ use App\User;
 
 class EmployeeController extends Controller
 {
-/**
+    /**
      * 
      * create employee 
      * request input name required
@@ -26,9 +26,9 @@ class EmployeeController extends Controller
             'password' => 'required|confirmed',
             'role_id' => 'required|exists:roles,id'
         ]);
-          $user= User::create($request->all());
-          $user->assignRole($request->role_id);
-            return redirect()->route('employee.list');
+        $user = User::create($request->all());
+        $user->assignRole($request->role_id);
+        return redirect()->route('employee.list');
     }
     /**
      * 
@@ -43,7 +43,7 @@ class EmployeeController extends Controller
         //     'role_id' => 'required|exists:role,id'
         // ]);
 
-        $user= User::find($request->type_id);
+        $user = User::find($request->type_id);
         $user->update($request->all());
         $user->assignRole($request->role_id);
 
@@ -64,7 +64,8 @@ class EmployeeController extends Controller
      */
     public function getAll()
     {
-        $types = User::all();
+        $employee = User::select('id', 'name')->get();
+        return response()->json($employee, 200);
     }
     /**
      * 
@@ -75,9 +76,8 @@ class EmployeeController extends Controller
     {
         $data['user'] = User::with('roles')->paginate(15);
         return view('dashboard.personal.employee.list')->with('data', $data);
-
     }
-    public function editPage( $type_id)
+    public function editPage($type_id)
     {
         $data['user'] = User::where('id', $type_id)->with('roles')->first();
 
@@ -87,10 +87,10 @@ class EmployeeController extends Controller
     }
 
     public function createPage()
-        {
-            $roles = Role::select('id', 'label')->get();
-            return view('dashboard.personal.employee.create')->with('roles',$roles);;
-        }
+    {
+        $roles = Role::select('id', 'label')->get();
+        return view('dashboard.personal.employee.create')->with('roles', $roles);;
+    }
     /**
      * 
      * get employee by id
@@ -103,4 +103,5 @@ class EmployeeController extends Controller
             'type_id' => 'required|exists:users,id'
         ]);
         $employee = User::where('id', $request->type_id)->first();
-    }}
+    }
+}

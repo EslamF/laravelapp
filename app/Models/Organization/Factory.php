@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Models\Organization;
+
+use App\Models\Orders\CuttingOrder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Organization\FactoryType;
 
 class Factory extends Model
 {
-    protected $fillable = ['name', 'factory_type_id','phone','address'];
+    protected $fillable = ['name', 'factory_type_id', 'phone', 'address'];
 
     /**
      * 
@@ -15,6 +17,11 @@ class Factory extends Model
      */
     public function factoryType()
     {
-        return $this->belogsTo(FactoryType::class);
+        return $this->belongsTo(FactoryType::class);
+    }
+
+    public function cuttingOrder()
+    {
+        return $this->hasMany(CuttingOrder::class);
     }
 }

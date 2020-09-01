@@ -6,8 +6,8 @@
             <div class="card-header">
                 <h3 class="card-title">تعديل شركه الشحن</h3>
             </div>
-                <!-- /.card-header -->
-                <!-- form start -->
+            <!-- /.card-header -->
+            <!-- form start -->
             <form role="form" action="{{Route('shipping.update')}}" method="POST">
                 @csrf
                 <div class="card-body">
@@ -15,7 +15,7 @@
                         <label for="name">اسم الشركه</label>
                         <input type="text" class="form-control" value="{{$type->name}}" name="name" id="name" placeholder="ادخل اسم الشركه">
                         <input type="hidden" name="type_id" value="{{$type->id}}">
-                    </div> 
+                    </div>
                 </div>
                 <!-- /.card-body -->
 
