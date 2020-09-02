@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">جدول الموظفين</h3>
+                <h3 class="card-title">  الموظفين</h3>
                 <a href="{{Route('employee.create_page')}}" class="btn btn-success float-right">انشاء</a>
             </div>
             <!-- /.card-header -->
@@ -28,7 +28,7 @@
                                 <td class="col-md-1">{{$employee->id}}</td>
                                 <td class="col-md-2">{{$employee->name}}</td>
                                 <td class="col-md-3">{{$employee->email}}</td>
-                                <td class="col-md-3">{{isset($employee->roles->label) ? $employee->roles->label: "لا يوجد له صلاحيه" }}</td>
+                                <td class="col-md-3">{{isset($employee->roles->label) ? $employee->roles->label: "لا يوجد لة صلاحية" }}</td>
                                 <td class="col-md-3">
                                     @can('edit-employee')
                                     <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>

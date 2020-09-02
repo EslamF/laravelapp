@@ -8,23 +8,23 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-3">
-                            <h3 class="card-title">جدول فرز المنتجات</h3>
+                            <h3 class="card-title">  فرز المنتجات</h3>
                         </div>
                         <div class="col-md-4">
                             <input type="text" name="prod_code" class="form-control" placeholder="كود المنتج">
                         </div>
                         <div class="col-md-3">
                             <select name="damage_type" class="form-control" id="">
-                                <option value="" disabled selected>حدد حاله المنتج</option>
+                                <option value="" disabled selected>حدد حالة المنتج</option>
                                 <option value="fine">صالح</option>
                                 <option value="ironing">كي</option>
-                                <option value="tailoring">خياطه </option>
-                                <option value="dyeing">صباغه</option>
+                                <option value="tailoring">خياطة </option>
+                                <option value="dyeing">صباغة</option>
                             </select>
                         </div>
                         <input type="hidden" name="sort_id" value="{{$data['sort_id']}}" id="">
                         <div class="col-md-1">
-                            <button type="submit" class="btn btn-success float-right">اضافه</button>
+                            <button type="submit" class="btn btn-success float-right">اضافة</button>
                         </div>
                     </div>
                 </form>
@@ -36,8 +36,8 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-3">كود الخامه</th>
-                                <th class="col-md-2">حاله المنتج</th>
+                                <th class="col-md-3">كود الخامة</th>
+                                <th class="col-md-2">حالة المنتج</th>
                                 <th class="col-md-3">تاريخ الفرز</th>
                                 <th class="col-md-3">الخيارات</th>
                             </div>

@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">جدول اذونات التصنيع</h3>
+                <h3 class="card-title">  اذونات التصنيع</h3>
                 <a href="{{Route('produce.order.create')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->
@@ -17,7 +17,7 @@
                                 <th class="col-md-2"> الرقم المرجعي إذن القص</th>
                                 <th class="col-md-3">المصنع</th>
                                 <th class="col-md-3">تاريخ الإستلام</th>
-                                <th class="col-md-3">المكانيه</th>
+                                <th class="col-md-3">المكانية</th>
                             </div>
                         </tr>
                     </thead>

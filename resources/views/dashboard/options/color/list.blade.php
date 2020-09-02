@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">جدول الالوان</h3>
+                <h3 class="card-title">  الالوان</h3>
                 <a href="{{Route('color.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->

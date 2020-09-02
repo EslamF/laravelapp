@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">اضافه موظف</h3>
+                <h3 class="card-title">اضافة موظف</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start  -->
@@ -32,8 +32,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1"> كلمه المرور</label>
-                        <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="ادخل كلمه المرور ">
+                        <label for="exampleInputPassword1"> كلمة المرور</label>
+                        <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="ادخل كلمة المرور ">
                         @error('password_confirmation')
                         <p class="help is-danger">
                             {{ $message }}
@@ -42,8 +42,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputPassword1"> تأكيد كلمه المرور</label>
-                        <input type="password" class="form-control" name="password_confirmation" id="exampleInputPassword1" placeholder="تأكيد كلمه المرور">
+                        <label for="exampleInputPassword1"> تأكيد كلمة المرور</label>
+                        <input type="password" class="form-control" name="password_confirmation" id="exampleInputPassword1" placeholder="تأكيد كلمة المرور">
                         @error('password_confirmation')
                         <p class="help is-danger">
                             {{ $message }}

@@ -63,7 +63,7 @@
 
                             <div class="form-group">
                                 <label for="qty">الكمية</label>
-                                <input type="number" class="form-control" name="qty" id="qty" placeholder="الكميه" class="@error('qty') is-danger @enderror" value="{{old('qty')}}">
+                                <input type="number" class="form-control" name="qty" id="qty" placeholder="الكمية" class="@error('qty') is-danger @enderror" value="{{old('qty')}}">
                                 @error('qty')
                                 <p class="help is-danger">
                                     {{$message}}
@@ -74,7 +74,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="bill_number"> الرقم المرجعي الفتورة</label>
-                                <input type="text" class="form-control" name="bill_number" id="bill_number" placeholder=" الرقم المرجعي الفتوره" class="@error('bill_number') is-danger @enderror" value="{{old('bill_number')}}">
+                                <input type="text" class="form-control" name="bill_number" id="bill_number" placeholder=" الرقم المرجعي الفتورة" class="@error('bill_number') is-danger @enderror" value="{{old('bill_number')}}">
                                 @error('bill_number')
                                 <p class="help is-danger">
                                     {{$message}}

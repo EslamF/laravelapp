@@ -38,9 +38,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">حاله الفرز</label>
+                                <label for="weight">حالة الفرز</label>
                                 <select class="form-control" name="sorted" id="material">
-                                    <option value="" disabled selected>حدد حاله الفرز</option>
+                                    <option value="" disabled selected>حدد حالة الفرز</option>
                                     <option value="1" {{$data['product']->sorted == 1? 'selected' : ''}}>True</option>
                                     <option value="0" {{$data['product']->sorted == 0? 'selected' : ''}}>False</option>
                                 </select>
@@ -50,9 +50,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="weight"> حاله المنتج الفرز</label>
+                                <label for="weight"> حالة المنتج الفرز</label>
                                 <select class="form-control" name="damaged" id="material">
-                                    <option value="" disabled selected>حاجه المنتج</option>
+                                    <option value="" disabled selected>حاجة المنتج</option>
                                     <option value="1" {{$data['product']->damaged == 1? 'selected' : ''}}>صالح</option>
                                     <option value="0" {{$data['product']->damaged == 0? 'selected' : ''}}>تالف</option>
                                 </select>
@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 <label for="weight">Stock</label>
                                 <select class="form-control" name="status" id="material">
-                                    <option value="" disabled selected>جدد حاله المنتج</option>
+                                    <option value="" disabled selected>جدد حالة المنتج</option>
                                     <option value="available" {{$data['product']->status == 'available'? 'selected' : ''}}>متاح</option>
                                     <option value="pending" {{$data['product']->status == 'pending'? 'selected' : ''}}>انتظار</option>
                                     <option value="sold" {{$data['product']->status == 'sold'? 'selected' : ''}}>مباع</option>
@@ -73,9 +73,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="description">التفاصيل</label>
+                                <label for="description">الوصف</label>
                                 <textarea class="form-control" name="description"  id="description"
-                                    placeholder="ادخل التفاصيل">{{$data['product']->description}}</textarea>
+                                    placeholder="ادخل الوصف">{{$data['product']->description}}</textarea>
                             </div>
                         </div>
                     </div>

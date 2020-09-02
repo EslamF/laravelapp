@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">جدول المنتجات</h3>
+                <h3 class="card-title">  المنتجات</h3>
                 <a href="{{Route('product.create_page')}}" class="btn btn-success float-right">انشاء</a>
             </div>
             <!-- /.card-header -->
@@ -16,9 +16,9 @@
                                 <th class="col-md-1"> الرقم المرجعي </th>
                                 <th class="col-md-2">كود المنتج</th>
                                 <th class="col-md-2">كود المنتج</th>
-                                <th class="col-md-2">حاله المنتج</th>
-                                <th class="col-md-1">حاله الفرز</th>
-                                <th class="col-md-2">الحاله البيعيه</th>
+                                <th class="col-md-2">حالة المنتج</th>
+                                <th class="col-md-1">حالة الفرز</th>
+                                <th class="col-md-2">الحالة البيعية</th>
                                 <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>

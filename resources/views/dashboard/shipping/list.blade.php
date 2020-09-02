@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">شركات الشحن </h3>
-                <a href="{{Route('shipping.create_page')}}" class="btn btn-success float-right">اضافه</a>
+                <a href="{{Route('shipping.create_page')}}" class="btn btn-success float-right">اضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -14,7 +14,7 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-8">اسم الشركه</th>
+                                <th class="col-md-8">اسم الشركة</th>
                                 <th class="col-md-3">الخيارات</th>
                             </div>
                         </tr>

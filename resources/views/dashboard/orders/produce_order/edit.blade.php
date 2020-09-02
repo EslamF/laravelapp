@@ -57,9 +57,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="material">الخامه</label>
+                                <label for="material">الخامة</label>
                                 <select class="form-control" name="material_id" id="material" class="@error('material_id') is-danger @enderror" value="{{old('material_id')}}">
-                                    <option value="" disabled selected>حدد نوع الخامه</option>
+                                    <option value="" disabled selected>حدد نوع الخامة</option>
                                     @foreach($data['materials'] as $material)
                                     <option value="{{$material->id}}" {{$data['records']->material_id == $material->id?'selected':''}}>
                                         {{$material->mq_r_code}}</option>
@@ -76,7 +76,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">الكميه</label>
+                                <label for="weight">الكمية</label>
                                 <input type="number" class="form-control" value="{{$data['records']->qty}}" name="qty" id="weight" placeholder="الكمية" class="@error('qty') is-danger @enderror" value="{{old('qty')}}">
                                 @error('qty')
                                 <p class="help is-danger">

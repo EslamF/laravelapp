@@ -6,8 +6,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">جدول العملاء</h3>
-                <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">اضافه عميل</a>
+                <h3 class="card-title">  العملاء</h3>
+                <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">اضافة عميل</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -21,7 +21,7 @@
                                 <th class="col-md-2">العنوان</th>
                                 <th class="col-md-1">المصدر</th>
                                 <th class="col-md-1">الوصول</th>
-                                <th class="col-md-1">الصفه</th>
+                                <th class="col-md-1">الصفة</th>
                                 <th class="col-md-3">الخيارات</th>
                             </div>
                         </tr>

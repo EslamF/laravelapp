@@ -34,10 +34,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">كود الخامه</label>
+                                <label for="mq_r_code">كود الخامة</label>
                                 <select class="form-control" name="material_id" id="user"
                                 class="@error('material_id') is-danger @enderror">
-                                    <option value="" disabled selected>حدد كود الخامه</option>
+                                    <option value="" disabled selected>حدد كود الخامة</option>
                                     @foreach($data['material'] as $material)
                                     <option value="{{$material->id}}"
                                         {{$data['spreading']->material_id == $material->id ? 'selected':'' }}>

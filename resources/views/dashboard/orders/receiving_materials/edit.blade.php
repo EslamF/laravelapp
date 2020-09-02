@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل إذن إستلام الخامه</h3>
+                <h3 class="card-title">تعديل إذن إستلام الخامة</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -29,7 +29,7 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label for="mq_r_code">كود الخامه</label>
+                                <label for="mq_r_code">كود الخامة</label>
                                 <input type="text" class="form-control" value="{{$data['material']->mq_r_code}}"
                                     name="mq_r_code" id="mq_r_code"
                                     class="@error('mq_r_code') is-danger @enderror">
@@ -49,6 +49,23 @@
                                     class="@error('user_id') is-danger @enderror">
                                     @foreach($data['users'] as $user)
                                     <option value="" disabled selected>حدد الموظف المستلم</option>
+                                    <option value="{{$user->id}}"
+                                        {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
+                                    </option>
+                                    @endforeach
+                                </select>
+                        @error('user_id')
+                        <p class="help is-danger">
+                            {{$message}}
+                        </p>
+                        @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="user">الموظف المشتري</label>
+                                <select class="form-control" name="user_id" id="user"
+                                    class="@error('user_id') is-danger @enderror">
+                                    @foreach($data['users'] as $user)
+                                    <option value="" disabled selected>حدد الموظف المشتري</option>
                                     <option value="{{$user->id}}"
                                         {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
                                     </option>
@@ -133,11 +150,11 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="material_types">نوع الخامه</label>
+                                <label for="material_types">نوع الخامة</label>
                                 <select class="form-control" name="material_type_id" id="material_types"
                                     class="@error('material_type_id') is-danger @enderror">
                                     @foreach($data['material_types'] as $type)
-                                    <option value="" disabled selected>حدد نوع الخامه</option>
+                                    <option value="" disabled selected>حدد نوع الخامة</option>
                                     <option value="{{$type->id}}"
                                         {{$data['material']->material_type_id == $type->id ? 'selected' : ''}}>
                                         {{$type->name}}</option>
@@ -166,7 +183,7 @@
                     @enderror
                     </div>
                     <div class="form-group">
-                        <label for="description">التفاصيل</label>
+                        <label for="description">ملاحظات</label>
                         <textarea class="form-control" name="description" id="description"
                         
                         class="@error('description') is-danger @enderror">

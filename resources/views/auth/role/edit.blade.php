@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل  الصلاحيه</h3>
+                <h3 class="card-title">تعديل  الصلاحية</h3>
             </div>
                 <!-- /.card-header          id	name	phone	address	source	link	type	 -->
                 <!-- form start -->
@@ -14,12 +14,12 @@
                     <div class="form-group">
 
                         {{-- {{dd($data['peremissions'])}} --}}
-                        <label for="name">اسم الصلاحيه</label>
+                        <label for="name">اسم الصلاحية</label>
                         <input type="text" class="form-control" name="name" id="name"  value="{{$data['role']->name}}" placeholder="ادخل اسم الصلاحية">
                     </div>
                     <div class="form-group">
-                        <label for="description">التفاصيل</label>
-                        <input type="text" class="form-control" name="description" id="description" value="{{$data['role']->description}}" placeholder="ادخل التفاصيل">
+                        <label for="description">الوصف</label>
+                        <input type="text" class="form-control" name="description" id="description" value="{{$data['role']->description}}" placeholder="ادخل الوصف">
                     </div>
                     <div class="row">
                     @foreach($data['peremissions'] as $peremission)

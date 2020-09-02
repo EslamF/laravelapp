@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">جدول اذونات الفرز</h3>
+                <h3 class="card-title">  اذونات الفرز</h3>
                 <a href="{{Route('sort.order.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->

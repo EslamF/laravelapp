@@ -27,8 +27,8 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <td class="col-md-1">{{$role->id}}</td>
-                                <td class="col-md-3">{{$role->label == "" ? " لا يوجد تفاصيل" : $role->label}}</td>
-                                <td class="col-md-6">{{$role->description == "" ? " لا يوجد تفاصيل": $role->description}}</td>
+                                <td class="col-md-3">{{$role->label == "" ? " لا يوجد وصف" : $role->label}}</td>
+                                <td class="col-md-6">{{$role->description == "" ? " لا يوجد وصف": $role->description}}</td>
                                 <td class="col-md-2">
                                     <a href="{{Route('role.edit_page', $role->id)}}"
                                         class="btn btn-primary">تعديل</a>

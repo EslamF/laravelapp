@@ -76,7 +76,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="weight">الكميه</label>
+                                <label for="weight">الكمية</label>
                                 <input type="number" class="form-control" value="{{$data['records']->qty}}" name="qty"
                                     id="weight"  
                                      class="@error('qty') is-danger @enderror"
@@ -92,10 +92,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="status">حاله الإذن</label>
+                                <label for="status">حالة الإذن</label>
                                 <select class="form-control" name="status" id="status"
                                 class="@error('status') is-danger @enderror">
-                                    <option value="" disabled selected>حدد حاله المنتج</option>
+                                    <option value="" disabled selected>حدد حالة المنتج</option>
                                     <option value="1" {{$data['records']->status == 1 ? "selected":''}}>تم 
                                     </option>
                                     <option value="0" {{$data['records']->status == 0 ? "selected":''}}>لم يتم بعد

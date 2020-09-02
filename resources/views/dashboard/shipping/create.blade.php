@@ -12,8 +12,8 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="name">اسم الشركه</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="ادخل اسم الشركه">
+                        <label for="name">اسم الشركة</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="ادخل اسم الشركة">
                     </div>
                 </div>
                 <!-- /.card-body -->

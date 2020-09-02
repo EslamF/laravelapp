@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">جدول اذونات القص</h3>
+                <h3 class="card-title">  اذونات القص</h3>
                 <a href="{{Route('cutting.material.create_page')}}" class="btn btn-success float-right"> انشاء</a>
             </div>
             <!-- /.card-header -->

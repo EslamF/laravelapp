@@ -25,8 +25,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="description">التفاصيل</label>
-                                <textarea class="form-control" name="description" id="description" placeholder="ادخل التفاصيل"></textarea>
+                                <label for="description">الوصف</label>
+                                <textarea class="form-control" name="description" id="description" placeholder="ادخل الوصف"></textarea>
                             </div>
                         </div>
                     </div>

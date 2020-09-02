@@ -80,13 +80,13 @@
                                 <li class="nav-item">
                                     <a href="{{Route('fix.product.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>إذن إستلام منتج تالف</p>
+                                        <p>إذن خروج منتجات تالفة</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('receiving.damaged_product.create_page')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>إذن إستلام تالف</p>
+                                        <p>إذن إستلام منتجات معدلة</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

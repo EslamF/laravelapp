@@ -98,7 +98,7 @@
                             </div>
                             <div class="form-group mt-2">
                                 <button type="button" @click="addRow" class='btn btn-success mt-4'>
-                                    اضافه
+                                    اضافة
                                 </button>
                                 <button type="button" @click="deleteRow(index)" class='btn btn-danger mt-4'>
                                     حذف

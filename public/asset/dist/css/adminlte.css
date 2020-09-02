@@ -4745,6 +4745,8 @@ input[type="button"].btn-block {
 
 .navbar-light .navbar-nav .nav-link {
     color: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+
 }
 
 .navbar-light .navbar-nav .nav-link:hover,
@@ -13603,6 +13605,7 @@ body.text-sm .control-sidebar {
 
 .navbar-navy {
     background-color: #001f3f;
+    display: inline-block;
 }
 
 .navbar-olive {
@@ -29393,7 +29396,14 @@ a.text-muted:hover {
 
 /*# sourceMappingURL=adminlte.css.map */
 
+p.is-danger{ 
+      color: red;
+    /* font-weight: bold; */
+}
 
+input[type="text"].is-danger{ 
+    border: 1px solid red;
+}
 
 .btn-success >{
     float: left;
