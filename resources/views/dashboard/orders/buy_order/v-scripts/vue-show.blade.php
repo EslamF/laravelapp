@@ -6,6 +6,8 @@
         data: {
             data: [],
             grand_total: '',
+            order_status: '',
+            status_message: '',
             data: {
                 order: {
                     confirmation: ''
@@ -17,13 +19,25 @@
         },
         mounted() {
             this.getOrder();
+            this.getOrderStatus();
         },
         methods: {
             getOrder() {
                 axios.get('{{url("orders/buy/show")}}' + '/' + '{{$id}}')
                     .then(res => {
                         this.data = res.data;
+                        document.getElementById('loader').style.display = 'block'
                         this.getGrandTotal();
+                    }).catch(err => {
+
+                    })
+            },
+            getOrderStatus() {
+                axios.get('{{Route("buy.order_status",$id)}}')
+                    .then(res => {
+                        this.orders = res.data;
+                        this.status_message = this.orders.status_message
+                        this.order_status = this.orders.status
                     }).catch(err => {
 
                     })
@@ -50,6 +64,8 @@
                 this.validatePrice();
                 var data = {};
                 data.data = this.data;
+                data.order_status = this.order_status;
+                data.status_message = this.status_message;
                 if (!this.have_error) {
                     axios.post('{{Route("buy.update_order")}}', data)
                         .then(res => {

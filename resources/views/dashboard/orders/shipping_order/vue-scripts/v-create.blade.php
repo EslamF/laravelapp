@@ -28,6 +28,8 @@
                 axios.get('{{Route("shipping.ready_orders")}}')
                     .then(res => {
                         this.options = res.data;
+                        var el = document.getElementsByClassName('loader')[0];
+                        el.style.display = 'flex';
                     }).catch(err => {
 
                     });

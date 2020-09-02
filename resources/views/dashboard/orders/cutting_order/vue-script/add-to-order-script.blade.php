@@ -39,6 +39,7 @@
                     .then(res => {
                         this.productTypes = [];
                         this.productTypes = res.data;
+                        document.getElementById('loader').style.display = 'block';
                     }).catch(err => {
 
                     });

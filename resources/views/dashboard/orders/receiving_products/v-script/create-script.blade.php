@@ -22,6 +22,7 @@
                 };
                 axios.get('{{Route("produce_order.get_all")}}').then(res => {
                     this.produce_orders = res.data;
+                    document.getElementById('loader').style.display = 'block';
                 }).catch(err => {
 
                 });

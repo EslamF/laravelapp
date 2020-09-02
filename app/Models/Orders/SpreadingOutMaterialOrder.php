@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SpreadingOutMaterialOrder extends Model
 {
-    protected $fillable = ['user_id', 'material_id', 'weight'];
+    protected $fillable = ['user_id', 'material_id', 'weight', 'created_by'];
 
 
     /**

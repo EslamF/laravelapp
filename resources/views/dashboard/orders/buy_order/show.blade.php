@@ -1,19 +1,39 @@
 @extends('index')
 @section('content')
 <div id="app" class="row">
-    <div class="col-12">
+    <div id="loader" style="display: none;" class="col-12">
         <div class="card">
             <div class="card-header">
-                <label for="">Confirmation</label>
-                <select style="display: inline;" id="confrimation" class="col-md-4 form-control" v-model="data.order.confirmation" id="">
-                    <option value="" dsiabled>Choose One</option>
-                    <option value="confirmed" :selected="data.order.confirmation == 'confirmed'">Confirmed</option>
-                    <option value="pending" :selected="data.order.confirmation == 'pending'">Pending</option>
-                    <option value="canceled" :selected="data.order.confirmation == 'canceled'">Canceled</option>
-                </select>
-                <div v-if="data.order.confirmation == 'pending'" style="display: inline;">
-                    <label for="">Pending Until</label>
-                    <input style="display: inline;" class="col-md-4 form-control" type="date" v-model="data.order.pending_date">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <label for="">Confirmation</label>
+                        <select id="confrimation" class="form-control" v-model="data.order.confirmation" id="">
+                            <option value="" dsiabled>Choose One</option>
+                            <option value="confirmed" :selected="data.order.confirmation == 'confirmed'">Confirmed</option>
+                            <option value="pending" :selected="data.order.confirmation == 'pending'">Pending</option>
+                            <option value="canceled" :selected="data.order.confirmation == 'canceled'">Canceled</option>
+                        </select>
+                    </div>
+                    <div v-if="data.order.confirmation == 'pending'" class="col-md-3 flex">
+                        <label for="">Pending Until</label>
+                        <input class="form-control" type="date" v-model="data.order.pending_date">
+                    </div>
+                    <div class="col-md-3  flex">
+                        <label for="">اختر حالة الاوردر</label>
+                        <select v-model="order_status" class="form-control">
+                            <option value="" disabled selected>اختر</option>
+                            <option :value="'Delivered'">Delivered</option>
+                            <option :value="'InProgress'">InProgress</option>
+                            <option :value="'LOST'">LOST</option>
+                            <option :value="'Returned'">Returned</option>
+                            <option :value="'UnDelivered'">UnDelivered</option>
+                        </select>
+                    </div>
+                </div>
+                <div v-if="order_status" class="row  mt-4">
+                    <label for="">تعليق علي حالة الاوردر</label>
+                    <textarea v-model="status_message" class="form-control" id="" cols="30" rows="10"></textarea>
                 </div>
             </div>
             <!-- /.card-header -->

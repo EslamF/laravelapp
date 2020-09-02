@@ -43,6 +43,7 @@
         methods: {
             getOrderBy() {
                 if (this.type == 'employee') {
+
                     this.getBy(this.employee_url);
                     this.getProductType();
                     this.getSizes();
@@ -59,6 +60,7 @@
                 };
                 axios.get('{{route("spreading.get_all")}}').then(res => {
                     this.spreading_orders = res.data;
+                    document.getElementById('loader').style.display = 'block';
                 }).catch(err => {
 
                 });

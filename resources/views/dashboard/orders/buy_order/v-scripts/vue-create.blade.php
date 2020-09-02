@@ -58,7 +58,7 @@
                 var y = someDate.getFullYear();
 
                 this.delivery_date = y + '-' + mm + '-' + dd;
-                console.log(this.delivery_date);
+                document.getElementById('loader').style.display = 'block';
 
             },
             getCustomer() {

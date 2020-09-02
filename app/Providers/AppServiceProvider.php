@@ -32,7 +32,6 @@ class AppServiceProvider extends ServiceProvider
             if (in_array('created_by', $model_attributes)) {
                 if (!isset($model->created_by)) {
                     $auth_id = \Auth::id();
-                    // dd($auth_id);
                     if (isset($auth_id)) {
                         $model->created_by = $auth_id;
                     } else {

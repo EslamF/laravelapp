@@ -28,6 +28,8 @@
                 axios.get('{{Route("shipping.order_to_package", $id)}}')
                     .then(res => {
                         this.order = res.data
+                        var el = document.getElementsByClassName('loader')[0];
+                        el.style.display = 'flex'
                         this.getBuyOrders();
                     }).catch(err => {
 

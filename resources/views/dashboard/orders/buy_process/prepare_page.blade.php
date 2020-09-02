@@ -1,7 +1,7 @@
 @extends('index')
 @section('content')
 <div id="app" class="row">
-    <div class="col-md-12">
+    <div id="loader" style="display:none" class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <label for="">Add Product</label>
