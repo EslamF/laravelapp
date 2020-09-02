@@ -5,7 +5,9 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">  الموظفين</h3>
+                @can('add-employee')
                 <a href="{{Route('employee.create_page')}}" class="btn btn-success float-right">انشاء</a>
+                @endcan
             </div>
             <!-- /.card-header -->
             <div class="card-body">

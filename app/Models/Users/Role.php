@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $fillable = ['id','name','label','description'];
+    protected $fillable = ['id','label','description'];
 
     public function  peremissions(){
         return $this->belongsToMany(peremission::class);

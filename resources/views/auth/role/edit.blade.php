@@ -14,20 +14,20 @@
                     <div class="form-group">
 
                         {{-- {{dd($data['peremissions'])}} --}}
-                        <label for="name">اسم الوظيفة</label>
-                        <input type="text" class="form-control" name="name" id="name"  value="{{$data['role']->name}}" placeholder="ادخل اسم الوظيفة">
+                        <label for="label">اسم الوظيفة</label>
+                        <input type="text" class="form-control" name="label" id="label"  value="{{$data['role']->label}}" placeholder="ادخل اسم الوظيفة">
                     </div>
                     <div class="form-group">
                         <label for="description">ملاحظات</label>
                         <input type="text" class="form-control" name="description" id="description" value="{{$data['role']->description}}" placeholder="ادخل الملاحظات ">
                     </div>
-                        <div class="row ">
-                            <h4> 
-                                الصلحيات
-                            </h4>
+                    <h5> 
+                        الصلحيات
+                    </h5>
+                                    <div class="row ">
                     @foreach($data['peremissions'] as $peremission)
                     <div class="form-check col-3">
-                        <input type="checkbox" class="form-check-input" name="peremissions[]" id="exampleCheck1" value="{{$peremission->id}}"  {{in_array($peremission->id, $data['peremission_id']) ? 'checked' : ''}}>
+                        <input type="checkbox" class="form-check-input" name="peremissions[]" id="{{$peremission->id}}" value="{{$peremission->id}}"  {{in_array($peremission->id, $data['peremission_id']) ? 'checked' : ''}}>
                         <label class="form-check-label" for="{{$peremission->id}}"  >{{$peremission->lable}}</label>
                       </div>
                       @endforeach

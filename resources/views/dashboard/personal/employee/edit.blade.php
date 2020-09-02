@@ -22,11 +22,11 @@
                     </div>
                     <div class="form-group">
                         <label for="password"> كلمة المرور</label>
-                        <input type="password" class="form-control" value="{{$data['user']->password}}" name="password" id="password" placeholder="ادخل كلمة المرور">
+                        <input type="password" class="form-control"  name="password" id="password" placeholder="ادخل كلمة المرور">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1"> تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control" value="{{$data['user']->password}}" name="password_confirmation" id="exampleInputPassword1" placeholder="تأكيد كلمة المرور">
+                        <input type="password" class="form-control"  name="password_confirmation" id="exampleInputPassword1" placeholder="تأكيد كلمة المرور">
                     </div>
 
                     <div class="form-group ">

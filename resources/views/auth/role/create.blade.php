@@ -34,9 +34,9 @@
                             @enderror
                     </div>
                     
-                    <h4> 
+                    <h5> 
                         الصلحيات
-                    </h4>
+                    </h5>
                     <div class="row ">
                         @foreach($peremissions as $peremission)
                     <div class="form-check col-3 ">

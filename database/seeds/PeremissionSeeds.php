@@ -13,7 +13,7 @@ class PeremissionSeeds extends Seeder
     public function run()
     {
 
-        DB::table('peremissions')->insert([
+        DB::table('peremissions')->insert([ 
 
             [
                 'name' => 'add-employee',
@@ -224,9 +224,6 @@ class PeremissionSeeds extends Seeder
                 'name' => 'delete-shapping',
                 'lable' => 'حذف شركات الشحن'
             ]
-        ]
-);
+        ]);
     }
-
-
 }

@@ -25,7 +25,6 @@ class UsersRequest extends FormRequest
     {
         return [
             'label' => ['required','min:3'],
-            'description' => ['required'],
             'peremissions.*' => ['exists:peremissions,id']           
         ];
     }

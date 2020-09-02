@@ -38,10 +38,13 @@ class EmployeeController extends Controller
      */
     public function update(Request $request)
     {
-        // $request->validate([
-        //     'type_id' => 'required|exists:users,id',
-        //     'role_id' => 'required|exists:role,id'
-        // ]);
+        $request->validate([
+            'type_id' => 'required|exists:users,id',
+            // 'role_id' => 'required|exists:role,id',
+            'name' => 'min:3',
+            'email' => 'min:3|unique:users,email,'.$this->user->id,
+            'password' => 'required|confirmed'
+        ]);
 
         $user = User::find($request->type_id);
         $user->update($request->all());

@@ -15,14 +15,11 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
             $table->string('label')->nullable();
             $table->string('description')->nullable();
 
-            $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
+            // $table->unsignedBigInteger('created_by');
+         
 
             $table->timestamps();
         });

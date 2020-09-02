@@ -126,13 +126,13 @@ Route::group([
                 'prefix' => 'shipping'
 
             ], function () {
-                Route::get('get-all', 'ShippingCompanyController@getAllPaginate')->name('shipping.list');
-                Route::get('create', 'ShippingCompanyController@createPage')->name('shipping.create_page');
-                Route::post('store', 'ShippingCompanyController@create')->name('shipping.store');
-                Route::post('delete', 'ShippingCompanyController@delete')->name('shipping.delete');
-                Route::get('edit/{type_id}', 'ShippingCompanyController@editPage')->name('shipping.edit_page');
-                Route::post('update', 'ShippingCompanyController@update')->name('shipping.update');
-                Route::get('get', 'ShippingCompanyController@getAll')->name('shipping.get_all');
+                Route::get('get-all', 'ShippingCompanyController@getAllPaginate')->name('shippingcompany.list');
+                Route::get('create', 'ShippingCompanyController@createPage')->name('shippingcompany.create_page');
+                Route::post('store', 'ShippingCompanyController@create')->name('shippingcompany.store');
+                Route::post('delete', 'ShippingCompanyController@delete')->name('shippingcompany.delete');
+                Route::get('edit/{type_id}', 'ShippingCompanyController@editPage')->name('shippingcompany.edit_page');
+                Route::post('update', 'ShippingCompanyController@update')->name('shippingcompany.update');
+                Route::get('get', 'ShippingCompanyController@getAll')->name('shippingcompany.get_all');
             });
 
             Route::group([

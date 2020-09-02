@@ -29,16 +29,18 @@ class AppServiceProvider extends ServiceProvider
             $model = $models[0];
             $table_name = $model->getTable();
             $model_attributes = Schema::getColumnListing($table_name);
-            if (in_array('user_id', $model_attributes)) {
-                if (!isset($model->user_id)) {
+            if (in_array('created_by', $model_attributes)) {
+                if (!isset($model->created_by)) {
                     $auth_id = \Auth::id();
+                    // dd($auth_id);
                     if (isset($auth_id)) {
-                        $model->user_id = $auth_id;
+                        $model->created_by = $auth_id;
                     } else {
-                        $model->user_id = '1';
+                        $model->created_by = '1';
                     }
                 }
             }
         });
+
     }
 }

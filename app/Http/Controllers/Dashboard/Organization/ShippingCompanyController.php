@@ -21,7 +21,7 @@ class ShippingCompanyController extends Controller
             'name' => 'required|min:3'
         ]);
         ShippingCompany::create($request->all());
-        return redirect()->route('shipping.list');
+        return redirect()->route('shippingcompany.list');
     }
     /**
      * 
@@ -36,7 +36,7 @@ class ShippingCompanyController extends Controller
         ]);
 
         ShippingCompany::find($request->type_id)->update($request->all());
-        return redirect()->route('shipping.list');
+        return redirect()->route('shippingcompany.list');
     }
     /**
      * 
@@ -51,7 +51,7 @@ class ShippingCompanyController extends Controller
         ]);
 
         ShippingCompany::find($request->type_id)->delete();
-        return redirect()->route('shipping.list');
+        return redirect()->route('shippingcompany.list');
     }
     /**
      * 

@@ -37,7 +37,7 @@ class RoleController extends Controller
         // dd($request->all());
         $request->validate([
                  'type_id' => 'required|exists:roles,id',
-                 ' label' => 'required|min:3',
+                 ' label' => 'min:3',
                 //  'description' => 'required',
                 //  'peremissions.*' => 'exists|peremission,id'
         ]); 

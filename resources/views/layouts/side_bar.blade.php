@@ -104,13 +104,13 @@
                                 <li class="nav-item">
                                     <a href="{{Route('buy.list_page')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Buy Order</p>
+                                        <p>إذن البيع</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('process.get_list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Buy Order Proccess</p>
+                                        <p>المخزن</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

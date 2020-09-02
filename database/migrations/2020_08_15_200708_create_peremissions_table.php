@@ -18,10 +18,10 @@ class CreatePeremissionsTable extends Migration
             $table->string('name');
             $table->string('lable')->nullable();
 
-            $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
+            // $table->unsignedBigInteger('created_by');
+            // $table->foreign('created_by')
+            //     ->references('id')->on('users')
+            //     ->onDelete('cascade');
 
             $table->timestamps();
         });
