@@ -28,7 +28,7 @@
                                 <td class="col-md-4">{{$order->code}}</td>
                                 <td class="col-md-4">{{$order->created_at}}</td>
                                 <td class="col-md-3">
-                                    <a href="{{Route('send.end_product.get_order', $order->id)}}" class="btn btn-info">اظهار</a>
+                                    <a href="{{Route('send.end_product.get_order', $order->id)}}" class="btn btn-info">إظهار</a>
                                     <form style="display:inline" action="{{Route('send.end_product.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="save_order_id" value="{{$order->id}}">

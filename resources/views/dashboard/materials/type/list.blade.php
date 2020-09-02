@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">  انوع الخامات</h3>
+                <h3 class="card-title">  أنواعالخامات</h3>
                 <a href="{{Route('material.type.create_page')}}" class="btn btn-success float-right">انشاء نوع جديد</a>
             </div>
             <!-- /.card-header -->

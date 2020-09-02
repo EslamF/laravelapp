@@ -13,7 +13,7 @@
                 <div class="card-body " style="height: 100%">
                 
                     <div class="form-group">
-                        <label for="label"></label>
+                        <label for="label">اسم الوظيفة</label>
                         <input type="text"
                          class="form-control @error('label') is-danger @enderror"
                             name="label" id="label"  placeholder="ادخل اسم الوظيفة" value="{{old('label')}}">
@@ -22,22 +22,22 @@
                         @enderror
                     </div>
                     <div class="form-group ">
-                        <label for="desc">وصف</label>
+                        <label for="desc">ملاحظات</label>
                         {{-- @if(count($errors->toArray()))
                             @foreach($errors[peremissions]->toArray() as $peremission_error)
                             @endif
                             @endforeach  --}}
                              {{-- {{dd($peremissions)}} --}}
-                        <input type="text" class="form-control" name="description" id="description"  placeholder="ادخل الوصف">
+                        <input type="text" class="form-control" name="description" id="description"  placeholder="ادخل الملاحظات">
                         @error('description')
                         <p class=" is-danger">{{$message}}</p>
                             @enderror
                     </div>
                     
+                    <h4> 
+                        الصلحيات
+                    </h4>
                     <div class="row ">
-                        <h4> 
-                            الصلحيات
-                        </h4>
                         @foreach($peremissions as $peremission)
                     <div class="form-check col-3 ">
                     <input type="checkbox" class="form-check-input" name="peremissions[]" id="{{$peremission->id}}" value="{{$peremission->id}}">

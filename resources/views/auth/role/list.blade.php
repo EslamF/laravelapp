@@ -17,7 +17,7 @@
                             <div class="col-md-12">
                                 <th class="col-md-1">الرقم المرجعي</th>
                                 <th class="col-md-3">الاسم الوظيفة</th>
-                                <th class="col-md-6">الوصف</th>
+                                <th class="col-md-6">ملاحظات</th>
                                 <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
@@ -27,7 +27,7 @@
                         <tr class="row">
                             <div class="col-md-12">
                                 <td class="col-md-1">{{$role->id}}</td>
-                                <td class="col-md-3">{{$role->label == "" ? " لا يوجد وصف" : $role->label}}</td>
+                                <td class="col-md-3">{{$role->label == "" ? " لا يوجد اسم وظيفي" : $role->label}}</td>
                                 <td class="col-md-6">{{$role->description == "" ? " لا يوجد وصف": $role->description}}</td>
                                 <td class="col-md-2">
                                     <a href="{{Route('role.edit_page', $role->id)}}"
