@@ -5,7 +5,6 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Ready Order</h3>
-                <a href="{{Route('shipping.create_package_page')}}" class="btn btn-success float-right">Add</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -31,12 +30,7 @@
                                 <td class="col-md-3">{{$order->shippingCompany->name}}</td>
 
                                 <td class="col-md-3">
-                                    <form style="display:inline" action="{{Route('shipping.package_orders')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{$order->id}}">
-                                        <input type="hidden" name="status" value="0">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
+                                    <a href="{{Route('shipping.create_package_page',$order->id)}}" class="btn btn-primary">show</a>
                                 </td>
                             </div>
                         </tr>

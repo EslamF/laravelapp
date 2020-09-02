@@ -31,7 +31,6 @@ class BuyOrderController extends Controller
             ->whereHas('material', function ($q) use ($mq_r_code) {
                 $q->where('mq_r_code', $mq_r_code);
             })
-            ->where('status', 'available')
             ->where('received', 1)
             ->get()->groupBy('produce_code');
 
@@ -55,8 +54,8 @@ class BuyOrderController extends Controller
             }
 
             $data[$key]['produce_code'] = $key;
-            $data[$key]['factory_count'] = intval($product->count() / 100 * 90 - $old_factory_qty);
-            $data[$key]['company_count'] = $product->where('save_order_id', '!=', null)->count() - $old_company_qty;
+            $data[$key]['factory_count'] = intval($product->where('status', 'available')->where('save_order_id', null)->count() / 100 * 90 - $old_factory_qty);
+            $data[$key]['company_count'] = ($product->where('status', 'available')->where('save_order_id', '!=', null)->count() + $product->where('status', 'reserved')->where('save_order_id', '!=', null)->count()) - $old_company_qty;
             $data[$key]['size'] = $product->first()->size->name;
             $data[$key]['product_type'] = $product->first()->productType->name;
         }
@@ -82,9 +81,6 @@ class BuyOrderController extends Controller
             if ($product['company_count'] != 0) {
                 if ($product['company_count'] >= $product['qty']) {
                     $product['company_qty'] = $product['qty'];
-
-                    $order->status = 1;
-                    $order->save();
                 } else {
                     $product['company_qty'] = $product['company_count'];
                     $product['factory_qty'] = $product['qty'] - $product['company_count'];
@@ -119,6 +115,15 @@ class BuyOrderController extends Controller
         $request->validate([
             'id' => 'required|exists:buy_orders,id'
         ]);
+
+        $products = Product::whereHas('buyOrders', function ($q) use ($request) {
+            $q->where('buy_orders.id', $request->id);
+        })->get()->pluck('id');
+
+        Product::whereIn('id', $products)->update([
+            'status' => 'available'
+        ]);
+
         BuyOrder::find($request->id)->delete();
         return redirect()->back();
     }

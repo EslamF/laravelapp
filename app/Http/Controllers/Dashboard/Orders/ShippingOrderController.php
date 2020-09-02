@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Dashboard\Orders;
 
 use App\Http\Controllers\Controller;
+use App\Imports\OrderStatusImport;
 use App\Models\Orders\BuyOrder;
+use App\Models\Orders\OrderStatus;
 use App\Models\Orders\ShippingOrder;
-use App\Models\Orders\ShippingProcess;
-use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Validator;
 
 class ShippingOrderController extends Controller
 {
@@ -99,13 +101,14 @@ class ShippingOrderController extends Controller
 
     public function packagedList()
     {
-        $orders = ShippingOrder::where('status', 1)->with('shippingCompany:id,name')->paginate();
+        $orders = ShippingOrder::where('status', 0)->with('shippingCompany:id,name')->paginate();
         return view('dashboard.orders.shipping_order.ready-to-ship.list', ['orders' => $orders]);
     }
 
-    public function packagePage()
+    public function packagePage($shipping_order_id)
     {
-        return view('dashboard.orders.shipping_order.ready-to-ship.create');
+        $shippingOrder = ShippingOrder::where('id', $shipping_order_id)->first();
+        return view('dashboard.orders.shipping_order.ready-to-ship.create', ['id' => $shippingOrder->id]);
     }
 
     public function canPackage()
@@ -124,6 +127,12 @@ class ShippingOrderController extends Controller
 
     public function packageOrders(Request $request)
     {
+        foreach ($request->orders as $order) {
+            $item = BuyOrder::where('bar_code', $order)->first();
+            $item->update([
+                'preparation' => 'shipped'
+            ]);
+        }
         ShippingOrder::find($request->id)->update([
             'status' => $request->status
         ]);
@@ -132,5 +141,28 @@ class ShippingOrderController extends Controller
         } else {
             return redirect()->back();
         }
+    }
+
+    public function orderToPackage($shipping_order_id)
+    {
+        $orders = ShippingOrder::where('id', $shipping_order_id)
+            ->with('shippingCompany:id,name')
+            ->where('status', 0)->first();
+
+        $data = [
+            'id'            => $orders->id,
+            'company_name'  => $orders->shippingCompany->name,
+            'shipping_date' => $orders->shipping_date
+        ];
+        return response()->json($data, 200);
+    }
+
+    public function importShippingStatus(Request $request)
+    {
+        Validator::make($request->all(), [
+            'file' => 'required|in:doc,csv,xlsx,xls,docx,ppt,odt,ods,odp'
+        ], []);
+
+        Excel::import(new OrderStatusImport, $request->file);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Orders;
 use App\Http\Controllers\Controller;
 use App\Models\Options\Size;
 use App\Models\Orders\BuyOrder;
+use App\Models\Orders\BuyOrderProduct;
 use App\Models\Products\Product;
 use App\Models\Products\ProductType;
 use Illuminate\Http\Request;
@@ -80,11 +81,13 @@ class OrderProcessController extends Controller
     {
         $order = BuyOrder::where('id', $request->buy_order_id)->first();
         $order->preparation = 'prepared';
+        $order->status = 1;
         $order->save();
+        $buyOrderProduct = BuyOrderProduct::where('buy_order_id', $order->id)->first();
 
         foreach ($request->products_code as $ids) {
             $order->products()->attach($ids);
-            Product::whereIn('id', $ids)->update(['status' => 'prepared']);
+            Product::whereIn('id', $ids)->update(['status' => 'reserved']);
         }
 
         return response()->json('saved', 200);
@@ -92,7 +95,7 @@ class OrderProcessController extends Controller
 
     public function readyOrderPage()
     {
-        $orders = BuyOrder::where('status', 0)
+        $orders = BuyOrder::where('status', 1)
             ->where('preparation', 'prepared')
             ->paginate();
 

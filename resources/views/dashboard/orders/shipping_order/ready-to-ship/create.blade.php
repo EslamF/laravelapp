@@ -15,11 +15,12 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="">Shipping Orders</label>
-            <select name="" class="form-control" @change="getBuyOrders" v-model="order.id" id="">
+            <label for="">Shipping Order</label>
+            <input type="text" :value="order.company_name + ' --- ' + order.shipping_date" class="form-control" id="" disabled>
+            <!-- <select name="" class="form-control" @change="getBuyOrders" v-model="order.id" id="">
                 <option value="" disabled selected>Choose Order</option>
                 <option :value="order.id" v-for="order in orders">Company: @{{order.company_name}} --- Date: @{{order.shipping_date}} </option>
-            </select>
+            </select> -->
         </div>
     </div>
     <div class="col-md-12 mt-5">

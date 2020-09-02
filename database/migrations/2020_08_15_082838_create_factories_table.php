@@ -18,10 +18,15 @@ class CreateFactoriesTable extends Migration
             $table->string('name');
             $table->text('phone')->nullable();
             $table->string('address')->nullable();
-            
+
             $table->unsignedBigInteger('factory_type_id');
             $table->foreign('factory_type_id')
                 ->references('id')->on('factory_types')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
+                ->references('id')->on('users')
                 ->onDelete('cascade');
 
             $table->timestamps();

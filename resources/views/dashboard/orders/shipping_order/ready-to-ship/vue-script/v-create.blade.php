@@ -11,7 +11,7 @@
         },
         data: {
             tags: [],
-            orders: [],
+            order: {},
             shipping_order_id: '',
             order: {
                 id: ''
@@ -25,16 +25,16 @@
         },
         methods: {
             getOrders() {
-                axios.get('{{Route("shipping.can_package")}}')
+                axios.get('{{Route("shipping.order_to_package", $id)}}')
                     .then(res => {
-                        this.orders = res.data;
+                        this.order = res.data
+                        this.getBuyOrders();
                     }).catch(err => {
 
                     });
             },
             getBuyOrders() {
                 var url = '{{url("orders/buy/by-shipping")}}' + '/' + this.order.id;
-                console.log(url);
                 axios.get(url)
                     .then(res => {
                         this.buy_orders = [];
@@ -48,6 +48,7 @@
                     var data = {}
                     data.id = this.order.id;
                     data.status = 1;
+                    data.orders = this.buy_orders;
                     axios.post('{{Route("shipping.package_orders")}}', data)
                         .then(res => {
                             window.location.href = "{{Route('shipping.list_packaged_orders')}}";
@@ -65,12 +66,12 @@
                 this.have_err = false;
 
                 if (!_arr1[0] || !_arr2[0]) {
-                    this.errors.order = "You mush Choose order";
+                    this.errors.order = " يجب اختيار اوردر";
                     this.have_err = true;
                     return false;
                 }
                 if (!Array.isArray(_arr1) || !Array.isArray(_arr2) || _arr1.length !== _arr2.length) {
-                    this.errors.tags = "Missing Order";
+                    this.errors.tags = " يوجد اوردر مفقود";
                     this.have_err = true;
                     return false;
                 }
@@ -81,7 +82,7 @@
                 for (var i = 0; i < arr1.length; i++) {
 
                     if (arr1[i] !== arr2[i]) {
-                        this.errors.tags = "Mismatch invalid orders";
+                        this.errors.tags = " اوردر خاظئ";
                         this.have_err = true;
                         return false;
 
