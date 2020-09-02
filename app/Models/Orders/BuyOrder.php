@@ -6,6 +6,7 @@ use App\Models\Products\Product;
 use App\Models\Users\Customer;
 use App\Models\Orders\ShippingOrder;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Orders\OrderStatus;
 
 class BuyOrder extends Model
 {
@@ -59,5 +60,10 @@ class BuyOrder extends Model
     public function shippingOrders()
     {
         return $this->belongsToMany(ShippingOrder::class);
+    }
+
+    public function orderStatus()
+    {
+        return $this->hasMany(OrderStatus::class);
     }
 }

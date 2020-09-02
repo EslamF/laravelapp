@@ -1,7 +1,7 @@
 @extends('index')
 @section('content')
 <div id="app" class="row">
-    <div class="col-md-12">
+    <div style="display: none;" id="loader" class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">انشاء اذن تصنيع </h3>

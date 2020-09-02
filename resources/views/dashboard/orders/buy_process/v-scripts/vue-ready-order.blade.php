@@ -14,6 +14,7 @@
                 axios.get('{{url("orders/process/ready-order")}}' + '/' + "{{$id}}")
                     .then(res => {
                         this.orders = res.data;
+                        // document.getElementsByClassName('card')[0].style.display = 'block';
                     }).catch(err => {
 
                     });

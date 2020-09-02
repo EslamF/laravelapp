@@ -23,6 +23,7 @@
                 axios.get('{{url("orders/process/get-order")}}' + '/' + '{{$id}}')
                     .then(res => {
                         this.items = res.data;
+                        document.getElementById('loader').style.display = 'block';
                         this.addProducts();
                     }).catch(err => {
 

@@ -8,6 +8,7 @@ use App\Models\Orders\BuyOrder;
 use App\Models\Orders\BuyOrderProduct;
 use App\Models\Orders\CuttingOrderProduct;
 use App\Models\Orders\OrderHistory;
+use App\Models\Orders\OrderStatus;
 use App\Models\Products\Product;
 use App\Models\Users\Customer;
 use Illuminate\Http\Request;
@@ -153,11 +154,21 @@ class BuyOrderController extends Controller
         return response()->json($data, 200);
     }
 
+    public function getOrderStatus($id)
+    {
+        $status = OrderStatus::where('buy_order_id', $id)->first();
+        return response()->json($status, 200);
+    }
     public function updateOrder(Request $request)
     {
         BuyOrder::find($request->data['order']['id'])->update([
             'confirmation' => $request->data['order']['confirmation'],
             'pending_date' => $request->data['order']['pending_date'] ?? null
+        ]);
+
+        OrderStatus::updateOrCreate(['buy_order_id' => $request->data['order']['id']], [
+            'status'    => $request->order_status,
+            'status_message' => $request->status_message
         ]);
 
         OrderHistory::create([

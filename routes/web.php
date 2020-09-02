@@ -11,14 +11,14 @@
 |
 */
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => false, 'verify' => true]);
 
 Route::group([
-    'middleware' => 'auth'
+    'middleware' => ['auth']
 ], function () {
 
     Route::get('/', function () {
-        return view('home');
+        return redirect('/home');
     });
 
     Route::group([
@@ -36,6 +36,7 @@ Route::group([
                 'prefix' => 'size'
             ], function () {
                 Route::get('get-all', 'SizeController@getAllPaginate')->name('size.list');
+                Route::get('get', 'SizeController@getAll')->name('size.get_all');
                 Route::get('create', 'SizeController@createPage')->name('size.create_page');
                 Route::post('store', 'SizeController@create')->name('size.store');
                 Route::post('delete', 'SizeController@delete')->name('size.delete');
@@ -305,6 +306,7 @@ Route::group([
                 Route::post('delete-order', 'BuyOrderController@deleteOrder')->name('buy.delete_order');
                 Route::get('show-order/{id}', 'BuyOrderController@showOrderPage')->name('buy.show_order');
                 Route::get('show/{id}', 'BuyOrderController@showOrder')->name('buy.show');
+                Route::get('order-status/{id}', 'BuyOrderController@getOrderStatus')->name('buy.order_status');
                 Route::post('update', 'BuyOrderController@updateOrder')->name('buy.update_order');
                 Route::post('remove-item', 'BuyOrderController@removeItem')->name('buy.remove_item');
                 Route::get('by-shipping/{id}', 'BuyOrderController@buyOrdersWithShippingId')->name('buy.get_buy_shipping');

@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div id="app" class="row">
+<div id="app" style="display: none;" class="row loader">
     <div v-if="have_err" class="col-md-12 alert alert-danger">
         <ul>
             <li v-if="errors.order" class=>@{{errors.order}}</li>

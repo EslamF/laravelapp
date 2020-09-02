@@ -65,11 +65,6 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('receiving_orders')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('cutting_order_product_id')->nullable();
-            $table->foreign('cutting_order_product_id')
-                ->references('id')->on('cutting_order_products')
-                ->onDelete('cascade');
-
             $table->enum('status', ['pending', 'sold', 'available', 'damaged', 'reserved'])->default('available');
 
             $table->timestamps();

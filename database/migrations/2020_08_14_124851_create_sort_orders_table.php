@@ -22,9 +22,7 @@ class CreateSortOrdersTable extends Migration
                 ->onDelete('cascade');
 
             $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
+
 
             $table->string('code');
             $table->timestamps();

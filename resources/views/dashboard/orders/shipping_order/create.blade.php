@@ -1,6 +1,8 @@
 @extends('index')
 @section('content')
-<div id="app" class="row">
+<div id="app" style="display:none" class="row loader">
+
+
     <div class="col-md-12">
         <div class="form-group">
             <label for="">Choose orders</label>
