@@ -23,8 +23,13 @@ class CreateMaterialsTable extends Migration
                 ->references('id')->on('material_types')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
+            $table->unsignedBigInteger('buyer_id');
+            $table->foreign('buyer_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
+            $table->unsignedBigInteger('receiver_id');
+            $table->foreign('receiver_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 

@@ -98,7 +98,7 @@
                                 <li class="nav-item">
                                     <a href="{{Route('store.end_product.list')}}" class="nav-link" >
                                          <i class="far fa-circle nav-icon"></i>
-                                        <p>Store Product Order</p>
+                                        <p>إستلام المنتج بلمخزن</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -116,7 +116,7 @@
                                 <li class="nav-item">
                                     <a href="{{Route('shipping.get_list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Shipping Order</p>
+                                        <p>إذن الشحن</p>
                                     </a>
                                 </li>
                             </ul>

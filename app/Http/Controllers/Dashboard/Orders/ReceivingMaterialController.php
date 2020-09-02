@@ -18,6 +18,10 @@ class ReceivingMaterialController extends Controller
             'material_type_id' => 'required|exists:material_types,id',
             'user_id' => 'required|exists:users,id',
             'supplier_id' => 'required|exists:suppliers,id',
+            'qty' => 'requiredIf:type,Accessories',
+            'weight' => 'requiredIf:type,Materials',
+            'qty' => 'required_without:weight',
+            'weight' => 'required_without:qty',
             'bill_number' => 'required',
             'description' => 'required',
             'color' => 'required'

@@ -175,6 +175,54 @@ class PeremissionSeeds extends Seeder
             [
                 'name' => 'delete-shapping',
                 'lable' => 'حذف شركات الشحن'
+            ],
+            [
+                'name' => 'add-cutting',
+                'lable' => 'إضافة إذن القص'
+            ],
+            [
+                'name' => 'edit-cutting',
+                'lable' => 'تعديل إذن القص'
+            ],
+            [
+                'name' => 'show-cutting',
+                'lable' => 'رؤية إذن القص'
+            ],
+            [
+                'name' => 'delete-cutting',
+                'lable' => 'حذف إذن القص'
+            ],
+            [
+                'name' => 'add-spreading',
+                'lable' => 'إضافة أذونات الفرش'
+            ],
+            [
+                'name' => 'edit-spreading',
+                'lable' => 'تعديل أذونات الفرش'
+            ],
+            [
+                'name' => 'show-spreading',
+                'lable' => 'رؤية أذونات الفرش'
+            ],
+            [
+                'name' => 'delete-spreading',
+                'lable' => 'حذف أذونات الفرش'
+            ],
+            [
+                'name' => 'add-shapping',
+                'lable' => 'إضافة شركات الشحن'
+            ],
+            [
+                'name' => 'edit-shapping',
+                'lable' => 'تعديل شركات الشحن'
+            ],
+            [
+                'name' => 'show-shapping',
+                'lable' => 'رؤية شركات الشحن'
+            ],
+            [
+                'name' => 'delete-shapping',
+                'lable' => 'حذف شركات الشحن'
             ]
         ]
 );
