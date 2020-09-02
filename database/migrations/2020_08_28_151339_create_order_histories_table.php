@@ -22,7 +22,7 @@ class CreateOrderHistoriesTable extends Migration
                 ->onDelete('cascade');
 
             $table->string('status');
-            $table->date('pending_to')->nullable();
+            $table->date('pending_date')->nullable();
 
             $table->timestamps();
         });

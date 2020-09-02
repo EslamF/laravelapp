@@ -96,16 +96,6 @@ Route::group([
                 'prefix' => 'employees',
             ], function () {
                 Route::get('get-all-paginate', 'EmployeeController@getAllPaginate')->name('employee.list');
-                Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
-                Route::post('store', 'EmployeeController@create')->name('employee.store');
-                Route::post('delete', 'EmployeeController@delete')->name('employee.delete');
-                Route::get('edit/{type_id}', 'EmployeeController@editPage')->name('employee.edit_page');
-                Route::post('update', 'EmployeeController@update')->name('employee.update');
-            });
-            Route::group([
-                'prefix' => 'employees',
-            ], function () {
-                Route::get('get-all-paginate', 'EmployeeController@getAllPaginate')->name('employee.list');
                 Route::get('get-all', 'EmployeeController@getAll')->name('employee.get_all');
                 Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
                 Route::post('store', 'EmployeeController@create')->name('employee.store');
@@ -113,6 +103,7 @@ Route::group([
                 Route::get('edit/{type_id}', 'EmployeeController@editPage')->name('employee.edit_page');
                 Route::post('update', 'EmployeeController@update')->name('employee.update');
             });
+
             Route::group([
                 'prefix' => 'customers',
             ], function () {
@@ -317,6 +308,7 @@ Route::group([
             Route::post('delete', 'SendEndProductController@delete')->name('send.end_product.delete');
             Route::get('get-order/{order_code}', 'SendEndProductController@getOrder')->name('send.end_product.get_order');
             Route::post('delete', 'SendEndProductController@delete')->name('send.end_product.delete');
+            Route::post('check-if-sorted', 'SendEndProductController@checkIfSorted')->name('send_end_product.check_if_sorted');
         });
 
         Route::group([

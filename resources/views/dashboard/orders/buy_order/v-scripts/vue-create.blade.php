@@ -29,7 +29,8 @@
             delivery_date: '',
             error: '',
             have_error: false,
-            customer_errors: {}
+            customer_errors: {},
+            have_value: false
         },
         mounted() {
             this.setDate(2);
@@ -94,23 +95,21 @@
             },
             checkIfExistsInProduct(item) {
                 if (this.products.length > 0) {
-                    var checker = false;
                     for (i = 0; i < this.products.length; i++) {
                         if (this.products[i].produce_code == item.produce_code &&
                             this.products[i].product_type == item.product_type &&
                             this.products[i].size == item.size) {
-                            continue;
+                            checker = false;
+                            break;
                         } else {
                             checker = true;
                         }
                     }
                     if (checker) {
-                        console.log(checker);
-                        console.log('test');
                         this.products.push(item);
                     }
+
                 } else {
-                    console.log(checker);
                     this.products.push(item);
 
                 }
@@ -126,7 +125,7 @@
             },
             sendOrder() {
                 this.customerValidate();
-                if (!this.have_error) {
+                if (!this.have_error && this.have_value) {
                     let data = {};
                     data.customer = this.customer;
                     data.products = this.products;
@@ -151,23 +150,23 @@
                 this.customer_errors = {}
 
                 if (!this.customer.name) {
-                    this.customer_errors.name = "* field is required";
+                    this.customer_errors.name = "* يجب ادخال هذا الحقل";
                     this.have_error = true;
                 }
                 if (!this.customer.phone) {
-                    this.customer_errors.phone = "* field is required"
+                    this.customer_errors.phone = "* يجب ادخال هذا الحقل"
                     this.have_error = true;
                 }
                 if (!this.customer.address) {
-                    this.customer_errors.address = "* field is required"
+                    this.customer_errors.address = "* يجب ادخال هذا الحقل"
                     this.have_error = true;
                 }
                 if (!this.customer.source) {
-                    this.customer_errors.source = "* field is required"
+                    this.customer_errors.source = "* يجب ادخال هذا الحقل"
                     this.have_error = true;
                 }
                 if (!this.customer.link) {
-                    this.customer_errors.link = "* field is required"
+                    this.customer_errors.link = "* يجب ادخال هذا الحقل"
                     this.have_error = true;
                 }
                 this.productsValidate();
@@ -185,31 +184,32 @@
                     this.products[i].error_qty = '';
                     this.products[i].error_price = '';
                     this.products[i].price_err = '';
-
+                    this.have_value = false;
                     if (this.products[i].qty > this.products[i].company_count) {
                         this.setDate(7);
                     }
 
                     if ((this.products[i].qty <= 0 && this.products[i].qty !== "")) {
-                        console.log('test1');
-                        this.products[i].error_qty = "* this field is required";
+                        this.products[i].error_qty = "* يجب ادخال هذا الحقل";
                         this.have_error = true;
                     }
 
                     if (this.products[i].price > 0 && !this.products[i].qty || reg.test(this.products[i].qty)) {
-                        console.log('test2');
-                        this.products[i].error_qty = "* this field is required";
+                        this.products[i].error_qty = "* يجب ادخال هذا الحقل";
                         this.have_error = true;
                     }
 
                     if ((this.products[i].qty > 0 && !this.products[i].price) || this.products[i].price <= 0) {
-                        this.products[i].price_err = "* this field is required";
-                        console.log('test3');
+                        this.products[i].price_err = "* يجب ادخال هذا الحقل";
 
                         this.have_error = true;
                     }
 
+                    if (this.products[i].qty) {
+                        this.have_value = true;
+                    }
                 }
+
             }
 
         }

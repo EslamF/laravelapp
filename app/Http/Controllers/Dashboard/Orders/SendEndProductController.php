@@ -47,10 +47,7 @@ class SendEndProductController extends Controller
             'code' => $this->generateCode()
         ]);
 
-        $temp = explode(',', $request->products);
-        $data = [];
-
-        foreach ($temp as $value) {
+        foreach ($request->products as $value) {
             $product = Product::where('prod_code', $value)->first();
             if ($product) {
                 $product->update([
@@ -88,5 +85,17 @@ class SendEndProductController extends Controller
 
         SaveOrder::find($request->save_order_id)->delete();
         return redirect()->route('send.end_product.list');
+    }
+
+    public function checkIfSorted(Request $request)
+    {
+
+        return response()->json(Product::where('prod_code', $request->product_code)
+            ->where('sorted', 1)
+            ->where('save_order_id', null)
+            ->where('damage_type', '!=', 'ironing')
+            ->where('damage_type', '!=', 'dyeing')
+            ->where('damage_type', '!=', 'tailoring')
+            ->exists(), 200);
     }
 }
