@@ -21,6 +21,12 @@ class CreateCustomersTable extends Migration
             $table->string('source');
             $table->string('link');
             $table->enum('type', ['individual', 'retailer', 'wholesaler']);
+
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

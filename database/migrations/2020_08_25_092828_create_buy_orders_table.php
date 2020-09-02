@@ -22,6 +22,11 @@ class CreateBuyOrdersTable extends Migration
                 ->onDelete('cascade');
             $table->string('source');
 
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
             $table->text('description')->nullable();
             $table->enum('confirmation', ['pending', 'canceled', 'confirmed'])->default('pending');
             $table->enum('preparation', ['need_prepare', 'prepared', 'shipped'])->default('need_prepare');

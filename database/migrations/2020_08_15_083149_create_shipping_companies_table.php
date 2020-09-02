@@ -16,6 +16,12 @@ class CreateShippingCompaniesTable extends Migration
         Schema::create('shipping_companies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

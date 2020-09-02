@@ -17,6 +17,12 @@ class CreateSaveOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->string('code')->unique();
             $table->boolean('stored')->default(0);
+
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

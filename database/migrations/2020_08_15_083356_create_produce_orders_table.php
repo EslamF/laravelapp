@@ -26,6 +26,12 @@ class CreateProduceOrdersTable extends Migration
                 ->references('id')->on('factories')
                 ->onDelete('cascade');
 
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
+
             $table->date('receiving_date');
             $table->timestamps();
         });

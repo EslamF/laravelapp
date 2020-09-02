@@ -179,12 +179,12 @@
 
                 var reg = new RegExp('^(?:0|00)\d+$')
 
+                this.have_value = false;
                 for (i = 0; i < this.products.length; i++) {
                     let error = {}
                     this.products[i].error_qty = '';
                     this.products[i].error_price = '';
                     this.products[i].price_err = '';
-                    this.have_value = false;
                     if (this.products[i].qty > this.products[i].company_count) {
                         this.setDate(7);
                     }

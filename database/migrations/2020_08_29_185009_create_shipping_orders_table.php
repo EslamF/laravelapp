@@ -23,6 +23,11 @@ class CreateShippingOrdersTable extends Migration
                 ->references('id')->on('shipping_companies')
                 ->onDelete('cascade');
 
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
             $table->boolean('status')->default(0);
 
             $table->timestamps();

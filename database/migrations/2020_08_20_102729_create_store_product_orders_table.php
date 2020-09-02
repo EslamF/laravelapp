@@ -23,6 +23,11 @@ class CreateStoreProductOrdersTable extends Migration
                 ->references('id')->on('save_orders')
                 ->onDelete('cascade');
 
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

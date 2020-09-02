@@ -4,8 +4,16 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Shipping List</h3>
+                <div class="row mb-3">
+                    <h3 class="card-title">Shipping List</h3>
+                </div>
                 <a href="{{Route('shipping.create_page')}}" class="btn btn-success float-right">Add</a>
+                <form action="{{Route('shipping.import_excel')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="file" value="fileupload" class="hidden" id="fileupload">
+                    <label for="fileupload"> اضف ملف لتعديل حالت الاوردرات</label>
+                    <button class="btn btn-primary">اضف</button>
+                </form>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

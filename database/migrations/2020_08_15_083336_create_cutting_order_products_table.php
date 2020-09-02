@@ -31,6 +31,8 @@ class CreateCuttingOrderProductsTable extends Migration
                 ->references('id')->on('sizes')
                 ->onDelete('cascade');
 
+
+
             $table->string('qty');
 
             $table->boolean('received')->default(0);
