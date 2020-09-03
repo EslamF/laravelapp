@@ -22,7 +22,7 @@ class RoleController extends Controller
 
 
         $role=Role::create($request->all());
-        $role->peremissions()->attach($request->peremissions);
+        $role->allowTo($request->peremissions);
         return redirect()->route('role.list');
     }
     /**

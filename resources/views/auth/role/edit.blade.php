@@ -18,8 +18,8 @@
                         <input type="text" class="form-control" name="label" id="label"  value="{{$data['role']->label}}" placeholder="ادخل اسم الوظيفة">
                     </div>
                     <div class="form-group">
-                        <label for="description">ملاحظات</label>
-                        <input type="text" class="form-control" name="description" id="description" value="{{$data['role']->description}}" placeholder="ادخل الملاحظات ">
+                        <label for="description">وصف</label>
+                        <input type="text" class="form-control" name="description" id="description" value="{{$data['role']->description}}" placeholder="ادخل الوصف ">
                     </div>
                     <h5> 
                         الصلحيات

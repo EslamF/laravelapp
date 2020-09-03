@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">اسم المورد</label>
-                        <input type="text" class="form-control" value="{{$supplier->name}}" name="name" id="name" placeholder="ادخل اسم المورد">
+                        <input type="text" class="form-control" value="{{$supplier->name}}" name="name" id="name" placceholder="ادخل اسم المورد">
                     </div> 
                 </div>
                 <!-- /.card-body -->

@@ -37,7 +37,7 @@ class UsersRequest extends FormRequest
 public function messages()
 {
     return [
-        'peremissions.*' => 'خ',
+        'peremissions.*' => 'خطاء',
     ];
 }
 }
