@@ -44,11 +44,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="user">الموظف المستلم</label>
+                                <label for="user"> المستلم</label>
                                 <select class="form-control" name="user_id" id="user"
                                     class="@error('user_id') is-danger @enderror">
                                     @foreach($data['users'] as $user)
-                                    <option value="" disabled selected>حدد الموظف المستلم</option>
+                                    <option value="" disabled selected>حدد المستلم</option>
                                     <option value="{{$user->id}}"
                                         {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
                                     </option>
@@ -61,11 +61,11 @@
                         @enderror
                             </div>
                             <div class="form-group">
-                                <label for="user">الموظف المشتري</label>
+                                <label for="user"> المشتري</label>
                                 <select class="form-control" name="user_id" id="user"
                                     class="@error('user_id') is-danger @enderror">
                                     @foreach($data['users'] as $user)
-                                    <option value="" disabled selected>حدد الموظف المشتري</option>
+                                    <option value="" disabled selected>حدد المشتري</option>
                                     <option value="{{$user->id}}"
                                         {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
                                     </option>
@@ -184,8 +184,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">ملاحظات</label>
-                        <textarea class="form-control" name="description" id="description"
-                        
+                            <textarea class="form-control" name="description" id="description"
                         class="@error('description') is-danger @enderror">
                             {{$data['material']->description}}</textarea>
                                 

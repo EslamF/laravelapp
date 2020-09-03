@@ -18,8 +18,8 @@
                                 <th class="col-md-2">نوع الخامة</th>
                                 <th class="col-md-2">المورد</th>
                                 <th class="col-md-1">الرقم المرجعي الفاتورة</th>
-                                <th class="col-md-1">الموظف المستلم</th>
-                                <th class="col-md-1">الموظف المشتري</th>
+                                <th class="col-md-1"> المستلم</th>
+                                <th class="col-md-1"> المشتري</th>
                                 <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>

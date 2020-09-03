@@ -28,9 +28,9 @@
                         
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="user">الموظف المشتري</label>
+                                <label for="user"> المشتري</label>
                                 <select class="form-control" name="buyer_id" id="user" class="@error('buyer_id') is-danger @enderror">
-                                    <option disabled selected>حدد اسم الموظف المشتري</option>
+                                    <option disabled selected>حدد اسم المشتري</option>
                                     @foreach($data['users'] as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
@@ -44,9 +44,9 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="user">الموظف المستلم</label>
+                                <label for="user"> المستلم</label>
                                 <select class="form-control" name="receiver_id" id="user" class="@error('receiver_id') is-danger @enderror">
-                                    <option disabled selected>حدد اسم الموظف المستلم</option>
+                                    <option disabled selected>حدد اسم المستلم</option>
                                     @foreach($data['users'] as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach

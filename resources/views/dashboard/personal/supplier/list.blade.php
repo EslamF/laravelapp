@@ -15,7 +15,7 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-2"> الرقم المرجعي المورد</th>
+                                <th class="col-md-2">الرقم المرجعي المورد</th>
                                 <th class="col-md-4">اسم المورد</th>
                                 <th class="col-md-6">الخيارات</th>
                             </div>
@@ -28,8 +28,7 @@
                                 <td class="col-md-2">{{$supplier->id}}</td>
                                 <td class="col-md-4">{{$supplier->name}}</td>
                                 <td class="col-md-6">
-                                    <a href="{{Route('supplier.edit_page', $supplier->id)}}"
-                                        class="btn btn-primary">تعديل</a>
+                                    <a href="{{Route('supplier.edit_page', $supplier->id)}}" class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('supplier.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="supplier_id" value="{{$supplier->id}}">

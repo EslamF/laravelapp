@@ -10,7 +10,7 @@
                 <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">اضافة عميل</a>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+        <div class="card-body">
                 <table class="table ">
                     <thead>
                         <tr class="row">
@@ -39,11 +39,11 @@
                                 <td class="col-md-1">{{$customer->type}}</td>
                                 <td class="col-md-3">
                                     <a href="{{Route('customer.edit_page', $customer->id)}}"
-                                        class="btn btn-primary">Edit</a>
+                                        class="btn btn-primary">تعديل</a>
                                     <form style="display:inline" action="{{Route('customer.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="customer_id" value="{{$customer->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
                                 </td>
                             </div>
