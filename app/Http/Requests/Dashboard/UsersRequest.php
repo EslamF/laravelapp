@@ -24,20 +24,20 @@ class UsersRequest extends FormRequest
     public function rules()
     {
         return [
-            'label' => ['required','min:3'],
-            'peremissions.*' => ['exists:peremissions,id']           
+            'label' => ['required', 'min:3'],
+            'peremissions.*' => ['exists:peremissions,id']
         ];
     }
 
     /**
- * Get the error messages for the defined validation rules.
- *
- * @return array
- */
-public function messages()
-{
-    return [
-        'peremissions.*' => 'خطاء',
-    ];
-}
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'peremissions.*' => 'خطاء',
+        ];
+    }
 }
