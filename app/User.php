@@ -39,21 +39,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function setPasswordAttribute($value){
-        $this->password= bcrypt($value);
-
+    public function setPasswordAttribute($value)
+    {
+        $this->password = bcrypt($value);
     }
 
-    public function  roles(){
+    public function  roles()
+    {
         return $this->belongsToMany(Role::class);
     }
 
-    public function  assignRole($role){
+    public function  assignRole($role)
+    {
 
-         return $this->roles()->sync($role,true);
+        return $this->roles()->sync($role, true);
     }
 
-    public function  peremissions(){
+    public function  peremissions()
+    {
         return $this->roles->map->peremissions->flatten()->pluck('name')->unique();
     }
 }
