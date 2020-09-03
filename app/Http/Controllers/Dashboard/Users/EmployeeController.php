@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Users\Role;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -42,7 +43,7 @@ class EmployeeController extends Controller
             'type_id' => 'required|exists:users,id',
             // 'role_id' => 'required|exists:role,id',
             'name' => 'min:3',
-            'email' => 'min:3|unique:users,email,'.$this->user->id,
+            'email' => 'min:3|unique:users,email,' . Auth::user()->id,
             'password' => 'required|confirmed'
         ]);
 
