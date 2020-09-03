@@ -19,7 +19,7 @@
                                 <th class="col-md-2">المورد</th>
                                 <th class="col-md-1">الرقم المرجعي الفاتورة</th>
                                 <th class="col-md-1">الموظف المستلم</th>
-                                <th class="col-md-1">الموظف المستلم</th>
+                                <th class="col-md-1">الموظف المشتري</th>
                                 <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
@@ -32,8 +32,9 @@
                                 <td class="col-md-2">{{$material->mq_r_code}}</td>
                                 <td class="col-md-2">{{$material->materialType->name}}</td>
                                 <td class="col-md-2">{{$material->supplier->name}}</td>
-                                <td class="col-md-2">{{$material->bill_number}}</td>
-                                <td class="col-md-1">{{$material->user->name}}</td>
+                                <td class="col-md-1">{{$material->bill_number}}</td>
+                                <td class="col-md-1">{{$material->receiver->name}}</td>
+                                <td class="col-md-1">{{$material->buyer->name}}</td>
                                 <td class="col-md-2">
                                     <a href="{{Route('receiving.material.edit_page', $material->id)}}"
                                         class="btn btn-primary">تعديل</a>

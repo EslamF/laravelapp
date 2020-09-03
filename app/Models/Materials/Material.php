@@ -14,7 +14,8 @@ class Material extends Model
     protected $fillable = [
         'mq_r_code',
         'material_type_id',
-        'user_id',
+        'buyer_id',
+        'receiver_id',
         'supplier_id',
         'qty',
         'weight',
@@ -38,9 +39,13 @@ class Material extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    public function user()
+    public function receiver()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'receiver_id','id');
+    }
+    public function buyer()
+    {
+        return $this->belongsTo(User::class,'buyer_id','id');
     }
 
     public function cuttingOrders()

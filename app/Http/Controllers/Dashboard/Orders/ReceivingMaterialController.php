@@ -16,7 +16,8 @@ class ReceivingMaterialController extends Controller
         $validate = $request->validate([
             'mq_r_code' => 'required',
             'material_type_id' => 'required|exists:material_types,id',
-            'user_id' => 'required|exists:users,id',
+            'receiver_id' => 'required|exists:users,id',
+            'buyer_id' => 'required|exists:users,id',
             'supplier_id' => 'required|exists:suppliers,id',
             'qty' => 'requiredIf:type,Accessories',
             'weight' => 'requiredIf:type,Materials',
@@ -24,7 +25,7 @@ class ReceivingMaterialController extends Controller
             'weight' => 'required_without:qty',
             'bill_number' => 'required',
             'description' => 'required',
-            'color' => 'required'
+            'color' => 'required',
         ]);
 
         Material::create($request->all());
@@ -42,7 +43,7 @@ class ReceivingMaterialController extends Controller
 
     public function getAllPaginate()
     {
-        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'user:id,name')->paginate();
+        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'receiver:id,name','buyer:id,name')->paginate();
         return view('dashboard.orders.receiving_materials.list')->with('receiving', $receiving);
     }
 

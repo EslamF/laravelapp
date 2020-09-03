@@ -25,23 +25,40 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="user">الموظف المشتري</label>
-                                <select class="form-control" name="user_id" id="user" class="@error('user_id') is-danger @enderror">
+                                <select class="form-control" name="buyer_id" id="user" class="@error('buyer_id') is-danger @enderror">
                                     <option disabled selected>حدد اسم الموظف المشتري</option>
                                     @foreach($data['users'] as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
                                 </select>
-                                @error('user_id')
+                                @error('buyer_id')
                                 <p class="help is-danger">
                                     {{$message}}
                                 </p>
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="user">الموظف المستلم</label>
+                                <select class="form-control" name="receiver_id" id="user" class="@error('receiver_id') is-danger @enderror">
+                                    <option disabled selected>حدد اسم الموظف المستلم</option>
+                                    @foreach($data['users'] as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('receiver_id')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="supplier">المورد</label>
                                 <select class="form-control" name="supplier_id" id="supplier" class="@error('supplier_id') is-danger @enderror">
