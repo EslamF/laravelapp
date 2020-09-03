@@ -164,6 +164,11 @@
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>المصانع</p>
                                     </a>
+                                </li>  <li class="nav-item">
+                                    <a href="{{Route('shippingcompany.list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>شاركات الشحن</p>
+                                    </a>
                                 </li>
                             </ul>
                         </li>

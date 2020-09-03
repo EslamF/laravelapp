@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Materials\Material;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -40,12 +41,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     public function setPasswordAttribute($value){
-        $this->password= bcrypt($value);
+        $this->attributes['password']= bcrypt($value);
 
     }
 
+
+
     public function  roles(){
         return $this->belongsToMany(Role::class);
+    }
+    public function  receivering(){
+        return $this->hasMany(Material::class);
+    }
+    public function  buying(){
+        return $this->hasMany(Material::class);
     }
 
     public function  assignRole($role){
