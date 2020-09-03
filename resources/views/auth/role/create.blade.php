@@ -22,7 +22,7 @@
                         @enderror
                     </div>
                     <div class="form-group ">
-                        <label for="desc">ملاحظات</label>
+                        <label for="desc">وصف الوظيفة</label>
                         {{-- @if(count($errors->toArray()))
                             @foreach($errors[peremissions]->toArray() as $peremission_error)
                             @endif

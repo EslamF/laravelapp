@@ -17,7 +17,7 @@
                             <div class="col-md-12">
                                 <th class="col-md-1">الرقم المرجعي</th>
                                 <th class="col-md-3">الاسم الوظيفة</th>
-                                <th class="col-md-6">ملاحظات</th>
+                                <th class="col-md-6">الوصف</th>
                                 <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
