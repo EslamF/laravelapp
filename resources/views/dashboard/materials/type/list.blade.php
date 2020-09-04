@@ -36,6 +36,9 @@
                     </tbody>
                 </table>
             </div>
+            @if(!$types->count())
+            <p class="text-center">لا يوجد بيانات</p>
+            @endif
             <!-- /.card-body -->
             <div class="card-footer clearfix">
                 {{$types->links()}}
