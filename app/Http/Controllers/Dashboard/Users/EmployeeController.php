@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard\Users;
 use App\Http\Controllers\Controller;
 use App\Models\Users\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\User;
 
 class EmployeeController extends Controller
@@ -56,7 +58,6 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'type_id' => 'required|exists:users,id'
-            
         ]);
         User::find($request->type_id)->delete();
         return redirect()->route('employee.list');
