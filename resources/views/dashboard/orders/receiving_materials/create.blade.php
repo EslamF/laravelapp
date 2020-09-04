@@ -187,11 +187,6 @@
             //disable the submit button
             $("#btnSubmit").attr("disabled", true);
 
-            //disable a normal button
-            $("#btnTest").attr("disabled", true);
-
-            return true;
-
         });
     })
 </script>
