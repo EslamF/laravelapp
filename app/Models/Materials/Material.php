@@ -15,13 +15,13 @@ class Material extends Model
         'mq_r_code',
         'material_type_id',
         'buyer_id',
-        'receiver_id',
         'supplier_id',
         'qty',
         'weight',
         'bill_number',
         'description',
-        'color'
+        'color',
+        'created_by'
     ];
 
     /**
@@ -39,13 +39,14 @@ class Material extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    public function receiver()
-    {
-        return $this->belongsTo(User::class,'receiver_id','id');
-    }
     public function buyer()
     {
-        return $this->belongsTo(User::class,'buyer_id','id');
+        return $this->belongsTo(User::class, 'buyer_id', 'id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
     public function cuttingOrders()

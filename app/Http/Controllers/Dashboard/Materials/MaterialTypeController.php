@@ -7,7 +7,7 @@ use App\Models\Materials\MaterialType;
 use App\Http\Controllers\Controller;
 
 class MaterialTypeController extends Controller
-{   
+{
     /**
      * 
      * create material type 
@@ -17,7 +17,7 @@ class MaterialTypeController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3'
+            'name' => 'required|min:3|unique:material_types,name'
         ]);
         MaterialType::create($request->all());
         return redirect()->route('material.type.list');
@@ -31,7 +31,8 @@ class MaterialTypeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'type_id' => 'required'
+            'type_id' => 'required|exists:material_types,id',
+            'name'  => 'required|unique:material_types,name,' . $request->type_id
         ]);
 
         MaterialType::find($request->type_id)->update($request->all());
@@ -87,8 +88,6 @@ class MaterialTypeController extends Controller
             'type_id' => 'required|exists:material_types,id'
         ]);
         MaterialType::find($request->type_id)->delete();
-
-        return redirect()->route('material.type.list');
+        return response()->json('deleted', 200);
     }
-
 }

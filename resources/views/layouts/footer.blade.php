@@ -5,7 +5,7 @@
                 <b>Version</b> 3.0.1-pre
             </div>
         </footer>
-
+        @yield('footer-script')
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
@@ -16,6 +16,7 @@
         <script src="{{asset('asset/dist/js/jquery/jquery.validate.min.js')}}"></script>
         <script src="{{asset('asset/dist/js/jquery/jquery.methods.min.js')}}"></script>
         <script src="{{asset('asset/dist/js/jquery/messages_ar.js')}}"></script> --}}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <!-- ./wrapper -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
         <!-- jQuery -->
@@ -26,7 +27,6 @@
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
             $.widget.bridge('uibutton', $.ui.button)
-            
         </script>
         <!-- Bootstrap 4 -->
         <script src="{{asset('asset/')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -52,18 +52,18 @@
         <!-- AdminLTE App -->
         <script src="{{asset('asset/')}}/dist/js/adminlte.js"></script>
 
-        
+
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="{{asset('asset/')}}/dist/js/pages/dashboard.js"></script>
-       
+
         <!-- AdminLTE for demo purposes -->
         <script src="{{asset('asset/')}}/dist/js/demo.js"></script>
         <script src="{{asset('/js/bootstrap-tagsinput.min.js')}}"></script>
         <script>
             $('#submit').click(function() {
                 console.log('test');
-        $(this).attr('disabled','disabled');
-});
+                $(this).attr('disabled', 'disabled');
+            });
         </script>
         </body>
 

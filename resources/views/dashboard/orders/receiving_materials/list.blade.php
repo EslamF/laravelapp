@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div id="app" class="row">
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
@@ -18,8 +18,8 @@
                                 <th class="col-md-2">نوع الخامة</th>
                                 <th class="col-md-2">المورد</th>
                                 <th class="col-md-1">الرقم المرجعي الفاتورة</th>
-                                <th class="col-md-1"> المستلم</th>
-                                <th class="col-md-1"> المشتري</th>
+                                <th class="col-md-1">المستلم</th>
+                                <th class="col-md-1">المشتري</th>
                                 <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
@@ -30,20 +30,14 @@
                             <div class="col-md-12">
                                 <td class="col-md-1">{{$material->id}}</td>
                                 <td class="col-md-2">{{$material->mq_r_code}}</td>
-                                <td class="col-md-2">{{$material->materialType->name}}</td>
+                                <td class="col-md-2">{{$material->materialType ? $material->materialType->name : 'ليس له نوع خامة'}}</td>
                                 <td class="col-md-2">{{$material->supplier->name}}</td>
                                 <td class="col-md-1">{{$material->bill_number}}</td>
-                                <td class="col-md-1">{{$material->receiver->name}}</td>
+                                <td class="col-md-1">{{$material->createdBy->name}}</td>
                                 <td class="col-md-1">{{$material->buyer->name}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('receiving.material.edit_page', $material->id)}}"
-                                        class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('receiving.material.delete')}}"
-                                        method="POST">
-                                        @csrf
-                                        <input type="hidden" name="material_id" value="{{$material->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
+                                    <a href="{{Route('receiving.material.edit_page', $material->id)}}" class="btn btn-primary">تعديل</a>
+                                    <button type="submit" @click="deleteItem({{$material->id}})" class="btn btn-danger">حذف</button>
                                 </td>
                             </div>
                         </tr>
@@ -59,4 +53,46 @@
         <!-- /.card -->
     </div>
 </div>
+@endsection
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.material_id = id
+                            axios.post("{{Route('receiving.material.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
 @endsection

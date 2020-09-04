@@ -30,7 +30,7 @@
                                 <td class="col-md-1">{{$employee->id}}</td>
                                 <td class="col-md-2">{{$employee->name}}</td>
                                 <td class="col-md-3">{{$employee->email}}</td>
-                                <td class="col-md-3">{{isset($employee->roles->label) ? $employee->roles->label: "لا يوجد لة صلاحية" }}</td>
+                                <td class="col-md-3">{{isset($employee->roles[0]->label) ? $employee->roles[0]->label: "لا يوجد لة صلاحية" }}</td>
                                 <td class="col-md-3">
                                     @can('edit-employee')
                                     <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>

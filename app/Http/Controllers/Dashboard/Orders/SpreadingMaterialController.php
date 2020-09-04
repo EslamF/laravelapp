@@ -20,7 +20,7 @@ class SpreadingMaterialController extends Controller
     {
         $data = [];
         $data['users'] = User::select('id', 'name')->get();
-        $data['material'] = Material::select('id', 'mq_r_code')->get();
+        $data['material'] = Material::select('id', 'mq_r_code')->where('weight', '!=', null)->get();
         return view('dashboard.orders.spreading_materials.create')->with('data', $data);
     }
 

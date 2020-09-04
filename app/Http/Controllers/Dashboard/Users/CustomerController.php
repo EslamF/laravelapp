@@ -63,7 +63,7 @@ class CustomerController extends Controller
         ]);
         Customer::find($request->customer_id)->delete();
 
-        return redirect()->route('customer.list');
+        return response()->json('deleted', 200);
     }
     /**
      * 

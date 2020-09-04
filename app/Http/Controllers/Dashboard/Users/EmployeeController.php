@@ -56,6 +56,7 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'type_id' => 'required|exists:users,id'
+            
         ]);
         User::find($request->type_id)->delete();
         return redirect()->route('employee.list');

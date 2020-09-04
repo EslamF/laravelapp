@@ -64,7 +64,7 @@
         <!-- /.card -->
     </div>
 </div>
-<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
 </script>
 <script>
     var totalLength;
@@ -112,7 +112,6 @@
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             if (products.length > 0) {
-                console.log(products);
                 if (products.includes($('.code').val()) && !addProducts.includes($('.code').val())) {
                     $('.error').css('display', 'none');
                     $("tbody").empty();
