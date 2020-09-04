@@ -10,10 +10,10 @@
                 <a href="{{Route('shippingcompany.create_page')}}" class="btn btn-success float-right">إضافة مورد</a>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+        <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
+                    <tr class="row">
                             <div class="col-md-12">
                                 <th class="col-md-2">الرقم المرجعي المورد</th>
                                 <th class="col-md-4">اسم المورد</th>

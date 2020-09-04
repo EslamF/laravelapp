@@ -36,34 +36,6 @@
                         </div>
                     </div>
                     <div class="row">
-<<<<<<< HEAD
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="user"> المستلم</label>
-                                <select class="form-control" name="user_id" id="user"
-                                    class="@error('user_id') is-danger @enderror">
-                                    @foreach($data['users'] as $user)
-                                    <option value="" disabled selected>حدد المستلم</option>
-                                    <option value="{{$user->id}}"
-                                        {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
-                                    </option>
-                                    @endforeach
-                                </select>
-                        @error('user_id')
-                        <p class="help is-danger">
-                            {{$message}}
-                        </p>
-                        @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="user"> المشتري</label>
-                                <select class="form-control" name="user_id" id="user"
-                                    class="@error('user_id') is-danger @enderror">
-                                    @foreach($data['users'] as $user)
-                                    <option value="" disabled selected>حدد المشتري</option>
-                                    <option value="{{$user->id}}"
-                                        {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
-=======
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="user">المشتري</label>
@@ -71,7 +43,6 @@
                                     @foreach($data['users'] as $user)
                                     <option value="" disabled selected>حدد المشتري</option>
                                     <option value="{{$user->id}}" {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
->>>>>>> be6eafe6caa8449256be5cd2ff1faed82b4f8c0b
                                     </option>
                                     @endforeach
                                 </select>
@@ -169,16 +140,9 @@
                     </div>
                     <div class="form-group">
                         <label for="description">ملاحظات</label>
-<<<<<<< HEAD
-                            <textarea class="form-control" name="description" id="description"
-                        class="@error('description') is-danger @enderror">
-                            {{$data['material']->description}}</textarea>
-                                
-=======
                         <textarea class="form-control" name="description" id="description" class="@error('description') is-danger @enderror">
                         {{$data['material']->description}}</textarea>
 
->>>>>>> be6eafe6caa8449256be5cd2ff1faed82b4f8c0b
                         @error('description')
                         <p class="help is-danger">
                             {{$message}}

@@ -36,18 +36,8 @@
                                 <td class="col-md-1">{{$customer->link}}</td>
                                 <td class="col-md-1">{{$customer->type}}</td>
                                 <td class="col-md-3">
-<<<<<<< HEAD
-                                    <a href="{{Route('customer.edit_page', $customer->id)}}"
-                                        class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('customer.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="customer_id" value="{{$customer->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-=======
                                     <a href="{{Route('customer.edit_page', $customer->id)}}" class="btn btn-primary">تعديل</a>
                                     <button type="button" @click="deleteItem({{$customer->id}})" class="btn btn-danger">حذف</button>
->>>>>>> be6eafe6caa8449256be5cd2ff1faed82b4f8c0b
                                 </td>
                             </div>
                         </tr>
