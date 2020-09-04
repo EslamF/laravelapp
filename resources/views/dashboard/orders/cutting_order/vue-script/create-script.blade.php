@@ -221,7 +221,7 @@
                 if (this.type == 'company') {
                     this.factoryValidation();
                     data.factory_id = this.factory_id;
-
+                    data.spreading_out_material_order_id = this.spreading_out_material_order_id;
                     if (!this.have_error) {
 
                         const metas = document.getElementsByTagName('meta');

@@ -24,7 +24,7 @@ class ReceivingMaterialController extends Controller
             'qty' => 'required_without:weight',
             'weight' => 'required_without:qty',
             'bill_number' => 'required',
-            'description' => 'required',
+            'description' => 'in:3',
             'color' => 'required',
         ]);
 
@@ -43,7 +43,7 @@ class ReceivingMaterialController extends Controller
 
     public function getAllPaginate()
     {
-        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'receiver:id,name','buyer:id,name')->paginate();
+        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'receiver:id,name', 'buyer:id,name')->paginate();
         return view('dashboard.orders.receiving_materials.list')->with('receiving', $receiving);
     }
 

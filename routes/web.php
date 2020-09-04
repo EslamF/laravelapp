@@ -50,8 +50,6 @@ Route::group([
                 'namespace' => 'Users'
             ],
             function () {
-
-
                 Route::group([
                     'prefix' => 'roles',
                 ], function () {
