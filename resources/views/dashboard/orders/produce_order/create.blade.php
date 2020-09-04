@@ -61,7 +61,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="button" @click="store" class="btn btn-primary">تسجيل</button>
+                    <button type="button" @click="store" class="btn btn-primary">إضافة</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

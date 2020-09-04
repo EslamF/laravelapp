@@ -70,7 +70,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">تسجيل</button>
+                    <button type="submit" class="btn btn-primary">إضافة</button>
                     <a href="{{ url()->previous() }}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

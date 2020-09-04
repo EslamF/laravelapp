@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Dashboard\Users;
 use App\Http\Controllers\Controller;
 use App\Models\Users\Role;
 use Illuminate\Http\Request;
-use App\User;
 use Illuminate\Support\Facades\Auth;
+
+use App\User;
 
 class EmployeeController extends Controller
 {

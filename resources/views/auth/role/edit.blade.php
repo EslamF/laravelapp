@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل  الوظيفة</h3>
+                <h3 class="card-title">بيانات  الوظيفة</h3>
             </div>
                 <!-- /.card-header          id	name	phone	address	source	link	type	 -->
                 <!-- form start -->
@@ -37,7 +37,7 @@
                 <!-- /.card-body -->
                 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">تأكيد التعديل</button>
+                    <button type="submit" class="btn btn-primary">تأكيد</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

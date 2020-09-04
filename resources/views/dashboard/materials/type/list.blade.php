@@ -13,9 +13,9 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-8">النوع</th>
-                                <th class="col-md-3">الخيارات</th>
+                                <th class="col-md-3"> الرقم المرجعي</th>
+                                <th class="col-md-7">النوع</th>
+                                <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
                     </thead>
@@ -23,8 +23,8 @@
                         @foreach($types as $type)
                         <tr class="row">
                             <div class="col-md-12">
-                                <td class="col-md-1">{{$type->id}}</td>
-                                <td class="col-md-9">{{$type->name}}</td>
+                                <td class="col-md-3">{{$type->id}}</td>
+                                <td class="col-md-7">{{$type->name}}</td>
                                 <td class="col-md-2">
                                     <a href="{{Route('material.type.edit_page', $type->id)}}" class="btn btn-primary">تعديل</a>
                                     <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger">حذف</button>

@@ -4,7 +4,7 @@
     <div id="loader" style="display: none;" class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل إذن الفرش</h3>
+                <h3 class="card-title">بيانات إذن الفرش</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->

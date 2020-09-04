@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل إذن إستلام الخامة</h3>
+                <h3 class="card-title">بيانات إذن إستلام الخامة</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -154,7 +154,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" id="btnSubmit" onclick="submitForm()" class="btn btn-primary">تأكيد التعديل</button>
+                    <button type="submit" id="btnSubmit" onclick="submitForm()" class="btn btn-primary">تأكيد</button>
                     <a href="{{Route('order.receiving.material')}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

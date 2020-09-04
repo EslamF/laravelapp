@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">تأكيد التعديل</button>
+                        <button type="submit" class="btn btn-primary">تأكيد</button>
                         <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                     </div>
                     <!-- /.card-body -->

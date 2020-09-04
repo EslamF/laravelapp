@@ -8,7 +8,7 @@
                 <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">اضافة عميل</a>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+        <div class="card-body">
                 <table class="table ">
                     <thead>
                         <tr class="row">

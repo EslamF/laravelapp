@@ -24,7 +24,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" id="reg" onclick="test()" class="btn btn-primary">تسجيل</button>
+                    <button type="submit" id="reg" onclick="test()" class="btn btn-primary">إضافة</button>
                     <a href="{{Route('material.type.list')}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

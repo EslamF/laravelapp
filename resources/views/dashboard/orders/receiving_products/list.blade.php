@@ -5,7 +5,7 @@
         <div class="card ">
             <div class="card-header">
                 <h3 class="card-title">  اذونات الإستلام</h3>
-                <a href="{{Route('receiving.product.create')}}" class="btn btn-success float-right">Add</a>
+                <a href="{{Route('receiving.product.create')}}" class="btn btn-success float-right">انشاء اذن إستلام</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

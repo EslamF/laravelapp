@@ -147,7 +147,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" id="btnSubmit" onclick="submitForm()" class="btn btn-primary">تسجيل</button>
+                    <button type="submit" id="btnSubmit" onclick="submitForm()" class="btn btn-primary">إضافة</button>
                     <a href="{{Route('order.receiving.material')}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

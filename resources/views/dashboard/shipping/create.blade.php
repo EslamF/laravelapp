@@ -8,7 +8,7 @@
                 <h3 class="card-title"></h3>
             </div>
             <!-- form start  -->
-            <form role="form" action="{{Route('shippingcompany.store')}}" method="POST">
+            <form role="form" action="{{Route('supplier.store')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -19,7 +19,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" id="reg" onclick="test()" class="btn btn-primary">تسجيل</button>
+                    <button type="submit" id="reg" onclick="test()" class="btn btn-primary">إضافة</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
