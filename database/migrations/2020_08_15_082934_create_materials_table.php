@@ -16,9 +16,9 @@ class CreateMaterialsTable extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('mq_r_code')->unique();
-            $table->string('color');
+            $table->string('color')->nullable();
 
-            $table->unsignedBigInteger('material_type_id');
+            $table->unsignedBigInteger('material_type_id')->nullable();
             $table->foreign('material_type_id')
                 ->references('id')->on('material_types')
                 ->onDelete('cascade');
@@ -28,8 +28,8 @@ class CreateMaterialsTable extends Migration
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('receiver_id');
-            $table->foreign('receiver_id')
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 

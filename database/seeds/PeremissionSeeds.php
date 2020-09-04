@@ -13,8 +13,11 @@ class PeremissionSeeds extends Seeder
     public function run()
     {
 
-        DB::table('peremissions')->insert([ 
-
+        DB::table('peremissions')->insert([
+            [
+                'name' => 'buy-material',
+                'lable' => 'شراء خامات'
+            ],
             [
                 'name' => 'add-employee',
                 'lable' => 'إضافة موظف'

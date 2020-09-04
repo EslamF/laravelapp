@@ -14,18 +14,15 @@ class ReceivingMaterialController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'mq_r_code' => 'required',
-            'material_type_id' => 'required|exists:material_types,id',
-            'receiver_id' => 'required|exists:users,id',
+            'mq_r_code' => 'required|unique:materials,mq_r_code',
+            'type' => 'required',
+            'material_type_id' => 'requiredIf:type,material|exists:material_types,id',
             'buyer_id' => 'required|exists:users,id',
             'supplier_id' => 'required|exists:suppliers,id',
-            'qty' => 'requiredIf:type,Accessories',
-            'weight' => 'requiredIf:type,Materials',
-            'qty' => 'required_without:weight',
-            'weight' => 'required_without:qty',
+            'qty' => 'requiredIf:type,accessory',
+            'weight' => 'requiredIf:type,material',
             'bill_number' => 'required',
-            'description' => 'in:3',
-            'color' => 'required',
+            'color' => 'requiredIf:type,material',
         ]);
 
         Material::create($request->all());
@@ -35,7 +32,11 @@ class ReceivingMaterialController extends Controller
     public function createPage()
     {
         $data = [];
-        $data['users'] = User::select('id', 'name')->get();
+        $data['users'] = User::select('id', 'name')->whereHas('roles', function ($q) {
+            $q->whereHas('peremissions', function ($query) {
+                $query->where('name', 'buy-material');
+            });
+        })->get();
         $data['suppliers'] = Supplier::select('id', 'name')->get();
         $data['material_types'] = MaterialType::select('id', 'name')->get();
         return view('dashboard.orders.receiving_materials.create')->with('data', $data);
@@ -43,7 +44,7 @@ class ReceivingMaterialController extends Controller
 
     public function getAllPaginate()
     {
-        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'receiver:id,name', 'buyer:id,name')->paginate();
+        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'createdBy:id,name', 'buyer:id,name')->paginate();
         return view('dashboard.orders.receiving_materials.list')->with('receiving', $receiving);
     }
 
@@ -63,14 +64,14 @@ class ReceivingMaterialController extends Controller
 
         $request->validate([
             'material_id' => 'required|exists:materials,id',
-            'code' => 'min:3',
-            'mq_r_code' => 'min:3',
-            'material_type_id' => 'exists:material_types,id',
+            'mq_r_code' => 'unique:materials,mq_r_code,' . $request->material_id,
+            'material_type_id' => 'requiredIf:type,material|exists:material_types,id',
             'user_id'     => 'exists:users,id',
             'supplier_id' => 'exists:suppliers,id',
             'bill_number' => 'min:3',
-            'description' => 'min:3',
-            'color' => 'required',
+            'color' => 'requiredIf:type,material',
+            'weight' => 'requiredIf:type,material',
+            'qty'   => 'requiredIf:type,accessory'
 
         ]);
 
@@ -85,6 +86,6 @@ class ReceivingMaterialController extends Controller
         ]);
 
         Material::find($request->material_id)->delete();
-        return redirect()->route('order.receiving.material');
+        return response()->json('deleted', 200);
     }
 }

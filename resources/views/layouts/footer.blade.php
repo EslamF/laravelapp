@@ -5,7 +5,7 @@
                 <b>Version</b> 3.0.1-pre
             </div>
         </footer>
-        @yield('script')
+        @yield('footer-script')
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->

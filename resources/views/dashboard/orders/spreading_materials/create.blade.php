@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div id="app" class="row">
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
@@ -33,7 +33,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="mq_r_code">كود الخامة</label>
-                                <select class="form-control" name="material_id" id="user" class="@error('material_id') is-danger @enderror">
+                                <select class="form-control" @change="checkWeight()" name="material_id" id="user" class="@error('material_id') is-danger @enderror">
                                     <option value="" disabled selected>حدد كود الخامة</option>
                                     @foreach($data['material'] as $material)
                                     <option value="{{$material->id}}" {{old('material_id') == $material->id ? 'selected':'' }}>
@@ -73,4 +73,25 @@
     </div>
 </div>
 </div>
+@endsection
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        mounted() {
+
+        },
+        methods: {
+            checkWeight() {
+
+            }
+        }
+
+    })
+</script>
 @endsection
