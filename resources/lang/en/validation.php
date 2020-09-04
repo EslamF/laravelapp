@@ -96,8 +96,8 @@ return [
     'present'              => 'يجب تقديم :attribute.',
     'regex'                => 'صيغة :attribute .غير صحيحة.',
     'required'             => ':attribute مطلوب.',
-    'required_if'          => ':attribute مطلوب في حال ما إذا كان :other يساوي :value.',
-    'required_unless'      => ':attribute مطلوب في حال ما لم يكن :other يساوي :values.',
+    'required_if'          => ':attribute مطلوب ',
+    'required_unless'      => ':attribute مطلوب .',
     'required_with'        => ':attribute مطلوب إذا توفّر :values.',
     'required_with_all'    => ':attribute مطلوب إذا توفّر :values.',
     'required_without'     => ':attribute مطلوب إذا لم يتوفّر :values.',
@@ -109,6 +109,10 @@ return [
         'string'  => 'يجب أن يحتوي النص :attribute على :size حروفٍ/حرفًا بالضبط.',
         'array'   => 'يجب أن يحتوي :attribute على :size عنصرٍ/عناصر بالضبط.',
     ],
+    'type' => [
+        'material' => 'custom-message',
+    ]
+    ,
     'starts_with' => 'يجب أن يبدأ :attribute بأحد القيم التالية: :values',
     'string'      => 'يجب أن يكون :attribute نصًا.',
     'timezone'    => 'يجب أن يكون :attribute نطاقًا زمنيًا صحيحًا.',
@@ -132,6 +136,7 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+
     ],
 
     /*
@@ -175,17 +180,24 @@ return [
         'time'                  => 'الوقت',
         'available'             => 'مُتاح',
         'size'                  => 'الحجم',
-        'prod_code'                  => 'الكود المنتج',
-        'factory_id'                  => 'الرقم المرجعي الخاص بلمصنع',
-        'material_type_id'                  => 'الرقم المرجعي للخامات',
-        'bill_number'                  => 'رقم الفتورة',
-        'mq_r_code'                  => 'كود الخامة ',
-        'supplier_id'                  => ' كودالمورد',
-        'user_id'                  => ' كودالموظف',
-        'color'                  => ' اللون',
-        'role_id'                  => ' اسم الوظيفة',
+        'prod_code'             => 'الكود المنتج',
+        'factory_id'            => 'الرقم المرجعي الخاص بلمصنع',
+        'material_type_id'      => 'الرقم المرجعي للخامات',
+        'bill_number'           => 'رقم الفتورة',
+        'mq_r_code'             => 'كود الخامة ',
+        'supplier_id'           => ' كود المورد',
+        'user_id'               => ' كودالموظف',
+        'color'                 => ' اللون',
+        'role_id'               => ' اسم الوظيفة',
+        'buyer_id'              => 'اسم المشتري',
+        'weight'                => 'الوزن',
+        'type'                  => 'النوع',
+        'material'              => 'الخامة',
+        'weight '               => 'الوزن',
+        'qty'                  => 'الكمية'
+        // 'weight '                  => 'الوزن',
 
-
-
+        
+        
     ],
 ];

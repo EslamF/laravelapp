@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل نوع المنتج</h3>
+                <h3 class="card-title">بيانات نوع المنتج</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -21,7 +21,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">تعديل</button>
+                    <button type="submit" class="btn btn-primary">تأكيد</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

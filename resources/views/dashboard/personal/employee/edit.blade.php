@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل في بيانات الموظف </h3>
+                <h3 class="card-title">بيانات في بيانات الموظف </h3>
             </div>
             <!-- form start -->
             <form role="form" action="{{Route('employee.update')}}" method="POST">
