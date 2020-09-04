@@ -29,10 +29,15 @@ class SpreadingMaterialController extends Controller
         $request->validate([
             'material_id' => 'required|exists:materials,id',
             'user_id'     => 'required|exists:users,id',
-            'weight'      => 'required'
+            'weight'      => 'required|numeric|gt:0'
         ]);
 
-        SpreadingOutMaterialOrder::create($request->all());
+        $order = SpreadingOutMaterialOrder::create($request->all());
+        if ($order) {
+            $material = Material::where('id', $request->material_id)->first();
+            $material->weight = $material->weight - $request->weight;
+            $material->save();
+        }
         return redirect()->route('spreading.material.list');
     }
 
@@ -40,7 +45,7 @@ class SpreadingMaterialController extends Controller
     {
         $data = [];
         $data['users'] = User::select('id', 'name')->get();
-        $data['material'] = Material::select('id', 'mq_r_code')->get();
+        $data['material'] = Material::select('id', 'mq_r_code')->where('weight', '!=', null)->get();
         $data['spreading'] = SpreadingOutMaterialOrder::where('id', $spreading_id)
             ->with('user:id,name', 'material:id,mq_r_code')
             ->first();
@@ -53,10 +58,23 @@ class SpreadingMaterialController extends Controller
             'spreading_id' => 'exists:spreading_out_material_orders,id',
             'material_id' => 'exists:materials,id',
             'user_id'     => 'exists:users,id',
-            'weight' => 'required'
+            'weight' => 'required|numeric|gt:0,'
         ]);
 
-        SpreadingOutMaterialOrder::find($request->spreading_id)->update($request->all());
+        $order = SpreadingOutMaterialOrder::where('id', $request->spreading_id)->first();
+        $material = Material::where('id', $request->material_id)->first();
+        if ($order->weight > $request->weight) {
+            $material->update([
+                'weight' => $material->weight + ($order->weight - $request->weight)
+            ]);
+        }
+
+        if ($order->weight < $request->weight) {
+            $material->update([
+                'weight' => $material->weight - ($request->weight - $order->weight)
+            ]);
+        }
+        $order->update($request->all());
         return redirect()->route('spreading.material.list');
     }
 
@@ -67,7 +85,11 @@ class SpreadingMaterialController extends Controller
             'spreading_id' => 'exists:spreading_out_material_orders,id',
         ]);
 
-        SpreadingOutMaterialOrder::find($request->spreading_id)->delete();
+        $order = SpreadingOutMaterialOrder::where('id', $request->spreading_id)->first();
+        $material  = Material::where('id', $order->material_id)->first();
+        $material->weight = $material->weight + $order->weight;
+        $material->save();
+        $order->delete();
         return redirect()->route('spreading.material.list');
     }
 

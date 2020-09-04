@@ -88,4 +88,10 @@ class ReceivingMaterialController extends Controller
         Material::find($request->material_id)->delete();
         return response()->json('deleted', 200);
     }
+
+    public function checkWeight($material_code)
+    {
+        $material = Material::select('id', 'mq_r_code', 'weight')->where('id', $material_code)->first();
+        return response()->json($material, 200);
+    }
 }

@@ -175,6 +175,7 @@ Route::group([
                 Route::get('edit/{material_id}', 'ReceivingMaterialController@editPage')->name('receiving.material.edit_page');
                 Route::post('update', 'ReceivingMaterialController@update')->name('receiving.material.update');
                 Route::post('delete', 'ReceivingMaterialController@delete')->name('receiving.material.delete');
+                Route::get('check-weight/{material_code}', 'ReceivingMaterialController@checkWeight');
             });
 
             Route::group([
