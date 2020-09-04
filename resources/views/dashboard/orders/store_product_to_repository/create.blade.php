@@ -112,7 +112,6 @@
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             if (products.length > 0) {
-                console.log(products);
                 if (products.includes($('.code').val()) && !addProducts.includes($('.code').val())) {
                     $('.error').css('display', 'none');
                     $("tbody").empty();
