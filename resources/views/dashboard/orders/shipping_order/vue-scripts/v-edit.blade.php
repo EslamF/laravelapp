@@ -35,7 +35,7 @@
                     });
             },
             getShippingCompanies() {
-                axios.get('{{Route("shipping.get_all")}}')
+                axios.get('{{Route("shippingcompany.get_all")}}')
                     .then(res => {
                         this.shipping_companies = res.data;
                     }).catch(err => {
