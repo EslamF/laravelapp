@@ -193,7 +193,9 @@ Route::group([
             Route::group([
                 'prefix' => 'cutting'
             ], function () {
+                Route::get('all', 'CuttingOrderController@outerList')->name('cutting.outer_list');
                 Route::get('get-all', 'CuttingOrderController@getAllPaginate')->name('cutting.material.list');
+                Route::get('get-factory-list', 'CuttingOrderController@companyList')->name('cutting.factory_list');
                 Route::get('get', 'CuttingOrderController@getAll')->name('cutting_order.all');
                 Route::get('get-order-products/{id}', 'CuttingOrderController@getWithProduct')->name('cutting_order.show_products');
                 Route::get('add_to_order/{id}', 'CuttingOrderController@addExtraCreate')->name('cutting_order.add_page');
@@ -204,6 +206,10 @@ Route::group([
                 Route::post('update', 'CuttingOrderController@update')->name('cutting.material.update');
                 Route::post('delete', 'CuttingOrderController@delete')->name('cutting.material.delete');
                 Route::post('delete-product', 'CuttingOrderController@deleteProduct')->name('cutting.delete_product');
+                Route::post('delet-products', 'CuttingOrderController@deleteProductsFromOrder')->name('cutting.delete_products');
+                Route::get('inner-factory-edit/{cutting_order_id}', 'CuttingOrderController@innerOrderEdit')->name('cutting.inner_factory_edit_data');
+                Route::get('inner-edit-page/{cutting_order_id}', 'CuttingOrderController@innerEditPage')->name('cutting.inner_factory_edit');
+                Route::get('cutting-order-employees', 'CuttingOrderController@cuttingOrderEmployee')->name('cutting_order.employee');
             });
 
             Route::group([

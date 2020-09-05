@@ -95,6 +95,6 @@ class SpreadingMaterialController extends Controller
 
     public function getAll()
     {
-        return response()->json(SpreadingOutMaterialOrder::select('id')->get(), 200);
+        return response()->json(SpreadingOutMaterialOrder::select('id')->whereDoesntHave('cuttingOrders')->get(), 200);
     }
 }

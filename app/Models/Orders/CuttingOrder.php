@@ -40,10 +40,6 @@ class CuttingOrder extends Model
         return $this->hasMany(ProduceOrder::class);
     }
 
-    public function CuttingOrderProducts()
-    {
-        return $this->hasMany(CuttingOrderProduct::class);
-    }
 
     public function spreadingOutMaterialOrder()
     {

@@ -12,70 +12,36 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Spreading Order</label>
                                 <span style="color:red" v-if="spreading_order_error">@{{spreading_order_error}}</span>
-                                <select v-model="spreading_out_material_order_id" class="form-control" id="" required>
-                                    <option value="" disabled seelcted>Choose Spreading Order</option>
+                                <select v-model="cutting_order.spreading_out_material_order_id" class="form-control" id="" required>
+                                    <option :value="cutting_order.spreading_out_material_order_id" selected>@{{cutting_order.spreading_out_material_order_id}}</option>
                                     <option :value="order.id" v-for="order in spreading_orders">@{{order.id}}</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="">Order By</label>
-                                <select v-model="type" @change="getOrderBy()" class="form-control" id="" required>
-                                    <option value="" disabled seelcted>اختر النوع</option>
-                                    <option value="company">شركة</option>
-                                    <option value="employee">موظف</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3" v-if="type == 'employee'">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">اسم الموظف</label>
                                 <span style="color:red" v-if="employee_error">@{{employee_error}}</span>
-                                <select v-model="employee_id" class="form-control" id="" required>
+                                <select v-model="cutting_order.user_id" class="form-control" id="" required>
                                     <option value="" disabled seelcted>Choose Employee</option>
-                                    <option :value="user.id" v-for="user in users">@{{user.name}}</option>
+                                    <option :value="user.id" v-for="user in users" :selected="cutting_order.user_id == user.id">@{{user.name}}</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3" v-if="type == 'company'">
-                            <div class="form-group">
-                                <label for="">Company type</label>
-                                <select v-model="factory_type_id" @change="getFactory(factory_type_id)" class="form-control" id="" required>
-                                    <option value="" disabled seelcted>Choose Company type</option>
-                                    <option :value="type.id" v-for="type in factoryTypes">@{{type.name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3" v-if="type == 'company'">
-                            <div class="form-group">
-                                <label for="">Company</label>
-                                <span style="color:red" v-if="factory_error">@{{factory_error}}</span>
-                                <select v-model="factory_id" class="form-control" id="" required>
-                                    <option value="" disabled seelcted>Choose Company</option>
-                                    <option :value="factory.id" v-for="factory in factories">@{{factory.name}}</option>
-                                </select>
-                                @error('employee')
-                                <p class="help is-danger">
-                                    {{$message}}
-                                </p>
-                                @enderror
                             </div>
                         </div>
                     </div>
-                    <div v-if="type == 'employee'">
-                        <div class="row" v-for="(item,index) in items">
+                    <div>
+                        <div class="row" v-for="(item,index) in products">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Product Type</label>
-                                    <span style="color:red" v-if="errors[index].product_type_id">*@{{errors[index].product_type_id}}</span>
-                                    <select v-model="item.product_type_id" class="form-control" id="" required>
+                                    <span style="color:red" v-if="errors[index].product_id">*@{{errors[index].product_id}}</span>
+                                    <select v-model="item.type" class="form-control" id="" required>
                                         <option value="" disabled seelcted>Choose Type</option>
-                                        <option :value="type.id" v-for="type in productTypes">@{{type.name}}</option>
+                                        <option :value="type.id" v-for="type in productTypes" :selected="type.id == item.type">@{{type.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -83,9 +49,9 @@
                                 <div class="form-group">
                                     <label for="">Size</label>
                                     <span style="color:red" v-if="errors[index].size_id">*@{{errors[index].size_id}}</span>
-                                    <select v-model="item.size_id" class="form-control" id="" required>
+                                    <select v-model="item.size" class="form-control" id="" required>
                                         <option value="" disabled seelcted>Choose Type</option>
-                                        <option :value="size.id" v-for="size in sizes">@{{size.name}}</option>
+                                        <option :value="size.id" v-for="size in sizes" :selected="size.id == item.size">@{{size.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -108,11 +74,11 @@
                         <div class="form-group col-md-12">
                             <label for="">Layers</label>
                             <span style="color:red" v-if="layer_error">*@{{layer_error}}</span>
-                            <input class="form-control" v-model="layers" type="number" required>
+                            <input class="form-control" v-model="cutting_order.layers" type="number" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="">Extra Return</label>
-                            <input class="form-control" v-model="extra_returns_weight" type="number">
+                            <input class="form-control" v-model="cutting_order.extra_returns_weight" type="number">
                         </div>
                     </div>
 
@@ -126,6 +92,6 @@
         </div>
     </div>
 </div>
-@include('dashboard.orders.cutting_order.vue-script.create-script')
+@include('dashboard.orders.cutting_order.vue-script.edit-script')
 </div>
 @endsection
