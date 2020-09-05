@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="weight">الوزن المتاح</label>
-                            <input type="number" class="form-control" v-model="material_weight" placeholder="حدد كود الخامة لرؤية الكمية المتاحه" disabled>
+                            <input type="number" class="form-control" v-model="material_weight" placeholder="حدد كود الخامة لرؤية الكمية المتاحة" disabled>
 
                         </div>
                     </div>
@@ -112,7 +112,6 @@
                         this.material_weight = res.data.weight;
                     })
                     .catch(err => {
-
                     });
             },
             getSize() {

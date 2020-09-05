@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">اضافة عميل</h3>
+                <h3 class="card-title">إضافة عميل</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start  -->
@@ -42,7 +42,7 @@
                         <label for="type"></label>
                         <select class="form-control" name="type" id="type">
                             <option value="" disabled selected>حدد صفة تعامل العميل</option>
-                            <option value="individual">عادي</option>
+                            <option value="individual">صالح</option>
                             <option value="wholesaler">تاجر جملة</option>
                             <option value="retailer">بائع</option>
                         </select>

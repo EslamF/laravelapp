@@ -5,12 +5,14 @@
         <div class="card card-primary">
             <div class="card-header">
                 <!-- /.card-header -->
-                <h3 class="card-title"></h3>
+                <h3 class="card-title">إضافة شركة شحن</h3>
             </div>
             <!-- form start  -->
-            <form role="form" action="{{Route('supplier.store')}}" method="POST">
+            <form role="form" action="{{Route('shippingcompany.store')}}" method="POST">
+                <h3 class="card-title"></h3>
                 @csrf
                 <div class="card-body">
+
                     <div class="form-group">
                         <label for="name">اسم الشركة</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="ادخل اسم الشركة">

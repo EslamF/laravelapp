@@ -16,7 +16,7 @@
                                 <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-4">الموظف</th>
                                 <th class="col-md-5">الشركة</th>
-                                <th class="col-md-2">Action</th>
+                                <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
                     </thead>
@@ -28,7 +28,7 @@
                                 <td class="col-md-4">{{$value->user? $value->user->name:'غير متاح'}}</td>
                                 <td class="col-md-5">{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">Show</a>
+                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">رؤية</a>
                                     <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="cutting_order_id" value="{{$value->id}}">

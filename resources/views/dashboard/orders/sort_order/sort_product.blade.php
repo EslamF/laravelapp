@@ -24,7 +24,7 @@
                         </div>
                         <input type="hidden" name="sort_id" value="{{$data['sort_id']}}" id="">
                         <div class="col-md-1">
-                            <button type="submit" class="btn btn-success float-right">اضافة</button>
+                            <button type="submit" class="btn btn-success float-right">إضافة</button>
                         </div>
                     </div>
                 </form>

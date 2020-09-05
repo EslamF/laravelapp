@@ -8,7 +8,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" action="{{Route('material.type.update')}}" method="POST">
+            <form role="form" action="{{Route('product.type.update')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -19,7 +19,6 @@
                     </div>
                 </div>
                 <!-- /.card-body -->
-
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">تأكيد</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>

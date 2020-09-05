@@ -24,7 +24,7 @@
                                 <select class="form-control" name="damage_type" id=""
                                 class="@error('damage_type') is-danger @enderror">
                                     <option value="" disabled selected>تحديد الجودة</option>
-                                            <option value="">عادي</option>
+                                            <option value="">صالح</option>
                                             <option value="ironing">كي</option>
                                             <option value="tailoring">خياطة</option>
                                             <option value="dyeing">صباغة</option>

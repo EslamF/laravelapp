@@ -10,6 +10,7 @@ use App\Models\Orders\SpreadingOutMaterialOrder;
 
 class SpreadingMaterialController extends Controller
 {
+    
     public function getAllPaginate()
     {
         $data = SpreadingOutMaterialOrder::with('user:id,name', 'material:id,mq_r_code')->paginate();

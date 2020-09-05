@@ -83,7 +83,7 @@
                     </div>
                     <div class="row" id="material" style="display:none">
                         <div class="col-md-4">
-                            <div class="form-group">
+                            <div class="form-group">ٍ
                                 <label for="weight">الوزن</label>
                                 <input type="number" class="form-control" name="weight" id="weight" placeholder="ادخل الوزن" class="@error('weight') is-danger @enderror" value="{{old('weight')}}">
                                 @error('weight')

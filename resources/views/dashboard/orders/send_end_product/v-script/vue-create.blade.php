@@ -36,11 +36,11 @@
                                 this.product_code = '';
                             } else {
                                 this.have_error = true;
-                                this.errors.exists = '* لا يمكن اضافة هذا المنتج مره اخري'
+                                this.errors.exists = '* لا يمكن إضافة هذا المنتج مره اخري'
                             }
                         } else {
                             this.have_error = true;
-                            this.errors.exists = '* لا يمكن اضافة هذا المنتج'
+                            this.errors.exists = '* لا يمكن إضافة هذا المنتج'
                         }
                     })
                     .catch(err => {
@@ -67,12 +67,12 @@
             },
             validateUser() {
                 if (!this.user_id) {
-                    this.errors.user = "* يجب اضافة موظف";
+                    this.errors.user = "* يجب إضافة موظف";
                     this.have_error = true;
                 }
 
                 if (!this.codes[0]) {
-                    this.errors.exists = '* يجب اضافة منتجات'
+                    this.errors.exists = '* يجب إضافة منتجات'
                     this.have_error = true;
                 }
             }

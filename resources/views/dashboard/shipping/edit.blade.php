@@ -8,7 +8,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" action="{{Route('supplier.update')}}" method="POST">
+            <form role="form" action="{{Route('shippingcompany.update')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">

@@ -37,14 +37,26 @@ class FactoryController extends Controller
 
     public function create(Request $request)
     {
+        // dd($);
         $request->validate([
-            'name' => 'required|min:3',
+            'name' => 'required|min:3|unique:factory_types,name',
             'phone' => 'min:11',
             'address' => 'max:100',
             'factory_type_id' => 'required|exists:factory_types,id'
         ]);
         Factory::create($request->all());
 
+        return redirect()->route('factory.list');
+    }
+    public function update(Request $request)
+    {
+        $request->validate([
+            'type_id' => 'required|exists:factory_types,id',
+            'name' => 'required|min:3|unique:factory_types,name',
+            'phone' => 'min:11',
+            'address' => 'max:100'
+        ]);
+        FactoryType::find($request->type_id)->update($request->all());
         return redirect()->route('factory.list');
     }
 

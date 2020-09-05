@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Cutting Order Product Table</h3>
-                <a href="{{Route('cutting_order.add_page', $cutting_order->id)}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title"> المنتجات  الخاصة بإذن القص</h3>
+                <a href="{{Route('cutting_order.add_page', $cutting_order->id)}}" class="btn btn-success float-right">إنشاء</a>
             </div>
             <h4 class="ml-3 mt-2">{{$cutting_order->factory ?'Company '. $cutting_order->factory->name: 'Employee '.$cutting_order->user->name}}</h3>
                 <!-- /.card-header -->
@@ -14,11 +14,11 @@
                         <thead>
                             <tr class="row">
                                 <div class="col-md-12">
-                                    <th class="col-md-2">id</th>
-                                    <th class="col-md-4">Product Name</th>
-                                    <th class="col-md-3">Prodcut Size</th>
-                                    <th class="col-md-1">Qty</th>
-                                    <th class="col-md-2">Action</th>
+                                    <th class="col-md-2">الرقم المرجعي</th>
+                                    <th class="col-md-4">اسم المنتج</th>
+                                    <th class="col-md-3">مقاس المنتج</th>
+                                    <th class="col-md-1">الكمية</th>
+                                    <th class="col-md-2">الخيارات</th>
                                 </div>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@
                                         <form style="display:inline" action="{{Route('cutting.delete_product')}}" method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{$value->id}}">
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="btn btn-danger">حذف</button>
                                         </form>
                                     </td>
                                 </div>
