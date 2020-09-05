@@ -15,7 +15,8 @@ class CreateFactoriesTable extends Migration
     {
         Schema::create('factories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->unique();
+
             $table->text('phone')->nullable();
             $table->string('address')->nullable();
 

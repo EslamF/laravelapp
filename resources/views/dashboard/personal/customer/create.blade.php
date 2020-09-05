@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">اضافة عميل</h3>
+                <h3 class="card-title">إضافة عميل</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start  -->
@@ -42,35 +42,35 @@
                             <input type="text" class="form-control" name="link" id="link" placeholder="من اين علمت بنا">
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group ">
+                            <label for="type"></label>
                             <select class="form-control" name="type" id="type">
                                 <option value="" disabled selected>حدد صفة تعامل العميل</option>
-                                <option value="individual">عادي</option>
+                                <option value="individual">صالح</option>
                                 <option value="wholesaler">تاجر جملة</option>
                                 <option value="retailer">بائع</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="address">العنوان</label>
-                                <input type="text" class="form-control" name="address" id="address" placeholder="ادخل العنوان">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="address">العنوان</label>
+                                    <input type="text" class="form-control" name="address" id="address" placeholder="ادخل العنوان">
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
+                <!-- /.card-body -->
 
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">إضافة</button>
+                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
+                </div>
+            </form>
         </div>
-        <!-- /.card-body -->
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">إضافة</button>
-            <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
-        </div>
-        </form>
     </div>
-</div>
 </div>
 @endsection

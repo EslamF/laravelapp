@@ -14,7 +14,7 @@
                     <div class="row" v-for="(item,index) in items">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="">Product Type</label>
+                                <label for="">نوع المنتج</label>
                                 <span style="color:red" v-if="errors[index].product_type_id">*@{{errors[index].product_type_id}}</span>
                                 <select v-model="item.product_type_id" class="form-control" id="">
                                     <option value="" disabled seelcted>Choose Type</option>
@@ -24,36 +24,36 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="">Size</label>
+                                <label for="">المقاس</label>
                                 <span style="color:red" v-if="errors[index].size_id">*@{{errors[index].size_id}}</span>
                                 <select v-model="item.size_id" class="form-control" id="">
-                                    <option value="" disabled seelcted>Choose Type</option>
+                                    <option value="" disabled seelcted>حدد المقاس</option>
                                     <option :value="size.id" v-for="size in sizes">@{{size.name}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="">Qty</label>
+                                <label for="">الكمية</label>
                                 <span style="color:red" v-if="errors[index].qty">*@{{errors[index].qty}}</span>
                                 <input class="form-control" v-model="item.qty" type="number">
                             </div>
                         </div>
                         <div class="form-group mt-2">
                             <button type="button" @click="addRow" class='btn btn-success mt-4'>
-                                Add
+                                إضافه
                             </button>
                             <button type="button" @click="deleteRow(index)" class='btn btn-danger mt-4'>
-                                remove
+                                حذف
                             </button>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="">Layers</label>
+                        <label for="">عدد الرقات</label>
                         <input class="form-control" v-model="layers" type="number">
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="">Extra Return</label>
+                        <label for="">الزيادة المرتجعة</label>
                         <input class="form-control" v-model="extra_returns_weight" type="number">
                     </div>
                 </div>

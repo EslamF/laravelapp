@@ -17,16 +17,14 @@ class FactoryTypeController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3'
+            'type' => 'required|min:3'
         ]);
-        FactoryType::create(
-            $request->validate([
-                'name' => 'required|min:3'
-            ])
-        );
+        $data['name']= $request->type;
+        FactoryType::create($data);
 
         return redirect()->route('factory.type.list');
     }
+    
     /**
      * 
      * update Factory type
@@ -36,8 +34,11 @@ class FactoryTypeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'type_id' => 'required|exists:factory_types,id'
+            'type_id' => 'required|exists:factory_types,id',
+
         ]);
+
+        $data['name']= $request->type;
 
         FactoryType::find($request->type_id)->update($request->all());
         return redirect()->route('factory.type.list');

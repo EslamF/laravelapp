@@ -112,7 +112,6 @@
                         this.material_weight = res.data.weight;
                     })
                     .catch(err => {
-
                     });
             },
             getSize() {

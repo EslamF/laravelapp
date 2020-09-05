@@ -163,7 +163,7 @@
 </div>
 </div>
 @section('footer-script')
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1  .min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
 </script>
 <script>
     $(document).ready(function() {
@@ -200,10 +200,6 @@
             form.submit();
             //disable the submit button
             $("#btnSubmit").attr("disabled", true);
-
-            //disable a normal button
-            $("#btnTest").attr("disabled", true);
-
             return true;
 
         });

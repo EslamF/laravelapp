@@ -15,7 +15,7 @@ class CreateFactoryTypesTable extends Migration
     {
         Schema::create('factory_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->unique();
 
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')

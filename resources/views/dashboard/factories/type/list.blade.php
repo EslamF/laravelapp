@@ -6,8 +6,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Factory Type Table</h3>
-                <a href="{{Route('factory.type.create_page')}}" class="btn btn-success float-right">Add</a>
+                <h3 class="card-title">انواع المصانع</h3>
+                <a href="{{Route('factory.type.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -15,9 +15,9 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-9">Name</th>
-                                <th class="col-md-2">Action</th>
+                                <th class="col-md-1">الرقم المرجعي</th>
+                                <th class="col-md-9">النوع</th>
+                                <th class="col-md-2">الخيارات</th>
                             </div>
                         </tr>
                     </thead>
@@ -28,15 +28,10 @@
                                 <td class="col-md-1">{{$type->id}}</td>
                                 <td class="col-md-9">{{$type->name}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('factory.type.edit_page', $type->id)}}"
-                                        class="btn btn-primary">Edit</a>
-                                    <form style="display:inline" action="{{Route('factory.type.delete')}}"
-                                        method="POST">
-                                        @csrf
-                                        <input type="hidden" name="type_id" value="{{$type->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
+                                    <a href="{{Route('factory.type.edit_page', $type->id)}}" class="btn btn-primary">تعديل</a>
+                                    <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger">حذف</button>
                                 </td>
+                               
                             </div>
                         </tr>
                         @endforeach
@@ -52,6 +47,55 @@
     </div>
 </div>
 @endsection
+
+
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.factory_type_id = id
+                            axios.post("{{Route('factory.type.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+            }
+        }
+
+    })
+</script>
+@endsection
+
+
+
+
+
+
 
 
 

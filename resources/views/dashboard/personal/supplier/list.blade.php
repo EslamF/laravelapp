@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">الموردين</h3>
-                <a href="{{Route('shippingcompany.create_page')}}" class="btn btn-success float-right">إضافة مورد</a>
+                <a href="{{Route('supplier.create_page')}}" class="btn btn-success float-right">إضافة مورد</a>
             </div>
             <!-- /.card-header -->
         <div class="card-body">

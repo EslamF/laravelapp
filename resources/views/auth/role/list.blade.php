@@ -54,6 +54,48 @@
 </div>
 </div>
 @endsection
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.material_id = id
+                            axios.post("{{Route('receiving.material.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
+@endsection
 
 
 

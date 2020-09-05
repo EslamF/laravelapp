@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"> العملاء</h3>
-                <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">اضافة عميل</a>
+                <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">إضافة عميل</a>
             </div>
             <!-- /.card-header -->
         <div class="card-body">

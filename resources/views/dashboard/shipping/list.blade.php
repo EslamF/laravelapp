@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">شركات الشحن </h3>
-                <a href="{{Route('supplier.create_page')}}" class="btn btn-success float-right">اضافة</a>
+                <a href="{{Route('shippingcompany.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -26,8 +26,8 @@
                                 <td class="col-md-1">{{$shipping->id}}</td>
                                 <td class="col-md-8">{{$shipping->name}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('supplier.edit_page', $shipping->id)}}" class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('supplier.delete')}}" method="POST">
+                                    <a href="{{Route('shippingcompany.edit_page', $shipping->id)}}" class="btn btn-primary">تعديل</a>
+                                    <form style="display:inline" action="{{Route('shippingcompany.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="type_id" value="{{$shipping->id}}">
                                         <button type="submit" class="btn btn-danger">حذف</button>

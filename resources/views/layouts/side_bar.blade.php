@@ -67,7 +67,7 @@
                                 <li class="nav-item">
                                     <a href="{{Route('receiving.product.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>إذن إستلام منتجات</p>
+                                        <p>إذن إستلام منتجات(مصنع)</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -91,13 +91,13 @@
                                 <li class="nav-item">
                                     <a href="{{Route('send.end_product.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>إرسال المنتج الي المخزن</p>
+                                        <p>إذن خروج منتجات (مصنع) </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{Route('store.end_product.list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>إستلام المنتج بلمخزن</p>
+                                        <p> إذن إستلام منتجات (الشركة) </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

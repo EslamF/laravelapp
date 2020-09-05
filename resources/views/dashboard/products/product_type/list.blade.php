@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">جدوال أنواع المنتجات</h3>
+                <h3 class="card-title"> أنواع المنتجات</h3>
                 <a href="{{Route('product.type.create_page')}}" class="btn btn-success float-right">انشاء</a>
             </div>
             <!-- /.card-header -->

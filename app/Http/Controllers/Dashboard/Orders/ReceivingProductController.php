@@ -43,6 +43,7 @@ class ReceivingProductController extends Controller
 
         ReceivingOrder::create($request->all());
         return redirect()->route('receiving.product.list');
+        
     }
 
     public function editPage($receiving_id)
