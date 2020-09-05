@@ -69,12 +69,22 @@ class ProductController extends Controller
 
     public function editPage($product_id)
     {
-        $data = [];
-        $data['product'] = Product::where('id', $product_id)
+        $product = Product::where('id', $product_id)
             ->with('material', 'productType', 'size')
             ->first();
 
-        return view('dashboard.products.product.edit')->with('data', $data);
+        $materials = Material::get();
+        $productTypes = ProductType::get();
+        $sizes = Size::get();
+        return view(
+            'dashboard.products.product.edit',
+            [
+                'product' => $product,
+                'materials' => $materials,
+                'product_types' => $productTypes,
+                'sizes' => $sizes
+            ]
+        );
     }
 
 
@@ -83,9 +93,7 @@ class ProductController extends Controller
         $request->validate([
             'product_id'         => 'required|exists:products,id',
             'prod_code'          => 'unique:products,prod_code,' . $request->product_id,
-            'damaged'            => 'in:0,1',
-            'sorted'             => 'in:0,1',
-            'description'        => 'min:3'
+
         ]);
 
         Product::find($request->product_id)->update($request->all());
