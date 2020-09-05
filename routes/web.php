@@ -138,6 +138,7 @@ Route::group([
                 'prefix' => 'factory'
             ], function () {
                 Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list');
+                Route::get('get-by-id/{factory_type_id}', 'FactoryController@getByType')->name('factory.by_type');
                 Route::get('get', 'FactoryController@getAll')->name('factory_get_all');
                 Route::get('get-by-cutting/{id}', 'FactoryController@getFactoryByCuttingOrder')->name('factory_by_cutting');
                 Route::get('get/{id}', 'FactoryController@getById')->name('factory.get_by_id');
@@ -210,6 +211,7 @@ Route::group([
                 Route::get('inner-factory-edit/{cutting_order_id}', 'CuttingOrderController@innerOrderEdit')->name('cutting.inner_factory_edit_data');
                 Route::get('inner-edit-page/{cutting_order_id}', 'CuttingOrderController@innerEditPage')->name('cutting.inner_factory_edit');
                 Route::get('cutting-order-employees', 'CuttingOrderController@cuttingOrderEmployee')->name('cutting_order.employee');
+                Route::post('inner-order-update', 'CuttingOrderController@updateCuttingOrder')->name('cutting_order.update_inneer');
             });
 
             Route::group([

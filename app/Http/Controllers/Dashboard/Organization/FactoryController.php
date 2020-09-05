@@ -81,4 +81,9 @@ class FactoryController extends Controller
     {
         return response()->json(Factory::select('id', 'name')->get(), 200);
     }
+
+    public function getByType($factory_type_id)
+    {
+        return response()->json(Factory::where('factory_type_id', $factory_type_id)->get(), 200);
+    }
 }

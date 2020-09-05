@@ -57,38 +57,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="material">الخامة</label>
-                                <select class="form-control" name="material_id" id="material" class="@error('material_id') is-danger @enderror" value="{{old('material_id')}}">
-                                    <option value="" disabled selected>حدد نوع الخامة</option>
-                                    @foreach($data['materials'] as $material)
-                                    <option value="{{$material->id}}" {{$data['records']->material_id == $material->id?'selected':''}}>
-                                        {{$material->mq_r_code}}</option>
-                                    @endforeach
-                                </select>
-                                @error('material_id')
-                                <p class="help is-danger">
-                                    {{$message}}
-                                </p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="weight">الكمية</label>
-                                <input type="number" class="form-control" value="{{$data['records']->qty}}" name="qty" id="weight" placeholder="الكمية" class="@error('qty') is-danger @enderror" value="{{old('qty')}}">
-                                @error('qty')
-                                <p class="help is-danger">
-                                    {{$message}}
-                                </p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
                                 <label for="weight">تاريخ الإستلام</label>
                                 <input type="date" class="form-control" name="receiving_date" value="{{$data['records']->receiving_date}}" id="weight" placeholder="تاريخ الإستلام" class="@error('receiving_date') is-danger @enderror" value="{{old('receiving_date')}}">
                                 @error('receiving_date')

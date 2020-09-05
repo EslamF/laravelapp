@@ -25,7 +25,7 @@
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">تأكيد</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
+                    <a href="{{Route('sort.order.list')}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

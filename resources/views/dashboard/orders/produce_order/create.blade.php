@@ -30,7 +30,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mq_r_code">نوع المصنع</label>
+                                <span style="color:red" v-if="error.factory_id">*@{{error.factory_type_id}}</span>
+                                <select class="form-control" v-model="factory_type_id" @change="getFactory()" id="user">
+                                    <option value="" disabled selected>حدد نوع المصنع</option>
+                                    <option :value="factory.id" v-for="factory in factory_types">@{{factory.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="mq_r_code">المصنع</label>
                                 <span style="color:red" v-if="error.factory_id">*@{{error.factory_id}}</span>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Options\Size;
 use App\Models\Orders\BuyOrder;
 use App\Models\Orders\BuyOrderProduct;
+use App\Models\Orders\ShippingOrder;
 use App\Models\Products\Product;
 use App\Models\Products\ProductType;
 use Illuminate\Http\Request;
@@ -14,7 +15,30 @@ class OrderProcessController extends Controller
 {
     public function getAllPaginate()
     {
-        return view('dashboard.orders.buy_process.list');
+        $new = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation')
+            ->whereHas('buyOrderProducts', function ($q) {
+                $q->where('factory_qty', 0);
+            })
+            ->where('confirmation', '!=', 'canceled')
+            ->where('preparation', 'need_prepare')
+            ->where('status', 0)
+            ->count();
+
+        $prepared = BuyOrder::where('status', 1)
+            ->where('preparation', 'prepared')
+            ->count();
+
+        $done = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation')
+            ->whereHas('buyOrderProducts', function ($q) {
+                $q->where('factory_qty', 0);
+            })
+            ->where('preparation', 'shipped')
+            ->where('status', 1)
+            ->count();
+
+        $readyToShip = ShippingOrder::where('status', 0)->count();
+
+        return view('dashboard.orders.buy_process.list', ['new' => $new, 'prepared' => $prepared, 'done' => $done, 'ready' => $readyToShip]);
     }
 
     public function getNewOrders()

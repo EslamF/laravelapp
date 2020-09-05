@@ -49,8 +49,8 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('sizes')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->foreign('created_by')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 

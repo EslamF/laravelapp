@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">  المنتجات</h3>
+                <h3 class="card-title"> المنتجات</h3>
                 <a href="{{Route('product.create_page')}}" class="btn btn-success float-right">انشاء</a>
             </div>
             <!-- /.card-header -->
@@ -34,10 +34,8 @@
                                 <td class="col-md-1">{{$value->sorted == 1 ? 'True' : 'False'}}</td>
                                 <td class="col-md-2">{{$value->status}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('product.edit_page', $value->id)}}"
-                                        class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('product.delete')}}"
-                                        method="POST">
+                                    <a href="{{Route('product.edit_page', $value->id)}}" class="btn btn-primary">تعديل</a>
+                                    <form style="display:inline" action="{{Route('product.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{$value->id}}">
                                         <button type="submit" class="btn btn-danger">حذف</button>

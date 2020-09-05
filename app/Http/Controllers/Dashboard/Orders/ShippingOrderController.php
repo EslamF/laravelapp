@@ -32,6 +32,20 @@ class ShippingOrderController extends Controller
     public function getShippingOrder($id)
     {
         $shipping = ShippingOrder::with('buyOrders:buy_order_id as id,bar_code')->where('id', $id)->first();
+        //     $orders = BuyOrder::select('id', 'delivery_date', 'customer_id')
+        //     ->with('customer:id,address')
+        //     ->whereHas('shippingOrders', function ($q) use ($id) {
+        //         $q->where('shipping_orders.id', $id);
+        //     })
+        //     ->get();
+
+        // $orders = $orders->map(function ($item) {
+        //     return [
+        //         'id'            => $item->id,
+        //         'delivery_date' => $item->delivery_date,
+        //         'address'       => $item->customer->address
+        //     ];
+        // });
         return response()->json($shipping, 200);
     }
 
@@ -159,9 +173,6 @@ class ShippingOrderController extends Controller
 
     public function importShippingStatus(Request $request)
     {
-        Validator::make($request->all(), [
-            'file' => 'required|in:doc,csv,xlsx,xls,docx,ppt,odt,ods,odp'
-        ], []);
 
         Excel::import(new OrderStatusImport, $request->file);
     }

@@ -17,35 +17,18 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label for="factory">إذن الإستلام</label>
-                                <select class="form-control" name="receiving_order_id" id="factory">
-                                    <option value="" disabled selected>حدد  الرقم المرجعي إذن الإستلام</option>
-                                    @foreach($data['receiving_orders'] as $order)
-                                    <option value="{{$order->id}}">{{$order->id}}</option>
+                                <label for="weight">كود المنتج</label>
+                                <select name="material_id" id="">
+                                    @foreach($materials as $material)
+                                    <option value="{{}}" {{$material->id  == $material- }}>{{$material->mq_r_code}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="weight">كود المنتج</label>
-                                <input type="text" class="form-control" value="{{$data['product']->prod_code}}" name="prod_code" id="weight" placeholder="كود المنتج">
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="weight">حالة الفرز</label>
-                                <select class="form-control" name="sorted" id="material">
-                                    <option value="" disabled selected>حدد حالة الفرز</option>
-                                    <option value="1" {{$data['product']->sorted == 1? 'selected' : ''}}>True</option>
-                                    <option value="0" {{$data['product']->sorted == 0? 'selected' : ''}}>False</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -60,7 +43,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="weight">Stock</label>
+                                <label for="weight">الحالة</label>
                                 <select class="form-control" name="status" id="material">
                                     <option value="" disabled selected>جدد حالة المنتج</option>
                                     <option value="available" {{$data['product']->status == 'available'? 'selected' : ''}}>متاح</option>
@@ -74,8 +57,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="description">الوصف</label>
-                                <textarea class="form-control" name="description"  id="description"
-                                    placeholder="ادخل الوصف">{{$data['product']->description}}</textarea>
+                                <textarea class="form-control" name="description" id="description" placeholder="ادخل الوصف">{{$data['product']->description}}</textarea>
                             </div>
                         </div>
                     </div>

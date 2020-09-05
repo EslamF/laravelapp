@@ -11,8 +11,6 @@
                 <form action="{{Route('shipping.import_excel')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="file" value="fileupload" class="hidden" id="fileupload">
-                    <label for="fileupload"> اضف ملف لبيانات حالت الاوردرات</label>
-                    <button class="btn btn-primary">اضف</button>
                 </form>
             </div>
             <!-- /.card-header -->

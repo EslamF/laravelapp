@@ -161,14 +161,10 @@ class BuyOrderController extends Controller
     }
     public function updateOrder(Request $request)
     {
+
         BuyOrder::find($request->data['order']['id'])->update([
             'confirmation' => $request->data['order']['confirmation'],
             'pending_date' => $request->data['order']['pending_date'] ?? null
-        ]);
-
-        OrderStatus::updateOrCreate(['buy_order_id' => $request->data['order']['id']], [
-            'status'    => $request->order_status,
-            'status_message' => $request->status_message
         ]);
 
         OrderHistory::create([
@@ -176,10 +172,6 @@ class BuyOrderController extends Controller
             'status'       => $request->data['order']['confirmation'],
             'pending_date' => $request->data['order']['pending_date'] ?? null
         ]);
-
-        foreach ($request->data['products'] as $product) {
-            Product::find($product['id'])->update($product);
-        }
 
         return response()->json('success', 200);
     }

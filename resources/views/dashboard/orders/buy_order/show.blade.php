@@ -8,7 +8,7 @@
 
                     <div class="col-md-3">
                         <label for="">Confirmation</label>
-                        <select id="confrimation" class="form-control" v-model="data.order.confirmation" id="">
+                        <select id="confrimation" class="form-control" v-if="data.order.preparation != 'shipped'" v-model="data.order.confirmation" id="">
                             <option value="" dsiabled>Choose One</option>
                             <option value="confirmed" :selected="data.order.confirmation == 'confirmed'">Confirmed</option>
                             <option value="pending" :selected="data.order.confirmation == 'pending'">Pending</option>
@@ -19,7 +19,7 @@
                         <label for="">Pending Until</label>
                         <input class="form-control" type="date" v-model="data.order.pending_date">
                     </div>
-                    <div class="col-md-3  flex">
+                    <!-- <div class="col-md-3  flex">
                         <label for="">اختر حالة الاوردر</label>
                         <select v-model="order_status" class="form-control">
                             <option value="" disabled selected>اختر</option>
@@ -29,12 +29,12 @@
                             <option :value="'Returned'">Returned</option>
                             <option :value="'UnDelivered'">UnDelivered</option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
-                <div v-if="order_status" class="row  mt-4">
+                <!-- <div v-if="order_status" class="row  mt-4">
                     <label for="">تعليق علي حالة الاوردر</label>
                     <textarea v-model="status_message" class="form-control" id="" cols="30" rows="10"></textarea>
-                </div>
+                </div> -->
             </div>
             <!-- /.card-header -->
             <div class="card-body">

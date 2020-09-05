@@ -61,7 +61,7 @@ class ProduceOrderController extends Controller
             'produce_id'       => 'exists:produce_orders,id',
             'factory_id'       => 'exists:factories,id',
             'cutting_order_id' => 'exists:cutting_orders,id',
-            'receiving_date'   => 'date',
+            'receiving_date'   => 'required|date',
         ]);
 
         ProduceOrder::find($request->produce_id)->update($request->all());

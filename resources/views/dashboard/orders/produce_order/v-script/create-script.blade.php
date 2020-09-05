@@ -9,18 +9,28 @@
             factory_id: '',
             cutting_order_id: '',
             receiving_date: '',
+            factory_type_id: '',
             error: {
                 factory_id: '',
                 cutting_order_id: '',
                 receiving_date: ''
             },
+            factory_types: [],
             have_error: false
         },
         mounted() {
             this.getCuttingOrders();
-            this.getAllFactory();
+            this.getFactoryTypes();
         },
         methods: {
+            getFactoryTypes() {
+                axios.get('{{Route("factory.type_all")}}')
+                    .then(res => {
+                        this.factory_types = res.data;
+                    }).catch(err => {
+
+                    })
+            },
             getCuttingOrders() {
                 const metas = document.getElementsByTagName('meta');
                 axios.defaults.headers = {
@@ -48,14 +58,14 @@
 
                 });
             },
-            getAllFactory() {
+            getFactory() {
                 const metas = document.getElementsByTagName('meta');
                 axios.defaults.headers = {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                 };
-                axios.get('{{Route("factory_get_all")}}').then(res => {
+                axios.get('{{url("factory/get-by-id")}}' + '/' + this.factory_type_id).then(res => {
                     this.factories = res.data;
                 }).catch(err => {
 
@@ -64,6 +74,7 @@
             store() {
                 var data = {};
                 data.factory_id = this.factory_id;
+                data.factory_type_id = this.factory_type_id;
                 data.cutting_order_id = this.cutting_order_id;
                 data.receiving_date = this.receiving_date;
                 this.validations();

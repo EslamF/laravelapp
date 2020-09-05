@@ -195,7 +195,7 @@
                         'Access-Control-Allow-Origin': '*',
                         'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                     };
-                    axios.post("{{Route('cutting_order.update')}}", data).then(res => {
+                    axios.post("{{Route('cutting_order.update_inneer')}}", data).then(res => {
 
                         window.location.href = '{{Route("cutting.material.list")}}';
 

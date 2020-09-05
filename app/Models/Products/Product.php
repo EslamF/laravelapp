@@ -29,7 +29,7 @@ class Product extends Model
         'sort_order_id',
         'sort_date',
         'save_order_id',
-        'user_id',
+        'created_by',
         'stored',
         'cutting_order_product_id',
         'cutting_order_id',

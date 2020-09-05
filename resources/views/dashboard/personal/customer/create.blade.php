@@ -16,54 +16,61 @@
                         <label for="name">اسم العميل</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="انخل اسم العميل">
                     </div>
-            <div class="row ">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="phone"> الرقم المرجعي الهاتف</label>
-                        <input type="text" class="form-control" name="phone" id="phone" placeholder="اخل  الرقم المرجعي الهاتف">
-                    </div>
-                </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="source">مصدر وصولك الينا </label>
-                            <input type="text" class="form-control" name="source" id="source" placeholder="مصدر وصولك الينا">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="phone"> رقم الهاتف</label>
+                                <input type="text" class="form-control" name="phone" id="phone" placeholder="اخل  الرقم المرجعي الهاتف">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="source">المصدر </label>
+                                <input type="text" class="form-control" name="source" id="source" placeholder="مصدر وصولك الينا">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="source">ملاحظات علي العميل </label>
+                                <input type="text" class="form-control" name="observation" id="source" placeholder="مصدر وصولك الينا">
+                            </div>
                         </div>
                     </div>
-                </div>
-                    <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label for="link">من اين علمت بنا</label>
+                            <label for="link">صفحة العميل الخاصة</label>
                             <input type="text" class="form-control" name="link" id="link" placeholder="من اين علمت بنا">
                         </div>
                     </div>
-                <div class="col-md-6">
-                    <div class="form-group ">
-                        <label for="type"></label>
-                        <select class="form-control" name="type" id="type">
-                            <option value="" disabled selected>حدد صفة تعامل العميل</option>
-                            <option value="individual">عادي</option>
-                            <option value="wholesaler">تاجر جملة</option>
-                            <option value="retailer">بائع</option>
-                        </select>
+                    <div class="col-md-12">
+                        <div class="form-group ">
+                            <select class="form-control" name="type" id="type">
+                                <option value="" disabled selected>حدد صفة تعامل العميل</option>
+                                <option value="individual">عادي</option>
+                                <option value="wholesaler">تاجر جملة</option>
+                                <option value="retailer">بائع</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="address">العنوان</label>
+                                <input type="text" class="form-control" name="address" id="address" placeholder="ادخل العنوان">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-                    <div class="form-group">
-                        <label for="address">العنوان</label>
-                        <input type="text" class="form-control" name="address" id="address" placeholder="ادخل العنوان">
-                    </div>
-                
-                   
-                </div>
-                <!-- /.card-body -->
 
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">إضافة</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
-                </div>
-            </form>
         </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">إضافة</button>
+            <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
+        </div>
+        </form>
     </div>
+</div>
 </div>
 @endsection

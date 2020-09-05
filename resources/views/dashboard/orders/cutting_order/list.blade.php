@@ -14,8 +14,10 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-3"> الرقم المرجعي</th>
-                                <th class="col-md-6">الموظف</th>
+                                <th class="col-md-2"> الرقم المرجعي</th>
+                                <th class="col-md-2">الموظف</th>
+                                <th class="col-md-3">كود الخامة</th>
+                                <th class="col-md-2">موظف الفرش</th>
                                 <th class="col-md-3">Action</th>
                             </div>
                         </tr>
@@ -24,8 +26,10 @@
                         @foreach($data as $value)
                         <tr class="row">
                             <div class="col-md-12">
-                                <td class="col-md-3">{{$value->id}}</td>
-                                <td class="col-md-6">{{$value->user? $value->user->name:'غير متاح'}}</td>
+                                <td class="col-md-2">{{$value->id}}</td>
+                                <td class="col-md-2">{{$value->user? $value->user->name:'غير متاح'}}</td>
+                                <td class="col-md-3">{{$value->spreadingOutMaterialOrder->material->mq_r_code}}</td>
+                                <td class="col-md-2">{{$value->spreadingOutMaterialOrder->user->name}}</td>
                                 <td class="col-md-3">
                                     <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">Show</a>
                                     <a class="btn btn-primary" href="{{Route('cutting.inner_factory_edit', $value->id)}}">تعديل</a>

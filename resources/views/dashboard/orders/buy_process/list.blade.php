@@ -5,7 +5,7 @@
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{$new}}</h3>
 
                 <p>New Orders</p>
             </div>
@@ -19,7 +19,7 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{$prepared}}</h3>
 
                 <p>Ready Orders</p>
             </div>
@@ -33,7 +33,7 @@
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{$ready}}</h3>
                 <p>Ready to Shipping</p>
             </div>
             <div class="icon">
@@ -46,7 +46,7 @@
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{$done}}</h3>
 
                 <p>Done Orders</p>
             </div>

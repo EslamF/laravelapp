@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div id="app" class="row">
+<div class="row">
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
@@ -12,13 +12,43 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="factory">Receiving Order</label>
-                                <select class="form-control" @change="getCuttingOrderProduct()" v-model="receiving_order_id" id="factory">
-                                    <option value="" disabled selected>Select Receiving Order Number</option>
-                                    <option value="{{$order->id}}">{{$order->id}}</option>
+                                <label for="factory">نوع المنتج</label>
+                                <select class="form-control" name="product_type_id">
+                                    <option value="" disabled selected>اختر نوع المنتج</option>
+                                    @foreach($product_types as $type)
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                    @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="factory">مقاس المنتج</label>
+                                <select class="form-control" name="size_id">
+                                    <option value="" disabled selected>اختر مقاس المنتج</option>
+                                    @foreach($sizes as $size)
+                                    <option value="{{$size->id}}">{{$size->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="factory">خامة المنتج</label>
+                                <select class="form-control" name="material_id">
+                                    <option value="" disabled selected>اختر خامة المنتج</option>
+                                    @foreach($materials as $material)
+                                    <option value="{{$material->id}}">{{$material->mq_r_code}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="factory">الكمية</label>
+                                <input type="number" name="qty" class="form-control" placeholder="اضف كمية">
                             </div>
                         </div>
                     </div>
@@ -41,6 +71,5 @@
         </div>
     </div>
 </div>
-@incluce('dashboard.products.product.v-script.vue-create')
 </div>
 @endsection

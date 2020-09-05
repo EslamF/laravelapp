@@ -18,13 +18,14 @@ class CuttingOrderController extends Controller
 {
     public function getAllPaginate()
     {
-        $data = CuttingOrder::where('user_id', '!=', null)->with('user:id,name')->orderBy('id', 'DESC')->paginate();
+        $data = CuttingOrder::where('user_id', '!=', null)->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
+
         return view('dashboard.orders.cutting_order.list')->with('data', $data);
     }
 
     public function companyList()
     {
-        $data = CuttingOrder::where('factory_id', '!=', null)->with('factory:id,name')->orderBy('id', 'DESC')->paginate();
+        $data = CuttingOrder::where('factory_id', '!=', null)->with('factory:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
         return view('dashboard.orders.cutting_order.factory_list', ['data' => $data]);
     }
 
@@ -111,7 +112,7 @@ class CuttingOrderController extends Controller
 
         if (request('items')) {
             foreach ($request->items as $item) {
-                $count = $item['qty'];
+                $count = $item['qty'] * $order->layers / 2;
 
                 $product = Product::where('product_type_id', $item['product_type_id'])
                     ->where('size_id', $item['size_id'])
