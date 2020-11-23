@@ -32,16 +32,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="">Order By</label>
-                                <select v-model="type" @change="getOrderBy()" class="form-control" id="" required>
-                                    <option value="" disabled seelcted>اختر النوع</option>
-                                    <option value="company">شركة</option>
-                                    <option value="employee">موظف</option>
-                                </select>
-                            </div>
-                        </div>
+                       
                         <div class="col-md-3" v-if="type == 'employee'">
                             <div class="form-group">
                                 <label for="emp">اسم الموظف</label>
@@ -107,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="form-group mt-2">
-                                <button type="button" @click="addRow" class='btn btn-success mt-4'>
+                                <button type="button" style="margin-right:10px " @click="addRow" class='btn btn-success mt-4'>
                                     إضافة
                                 </button>
                                 <button type="button" @click="deleteRow(index)" class='btn btn-danger mt-4'>

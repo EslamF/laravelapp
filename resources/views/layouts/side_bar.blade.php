@@ -47,7 +47,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{Route('spreading.material.list')}}" class="nav-link">
+                                    <a href="{{Route('spreading.material.counter_list')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>إذن الفرش</p>
                                     </a>

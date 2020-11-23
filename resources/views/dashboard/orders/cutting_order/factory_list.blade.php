@@ -18,7 +18,7 @@
                                 <th class="col-md-2">الشركة</th>
                                 <th class="col-md-3">كود الخامة</th>
                                 <th class="col-md-2">موظف الفرش</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

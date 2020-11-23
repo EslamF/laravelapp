@@ -7,14 +7,28 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Materials\Material;
 use App\Models\Orders\SpreadingOutMaterialOrder;
+// use App\Models\Orders\CuttingOrder;
+
 
 class SpreadingMaterialController extends Controller
 {
-    
-    public function getAllPaginate()
+    public function getAllPaginateForUsed()
     {
-        $data = SpreadingOutMaterialOrder::with('user:id,name', 'material:id,mq_r_code')->paginate();
-        return view('dashboard.orders.spreading_materials.list')->with('data', $data);
+        $data = SpreadingOutMaterialOrder::with('user:id,name', 'material:id,mq_r_code')->doesntHave('cuttingOrders')->paginate();
+        return view('dashboard.orders.spreading_materials.used_list')->with('data', $data);
+    }
+    public function getAllPaginateForHold()
+    {
+        $data = SpreadingOutMaterialOrder::with('user:id,name', 'material:id,mq_r_code')->has('cuttingOrders')->paginate();
+        return view('dashboard.orders.spreading_materials.hold_list')->with('data', $data);
+    }
+
+    public function counterList()
+    {
+        $holdOrders = SpreadingOutMaterialOrder::has('cuttingOrders')->count();
+        $usedOrders = SpreadingOutMaterialOrder::doesntHave('cuttingOrders')->count();
+
+        return view('dashboard.orders.spreading_materials.counter_list', ['hold' => $holdOrders, 'used' => $usedOrders]);
     }
 
     public function createPage()

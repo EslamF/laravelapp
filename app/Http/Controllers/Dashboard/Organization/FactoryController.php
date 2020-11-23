@@ -10,7 +10,6 @@ use App\Models\Organization\FactoryType;
 
 class FactoryController extends Controller
 {
-
     public function getAllPaginate()
     {
         $factories = Factory::paginate(15);
@@ -37,9 +36,8 @@ class FactoryController extends Controller
 
     public function create(Request $request)
     {
-        // dd($);
         $request->validate([
-            'name' => 'required|min:3|unique:factory_types,name',
+            'name' => 'required|min:3|unique:factories,name',
             'phone' => 'min:11',
             'address' => 'max:100',
             'factory_type_id' => 'required|exists:factory_types,id'
@@ -51,12 +49,14 @@ class FactoryController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'type_id' => 'required|exists:factory_types,id',
-            'name' => 'required|min:3|unique:factory_types,name',
+            'type_id' => 'required|exists:factories,id',
+            'name' => 'required|min:3|unique:factories,name',
             'phone' => 'min:11',
             'address' => 'max:100'
         ]);
-        FactoryType::find($request->type_id)->update($request->all());
+        $factory= Factory::findOrFail($request->type_id); 
+        
+        $factory->update($request->all());
         return redirect()->route('factory.list');
     }
 
@@ -76,7 +76,7 @@ class FactoryController extends Controller
         $data = [];
         $data['factory'] = Factory::where('id', $fact_id)->first();
         $data['type'] = FactoryType::select('id', 'name')->get();
-        // dd($data);
+        
         return view('dashboard.factories.edit')->with('data', $data);
     }
 
