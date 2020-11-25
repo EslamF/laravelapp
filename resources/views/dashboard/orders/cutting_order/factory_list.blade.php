@@ -31,7 +31,7 @@
                                 <td class="col-md-3">{{$value->spreadingOutMaterialOrder->material->mq_r_code}}</td>
                                 <td class="col-md-2">{{$value->spreadingOutMaterialOrder->user->name}}</td>
                                 <td class="col-md-3">
-                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">Show</a>
+                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">رؤية</a>
                                     <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="cutting_order_id" value="{{$value->id}}">
