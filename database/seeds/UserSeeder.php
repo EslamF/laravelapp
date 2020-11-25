@@ -20,6 +20,13 @@ class UserSeeder extends Seeder
                 'email_verified_at'=>'2020-11-01 00:00:00',
                 'name'=>'admin',
                 'password'=>'$2y$10$IEadymMtBNB2fXXIGx55FOAnnAqmEjPipFDhhsv4qVzZDtkjTcqBq',
+                'email_verified_at' => now(),
+            ] , 
+            [
+                'email' => 'admin@gmail.com' ,
+                'name' => 'Admin' ,
+                'password' => '$2y$10$eSA/JZilXgKTj1wAYd8TFOXdr2zyCF/RhglPNXSDimlXOUgGxd4PC',
+                'email_verified_at' => now(),
             ]
         ]);
 

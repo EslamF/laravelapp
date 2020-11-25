@@ -24,6 +24,7 @@ class SendEndProductController extends Controller
 
     public function getOrder($order_code)
     {
+        
         $data = Product::where('save_order_id', $order_code)
             ->select('id', 'save_order_id', 'user_id', 'prod_code')
             ->with('user:id,name')

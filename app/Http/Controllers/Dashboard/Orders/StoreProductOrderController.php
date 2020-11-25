@@ -51,6 +51,7 @@ class StoreProductOrderController extends Controller
 
     public function store(Request $request)
     {
+        
         StoreProductOrder::create([
             'code' => $this->generateCode(),
             'save_order_id' => $request['save_order_id']
