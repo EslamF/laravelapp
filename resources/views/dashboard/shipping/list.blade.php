@@ -15,7 +15,7 @@
                             <div class="col-md-12">
                                 <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-8">اسم الشركة</th>
-                                <th class="col-md-3">الخيارات</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

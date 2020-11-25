@@ -15,7 +15,7 @@
                             <div class="col-md-12">
                                 <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-9">اللون</th>
-                                <th class="col-md-2">الخيارات</th>
+                                <th class="col-md-2">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

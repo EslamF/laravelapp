@@ -19,7 +19,7 @@
                                 <th class="col-md-2">حالة المنتج</th>
                                 <th class="col-md-1">حالة الفرز</th>
                                 <th class="col-md-2">الحالة البيعية</th>
-                                <th class="col-md-2">الخيارات</th>
+                                <th class="col-md-2">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

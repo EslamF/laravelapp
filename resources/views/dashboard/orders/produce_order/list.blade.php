@@ -17,7 +17,7 @@
                                 <th class="col-md-2"> الرقم المرجعي إذن القص</th>
                                 <th class="col-md-3">المصنع</th>
                                 <th class="col-md-3">تاريخ الإستلام</th>
-                                <th class="col-md-3">الخيارات</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

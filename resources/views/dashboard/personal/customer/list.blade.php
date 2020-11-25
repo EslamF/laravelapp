@@ -20,7 +20,7 @@
                                 <th class="col-md-1">المصدر</th>
                                 <th class="col-md-1">الوصول</th>
                                 <th class="col-md-1">الصفة</th>
-                                <th class="col-md-3">الخيارات</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

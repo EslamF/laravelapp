@@ -17,7 +17,7 @@
                                 <th class="col-md-2">كود</th>
                                 <th class="col-md-2">موظف الفرز</th>
                                 <th class="col-md-4">تاريخ الفرز</th>
-                                <th class="col-md-3">الخيارات</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

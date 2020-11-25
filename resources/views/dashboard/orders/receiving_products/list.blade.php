@@ -17,7 +17,7 @@
                                 <th class="col-md-3">إذن اتصنيع</th>
                                 <th class="col-md-4">تاريخ الإستلام</th>
                                 <th class="col-md-2">حالة الإذن</th>
-                                <th class="col-md-2">الالخيارات</th>
+                                <th class="col-md-2">الإجراءات</th>
                             </div>
                         </tr>
                     </thead>

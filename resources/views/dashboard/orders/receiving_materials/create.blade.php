@@ -136,7 +136,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">ملاحظات</label>
-                        <textarea class="form-control" name="description" id="description" class="@error('description') is-danger @enderror" value="{{old('description')}}"></textarea>
+                        <textarea  class="form-control" name="description" id="description" class="@error('description') is-danger @enderror" >{{old('description')}}</textarea>
                         @error('description')
                         <p class="help is-danger">
                             {{$message}}

@@ -15,10 +15,10 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">الرقم المرجعي</th>
+                                <th class="col-md-2">الرقم المرجعي</th>
                                 <th class="col-md-3">الاسم الوظيفة</th>
-                                <th class="col-md-6">الوصف</th>
-                                <th class="col-md-2">الخيارات</th>
+                                <th class="col-md-5">الوصف</th>
+                                <th class="col-md-2">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

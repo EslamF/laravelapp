@@ -68,22 +68,6 @@ class PeremissionSeeds extends Seeder
                 'lable' => 'حذف نوع مصنع'
             ],
             [
-                'name' => 'add-typefactory',
-                'lable' => 'إضافة نوع مصنع'
-            ],
-            [
-                'name' => 'edit-typefactory',
-                'lable' => 'تعديل نوع مصنع'
-            ],
-            [
-                'name' => 'show-typefactory',
-                'lable' => 'رؤية نوع مصنع'
-            ],
-            [
-                'name' => 'delete-typefactory',
-                'lable' => 'حذف نوع مصنع'
-            ],
-            [
                 'name' => 'add-materials',
                 'lable' => 'إضافة خامات'
             ],
@@ -130,6 +114,9 @@ class PeremissionSeeds extends Seeder
             [
                 'name' => 'delete-customer',
                 'lable' => 'حذف عملاء'
+            ],[
+                'name' => 'search-customer',
+                'lable' => 'البحث في بيانات العملاء'
             ],
             [
                 'name' => 'add-prodact',
@@ -211,6 +198,70 @@ class PeremissionSeeds extends Seeder
                 'name' => 'delete-spreading',
                 'lable' => 'حذف أذونات الفرش'
             ],
+            [
+                'name' => 'add-customer',
+                'lable' => 'إضافة عميل'
+            ],
+            [
+                'name' => 'edit-customer',
+                'lable' => 'تعديل عميل'
+            ],
+            [
+                'name' => 'show-customer',
+                'lable' => 'رؤية عميل'
+            ],
+            [
+                'name' => 'delete-customer',
+                'lable' => 'حذف عميل'
+            ],
+            [
+                'name' => 'add-supplier',
+                'lable' => 'إضافة مورد'
+            ],
+            [
+                'name' => 'edit-supplier',
+                'lable' => 'تعديل مورد'
+            ],
+            [
+                'name' => 'show-supplier',
+                'lable' => 'رؤية مورد'
+            ],
+            [
+                'name' => 'delete-supplier',
+                'lable' => 'حذف مورد'
+            ],
+            [
+                'name' => 'add-product_type',
+                'lable' => 'إضافة نوع منتج'
+            ],
+            [
+                'name' => 'edit-product_type',
+                'lable' => 'تعديل نوع منتج'
+            ],
+            [
+                'name' => 'show-product_type',
+                'lable' => 'رؤية نوع منتج'
+            ],
+            [
+                'name' => 'delete-product_type',
+                'lable' => 'حذف نوع منتج'
+            ],[
+                'name' => 'add-role',
+                'lable' => 'إضافة وظيفة'
+            ],
+            [
+                'name' => 'edit-role',
+                'lable' => 'تعديل وظيفة'
+            ],
+            [
+                'name' => 'show-role',
+                'lable' => 'رؤية وظيفة'
+            ],
+            [
+                'name' => 'delete-role',
+                'lable' => 'حذف وظيفة'
+            ],
+
             [
                 'name' => 'add-shapping',
                 'lable' => 'إضافة شركات الشحن'

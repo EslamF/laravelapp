@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">المصانع</h3>
-                <a href="{{Route('factory.create_page')}}" class="btn btn-success float-right">إضافه المصانع</a>
+                <a href="{{Route('factory.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -15,12 +15,12 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1">الرقم المرجعي</th>
-                                <th class="col-md-3">اسم</th>
+                                <th class="col-md-2">الرقم المرجعي</th>
+                                <th class="col-md-2">اسم</th>
                                 <th class="col-md-2">تيليفون</th>
                                 <th class="col-md-2">العنوان</th>
                                 <th class="col-md-2">أنواع المصانع</th>
-                                <th class="col-md-2">الخيارات</th>
+                                <th class="col-md-2">إجراءات</th>
                             </div>
                         </tr>
                     </thead>
@@ -28,8 +28,8 @@
                         @foreach($factories as $factory)
                         <tr class="row">
                             <div class="col-md-12">
-                                <td class="col-md-1">{{$factory->id}}</td>
-                                <td class="col-md-3">{{$factory->name}}</td>
+                                <td class="col-md-2">{{$factory->id}}</td>
+                                <td class="col-md-2">{{$factory->name}}</td>
                                 <td class="col-md-2">{{$factory->phone}}</td>
                                 <td class="col-md-2">{{$factory->address}}</td>
                                 <td class="col-md-2">{{$factory->factory_type_id}}</td>

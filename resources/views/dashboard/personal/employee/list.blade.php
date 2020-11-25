@@ -19,7 +19,7 @@
                                 <th class="col-md-3">اسم</th>
                                 <th class="col-md-3">البريد الالكتروني</th>
                                 <th class="col-md-2">صلحية الموظف</th>
-                                <th class="col-md-3">الخيارات</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

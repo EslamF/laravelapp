@@ -17,7 +17,7 @@
                             <div class="col-md-12">
                                 <th class="col-md-2">الرقم المرجعي المورد</th>
                                 <th class="col-md-4">اسم المورد</th>
-                                <th class="col-md-6">الخيارات</th>
+                                <th class="col-md-6">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

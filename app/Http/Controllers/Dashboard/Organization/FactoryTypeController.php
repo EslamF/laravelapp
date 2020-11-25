@@ -17,7 +17,7 @@ class FactoryTypeController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'type' => 'required|min:3'
+            'type' => 'required|unique:factory_types,name,except,id|min:3'
         ]);
         $data['name']= $request->type;
         FactoryType::create($data);

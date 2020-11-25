@@ -16,7 +16,7 @@
                                 <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-5">كود المنتج</th>
                                 <th class="col-md-5">المصنع</th>
-                                <th class="col-md-1">الخيارات</th>
+                                <th class="col-md-1">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

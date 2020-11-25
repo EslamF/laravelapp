@@ -16,7 +16,7 @@
                                 <th class="col-md-1">الكود </th>
                                 <th class="col-md-4">كود الإذن</th>
                                 <th class="col-md-4">تاريخ الانشاء</th>
-                                <th class="col-md-3">الخيارات</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>
