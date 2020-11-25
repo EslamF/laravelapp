@@ -237,7 +237,7 @@
                         };
                         axios.post("{{Route('cutting.material.store')}}", data).then(res => {
 
-                            window.location.href = '{{Route("cutting.material.list")}}';
+                            window.location.href = '{{Route("cutting.factory_list")}}';
                         }).catch(err => {
                             this.submited = false;
                         });

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -182,7 +184,9 @@ Route::group([
             Route::group([
                 'prefix' => 'spreading-material'
             ], function () {
-                Route::get('get-all', 'SpreadingMaterialController@getAllPaginate')->name('spreading.material.list');
+                Route::get('get-all-hold', 'SpreadingMaterialController@getAllPaginateForHold')->name('spreading.material.hold_list');
+                Route::get('get-all-used', 'SpreadingMaterialController@getAllPaginateForUsed')->name('spreading.material.used_list');
+                Route::get('get-counter', 'SpreadingMaterialController@counterList')->name('spreading.material.counter_list');
                 Route::get('get', 'SpreadingMaterialController@getAll')->name('spreading.get_all');
                 Route::get('create', 'SpreadingMaterialController@createPage')->name('spreading.material.create_page');
                 Route::post('store', 'SpreadingMaterialController@store')->name('spreading.material.store');
@@ -195,7 +199,9 @@ Route::group([
                 'prefix' => 'cutting'
             ], function () {
                 Route::get('all', 'CuttingOrderController@outerList')->name('cutting.outer_list');
-                Route::get('get-all', 'CuttingOrderController@getAllPaginate')->name('cutting.material.list');
+                Route::get('get-all-used', 'CuttingOrderController@getAllForUsed')->name('cutting.material.used_list');
+                Route::get('get-all-hold', 'CuttingOrderController@getAllForHold')->name('cutting.material.hold_list');
+                Route::get('get-inner_list', 'CuttingOrderController@getAllCounterInnerList')->name('cutting.material.counter_inner_list');
                 Route::get('get-factory-list', 'CuttingOrderController@companyList')->name('cutting.factory_list');
                 Route::get('get', 'CuttingOrderController@getAll')->name('cutting_order.all');
                 Route::get('get-order-products/{id}', 'CuttingOrderController@getWithProduct')->name('cutting_order.show_products');

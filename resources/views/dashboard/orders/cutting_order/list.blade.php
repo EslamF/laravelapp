@@ -4,9 +4,9 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title"> اذونات القص</h3>
+                <h3 class="card-title"> أذونات القص</h3>
                 <a href="{{Route('cutting.outer_list')}}" class="btn btn-dark mr-2 float-right"> رجوع</a>
-                <a href="{{Route('cutting.material.create_page')}}" class="btn btn-success float-right"> انشاء</a>
+                <a href="{{Route('cutting.material.create_page')}}" class="btn btn-success float-right"> إنشاء</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -17,7 +17,7 @@
                                 <th class="col-md-1"> الرقم المرجعي</th>
                                 <th class="col-md-4">الموظف</th>
                                 <th class="col-md-5">الشركة</th>
-                                <th class="col-md-2">الخيارات</th>
+                                <th class="col-md-2">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

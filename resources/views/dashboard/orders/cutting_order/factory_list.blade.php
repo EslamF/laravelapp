@@ -18,7 +18,7 @@
                                 <th class="col-md-2">الشركة</th>
                                 <th class="col-md-3">كود الخامة</th>
                                 <th class="col-md-2">موظف الفرش</th>
-                                <th class="col-md-3">Action</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>
@@ -31,7 +31,7 @@
                                 <td class="col-md-3">{{$value->spreadingOutMaterialOrder->material->mq_r_code}}</td>
                                 <td class="col-md-2">{{$value->spreadingOutMaterialOrder->user->name}}</td>
                                 <td class="col-md-3">
-                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">Show</a>
+                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">رؤية</a>
                                     <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="cutting_order_id" value="{{$value->id}}">

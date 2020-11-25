@@ -4,8 +4,10 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title"> اذونات الفرش</h3>
+                <h3 class="card-title"> أذونات الفرش الحالية</h3>
+                <a href="{{Route('spreading.material.counter_list')}}" class="btn btn- float-right" style="margin-right: 5px">رجوع</a>
                 <a href="{{Route('spreading.material.create_page')}}" class="btn btn-success float-right">إنشاء</a>
+            
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -17,7 +19,7 @@
                                 <th class="col-md-3">موظف الفرش</th>
                                 <th class="col-md-3">كود الخامة</th>
                                 <th class="col-md-3">الوزن</th>
-                                <th class="col-md-2">الخيارات</th>
+                                <th class="col-md-2">إجراءات</th>
                             </div>
                         </tr>
                     </thead>
@@ -43,7 +45,6 @@
             <!-- /.card-body -->
             <div class="card-footer clearfix">
                 <div class="offset-5">
-
                     {{$data->links()}}
                 </div>
             </div>

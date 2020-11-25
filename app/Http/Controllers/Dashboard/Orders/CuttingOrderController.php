@@ -16,9 +16,16 @@ use Illuminate\Support\Facades\Redirect;
 
 class CuttingOrderController extends Controller
 {
-    public function getAllPaginate()
+    public function getAllForHold()
     {
-        $data = CuttingOrder::where('user_id', '!=', null)->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
+        $data = CuttingOrder::where('user_id', '!=', null)->doesntHave('produceOrders')->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
+
+        return view('dashboard.orders.cutting_order.list')->with('data', $data);
+    }
+
+    public function getAllForUsed()
+    {
+        $data = CuttingOrder::where('user_id', '!=', null)->has('produceOrders')->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
 
         return view('dashboard.orders.cutting_order.list')->with('data', $data);
     }
@@ -28,6 +35,11 @@ class CuttingOrderController extends Controller
         $data = CuttingOrder::where('factory_id', '!=', null)->with('factory:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
         return view('dashboard.orders.cutting_order.factory_list', ['data' => $data]);
     }
+    // public function companyListForUsed()
+    // {
+    //     $data = CuttingOrder::where('factory_id', '!=', null)->with('factory:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
+    //     return view('dashboard.orders.cutting_order.factory_list', ['data' => $data]);
+    // }
 
 
     public function outerList()
@@ -36,6 +48,14 @@ class CuttingOrderController extends Controller
         $ordersOuter = CuttingOrder::where('factory_id', '!=', null)->count();
 
         return view('dashboard.orders.cutting_order.outer_list', ['outer' => $ordersOuter, 'inner' => $ordersInner]);
+    }
+
+    public function getAllCounterInnerList()
+    {
+        $hold = CuttingOrder::where('factory_id', '!=', null)->has('produceOrders')->count();
+        $used = CuttingOrder::where('factory_id', '!=', null)->doesntHave('produceOrders')->count();
+
+        return view('dashboard.orders.cutting_order.counter_inner', ['hold' => $hold, 'used' => $used]);
     }
     public function getAll()
     {
@@ -54,6 +74,7 @@ class CuttingOrderController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $order = CuttingOrder::create($request->all());
         $material = Material::whereHas('spreadingOutMaterialOrders', function ($q) use ($order) {
             $q->whereHas('cuttingOrders', function ($query) use ($order) {
@@ -175,15 +196,21 @@ class CuttingOrderController extends Controller
     public function getWithProduct($id)
     {
         $cutting_order = CuttingOrder::where('id', $id)->with('user:id,name', 'factory:id,name')->first();
+        // dd();
         $orders = Product::where('cutting_order_id', $id)->with('productType:id,name', 'size:id,name')->get()->groupBy('produce_code');
+        
         $orders = $orders->map(function ($item) {
             return [
+                'id' => $item[0]->id,
                 'qty' => $item->count(),
                 'product_type' => $item[0]->productType->name,
                 'size'         => $item[0]->size->name
             ];
         });
+        
         $orders = array_values($orders->toArray());
+        // return $orders;
+        
         return view('dashboard.orders.cutting_order.show', ['orders' => $orders, 'cutting_order' => $cutting_order]);
     }
 

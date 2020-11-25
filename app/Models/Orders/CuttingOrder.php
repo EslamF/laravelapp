@@ -45,4 +45,6 @@ class CuttingOrder extends Model
     {
         return $this->belongsTo(SpreadingOutMaterialOrder::class);
     }
+
+    
 }
