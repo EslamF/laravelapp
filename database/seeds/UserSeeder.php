@@ -19,6 +19,13 @@ class UserSeeder extends Seeder
                 'email'=>'atya@gmail.com',
                 'name'=>'atya',
                 'password'=>'$2y$10$IEadymMtBNB2fXXIGx55FOAnnAqmEjPipFDhhsv4qVzZDtkjTcqBq',
+                'email_verified_at' => now(),
+            ] , 
+            [
+                'email' => 'admin@gmail.com' ,
+                'name' => 'Admin' ,
+                'password' => '$2y$10$eSA/JZilXgKTj1wAYd8TFOXdr2zyCF/RhglPNXSDimlXOUgGxd4PC',
+                'email_verified_at' => now(),
             ]
         ]);
 

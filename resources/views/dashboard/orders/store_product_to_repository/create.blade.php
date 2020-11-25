@@ -146,14 +146,14 @@
                 });
                 $.ajax({
                     type: "POST",
-                    url: "/orders/store-end-product/store",
+                    url: "{{url('orders/store-end-product/store')}}",
                     dataType: "json",
                     data: {
                         'data': addProducts,
                         'save_order_id': save_order_id
                     },
                     success: function(msg) {
-                        window.location.href = "/orders/store-end-product/get-all";
+                        window.location.href = "{{url('orders/store-end-product/get-all')}}";
                     }
                 });
             } else {

@@ -22,7 +22,7 @@ class ReceivingDamagedOrdersController extends Controller
         
         if(!$request->damage_type) {
             $request->merge([
-                'status' => 'available'
+                'status' => 'available' 
             ]);
         }
 
