@@ -35,7 +35,7 @@
                     </div>
                     
                     <h5> 
-                        الصلحيات
+                        صلاحيات الوظيفة
                     </h5>
                     <div class="row ">
                         @foreach($peremissions as $peremission)
