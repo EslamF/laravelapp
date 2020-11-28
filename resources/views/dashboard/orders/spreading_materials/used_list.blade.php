@@ -12,24 +12,20 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-4">موظف الفرش</th>
-                                <th class="col-md-4">كود الخامة</th>
-                                <th class="col-md-3">الوزن</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>موظف الفرش</th>
+                            <th>كود الخامة</th>
+                            <th>الوزن</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data as $value)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$value->id}}</td>
-                                <td class="col-md-4">{{$value->user->name}}</td>
-                                <td class="col-md-4">{{$value->material->mq_r_code}}</td>
-                                <td class="col-md-3">{{$value->weight}}</td>
-                            </div>
+                        <tr>
+                            <td>{{$value->id}}</td>
+                            <td>{{$value->user->name}}</td>
+                            <td>{{$value->material->mq_r_code}}</td>
+                            <td>{{$value->weight}}</td>
                         </tr>
                         @endforeach
                     </tbody>

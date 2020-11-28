@@ -11,35 +11,31 @@
         <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-2">الاسم</th>
-                                <th class="col-md-1"> الرقم المرجعي الهاتف</th>
-                                <th class="col-md-2">العنوان</th>
-                                <th class="col-md-1">المصدر</th>
-                                <th class="col-md-1">الوصول</th>
-                                <th class="col-md-1">الصفة</th>
-                                <th class="col-md-3">الخيارات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>الاسم</th>
+                            <th> الرقم المرجعي الهاتف</th>
+                            <th>العنوان</th>
+                            <th>المصدر</th>
+                            <th>الوصول</th>
+                            <th>الصفة</th>
+                            <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($customers as $customer)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$customer->id}}</td>
-                                <td class="col-md-2">{{$customer->name}}</td>
-                                <td class="col-md-1">{{$customer->phone}}</td>
-                                <td class="col-md-2">{{$customer->address}}</td>
-                                <td class="col-md-1">{{$customer->source}}</td>
-                                <td class="col-md-1">{{$customer->link}}</td>
-                                <td class="col-md-1">{{$customer->type}}</td>
-                                <td class="col-md-3">
-                                    <a href="{{Route('customer.edit_page', $customer->id)}}" class="btn btn-primary">تعديل</a>
-                                    <button type="button" @click="deleteItem({{$customer->id}})" class="btn btn-danger">حذف</button>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$customer->id}}</td>
+                            <td>{{$customer->name}}</td>
+                            <td>{{$customer->phone}}</td>
+                            <td>{{$customer->address}}</td>
+                            <td>{{$customer->source}}</td>
+                            <td>{{$customer->link}}</td>
+                            <td>{{$customer->type}}</td>
+                            <td>
+                                <a href="{{Route('customer.edit_page', $customer->id)}}" class="btn btn-primary">تعديل</a>
+                                <button type="button" @click="deleteItem({{$customer->id}})" class="btn btn-danger">حذف</button>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

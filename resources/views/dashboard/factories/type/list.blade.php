@@ -2,7 +2,7 @@
 
 @extends('index')
 @section('content')
-<div class="row">
+<div class="row" id = "app">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -13,26 +13,26 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1">الرقم المرجعي</th>
-                                <th class="col-md-9">النوع</th>
-                                <th class="col-md-2">الخيارات</th>
+                        <tr>
+                            <div>
+                                <th >الرقم المرجعي</th>
+                                <th>النوع</th>
+                                <th>الخيارات</th>
                             </div>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($types as $type)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$type->id}}</td>
-                                <td class="col-md-9">{{$type->name}}</td>
-                                <td class="col-md-2">
-                                    <a href="{{Route('factory.type.edit_page', $type->id)}}" class="btn btn-primary">تعديل</a>
-                                    <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger">حذف</button>
-                                </td>
+                        <tr>
+                            
+                            <td class="">{{$type->id}}</td>
+                            <td class="">{{$type->name}}</td>
+                            <td class="">
+                                <a href="{{Route('factory.type.edit_page', $type->id)}}" class="btn btn-primary">تعديل</a>
+                                <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger">حذف</button>
+                            </td>
                                
-                            </div>
+                            
                         </tr>
                         @endforeach
                     </tbody>
@@ -61,6 +61,7 @@
 
         methods: {
             deleteItem(id) {
+                console.log('id : ' + id);
                 swal({
                         title: "هل انت متأكد؟",
                         text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
@@ -71,7 +72,7 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             var data = {};
-                            data.factory_type_id = id
+                            data.type_id = id
                             axios.post("{{Route('factory.type.delete')}}", data)
                                 .then(res => {
                                     swal("تم المسح بنجاح", {

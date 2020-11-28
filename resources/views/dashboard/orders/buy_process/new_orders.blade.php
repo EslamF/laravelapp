@@ -11,28 +11,24 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1">id</th>
-                                <th class="col-md-3">Order Code</th>
-                                <th class="col-md-3">Confimation</th>
-                                <th class="col-md-3">Delivery date</th>
-                                <th class="col-md-2">Action</th>
-                            </div>
+                        <tr>
+                            <th>id</th>
+                            <th>Order Code</th>
+                            <th>Confimation</th>
+                            <th>Delivery date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($orders as $value)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$value->id}}</td>
-                                <td class="col-md-3">{{$value->bar_code}}</td>
-                                <td class="col-md-3">{{$value->confirmation}}</td>
-                                <td class="col-md-3">{{$value->delivery_date}}</td>
-                                <td class="col-md-2">
-                                    <a href="{{Route('process.prepare_order_page', $value->id)}}" class="btn btn-primary">Preparation</a>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$value->id}}</td>
+                            <td>{{$value->bar_code}}</td>
+                            <td>{{$value->confirmation}}</td>
+                            <td>{{$value->delivery_date}}</td>
+                            <td>
+                                <a href="{{Route('process.prepare_order_page', $value->id)}}" class="btn btn-primary">Preparation</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

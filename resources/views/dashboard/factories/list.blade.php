@@ -13,32 +13,30 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1">الرقم المرجعي</th>
-                                <th class="col-md-3">اسم</th>
-                                <th class="col-md-2">تيليفون</th>
-                                <th class="col-md-2">العنوان</th>
-                                <th class="col-md-2">أنواع المصانع</th>
-                                <th class="col-md-2">الخيارات</th>
-                            </div>
+                        <tr>
+                            <th>الرقم المرجعي</th>
+                            <th>اسم</th>
+                            <th>تيليفون</th>
+                            <th>العنوان</th>
+                            <th>أنواع المصانع</th>
+                            <th>الخيارات</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($factories as $factory)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$factory->id}}</td>
-                                <td class="col-md-3">{{$factory->name}}</td>
-                                <td class="col-md-2">{{$factory->phone}}</td>
-                                <td class="col-md-2">{{$factory->address}}</td>
-                                <td class="col-md-2">{{$factory->factory_type_id}}</td>
-                                <td class="col-md-2">
-                                    <a href="{{Route('factory.edit_page', $factory->id)}}"
-                                        class="btn btn-primary">تعديل</a>
-                                    <button type="submit" @click="deleteItem({{$factory->id}})" class="btn btn-danger">حذف</button>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$factory->id}}</td>
+                            <td>{{$factory->name}}</td>
+                            <td>{{$factory->phone}}</td>
+                            <td>{{$factory->address}}</td>
+                            <td>{{$factory->factoryType->name}}</td> 
+                            <td>
+                                <a href="{{Route('factory.edit_page', $factory->id)}}"
+                                    class="btn btn-primary">تعديل</a>
+                                <button type="submit" @click="deleteItem({{$factory->id}})" class="btn btn-danger">حذف</button>
+                            </td>
+                            
                         </tr>
                         @endforeach
                     </tbody>

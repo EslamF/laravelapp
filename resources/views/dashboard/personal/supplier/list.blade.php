@@ -13,29 +13,25 @@
         <div class="card-body">
                 <table class="table ">
                     <thead>
-                    <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-2">الرقم المرجعي المورد</th>
-                                <th class="col-md-4">اسم المورد</th>
-                                <th class="col-md-6">الخيارات</th>
-                            </div>
+                        <tr>
+                            <th>الرقم المرجعي </th>
+                            <th>اسم المورد</th>
+                            <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($suppliers as $supplier)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-2">{{$supplier->id}}</td>
-                                <td class="col-md-4">{{$supplier->name}}</td>
-                                <td class="col-md-6">
-                                    <a href="{{Route('supplier.edit_page', $supplier->id)}}" class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('supplier.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="supplier_id" value="{{$supplier->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$supplier->id}}</td>
+                            <td>{{$supplier->name}}</td>
+                            <td>
+                                <a href="{{Route('supplier.edit_page', $supplier->id)}}" class="btn btn-primary">تعديل</a>
+                                <form style="display:inline" action="{{Route('supplier.delete')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="supplier_id" value="{{$supplier->id}}">
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

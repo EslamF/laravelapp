@@ -16,21 +16,18 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-4">Product</th>
-                                <th class="col-md-4">Size</th>
-                                <th class="col-md-4">Qty</th>
-                            </div>
+                        <tr>
+                            <th>Product</th>
+                            <th>Size</th>
+                            <th>Qty</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="row" v-for="product in items">
-                            <div>
-                                <td class="col-md-4">@{{product.product}}</td>
-                                <td class="col-md-4">@{{product.size}}</td>
-                                <td class="col-md-4">@{{product.qty}}</td>
-                            </div>
+                        <tr v-for="product in items">
+                            <td>@{{product.product}}</td>
+                            <td>@{{product.size}}</td>
+                            <td>@{{product.qty}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -12,31 +12,27 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-4">الموظف</th>
-                                <th class="col-md-5">الشركة</th>
-                                <th class="col-md-2">إجراءات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>الموظف</th>
+                            <th>الشركة</th>
+                            <th>إجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data as $value)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$value->id}}</td>
-                                <td class="col-md-4">{{$value->user? $value->user->name:'غير متاح'}}</td>
-                                <td class="col-md-5">{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
-                                <td class="col-md-2">
-                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">رؤية</a>
-                                    <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="cutting_order_id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$value->id}}</td>
+                            <td>{{$value->user? $value->user->name:'غير متاح'}}</td>
+                            <td>{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
+                            <td>
+                                <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">رؤية</a>
+                                <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="cutting_order_id" value="{{$value->id}}">
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

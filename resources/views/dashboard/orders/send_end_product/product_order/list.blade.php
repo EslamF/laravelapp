@@ -9,22 +9,19 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <h3 style="display: block;">Shipped by {{$data[0]->user->name}}</h6>
+                <h3 style="display: block;">Shipped by <span> {{$order->user ? $order->user->name : ''}} </span></h3>
+                    <h3 style="display: block;">Code <span> {{$order->code}}</span></h3>
                     <table class="table ">
                         <thead>
-                            <tr class="row">
-                                <div class="col-md-12">
-                                    <th class="col-md-12">كود امنتج</th>
-                                </div>
+                            <tr>
+                                <th>كود المنتج</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach($data as $order)
-                            <tr class="row">
-                                <div class="col-md-12">
-                                    <td class="col-md-12">{{$order->prod_code}}</td>
-                                </div>
+                            @foreach($products as $product)
+                            <tr>
+                                <td>{{$product->prod_code}}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -32,7 +29,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                {{$data->links()}}
+                {{$products->links()}}
             </div>
         </div>
         <!-- /.card -->

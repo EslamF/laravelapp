@@ -11,37 +11,33 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي </th>
-                                <th class="col-md-2">كود المنتج</th>
-                                <th class="col-md-2">كود المنتج</th>
-                                <th class="col-md-2">حالة المنتج</th>
-                                <th class="col-md-1">حالة الفرز</th>
-                                <th class="col-md-2">الحالة البيعية</th>
-                                <th class="col-md-2">الخيارات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي </th>
+                            <th>كود المنتج</th>
+                            <th>كود المنتج</th>
+                            <th>حالة المنتج</th>
+                            <th>حالة الفرز</th>
+                            <th>الحالة البيعية</th>
+                            <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($products as $value)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$value->id}}</td>
-                                <td class="col-md-2">{{$value->prod_code}}</td>
-                                <td class="col-md-2">{{$value->receiving_order_id}}</td>
-                                <td class="col-md-2">{{$value->damaged == 1 ? 'True': 'False'}}</td>
-                                <td class="col-md-1">{{$value->sorted == 1 ? 'True' : 'False'}}</td>
-                                <td class="col-md-2">{{$value->status}}</td>
-                                <td class="col-md-2">
-                                    <a href="{{Route('product.edit_page', $value->id)}}" class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('product.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$value->id}}</td>
+                            <td>{{$value->prod_code}}</td>
+                            <td>{{$value->receiving_order_id}}</td>
+                            <td>{{$value->damaged == 1 ? 'True': 'False'}}</td>
+                            <td>{{$value->sorted == 1 ? 'True' : 'False'}}</td>
+                            <td>{{$value->status}}</td>
+                            <td>
+                                <a href="{{Route('product.edit_page', $value->id)}}" class="btn btn-primary">تعديل</a>
+                                <form style="display:inline" action="{{Route('product.delete')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{$value->id}}">
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

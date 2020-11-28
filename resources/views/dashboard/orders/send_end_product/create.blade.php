@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label for="name">موظف الشحن</label>
                             <span v-if="have_error" style="color:red;font-weight:700">@{{errors.user}}</span>
-                            <select class="form-control" v-model="user_id">
+                            <select class="form-control" v-model="user_id"> 
                                 <option value="" disabled selected>اختر موظف</option>
                                 <option :value="employee.id" v-for="employee in employees">@{{employee.name}}</option>
                             </select>

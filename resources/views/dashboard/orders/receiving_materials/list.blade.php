@@ -11,35 +11,31 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-2">كود الخامة</th>
-                                <th class="col-md-2">نوع الخامة</th>
-                                <th class="col-md-2">المورد</th>
-                                <th class="col-md-1">الرقم المرجعي الفاتورة</th>
-                                <th class="col-md-1">المستلم</th>
-                                <th class="col-md-1">المشتري</th>
-                                <th class="col-md-2">الخيارات</th>
-                            </div>
+                        <tr>
+                                <th> الرقم المرجعي</th>
+                                <th>كود الخامة</th>
+                                <th>نوع الخامة</th>
+                                <th>المورد</th>
+                                <th>الرقم المرجعي الفاتورة</th>
+                                <th>المستلم</th>
+                                <th>المشتري</th>
+                                <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($receiving as $material)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$material->id}}</td>
-                                <td class="col-md-2">{{$material->mq_r_code}}</td>
-                                <td class="col-md-2">{{$material->materialType ? $material->materialType->name : 'ليس له نوع خامة'}}</td>
-                                <td class="col-md-2">{{$material->supplier->name}}</td>
-                                <td class="col-md-1">{{$material->bill_number}}</td>
-                                <td class="col-md-1">{{$material->createdBy->name}}</td>
-                                <td class="col-md-1">{{$material->buyer->name}}</td>
-                                <td class="col-md-2">
+                        <tr>
+                                <td>{{$material->id}}</td>
+                                <td>{{$material->mq_r_code}}</td>
+                                <td>{{$material->materialType ? $material->materialType->name : 'ليس له نوع خامة'}}</td>
+                                <td>{{$material->supplier->name}}</td>
+                                <td>{{$material->bill_number}}</td>
+                                <td>{{$material->createdBy->name}}</td>
+                                <td>{{$material->buyer->name}}</td>
+                                <td>
                                     <a href="{{Route('receiving.material.edit_page', $material->id)}}" class="btn btn-primary">تعديل</a>
                                     <button type="submit" @click="deleteItem({{$material->id}})" class="btn btn-danger">حذف</button>
                                 </td>
-                            </div>
                         </tr>
                         @endforeach
                     </tbody>

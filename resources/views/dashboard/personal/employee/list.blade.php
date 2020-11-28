@@ -13,37 +13,33 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-3">اسم</th>
-                                <th class="col-md-3">البريد الالكتروني</th>
-                                <th class="col-md-2">صلحية الموظف</th>
-                                <th class="col-md-3">الخيارات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>الإسم</th>
+                            <th>البريد الالكتروني</th>
+                            <th>صلاحية الموظف</th>
+                            <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data['user'] as $employee)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$employee->id}}</td>
-                                <td class="col-md-2">{{$employee->name}}</td>
-                                <td class="col-md-3">{{$employee->email}}</td>
-                                <td class="col-md-3">{{isset($employee->roles[0]->label) ? $employee->roles[0]->label: "لا يوجد لة صلاحية" }}</td>
-                                <td class="col-md-3">
-                                    @can('edit-employee')
-                                    <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
-                                    @endcan
-                                    @can('delete-employee')
-                                    <form style="display:inline" action="{{Route('employee.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="type_id" value="{{$employee->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                    @endcan
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$employee->id}}</td>
+                            <td>{{$employee->name}}</td>
+                            <td>{{$employee->email}}</td>
+                            <td>{{isset($employee->roles[0]->label) ? $employee->roles[0]->label: "لا يوجد لة صلاحية" }}</td>
+                            <td>
+                                @can('edit-employee')
+                                <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
+                                @endcan
+                                @can('delete-employee')
+                                <form style="display:inline" action="{{Route('employee.delete')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="type_id" value="{{$employee->id}}">
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                                @endcan
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

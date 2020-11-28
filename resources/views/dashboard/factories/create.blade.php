@@ -66,7 +66,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                <button  id="btnSubmit" class="btn btn-primary">إضافة</button>
+                <button type = "submit" id="btnSubmit" class="btn btn-primary">إضافة</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
@@ -74,7 +74,7 @@
     </div>
 </div>
 @section('footer-script')
-<script src="https://code.jquery.com/jquery-3.3.1  .min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
 </script>
 <script>
     $(document).ready(function() {

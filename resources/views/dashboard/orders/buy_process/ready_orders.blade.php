@@ -11,27 +11,23 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-3">id</th>
-                                <th class="col-md-3">Order Code</th>
-                                <th class="col-md-3">Delivery Date</th>
-                                <th class="col-md-3">Action</th>
-                            </div>
+                        <tr>
+                            <th>id</th>
+                            <th>Order Code</th>
+                            <th>Delivery Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($orders as $order)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-3">{{$order->id}}</td>
-                                <td class="col-md-3">{{$order->bar_code}}</td>
-                                <td class="col-md-3">{{$order->delivery_date}}</td>
+                        <tr>
+                            <td>{{$order->id}}</td>
+                            <td>{{$order->bar_code}}</td>
+                            <td>{{$order->delivery_date}}</td>
 
-                                <td class="col-md-3">
-                                    <a href="{{Route('process.ready_order_page', $order->id)}}" class="btn btn-primary">Show</a>
-                                </td>
-                            </div>
+                            <td>
+                                <a href="{{Route('process.ready_order_page', $order->id)}}" class="btn btn-primary">Show</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
