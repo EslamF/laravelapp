@@ -21,7 +21,7 @@
                @can('show-materials','show-role','show-typefactory','show-prodacttype' )
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
-                                <i style="margin-right:-7px" class="nav-icon fas fa-edit"></i>
+                                <i style="margin-right:-7px" class="nav-icon fa fa-circle"></i>
                                 <p>
                                     <i class="fas fa-angle-left right" style="margin-right:160px"></i>
                                     البيانات الاساسية
@@ -71,16 +71,23 @@
                                         <p>الوظائف</p>
                                     </a>
                                 </li>
-                            </ul>
-                            @endcan
-                            
-                        </li>
+                                    @endcan
 
+   {{-- @can('show-size') --}}
+   <li class="nav-item has-treeview">
+    <a href="{{Route('size.list')}}" class="nav-link">
+        <i class="fa fa-circle nav-icon"></i>
+        <p>المقاسات</p>
+    </a>
+</li>
+{{-- @endcan --}}
+                                </ul>
+                        </li>
                     @endcan
                         @can('show-matrialreceiving','show-spreading','show-cutting','show-produceorder','show-receivingproduct','show-sortorders','show-fixproductout','show-receivingordersfix','show-sendorders','show-storeorders','show-buyorders','show-shappingorders','show-process')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
-                                <i style="margin-right:-7px" class="nav-icon fas fa-edit"></i>
+                                <i style="margin-right:-7px" class="nav-icon fa fa-circle"></i>
                                 <p >
                                     <i class="fas fa-angle-left right" style="margin-right:110px"></i>
                                     الأذونات
@@ -196,72 +203,55 @@
                         @endcan
 
 
+                        @can('show-employee')
+                                <li class="nav-item  has-treeview">
+                                    <a href="{{Route('employee.list')}}" class="nav-link">
+                                        <i style="margin-right:-7px" class="fa fa-circle nav-icon"></i>
+                                        <p>الموظفين</p>
+                                    </a>
+                                </li>
+                            @endcan
+
+                            
+
+                            @can('show-supplier')
+                            <li class="nav-item has-treeview">
+
+                                    <a href="{{Route('supplier.list')}}" class="nav-link">
+                                        <i style="margin-right:-7px" class="fa fa-circle nav-icon"></i>
+                                        <p>الموردين</p>
+                                    </a>    
+                                </li>
+                            @endcan
+                            @can('show-factory')
+                        <li class="nav-item has-treeview">
+
+                            <a href="{{Route('factory.list')}}" class="nav-link">
+                                <i style="margin-right:-7px" class="fa fa-circle nav-icon"></i>
+                                <p>المصانع</p>
+                            </a>
+                        </li>
+                        
+                        @endcan
+
+                            @can('show-customer')
+                            <li style="margin-right:-7px" class="nav-item has-treeview">
+                                    <a href="{{Route('customer.list')}}" class="nav-link">
+                                        <i class="fa fa-circle nav-icon"></i>
+                                        <p>العملاء</p>
+                                    </a>
+                            </li>
+                            @endcan
+
+                            
                         @can('show-shapping')
-                        <ul class="nav has-treeview">
-                        <li class="nav-item">
+                        <li style="margin-right:-7px" class="nav-item has-treeview">
                             <a href="{{Route('shippingcompany.list')}}" class="nav-link">
                                 <i class="fa fa-circle nav-icon"></i>
                                 <p>شركات الشحن</p>
                             </a>
                         </li>
-                        </ul>
                         @endcan
-                        @can('show-factory')
-                        <ul class="nav has-treeview">
-                        <li class="nav-item">
-                            <a href="{{Route('factory.list')}}" class="nav-link">
-                                <i class="fa fa-circle nav-icon"></i>
-                                <p>المصانع</p>
-                            </a>
-                        </li>
-                        </ul>
-                        @endcan
-
-                        @can('show-size')
-                        <ul class="nav has-treeview">
-                            <li class="nav-item">
-                                <a href="{{Route('size.list')}}" class="nav-link">
-                                    <i class="fa fa-circle nav-icon"></i>
-                                    <p>المقاسات</p>
-                                </a>
-                            </li>
-                        </ul>
-                        @endcan
-
-
-                        @can('show-employee')
-                            <ul class="nav has-treeview">
-                                <li class="nav-item">
-                                    <a href="{{Route('employee.list')}}" class="nav-link">
-                                        <i class="fa fa-circle nav-icon"></i>
-                                        <p>الموظفين</p>
-                                    </a>
-                                </li>
-                            </ul>
-                            @endcan
-
-                            @can('show-supplier')
-                            <ul class="nav has-treeview">
-                                <li class="nav-item">
-                                    <a href="{{Route('supplier.list')}}" class="nav-link">
-                                        <i class="fa fa-circle nav-icon"></i>
-                                        <p>الموردين</p>
-                                    </a>    
-                                </li>
-                            </ul>
-                            @endcan
-
-                            @can('show-customer')
-                            <ul class="nav has-treeview">
-                                <li class="nav-item">
-                                    <a href="{{Route('customer.list')}}" class="nav-link">
-                                        <i class="fa fa-circle nav-icon"></i>
-                                        <p>العملاء</p>
-                                    </a>
-                                </li>
-                            </ul>
-                            @endcan
-
                             
                 </nav>
                 <!-- /.sidebar-menu -->

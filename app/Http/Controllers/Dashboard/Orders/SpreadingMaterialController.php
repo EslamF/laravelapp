@@ -14,19 +14,20 @@ class SpreadingMaterialController extends Controller
 {
     public function getAllPaginateForUsed()
     {
-        $data = SpreadingOutMaterialOrder::with('user:id,name', 'material:id,mq_r_code')->doesntHave('cuttingOrders')->paginate();
+        $data = SpreadingOutMaterialOrder::with('user:id,name', 'material:id,mq_r_code')->has('cuttingOrders')->paginate();
         return view('dashboard.orders.spreading_materials.used_list')->with('data', $data);
     }
     public function getAllPaginateForHold()
     {
-        $data = SpreadingOutMaterialOrder::with('user:id,name', 'material:id,mq_r_code')->has('cuttingOrders')->paginate();
+        $data = SpreadingOutMaterialOrder::with('user:id,name', 'material:id,mq_r_code')->doesntHave('cuttingOrders')->paginate();
+        // dd($data->all());
         return view('dashboard.orders.spreading_materials.hold_list')->with('data', $data);
     }
 
     public function counterList()
     {
-        $holdOrders = SpreadingOutMaterialOrder::has('cuttingOrders')->count();
-        $usedOrders = SpreadingOutMaterialOrder::doesntHave('cuttingOrders')->count();
+        $usedOrders = SpreadingOutMaterialOrder::has('cuttingOrders')->count();
+        $holdOrders = SpreadingOutMaterialOrder::doesntHave('cuttingOrders')->count();
 
         return view('dashboard.orders.spreading_materials.counter_list', ['hold' => $holdOrders, 'used' => $usedOrders]);
     }
@@ -53,7 +54,7 @@ class SpreadingMaterialController extends Controller
             $material->weight = $material->weight - $request->weight;
             $material->save();
         }
-        return redirect()->route('spreading.material.list');
+        return redirect()->route('spreading.material.hold_list');
     }
 
     public function editPage($spreading_id)

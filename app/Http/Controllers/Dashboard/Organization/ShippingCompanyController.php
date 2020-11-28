@@ -44,13 +44,15 @@ class ShippingCompanyController extends Controller
      * request input type_id required
      * 
      */
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'type_id' => 'required|exists:shipping_companies,id'
         ]);
 
-        ShippingCompany::find($request->type_id)->delete();
+        $shapping = ShippingCompany::find($request->type_id);
+        $shapping->delete();
         return redirect()->route('shippingcompany.list');
     }
     /**

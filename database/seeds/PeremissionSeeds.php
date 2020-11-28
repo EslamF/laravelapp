@@ -28,7 +28,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-employee',
-                'lable' => 'رؤية موظف'
+                'lable' => 'عرض موظف'
             ],
             [
                 'name' => 'delete-employee',
@@ -44,12 +44,31 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-factory',
-                'lable' => 'رؤية مصنع'
+                'lable' => 'عرض مصنع'
+            ],
+            [
+                'name' => 'delete-size',
+                'lable' => 'حذف مقاسات'
+            ],
+            
+            [
+                'name' => 'add-size',
+                'lable' => 'إضافة مقاسات'
+            ],
+            [
+                'name' => 'edit-size',
+                'lable' => 'تعديل مقاسات'
+            ],
+            [
+                'name' => 'show-size',
+                'lable' => 'عرض مقاسات'
             ],
             [
                 'name' => 'delete-factory',
                 'lable' => 'حذف مصنع'
-            ], [
+            ],
+
+            [
                 'name' => 'add-buyorders',
                 'lable' => 'إضافة إذن البيع'
             ],
@@ -59,7 +78,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-buyorders',
-                'lable' => 'رؤية إذن البيع'
+                'lable' => 'عرض إذن البيع'
             ],
             [
                 'name' => 'delete-buyorders',
@@ -75,7 +94,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-storeorders',
-                'lable' => 'رؤية إذن إستلام منتجات (الشركة)'
+                'lable' => 'عرض إذن إستلام منتجات (الشركة)'
             ],
             [
                 'name' => 'delete-storeorders',
@@ -92,7 +111,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-typefactory',
-                'lable' => 'رؤية نوع مصنع'
+                'lable' => 'عرض نوع مصنع'
             ],
             [
                 'name' => 'delete-typefactory',
@@ -108,7 +127,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-materials',
-                'lable' => 'رؤية أنواع خامات'
+                'lable' => 'عرض أنواع خامات'
             ],
             [
                 'name' => 'delete-materials',
@@ -124,7 +143,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-supplier',
-                'lable' => 'رؤية موردين'
+                'lable' => 'عرض موردين'
             ],
             [
                 'name' => 'delete-supplier',
@@ -140,7 +159,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-customer',
-                'lable' => 'رؤية عملاء'
+                'lable' => 'عرض عملاء'
             ],
             [
                 'name' => 'delete-customer',
@@ -159,7 +178,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-prodact',
-                'lable' => 'رؤية منتجات'
+                'lable' => 'عرض منتجات'
             ],
             [
                 'name' => 'delete-prodact',
@@ -175,7 +194,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-prodacttype',
-                'lable' => 'رؤية وصف المنتجات'
+                'lable' => 'عرض وصف المنتجات'
             ],
             [
                 'name' => 'delete-prodacttype',
@@ -191,7 +210,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-shapping',
-                'lable' => 'رؤية شركات الشحن'
+                'lable' => 'عرض شركات الشحن'
             ],
             [
                 'name' => 'delete-shapping',
@@ -208,7 +227,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-shappingorders',
-                'lable' => 'رؤية إذن الشحن'
+                'lable' => 'عرض إذن الشحن'
             ],
             [
                 'name' => 'delete-shappingorders',
@@ -224,7 +243,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-sendorders',
-                'lable' => 'رؤية إذن خروج منتجات (مصنع)'
+                'lable' => 'عرض إذن خروج منتجات (مصنع)'
             ],
             [
                 'name' => 'delete-sendorders',
@@ -240,7 +259,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-receivingordersfix',
-                'lable' => 'رؤية إذن إستلام منتجات معدلة'
+                'lable' => 'عرض إذن إستلام منتجات معدلة'
             ],
             [
                 'name' => 'delete-receivingordersfix',
@@ -256,7 +275,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-fixproductout',
-                'lable' => 'رؤية إذن خروج منتجات تالفة'
+                'lable' => 'عرض إذن خروج منتجات تالفة'
             ],
             [
                 'name' => 'delete-fixproductout',
@@ -273,7 +292,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-sortorders',
-                'lable' => 'رؤية إذن فرز'
+                'lable' => 'عرض إذن فرز'
             ],
             [
                 'name' => 'delete-sortorders',
@@ -289,7 +308,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-matrialreceiving',
-                'lable' => 'رؤية إذن إستلام خامات'
+                'lable' => 'عرض إذن إستلام خامات'
             ],
             [
                 'name' => 'delete-matrialreceiving',
@@ -297,19 +316,19 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'add-receivingproduct',
-                'lable' => 'إضافة شركات الشحن'
+                'lable' => 'إضافة إذن استلام منتجات'
             ],
             [
                 'name' => 'edit-receivingproduct',
-                'lable' => 'تعديل شركات الشحن'
+                'lable' => 'تعديل إذن استلام منتجات'
             ],
             [
                 'name' => 'show-receivingproduct',
-                'lable' => 'رؤية شركات الشحن'
+                'lable' => 'عرض إذن استلام منتجات'
             ],
             [
                 'name' => 'delete-receivingproduct',
-                'lable' => 'حذف شركات الشحن'
+                'lable' => 'حذف إذن استلام منتجات'
             ],
 
             [
@@ -322,7 +341,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-produceorder',
-                'lable' => 'رؤية إذن تصنيع'
+                'lable' => 'عرض إذن تصنيع'
             ],
             [
                 'name' => 'delete-produceorder',
@@ -339,7 +358,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-process',
-                'lable' => 'رؤية المخزن'
+                'lable' => 'عرض المخزن'
             ],
             [
                 'name' => 'delete-process',
@@ -347,21 +366,43 @@ class PeremissionSeeds extends Seeder
             ],
 
             [
-                'name' => 'add-cutting',
-                'lable' => 'إضافة إذن القص'
+                'name' => 'add-cuttinginner',
+                'lable' => 'إضافة إذن القص الداخلي'
             ],
             [
-                'name' => 'edit-cutting',
-                'lable' => 'تعديل إذن القص'
+                'name' => 'edit-cuttinginner',
+                'lable' => 'تعديل إذن القص الداخلي'
             ],
             [
-                'name' => 'show-cutting',
-                'lable' => 'رؤية إذن القص'
+                'name' => 'show-cuttinginner',
+                'lable' => 'عرض إذن القص الداخلي'
             ],
             [
-                'name' => 'delete-cutting',
-                'lable' => 'حذف إذن القص'
+                'name' => 'delete-cuttinginner',
+                'lable' => 'حذف إذن القص الداخلي '
             ],
+
+
+
+            [
+                'name' => 'add-cuttingouter',
+                'lable' => 'إضافة إذن القص الخارجي'
+            ],
+            [
+                'name' => 'edit-cuttingouter',
+                'lable' => 'تعديل إذن القص الخارجي'
+            ],
+            [
+                'name' => 'show-cuttingouter',
+                'lable' => 'عرض إذن القص الخارجي'
+            ],
+
+            [
+                'name' => 'delete-cuttingouter',
+                'lable' => 'حذف إذن القص الخارجي'
+            ],
+
+
             [
                 'name' => 'add-spreading',
                 'lable' => 'إضافة أذونات الفرش'
@@ -372,7 +413,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-spreading',
-                'lable' => 'رؤية أذونات الفرش'
+                'lable' => 'عرض أذونات الفرش'
             ],
             [
                 'name' => 'delete-spreading',
@@ -388,7 +429,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-customer',
-                'lable' => 'رؤية عميل'
+                'lable' => 'عرض عميل'
             ],
             [
                 'name' => 'delete-customer',
@@ -404,7 +445,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-supplier',
-                'lable' => 'رؤية مورد'
+                'lable' => 'عرض مورد'
             ],
             [
                 'name' => 'delete-supplier',
@@ -420,7 +461,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-product_type',
-                'lable' => 'رؤية نوع منتج'
+                'lable' => 'عرض نوع منتج'
             ],
             [
                 'name' => 'delete-product_type',
@@ -435,7 +476,7 @@ class PeremissionSeeds extends Seeder
             ],
             [
                 'name' => 'show-role',
-                'lable' => 'رؤية وظيفة'
+                'lable' => 'عرض وظيفة'
             ],
             [
                 'name' => 'delete-role',

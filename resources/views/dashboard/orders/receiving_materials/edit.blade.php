@@ -40,8 +40,8 @@
                             <div class="form-group">
                                 <label for="user">المشتري</label>
                                 <select class="form-control" name="user_id" id="user" class="@error('user_id') is-danger @enderror">
-                                    @foreach($data['users'] as $user)
                                     <option value="" disabled selected>حدد المشتري</option>
+                                    @foreach($data['users'] as $user)
                                     <option value="{{$user->id}}" {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
                                     </option>
                                     @endforeach

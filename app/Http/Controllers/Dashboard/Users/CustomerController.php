@@ -15,7 +15,8 @@ class CustomerController extends Controller
      * 
      */
     public function create(Request $request)
-    {
+    { 
+        // dd($request->all());
         $request->validate([
             'name' => 'required|min:3',
             'phone' => 'required|min:11',

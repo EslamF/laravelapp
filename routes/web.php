@@ -66,13 +66,13 @@ Route::group([
                 Route::group([
                     'prefix' => 'employees',
                 ], function () {
-                    Route::get('get-all-paginate', 'EmployeeController@getAllPaginate')->name('employee.list');
-                    Route::get('get-all', 'EmployeeController@getAll')->name('employee.get_all');
-                    Route::get('create', 'EmployeeController@createPage')->name('employee.create_page');
-                    Route::post('store', 'EmployeeController@create')->name('employee.store');
-                    Route::post('delete', 'EmployeeController@delete')->name('employee.delete');
-                    Route::get('edit/{type_id}', 'EmployeeController@editPage')->name('employee.edit_page');
-                    Route::post('update', 'EmployeeController@update')->name('employee.update');
+                    Route::get('get-all-paginate', 'EmployeeController@getAllPaginate')->name('employee.list')->middleware('can:show-employee');
+                    Route::get('get-all', 'EmployeeController@getAll')->name('employee.get_all')->middleware('can:show-employee');
+                    Route::get('create', 'EmployeeController@createPage')->name('employee.create_page')->middleware('can:add-employee');
+                    Route::post('store', 'EmployeeController@create')->name('employee.store')->middleware('can:add-employee');
+                    Route::post('delete', 'EmployeeController@delete')->name('employee.delete')->middleware('can:delete-employee');
+                    Route::get('edit/{type_id}', 'EmployeeController@editPage')->name('employee.edit_page')->middleware('can:edit-employee');
+                    Route::post('update', 'EmployeeController@update')->name('employee.update')->middleware('can:edit-employee');
                 });
 
                 Route::group([
@@ -131,7 +131,7 @@ Route::group([
                 Route::post('test', 'ShippingCompanyController@test')->name('shippingcompany.test');
                 Route::get('create', 'ShippingCompanyController@createPage')->name('shippingcompany.create_page')->middleware('can:add-shapping');
                 Route::post('store', 'ShippingCompanyController@create')->name('shippingcompany.store')->middleware('can:add-shapping');
-                Route::post('delete', 'ShippingCompanyController@delete_company ')->name('shippingcompany.delete_company')->middleware('can:delete-shapping');
+                Route::delete('delete', 'ShippingCompanyController@destroy')->name('shippingcompany.delete_company')->middleware('can:delete-shapping');
                 Route::get('edit/{type_id}', 'ShippingCompanyController@editPage')->name('shippingcompany.edit_page')->middleware('can:edit-shapping');
                 Route::post('update', 'ShippingCompanyController@update')->name('shippingcompany.update')->middleware('can:edit-shapping');
                 Route::get('get', 'ShippingCompanyController@getAll')->name('shippingcompany.get_all')->middleware('can:show-shapping');
@@ -153,13 +153,13 @@ Route::group([
                 Route::group([
                     'prefix' => 'type'
                 ], function () {
-                    Route::get('get', 'FactoryTypeController@getAll')->name('factory.type_all');
-                    Route::get('get-all', 'FactoryTypeController@getAllPaginate')->name('factory.type.list');
-                    Route::get('create', 'FactoryTypeController@createPage')->name('factory.type.create_page');
-                    Route::post('store', 'FactoryTypeController@create')->name('factory.type.store');
-                    Route::post('delete', 'FactoryTypeController@delete')->name('factory.type.delete');
-                    Route::get('edit/{type_id}', 'FactoryTypeController@editPage')->name('factory.type.edit_page');
-                    Route::post('update', 'FactoryTypeController@update')->name('factory.type.update');
+                    Route::get('get', 'FactoryTypeController@getAll')->name('factory.type_all')->middleware('can:show-typefactory');
+                    Route::get('get-all', 'FactoryTypeController@getAllPaginate')->name('factory.type.list')->middleware('can:show-typefactory');
+                    Route::get('create', 'FactoryTypeController@createPage')->name('factory.type.create_page')->middleware('can:add-typefactory');
+                    Route::post('store', 'FactoryTypeController@create')->name('factory.type.store')->middleware('can:add-typefactory');
+                    Route::post('delete', 'FactoryTypeController@delete')->name('factory.type.delete')->middleware('can:delete-typefactory');
+                    Route::get('edit/{type_id}', 'FactoryTypeController@editPage')->name('factory.type.edit_page')->middleware('can:edit-typefactory');
+                    Route::post('update', 'FactoryTypeController@update')->name('factory.type.update')->middleware('can:edit-typefactory');
                 });
             });
         });
@@ -172,27 +172,27 @@ Route::group([
                 'prefix' => 'receiving-material'
             ], function () {
 
-                Route::get('get-all', 'ReceivingMaterialController@getAllPaginate')->name('order.receiving.material');
-                Route::get('create', 'ReceivingMaterialController@createPage')->name('order.receiving_material.create_page');
-                Route::post('store', 'ReceivingMaterialController@store')->name('receiving.material.store');
-                Route::get('edit/{material_id}', 'ReceivingMaterialController@editPage')->name('receiving.material.edit_page');
-                Route::post('update', 'ReceivingMaterialController@update')->name('receiving.material.update');
-                Route::post('delete', 'ReceivingMaterialController@delete')->name('receiving.material.delete');
-                Route::get('check-weight/{material_code}', 'ReceivingMaterialController@checkWeight');
+                Route::get('get-all', 'ReceivingMaterialController@getAllPaginate')->name('order.receiving.material')->middleware('can:show-matrialreceiving');
+                Route::get('create', 'ReceivingMaterialController@createPage')->name('order.receiving_material.create_page')->middleware('can:add-matrialreceiving');
+                Route::post('store', 'ReceivingMaterialController@store')->name('receiving.material.store')->middleware('can:add-matrialreceiving');
+                Route::get('edit/{material_id}', 'ReceivingMaterialController@editPage')->name('receiving.material.edit_page')->middleware('can:edit-matrialreceiving');
+                Route::post('update', 'ReceivingMaterialController@update')->name('receiving.material.update')->middleware('can:edit-matrialreceiving');
+                Route::post('delete', 'ReceivingMaterialController@delete')->name('receiving.material.delete')->middleware('can:delete-matrialreceiving');
+                Route::get('check-weight/{material_code}', 'ReceivingMaterialController@checkWeight')->middleware('can:show-matrialreceiving');
             });
 
             Route::group([
                 'prefix' => 'spreading-material'
             ], function () {
-                Route::get('get-all-hold', 'SpreadingMaterialController@getAllPaginateForHold')->name('spreading.material.hold_list');
-                Route::get('get-all-used', 'SpreadingMaterialController@getAllPaginateForUsed')->name('spreading.material.used_list');
-                Route::get('get-counter', 'SpreadingMaterialController@counterList')->name('spreading.material.counter_list');
-                Route::get('get', 'SpreadingMaterialController@getAll')->name('spreading.get_all');
-                Route::get('create', 'SpreadingMaterialController@createPage')->name('spreading.material.create_page');
-                Route::post('store', 'SpreadingMaterialController@store')->name('spreading.material.store');
-                Route::get('edit/{spreading_id}', 'SpreadingMaterialController@editPage')->name('spreading.material.edit_page');
-                Route::post('update', 'SpreadingMaterialController@update')->name('spreading.material.update');
-                Route::post('delete', 'SpreadingMaterialController@delete')->name('spreading.material.delete');
+                Route::get('get-all-hold', 'SpreadingMaterialController@getAllPaginateForHold')->name('spreading.material.hold_list')->middleware('can:show-spreading');
+                Route::get('get-all-used', 'SpreadingMaterialController@getAllPaginateForUsed')->name('spreading.material.used_list')->middleware('can:show-spreading');
+                Route::get('get-counter', 'SpreadingMaterialController@counterList')->name('spreading.material.counter_list')->middleware('can:show-spreading');
+                Route::get('get', 'SpreadingMaterialController@getAll')->name('spreading.get_all')->middleware('can:show-spreading');
+                Route::get('create', 'SpreadingMaterialController@createPage')->name('spreading.material.create_page')->middleware('can:add-spreading');
+                Route::post('store', 'SpreadingMaterialController@store')->name('spreading.material.store')->middleware('can:add-spreading');
+                Route::get('edit/{spreading_id}', 'SpreadingMaterialController@editPage')->name('spreading.material.edit_page')->middleware('can:edit-spreading');
+                Route::post('update', 'SpreadingMaterialController@update')->name('spreading.material.update')->middleware('can:edit-spreading');
+                Route::post('delete', 'SpreadingMaterialController@delete')->name('spreading.material.delete')->middleware('can:delete-spreading');
             });
 
             Route::group([
@@ -223,123 +223,123 @@ Route::group([
             Route::group([
                 'prefix' => 'produce'
             ], function () {
-                Route::get('get-all', 'ProduceOrderController@getAllPaginate')->name('produce.order.list');
-                Route::get('get', 'ProduceOrderController@getAll')->name('produce_order.get_all');
-                Route::get('create', 'ProduceOrderController@createPage')->name('produce.order.create');
-                Route::post('store', 'ProduceOrderController@store')->name('produce.order.store');
-                Route::get('edit/{produce_id}', 'ProduceOrderController@editPage')->name('produce.order.edit_page');
-                Route::post('update', 'ProduceOrderController@update')->name('produce.order.update');
-                Route::post('delete', 'ProduceOrderController@delete')->name('produce.order.delete');
+                Route::get('get-all', 'ProduceOrderController@getAllPaginate')->name('produce.order.list')->middleware('can:show-produceorder');
+                Route::get('get', 'ProduceOrderController@getAll')->name('produce_order.get_all')->middleware('can:show-produceorder');
+                Route::get('create', 'ProduceOrderController@createPage')->name('produce.order.create')->middleware('can:add-produceorder');
+                Route::post('store', 'ProduceOrderController@store')->name('produce.order.store')->middleware('can:add-produceorder');
+                Route::get('edit/{produce_id}', 'ProduceOrderController@editPage')->name('produce.order.edit_page')->middleware('can:edit-produceorder');
+                Route::post('update', 'ProduceOrderController@update')->name('produce.order.update')->middleware('can:edit-produceorder');
+                Route::post('delete', 'ProduceOrderController@delete')->name('produce.order.delete')->middleware('can:delete-produceorder');
             });
 
             Route::group([
                 'prefix' => 'receiving-products'
             ], function () {
-                Route::get('get-all', 'ReceivingProductController@getAllPaginate')->name('receiving.product.list');
-                Route::get('get', 'ReceivingProductController@getAll')->name('receiving_orders.get_all');
-                Route::get('list/{id}', 'ReceivingProductController@productsToReceive')->name('products_to_receive');
-                Route::post('status', 'ReceivingProductController@changeStatus')->name('order_status');
-                Route::get('/received/list/{id}', 'ReceivingProductController@productsReceived')->name('products_received');
-                Route::get('produce-products/{id}', 'ReceivingProductController@orderProduct')->name('receiving_products');
-                Route::get('create', 'ReceivingProductController@createPage')->name('receiving.product.create');
-                Route::post('store', 'ReceivingProductController@store')->name('receiving.product.store');
-                Route::get('edit/{receiving_id}', 'ReceivingProductController@editPage')->name('receiving.product.edit_page');
-                Route::post('update', 'ReceivingProductController@update')->name('receiving.product.update');
-                Route::post('delete', 'ReceivingProductController@delete')->name('receiving.product.delete');
-                Route::post('change-status', 'ReceivingProductController@approveOrUnapprove')->name('receiving_product.change_status');
+                Route::get('get-all', 'ReceivingProductController@getAllPaginate')->name('receiving.product.list')->middleware('can:show-receivingproduct');
+                Route::get('get', 'ReceivingProductController@getAll')->name('receiving_orders.get_all')->middleware('can:show-receivingproduct');
+                Route::get('list/{id}', 'ReceivingProductController@productsToReceive')->name('products_to_receive')->middleware('can:edit-receivingproduct');
+                Route::post('status', 'ReceivingProductController@changeStatus')->name('order_status')->middleware('can:show-receivingproduct');
+                Route::get('/received/list/{id}', 'ReceivingProductController@productsReceived')->name('products_received')->middleware('can:edit-receivingproduct');
+                Route::get('produce-products/{id}', 'ReceivingProductController@orderProduct')->name('receiving_products')->middleware('can:edit-receivingproduct');
+                Route::get('create', 'ReceivingProductController@createPage')->name('receiving.product.create')->middleware('can:add-receivingproduct');
+                Route::post('store', 'ReceivingProductController@store')->name('receiving.product.store')->middleware('can:add-receivingproduct');
+                Route::get('edit/{receiving_id}', 'ReceivingProductController@editPage')->name('receiving.product.edit_page')->middleware('can:edit-receivingproduct');
+                Route::post('update', 'ReceivingProductController@update')->name('receiving.product.update')->middleware('can:edit-receivingproduct');
+                Route::post('delete', 'ReceivingProductController@delete')->name('receiving.product.delete')->middleware('can:delete-receivingproduct');
+                Route::post('change-status', 'ReceivingProductController@approveOrUnapprove')->name('receiving_product.change_status')->middleware('can:delete-receivingproduct');
             });
 
             Route::group([
                 'prefix' => 'sort'
             ], function () {
-                Route::get('get-all', 'SortOrderController@getAllPaginate')->name('sort.order.list');
-                Route::get('create', 'SortOrderController@createPage')->name('sort.order.create_page');
-                Route::post('store', 'SortOrderController@store')->name('sort.order.store');
-                Route::get('edit/{sort_id}', 'SortOrderController@editPage')->name('sort.order.edit_page');
-                Route::post('update', 'SortOrderController@update')->name('sort.order.update');
-                Route::post('delete', 'SortOrderController@delete')->name('sort.order.delete');
-                Route::get('products/{sort_id}', 'SortOrderController@showSortedProducts')->name('sort.product.list');
-                Route::post('product', 'SortOrderController@SortProduct')->name('sort.product');
-                Route::post('remove-product', 'SortOrderController@removeSortedProduct')->name('product.sort.delete');
+                Route::get('get-all', 'SortOrderController@getAllPaginate')->name('sort.order.list')->middleware('can:show-receivingproduct');
+                Route::get('create', 'SortOrderController@createPage')->name('sort.order.create_page')->middleware('can:add-receivingproduct');
+                Route::post('store', 'SortOrderController@store')->name('sort.order.store')->middleware('can:add-receivingproduct');
+                Route::get('edit/{sort_id}', 'SortOrderController@editPage')->name('sort.order.edit_page')->middleware('can:edit-receivingproduct');
+                Route::post('update', 'SortOrderController@update')->name('sort.order.update')->middleware('can:edit-receivingproduct');
+                Route::post('delete', 'SortOrderController@delete')->name('sort.order.delete')->middleware('can:delete-receivingproduct');
+                Route::get('products/{sort_id}', 'SortOrderController@showSortedProducts')->name('sort.product.list')->middleware('can:show-receivingproduct');
+                Route::post('product', 'SortOrderController@SortProduct')->name('sort.product')->middleware('can:add-receivingproduct');
+                Route::post('remove-product', 'SortOrderController@removeSortedProduct')->name('product.sort.delete')->middleware('can:delete-receivingproduct');
             });
 
             Route::group([
                 'prefix' => 'fix-product'
             ], function () {
-                Route::get('create', 'FixProductOrderController@createPage')->name('fix.product.create_page');
-                Route::post('store', 'FixProductOrderController@store')->name('fix.product.store');
-                Route::get('get-all', 'FixProductOrderController@getAllPaginate')->name('fix.product.list');
-                Route::post('delete', 'FixProductOrderController@delete')->name('fix.product.delete');
+                Route::get('create', 'FixProductOrderController@createPage')->name('fix.product.create_page')->middleware('can:add-receivingordersfix');
+                Route::post('store', 'FixProductOrderController@store')->name('fix.product.store')->middleware('can:add-receivingordersfix');
+                Route::get('get-all', 'FixProductOrderController@getAllPaginate')->name('fix.product.list')->middleware('can:show-receivingordersfix');
+                Route::post('delete', 'FixProductOrderController@delete')->name('fix.product.delete')->middleware('can:delete-receivingordersfix');
             });
 
             Route::group([
                 'prefix' => 'receive-damaged-product'
             ], function () {
-                Route::get('create', 'ReceivingDamagedOrdersController@createPage')->name('receiving.damaged_product.create_page');
-                Route::post('store', 'ReceivingDamagedOrdersController@store')->name('receiving.damaged_product.store');
+                Route::get('create', 'ReceivingDamagedOrdersController@createPage')->name('receiving.damaged_product.create_page')->middleware('can:add-receivingordersfix');
+                Route::post('store', 'ReceivingDamagedOrdersController@store')->name('receiving.damaged_product.store')->middleware('can:add-receivingordersfix');
             });
 
 
             Route::group([
                 'prefix' => 'send-end-product'
             ], function () {
-                Route::get('get-all', 'SendEndProductController@getAllPaginate')->name('send.end_product.list');
-                Route::get('get-all-saved/{save_order}', 'SendEndProductController@getSavedProdacts')->name('send.end_product.get_order');
-                Route::get('create', 'SendEndProductController@create')->name('send.end_product.create_page');
-                Route::post('store', 'SendEndProductController@store')->name('send.end_product.store');
-                Route::post('edit/{product_id}', 'SendEndProductController@edit')->name('send.end_product.edit_page');
-                Route::post('update', 'SendEndProductController@update')->name('send.end_product.update');
-                Route::post('delete', 'SendEndProductController@delete')->name('send.end_product.delete');
-                Route::get('get-order/{order_code}', 'SendEndProductController@getOrder')->name('send.end_product.get_order');
-                Route::post('delete', 'SendEndProductController@delete')->name('send.end_product.delete');
-                Route::post('check-if-sorted', 'SendEndProductController@checkIfSorted')->name('send_end_product.check_if_sorted');
+                Route::get('get-all', 'SendEndProductController@getAllPaginate')->name('send.end_product.list')->middleware('can:show-sendorders');
+                Route::get('get-all-saved/{save_order}', 'SendEndProductController@getSavedProdacts')->name('send.end_product.get_order')->middleware('can:add-sendorders');
+                Route::get('create', 'SendEndProductController@create')->name('send.end_product.create_page')->middleware('can:add-sendorders');
+                Route::post('store', 'SendEndProductController@store')->name('send.end_product.store')->middleware('can:add-sendorders');
+                Route::post('edit/{product_id}', 'SendEndProductController@edit')->name('send.end_product.edit_page')->middleware('can:edit-sendorders');
+                Route::post('update', 'SendEndProductController@update')->name('send.end_product.update')->middleware('can:edit-sendorders');
+                Route::post('delete', 'SendEndProductController@delete')->name('send.end_product.delete')->middleware('can:delete-sendorders');
+                Route::get('get-order/{order_code}', 'SendEndProductController@getOrder')->name('send.end_product.get_order')->middleware('can:add-sendorders');
+                Route::post('delete', 'SendEndProductController@delete')->name('send.end_product.delete')->middleware('can:delete-sendorders');
+                Route::post('check-if-sorted', 'SendEndProductController@checkIfSorted')->name('send_end_product.check_if_sorted')->middleware('can:add-sendorders');
             });
 
             Route::group([
                 'prefix' => 'store-end-product'
             ], function () {
-                Route::get('get-all', 'StoreProductOrderController@getAllPaginate')->name('store.end_product.list');
-                Route::get('create', 'StoreProductOrderController@create')->name('store.end_product.create_page');
-                Route::get('order/{id}', 'StoreProductOrderController@getShippingOrder')->name('store.end_product.shipping_list');
-                Route::post('store', 'StoreProductOrderController@store')->name('store.end_product.store');
-                Route::post('edit/{product_id}', 'StoreProductOrderController@edit')->name('store.end_product.edit_page');
-                Route::post('update', 'StoreProductOrderController@update')->name('store.end_product.update');
-                Route::post('delete', 'StoreProductOrderController@delete')->name('store.end_product.delete');
-                Route::get('get-order/{order_code}', 'StoreProductOrderController@getOrder')->name('store.end_product.get_order');
-                Route::post('delete', 'StoreProductOrderController@delete')->name('store.end_product.delete');
+                Route::get('get-all', 'StoreProductOrderController@getAllPaginate')->name('store.end_product.list')->middleware('can:show-storeorders');
+                Route::get('create', 'StoreProductOrderController@create')->name('store.end_product.create_page')->middleware('can:add-storeorders');
+                Route::get('order/{id}', 'StoreProductOrderController@getShippingOrder')->name('store.end_product.shipping_list')->middleware('can:show-storeorders');
+                Route::post('store', 'StoreProductOrderController@store')->name('store.end_product.store')->middleware('can:add-storeorders');
+                Route::post('edit/{product_id}', 'StoreProductOrderController@edit')->name('store.end_product.edit_page')->middleware('can:edit-storeorders');
+                Route::post('update', 'StoreProductOrderController@update')->name('store.end_product.update')->middleware('can:edit-storeorders');
+                Route::post('delete', 'StoreProductOrderController@delete')->name('store.end_product.delete')->middleware('can:delete-storeorders');
+                Route::get('get-order/{order_code}', 'StoreProductOrderController@getOrder')->name('store.end_product.get_order')->middleware('can:show-storeorders');
+                Route::post('delete', 'StoreProductOrderController@delete')->name('store.end_product.delete')->middleware('can:delete-storeorders');
             });
 
             Route::group([
                 'prefix' => 'buy'
             ], function () {
-                Route::get('create', 'BuyOrderController@createPage')->name('buy.create_page');
-                Route::get('get-all-paginate', 'BuyOrderController@getAllPaginate')->name('buy.list_page');
-                Route::get('get-material/{mq_r_code}', 'BuyOrderController@cuttingOrdersByMaterial')->name('buy_get_cut_ids');
-                Route::post('receive-order', 'BuyOrderController@receiveOrder')->name('buy.receive_order');
-                Route::post('delete-order', 'BuyOrderController@deleteOrder')->name('buy.delete_order');
-                Route::get('show-order/{id}', 'BuyOrderController@showOrderPage')->name('buy.show_order');
-                Route::get('show/{id}', 'BuyOrderController@showOrder')->name('buy.show');
-                Route::get('order-status/{id}', 'BuyOrderController@getOrderStatus')->name('buy.order_status');
-                Route::post('update', 'BuyOrderController@updateOrder')->name('buy.update_order');
-                Route::post('remove-item', 'BuyOrderController@removeItem')->name('buy.remove_item');
-                Route::get('by-shipping/{id}', 'BuyOrderController@buyOrdersWithShippingId')->name('buy.get_buy_shipping');
+                Route::get('create', 'BuyOrderController@createPage')->name('buy.create_page')->middleware('can:add-buyorders');
+                Route::get('get-all-paginate', 'BuyOrderController@getAllPaginate')->name('buy.list_page')->middleware('can:show-buyorders');
+                Route::get('get-material/{mq_r_code}', 'BuyOrderController@cuttingOrdersByMaterial')->name('buy_get_cut_ids')->middleware('can:show-buyorders');
+                Route::post('receive-order', 'BuyOrderController@receiveOrder')->name('buy.receive_order')->middleware('can:edit-buyorders');
+                Route::post('delete-order', 'BuyOrderController@deleteOrder')->name('buy.delete_order')->middleware('can:delete-buyorders');
+                Route::get('show-order/{id}', 'BuyOrderController@showOrderPage')->name('buy.show_order')->middleware('can:show-buyorders');
+                Route::get('show/{id}', 'BuyOrderController@showOrder')->name('buy.show')->middleware('can:show-buyorders');
+                Route::get('order-status/{id}', 'BuyOrderController@getOrderStatus')->name('buy.order_status')->middleware('can:show-buyorders');
+                Route::post('update', 'BuyOrderController@updateOrder')->name('buy.update_order')->middleware('can:edit-buyorders');
+                Route::post('remove-item', 'BuyOrderController@removeItem')->name('buy.remove_item')->middleware('can:delete-buyorders');
+                Route::get('by-shipping/{id}', 'BuyOrderController@buyOrdersWithShippingId')->name('buy.get_buy_shipping')->middleware('can:add-buyorders');
             });
 
 
             Route::group([
                 'prefix' => 'process'
             ], function () {
-                Route::get('get-list', 'OrderProcessController@getAllPaginate')->name('process.get_list');
-                Route::get('get', 'OrderProcessController@getNewOrders')->name('process.orders_list');
-                Route::get('get-to-prepare/{id}', 'OrderProcessController@getToPrepare')->name('process.prepare_order_page');
-                Route::get('get-order/{id}', 'OrderProcessController@prepareOrder')->name('process.order');
-                Route::post('validate-prod', 'OrderProcessController@validateProduct')->name('process.validate_product');
-                Route::post('save-order', 'OrderProcessController@saveOrder')->name('process.save_order');
-                Route::get('ready-orders-page', 'OrderProcessController@readyOrderPage')->name('process.ready_orders_page');
-                Route::get('ready-order-page/{id}', 'OrderProcessController@readySingleOrderPage')->name('process.ready_order_page');
-                Route::get('ready-order/{id}', 'OrderProcessController@readyOrder')->name('process.ready_order');
-                Route::get('done-orders', 'OrderProcessController@doneOrder')->name('process.done_orders_page');
-                Route::get('done-order-page/{id}', 'OrderProcessController@doneOrderPage')->name('process.done_order_page');
+                Route::get('get-list', 'OrderProcessController@getAllPaginate')->name('process.get_list')->middleware('can:show-process');
+                Route::get('get', 'OrderProcessController@getNewOrders')->name('process.orders_list')->middleware('can:show-process');
+                Route::get('get-to-prepare/{id}', 'OrderProcessController@getToPrepare')->name('process.prepare_order_page')->middleware('can:show-process');
+                Route::get('get-order/{id}', 'OrderProcessController@prepareOrder')->name('process.order')->middleware('can:add-process');
+                Route::post('validate-prod', 'OrderProcessController@validateProduct')->name('process.validate_product')->middleware('can:show-process');
+                Route::post('save-order', 'OrderProcessController@saveOrder')->name('process.save_order')->middleware('can:add-process');
+                Route::get('ready-orders-page', 'OrderProcessController@readyOrderPage')->name('process.ready_orders_page')->middleware('can:add-process');
+                Route::get('ready-order-page/{id}', 'OrderProcessController@readySingleOrderPage')->name('process.ready_order_page')->middleware('can:add-process');
+                Route::get('ready-order/{id}', 'OrderProcessController@readyOrder')->name('process.ready_order')->middleware('can:add-process');
+                Route::get('done-orders', 'OrderProcessController@doneOrder')->name('process.done_orders_page')->middleware('can:add-process');
+                Route::get('done-order-page/{id}', 'OrderProcessController@doneOrderPage')->name('process.done_order_page')->middleware('can:add-process');
                 Route::group([
                     'prefix' => 'ready-orders'
                 ], function () {

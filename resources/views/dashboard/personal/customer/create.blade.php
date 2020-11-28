@@ -29,12 +29,12 @@
                                 <input type="text" class="form-control" name="source" id="source" placeholder="مصدر وصولك الينا">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
-                                <label for="source">ملاحظات علي العميل </label>
-                                <input type="text" class="form-control" name="observation" id="source" placeholder="مصدر وصولك الينا">
+                                <label for="notes">ملاحظات علي العميل </label>
+                                <input type="text" class="form-control" name="notes" id="notes" placeholder="مصدر وصولك الينا">
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
@@ -47,9 +47,10 @@
                             <label for="type"></label>
                             <select class="form-control" name="type" id="type">
                                 <option value="" disabled selected>حدد صفة تعامل العميل</option>
-                                <option value="individual">صالح</option>
+                                <option value="individual">عميل عادي</option>
+                                <option value="related">عميل مميز</option>
                                 <option value="wholesaler">تاجر جملة</option>
-                                <option value="retailer">بائع</option>
+                                <option value="retailer">تاجر قطاعي</option>
                             </select>
                         </div>
                         <div class="row">

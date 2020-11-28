@@ -27,8 +27,9 @@
                                 <td class="col-md-8">{{$shipping->name}}</td>
                                 <td class="col-md-2">
                                     <a href="{{Route('shippingcompany.edit_page', $shipping->id)}}" class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('shippingcompany.delete')}}" method="POST">
+                                    <form style="display:inline" action="{{Route('shippingcompany.delete_company')}}" method="POST">
                                         @csrf
+                                        @method('delete')
                                         <input type="hidden" name="type_id" value="{{$shipping->id}}">
                                         <button type="submit" class="btn btn-danger">حذف</button>
                                     </form>
