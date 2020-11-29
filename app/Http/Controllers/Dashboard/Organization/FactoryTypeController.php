@@ -33,14 +33,17 @@ class FactoryTypeController extends Controller
      */
     public function update(Request $request)
     {
+        
         $request->validate([
             'type_id' => 'required|exists:factory_types,id',
 
         ]);
+        
 
         $data['name']= $request->type;
 
-        FactoryType::find($request->type_id)->update($request->all());
+        
+        FactoryType::find($request->type_id)->update($data);
         return redirect()->route('factory.type.list');
     }
     /**

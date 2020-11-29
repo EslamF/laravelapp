@@ -1,6 +1,10 @@
 @extends('index')
 @section('content')
+<<<<<<< HEAD
 <div id="app" class="row">
+=======
+<div class="row" id = "app">
+>>>>>>> d06e9b0d1369f53f61a5f1d560a6e382f83ffa27
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -13,33 +17,29 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-2"> الرقم المرجعي</th>
-                                <th class="col-md-3">اسم</th>
-                                <th class="col-md-3">البريد الالكتروني</th>
-                                <th class="col-md-2">صلحية الموظف</th>
-                                <th class="col-md-2">إجراءات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>الإسم</th>
+                            <th>البريد الالكتروني</th>
+                            <th>صلاحية الموظف</th>
+                            <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data['user'] as $employee)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-2">{{$employee->id}}</td>
-                                <td class="col-md-2">{{$employee->name}}</td>
-                                <td class="col-md-3">{{$employee->email}}</td>
-                                <td class="col-md-3">{{isset($employee->roles[0]->label) ? $employee->roles[0]->label: "لا يوجد لة صلاحية" }}</td>
-                                <td class="col-md-2">
-                                    @can('edit-employee')
+                        <tr>
+                            <td>{{$employee->id}}</td>
+                            <td>{{$employee->name}}</td>
+                            <td>{{$employee->email}}</td>
+                            <td>{{isset($employee->roles[0]->label) ? $employee->roles[0]->label: "لا يوجد لة صلاحية" }}</td>
+                            <td>
+                                @can('edit-employee')
                                     <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
-                                    @endcan
-                                    @can('delete-employee')
-                                    <button type="submit" @click="deleteItem({{$employee->id}})" class="btn btn-danger">حذف</button>
-                                    @endcan
-                                </td>
-                            </div>
+                                @endcan
+                                @can('delete-employee')
+                                    <button type="submit" class="btn btn-danger" @click = "deleteItem({{$employee->id}})">حذف</button>
+                                @endcan
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -54,7 +54,6 @@
     </div>
 </div>
 @endsection
-
 
 @section('footer-script')
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>

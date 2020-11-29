@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div class="row" id = "app">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -9,31 +9,23 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table ">
+                <table class="table">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-8">المقاسات</th>
-                                <th class="col-md-3">الإجراءات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>المقاسات</th>
+                            <th>الالخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($types as $size)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$size->id}}</td>
-                                <td class="col-md-9">{{$size->name}}</td>
-                                <td class="col-md-2">
+                        <tr>
+                                <td>{{$size->id}}</td>
+                                <td>{{$size->name}}</td>
+                                <td>
                                     <a href="{{Route('size.edit_page', $size->id)}}" class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('size.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="type_id" value="{{$size->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
+                                    <button type="submit" class="btn btn-danger" @click = "deleteItem({{$size->id}})">حذف</button>
                                 </td>
-                            </div>
                         </tr>
                         @endforeach
                     </tbody>
@@ -47,4 +39,47 @@
         <!-- /.card -->
     </div>
 </div>
+@endsection
+
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.type_id = id
+                            axios.post("{{Route('size.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
 @endsection

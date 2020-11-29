@@ -44,8 +44,6 @@ class SupplierController extends Controller
             'type_id' => 'required|exists:suppliers,id'
         ]);
         Supplier::find($request->type_id)->delete();
-
-
         return redirect()->route('supplier.list');
     }
     /**

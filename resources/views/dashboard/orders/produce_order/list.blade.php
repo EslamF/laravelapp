@@ -11,33 +11,29 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-2"> الرقم المرجعي إذن القص</th>
-                                <th class="col-md-3">المصنع</th>
-                                <th class="col-md-3">تاريخ الإستلام</th>
-                                <th class="col-md-3">إجراءات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th> الرقم المرجعي إذن القص</th>
+                            <th>المصنع</th>
+                            <th>تاريخ الإستلام</th>
+                            <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data as $value)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$value->id}}</td>
-                                <td class="col-md-2">{{$value->cuttingOrder->id}}</td>
-                                <td class="col-md-3">{{$value->factory->name}}</td>
-                                <td class="col-md-3">{{$value->receiving_date}}</td>
-                                <td class="col-md-3">
-                                    <a href="{{Route('produce.order.edit_page', $value->id)}}" class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('produce.order.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="produce_id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$value->id}}</td>
+                            <td>{{$value->cuttingOrder->id}}</td>
+                            <td>{{$value->factory->name}}</td>
+                            <td>{{$value->receiving_date}}</td>
+                            <td>
+                                <a href="{{Route('produce.order.edit_page', $value->id)}}" class="btn btn-primary">تعديل</a>
+                                <form style="display:inline" action="{{Route('produce.order.delete')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="produce_id" value="{{$value->id}}">
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

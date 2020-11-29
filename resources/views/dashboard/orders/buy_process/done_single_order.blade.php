@@ -13,24 +13,20 @@
                 <div class="card-body">
                     <table class="table ">
                         <thead>
-                            <tr class="row">
-                                <div class="col-md-12">
-                                    <th class="col-md-3">Product code</th>
-                                    <th class="col-md-3">Product</th>
-                                    <th class="col-md-3">Size</th>
-                                    <th class="col-md-3">Qty</th>
-                                </div>
+                            <tr>
+                                <th>Product code</th>
+                                <th>Product</th>
+                                <th>Size</th>
+                                <th>Qty</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <tr class="row" v-for="order in orders">
-                                <div class="col-md-12">
-                                    <td class="col-md-3">@{{order.produce_code}}</td>
-                                    <td class="col-md-3">@{{order.product}}</td>
-                                    <td class="col-md-3">@{{order.size}}</td>
-                                    <td class="col-md-3">@{{order.qty}}</td>
-                                </div>
+                            <tr v-for="order in orders">
+                                <td>@{{order.produce_code}}</td>
+                                <td>@{{order.product}}</td>
+                                <td>@{{order.size}}</td>
+                                <td>@{{order.qty}}</td>
                             </tr>
                         </tbody>
                     </table>

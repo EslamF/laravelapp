@@ -42,9 +42,7 @@
                                     <button type="button" @click="deleteItem({{$customer->id}})" class="btn btn-danger">حذف</button>
                                 </td>
                             </div>
-                        </tr>
-                        @endforeach
-                    </tbody>
+          </tbody>
                 </table>
             </div>
             <!-- /.card-body -->

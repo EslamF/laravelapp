@@ -17,32 +17,28 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-3">id</th>
-                                <th class="col-md-3">Shipping Code</th>
-                                <th class="col-md-3">Shipping Date</th>
-                                <th class="col-md-3">Action</th>
-                            </div>
+                        <tr>
+                            <th>id</th>
+                            <th>Shipping Code</th>
+                            <th>Shipping Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($orders as $order)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-3">{{$order->id}}</td>
-                                <td class="col-md-3">{{$order->shipping_code}}</td>
-                                <td class="col-md-3">{{$order->shipping_date}}</td>
+                        <tr>
+                            <td>{{$order->id}}</td>
+                            <td>{{$order->shipping_code}}</td>
+                            <td>{{$order->shipping_date}}</td>
 
-                                <td class="col-md-3">
-                                    <a href="{{Route('shipping.get', $order->id)}}" class="btn btn-primary">Show</a>
-                                    <form style="display:inline" action="{{Route('delete_shipping_order')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{$order->id}}">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                                </td>
-                            </div>
+                            <td>
+                                <a href="{{Route('shipping.get', $order->id)}}" class="btn btn-primary">Show</a>
+                                <form style="display:inline" action="{{Route('delete_shipping_order')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$order->id}}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

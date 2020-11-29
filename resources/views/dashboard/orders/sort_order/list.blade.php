@@ -11,37 +11,33 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-2">كود</th>
-                                <th class="col-md-2">موظف الفرز</th>
-                                <th class="col-md-4">تاريخ الفرز</th>
-                                <th class="col-md-3">إجراءات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>كود</th>
+                            <th>موظف الفرز</th>
+                            <th>تاريخ الفرز</th>
+                            <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($orders as $order)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$order->id}}</td>
-                                <td class="col-md-2">{{$order->code}}</td>
-                                <td class="col-md-2">{{$order->user->name}}</td>
-                                <td class="col-md-4">{{$order->created_at}}</td>
-                                <td class="col-md-3">
-                                    <a href="{{Route('sort.product.list', $order->id)}}"
-                                            class="btn btn-info">اظهار</a>
-                                    <a href="{{Route('sort.order.edit_page', $order->id)}}"
-                                        class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('sort.order.delete')}}"
-                                        method="POST">
-                                        @csrf
-                                        <input type="hidden" name="sort_id" value="{{$order->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$order->id}}</td>
+                            <td>{{$order->code}}</td>
+                            <td>{{$order->user->name}}</td>
+                            <td>{{$order->created_at}}</td>
+                            <td>
+                                <a href="{{Route('sort.product.list', $order->id)}}"
+                                        class="btn btn-info">اظهار</a>
+                                <a href="{{Route('sort.order.edit_page', $order->id)}}"
+                                    class="btn btn-primary">تعديل</a>
+                                <form style="display:inline" action="{{Route('sort.order.delete')}}"
+                                    method="POST">
+                                    @csrf
+                                    <input type="hidden" name="sort_id" value="{{$order->id}}">
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

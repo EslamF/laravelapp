@@ -106,7 +106,7 @@ class SpreadingMaterialController extends Controller
         $material->weight = $material->weight + $order->weight;
         $material->save();
         $order->delete();
-        return redirect()->route('spreading.material.list');
+        return back();
     }
 
     public function getAll()

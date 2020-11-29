@@ -11,31 +11,27 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-5">كود المنتج</th>
-                                <th class="col-md-5">المصنع</th>
-                                <th class="col-md-1">إجراءات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>كود المنتج</th>
+                            <th>المصنع</th>
+                            <th>الخيارات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data as $order)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$order->id}}</td>
-                                <td class="col-md-5">{{$order->product->prod_code}}</td>
-                                <td class="col-md-5">{{$order->factory->name}}</td>
-                                <td class="col-md-1">
-                                    <form style="display:inline" action="{{Route('fix.product.delete')}}"
-                                        method="POST">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{$order->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$order->id}}</td>
+                            <td>{{$order->product->prod_code}}</td>
+                            <td>{{$order->factory->name}}</td>
+                            <td>
+                                <form style="display:inline" action="{{Route('fix.product.delete')}}"
+                                    method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$order->id}}">
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

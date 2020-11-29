@@ -25,11 +25,13 @@ class SendEndProductController extends Controller
     public function getOrder($order_code)
     {
         
-        $data = Product::where('save_order_id', $order_code)
-            ->select('id', 'save_order_id', 'user_id', 'prod_code')
+        $order = SaveOrder::findOrFail($order_code);
+
+        $products = Product::where('save_order_id', $order_code)
+            ->select('id', 'save_order_id', 'prod_code')
             ->with('user:id,name')
             ->paginate();
-        return view('dashboard.orders.send_end_product.product_order.list')->with('data', $data);
+        return view('dashboard.orders.send_end_product.product_order.list')->with([  'products' => $products  , 'order' => $order ]);
     }
     public function create()
     {
@@ -39,13 +41,15 @@ class SendEndProductController extends Controller
 
     public function store(Request $request)
     {
+        //return $request;
         $request->validate([
             'products' => 'required',
             'user_id' => 'required|exists:users,id'
         ]);
 
         $order = SaveOrder::create([
-            'code' => $this->generateCode()
+            'code' => $this->generateCode() , 
+            'user_id' => $request->user_id  
         ]);
 
         foreach ($request->products as $value) {
@@ -53,7 +57,7 @@ class SendEndProductController extends Controller
             if ($product) {
                 $product->update([
                     'save_order_id' => $order->id,
-                    'user_id'       => $request->user_id,
+                    //'user_id'       => $request->user_id,
                 ]);
             } else {
                 continue;
