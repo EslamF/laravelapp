@@ -131,7 +131,7 @@ Route::group([
                 Route::post('test', 'ShippingCompanyController@test')->name('shippingcompany.test');
                 Route::get('create', 'ShippingCompanyController@createPage')->name('shippingcompany.create_page')->middleware('can:add-shapping');
                 Route::post('store', 'ShippingCompanyController@create')->name('shippingcompany.store')->middleware('can:add-shapping');
-                Route::delete('delete', 'ShippingCompanyController@destroy')->name('shippingcompany.delete_company')->middleware('can:delete-shapping');
+                Route::post('delete', 'ShippingCompanyController@destroy')->name('shippingcompany.delete_company')->middleware('can:delete-shapping');
                 Route::get('edit/{type_id}', 'ShippingCompanyController@editPage')->name('shippingcompany.edit_page')->middleware('can:edit-shapping');
                 Route::post('update', 'ShippingCompanyController@update')->name('shippingcompany.update')->middleware('can:edit-shapping');
                 Route::get('get', 'ShippingCompanyController@getAll')->name('shippingcompany.get_all')->middleware('can:show-shapping');
