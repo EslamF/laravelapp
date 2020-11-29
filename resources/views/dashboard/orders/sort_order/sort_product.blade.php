@@ -39,7 +39,7 @@
                                 <th class="col-md-3">كود الخامة</th>
                                 <th class="col-md-2">حالة المنتج</th>
                                 <th class="col-md-3">تاريخ الفرز</th>
-                                <th class="col-md-3">الخيارات</th>
+                                <th class="col-md-3">إجراءات</th>
                             </div>
                         </tr>
                     </thead>

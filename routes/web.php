@@ -55,12 +55,12 @@ Route::group([
                 Route::group([
                     'prefix' => 'roles',
                 ], function () {
-                    Route::get('get-all', 'RoleController@getAllPaginate')->name('role.list');
-                    Route::get('create', 'RoleController@createPage')->name('role.create_page');
-                    Route::post('store', 'RoleController@create')->name('role.store');
-                    Route::post('delete', 'RoleController@delete')->name('role.delete');
-                    Route::get('edit/{type_id}', 'RoleController@editPage')->name('role.edit_page');
-                    Route::post('update', 'RoleController@update')->name('role.update');
+                    Route::get('get-all', 'RoleController@getAllPaginate')->name('role.list')->middleware('can:show-role');
+                    Route::get('create', 'RoleController@createPage')->name('role.create_page')->middleware('can:add-role');
+                    Route::post('store', 'RoleController@create')->name('role.store')->middleware('can:add-role');
+                    Route::post('delete', 'RoleController@delete')->name('role.delete')->middleware('can:delete-role');
+                    Route::get('edit/{type_id}', 'RoleController@editPage')->name('role.edit_page')->middleware('can:edit-role');
+                    Route::post('update', 'RoleController@update')->name('role.update')->middleware('can:edit-role');
                 });
 
                 Route::group([
@@ -78,25 +78,25 @@ Route::group([
                 Route::group([
                     'prefix' => 'customers',
                 ], function () {
-                    Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list');
-                    Route::get('create', 'CustomerController@createPage')->name('customer.create_page');
-                    Route::post('store', 'CustomerController@create')->name('customer.store');
-                    Route::post('delete', 'CustomerController@delete')->name('customer.delete');
-                    Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page');
-                    Route::post('update', 'CustomerController@update')->name('customer.update');
-                    Route::get('search/{phone}', 'CustomerController@searchByPhone')->name('customer_search');
-                    Route::get('get/{id}', 'CustomerController@getById')->name('customer.get_by_id');
+                    Route::get('get-all', 'CustomerController@getAllPaginate')->name('customer.list')->middleware('can:show-customer');
+                    Route::get('create', 'CustomerController@createPage')->name('customer.create_page')->middleware('can:add-customer');
+                    Route::post('store', 'CustomerController@create')->name('customer.store')->middleware('can:add-customer');
+                    Route::post('delete', 'CustomerController@delete')->name('customer.delete')->middleware('can:delete-customer');
+                    Route::get('edit/{type_id}', 'CustomerController@editPage')->name('customer.edit_page')->middleware('can:edit-customer');
+                    Route::post('update', 'CustomerController@update')->name('customer.update')->middleware('can:edit-customer');
+                    Route::get('search/{phone}', 'CustomerController@searchByPhone')->name('customer_search')->middleware('can:search-customer');
+                    Route::get('get/{id}', 'CustomerController@getById')->name('customer.get_by_id')->middleware('can:search-customer');
                 });
 
                 Route::group([
                     'prefix' => 'suppliers',
                 ], function () {
-                    Route::get('get-all', 'SupplierController@getAllPaginate')->name('supplier.list');
-                    Route::get('create', 'SupplierController@createPage')->name('supplier.create_page');
-                    Route::post('store', 'SupplierController@create')->name('supplier.store');
-                    Route::post('delete', 'SupplierController@delete')->name('supplier.delete');
-                    Route::get('edit/{type_id}', 'SupplierController@editPage')->name('supplier.edit_page');
-                    Route::post('update', 'SupplierController@update')->name('supplier.update');
+                    Route::get('get-all', 'SupplierController@getAllPaginate')->name('supplier.list')->middleware('can:show-supplier');
+                    Route::get('create', 'SupplierController@createPage')->name('supplier.create_page')->middleware('can:add-supplier');
+                    Route::post('store', 'SupplierController@create')->name('supplier.store')->middleware('can:add-supplier');
+                    Route::post('delete', 'SupplierController@delete')->name('supplier.delete')->middleware('can:delete-supplier');
+                    Route::get('edit/{type_id}', 'SupplierController@editPage')->name('supplier.edit_page')->middleware('can:edit-supplier');
+                    Route::post('update', 'SupplierController@update')->name('supplier.update')->middleware('can:edit-supplier');
                 });
             }
         );
@@ -110,12 +110,12 @@ Route::group([
             Route::group([
                 'prefix' => 'type'
             ], function () {
-                Route::get('get-all', 'MaterialTypeController@getAllPaginate')->name('material.type.list');
-                Route::get('create', 'MaterialTypeController@createPage')->name('material.type.create_page');
-                Route::post('store', 'MaterialTypeController@create')->name('material.type.store');
-                Route::post('delete', 'MaterialTypeController@delete')->name('material.type.delete');
-                Route::get('edit/{type_id}', 'MaterialTypeController@editPage')->name('material.type.edit_page');
-                Route::post('update', 'MaterialTypeController@update')->name('material.type.update');
+                Route::get('get-all', 'MaterialTypeController@getAllPaginate')->name('material.type.list')->middleware('can:show-materials');
+                Route::get('create', 'MaterialTypeController@createPage')->name('material.type.create_page')->middleware('can:add-materials');
+                Route::post('store', 'MaterialTypeController@create')->name('material.type.store')->middleware('can:add-materials');
+                Route::post('delete', 'MaterialTypeController@delete')->name('material.type.delete')->middleware('can:delete-materials');
+                Route::get('edit/{type_id}', 'MaterialTypeController@editPage')->name('material.type.edit_page')->middleware('can:edit-materials');
+                Route::post('update', 'MaterialTypeController@update')->name('material.type.update')->middleware('can:edit-materials');
             });
         });
         Route::group([
@@ -127,28 +127,28 @@ Route::group([
                 'prefix' => 'shipping'
 
             ], function () {
-                Route::get('get-all', 'ShippingCompanyController@getAllPaginate')->name('shippingcompany.list');
-                Route::get('create', 'ShippingCompanyController@createPage')->name('shippingcompany.create_page');
-                Route::post('store', 'ShippingCompanyController@create')->name('shippingcompany.store');
-                Route::post('delete', 'ShippingCompanyController@delete')->name('shippingcompany.delete');
-                Route::get('edit/{type_id}', 'ShippingCompanyController@editPage')->name('shippingcompany.edit_page');
-                Route::post('update', 'ShippingCompanyController@update')->name('shippingcompany.update');
-                Route::get('get', 'ShippingCompanyController@getAll')->name('shippingcompany.get_all');
+                Route::get('get-all', 'ShippingCompanyController@getAllPaginate')->name('shippingcompany.list')->middleware('can:show-shapping');
+                Route::post('test', 'ShippingCompanyController@test')->name('shippingcompany.test');
+                Route::get('create', 'ShippingCompanyController@createPage')->name('shippingcompany.create_page')->middleware('can:add-shapping');
+                Route::post('store', 'ShippingCompanyController@create')->name('shippingcompany.store')->middleware('can:add-shapping');
+                Route::post('delete', 'ShippingCompanyController@delete_company ')->name('shippingcompany.delete_company')->middleware('can:delete-shapping');
+                Route::get('edit/{type_id}', 'ShippingCompanyController@editPage')->name('shippingcompany.edit_page')->middleware('can:edit-shapping');
+                Route::post('update', 'ShippingCompanyController@update')->name('shippingcompany.update')->middleware('can:edit-shapping');
+                Route::get('get', 'ShippingCompanyController@getAll')->name('shippingcompany.get_all')->middleware('can:show-shapping');
             });
 
             Route::group([
                 'prefix' => 'factory'
             ], function () {
-                Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list');
-                Route::get('get-by-id/{factory_type_id}', 'FactoryController@getByType')->name('factory.by_type');
-                Route::get('get', 'FactoryController@getAll')->name('factory_get_all');
-                Route::get('get-by-cutting/{id}', 'FactoryController@getFactoryByCuttingOrder')->name('factory_by_cutting');
-                Route::get('get/{id}', 'FactoryController@getById')->name('factory.get_by_id');
-                Route::get('create', 'FactoryController@createPage')->name('factory.create_page');
-                Route::post('store', 'FactoryController@create')->name('factory.store');
-                Route::post('delete', 'FactoryController@delete')->name('factory.delete');
-                Route::get('edit/{type_id}', 'FactoryController@editPage')->name('factory.edit_page');
-                Route::post('update', 'FactoryController@update')->name('factory.update');
+                         Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list')->middleware('can:show-factory');
+                Route::get('get', 'FactoryController@getAll')->name('factory_get_all')->middleware('can:show-factory');
+                Route::get('get-by-cutting/{id}', 'FactoryController@getFactoryByCuttingOrder')->name('factory_by_cutting')->middleware('can:show-factory');
+                Route::get('get/{id}', 'FactoryController@getById')->name('factory.get_by_id')->middleware('can:show-factory');
+                Route::get('create', 'FactoryController@createPage')->name('factory.create_page')->middleware('can:show-factory');
+                Route::post('store', 'FactoryController@create')->name('factory.store')->middleware('can:show-factory');
+                Route::post('delete', 'FactoryController@delete')->name('factory.delete')->middleware('can:show-factory');
+                Route::get('edit/{type_id}', 'FactoryController@editPage')->name('factory.edit_page')->middleware('can:show-factory');
+                Route::post('update', 'FactoryController@update')->name('factory.update')->middleware('can:show-factory');
 
                 Route::group([
                     'prefix' => 'type'

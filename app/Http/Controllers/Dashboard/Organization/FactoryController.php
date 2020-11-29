@@ -13,7 +13,6 @@ class FactoryController extends Controller
     public function getAllPaginate()
     {
         $factories = Factory::paginate(15);
-        //  dd($factories->all());
         return view('dashboard.factories.list')->with('factories', $factories);
     }
     public function delete(Request $request)
@@ -49,8 +48,9 @@ class FactoryController extends Controller
     public function update(Request $request)
     {
         $request->validate([
+            
             'type_id' => 'required|exists:factories,id',
-            'name' => 'required|min:3|unique:factories,name',
+            'name' => 'required|min:3|unique:,name,' . $request->type_id,
             'phone' => 'min:11',
             'address' => 'max:100'
         ]);

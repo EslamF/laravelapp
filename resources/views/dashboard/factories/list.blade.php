@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">المصانع</h3>
-                <a href="{{Route('factory.create_page')}}" class="btn btn-success float-right">إضافه المصانع</a>
+                <a href="{{Route('factory.create_page')}}" class="btn btn-success float-right">إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

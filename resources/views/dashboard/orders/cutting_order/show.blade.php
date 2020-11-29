@@ -18,7 +18,7 @@
                                     <th class="col-md-4">اسم المنتج</th>
                                     <th class="col-md-3">مقاس المنتج</th>
                                     <th class="col-md-1">الكمية</th>
-                                    <th class="col-md-2">الخيارات</th>
+                                    <th class="col-md-2">إجراءات</th>
                                 </div>
                             </tr>
                         </thead>
