@@ -70,11 +70,24 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">إضافة</button>
-                    <a href="{{ url()->previous() }}" class="btn btn-info">رجوع</a>
+                    <button type="submit"  id="reg" onclick="test()" class="btn btn-primary">إضافة</button>
+                    <a href="{{route('employee.list')}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+<script>
+    var count = 0;
+    function test() {
+        count++;
+        if (count == 2) {
+            var button = document.getElementById('reg');
+            button.disabled = true;
+        }
+    }
+</script>
+
 @endsection

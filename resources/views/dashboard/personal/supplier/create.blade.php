@@ -10,7 +10,7 @@
             <!-- form start  -->
 
             {{-- id	name	phone	address	source	link	type --}}
-            <form role="form" action="{{Route('supplier.store')}}" method="POST">
+            <form role="form" id="myForm" action="{{Route('supplier.store')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -21,11 +21,23 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">إضافة</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
+                    <button type="submit"id="reg" onclick="test()"  class="btn btn-primary">إضافة</button>
+                    <a href="{{ route('supplier.list') }}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    var count = 0;
+
+    function test() {
+        count++;
+        if (count == 2) {
+            var button = document.getElementById('reg');
+            button.disabled = true;
+        }
+    }
+</script>
 @endsection

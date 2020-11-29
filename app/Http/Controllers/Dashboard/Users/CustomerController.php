@@ -16,14 +16,14 @@ class CustomerController extends Controller
      */
     public function create(Request $request)
     { 
-        // dd($request->all());
         $request->validate([
             'name' => 'required|min:3',
             'phone' => 'required|min:11',
             'address' => 'required|min:3',
             'source' => 'required|min:3',
+            'notes' => 'required|min:3',
             'link' => 'required|min:3',
-            'type' => 'required|in:individual,wholesaler,retailer'
+            'type' => 'required|in:individual,wholesaler,related,retailer'
         ]);
 
 
@@ -50,8 +50,9 @@ class CustomerController extends Controller
             'phone' => '|min:11',
             'address' => 'min:4',
             'source' => 'min:3',
+            'notes' => 'min:3',
             'link' => 'min:2',
-            'type' => 'in:individual,wholesaler,retailer'
+            'type' => 'in:individual,related,wholesaler,retailer'
         ]);
 
         Customer::find($request->customer_id)->update($request->all());

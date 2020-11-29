@@ -76,7 +76,7 @@
    {{-- @can('show-size') --}}
    <li class="nav-item has-treeview">
     <a href="{{Route('size.list')}}" class="nav-link">
-        <i class="fa fa-circle nav-icon"></i>
+        <i class="far fa-circle nav-icon"></i>
         <p>المقاسات</p>
     </a>
 </li>

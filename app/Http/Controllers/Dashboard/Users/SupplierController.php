@@ -35,13 +35,15 @@ class SupplierController extends Controller
         ]);
 
         Supplier::find($request->supplier_id)->update($request->all());
+        return redirect()->route('supplier.list');
+
     }
     public function delete(Request $request)
     {
         $request->validate([
-            'supplier_id' => 'required|exists:suppliers,id'
+            'type_id' => 'required|exists:suppliers,id'
         ]);
-        Supplier::find($request->supplier_id)->delete();
+        Supplier::find($request->type_id)->delete();
 
 
         return redirect()->route('supplier.list');

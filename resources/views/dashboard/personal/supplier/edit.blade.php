@@ -8,22 +8,37 @@
             </div>
             <!-- /.card-header          id	name	phone	address	source	link	type	 -->
             <!-- form start -->
-            <form role="form" action="{{Route('supplier.update')}}" method="POST">
+            <form role="form" id="myForm" action="{{Route('supplier.update')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">اسم المورد</label>
                         <input type="text" class="form-control" value="{{$supplier->name}}" name="name" id="name" placceholder="ادخل اسم المورد">
+                        <input type="hidden" name="supplier_id" value="{{$supplier->id}}">
+
                     </div> 
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">تأكيد</button>
-                    <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
+                    <button type="submit" id="reg" onclick="test()" class="btn btn-primary">تأكيد</button>
+                    <a href="{{route('supplier.list')}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+<script>
+    var count = 0;
+
+    function test() {
+        count++;
+        if (count == 2) {
+            var button = document.getElementById('reg');
+            button.disabled = true;
+        }
+    }
+</script>
 @endsection

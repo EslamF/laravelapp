@@ -15,11 +15,12 @@
                             <div class="col-md-12">
                                 <th class="col-md-2"> الرقم المرجعي</th>
                                 <th class="col-md-2">الاسم</th>
-                                <th class="col-md-1">رقم الهاتف</th>
-                                <th class="col-md-2">العنوان</th>
+                                <th class="col-md-1">الهاتف</th>
+                                <th class="col-md-1">العنوان</th>
+                                <th class="col-md-1">وصف</th>
                                 <th class="col-md-1">المصدر</th>
                                 <th class="col-md-1">الوصول</th>
-                                <th class="col-md-1">الصفة</th>
+                                <th class="col-md-1">النوع </th>
                                 <th class="col-md-2">إجراءات</th>
                             </div>
                         </tr>
@@ -31,12 +32,13 @@
                                 <td class="col-md-2">{{$customer->id}}</td>
                                 <td class="col-md-2">{{$customer->name}}</td>
                                 <td class="col-md-1">{{$customer->phone}}</td>
-                                <td class="col-md-2">{{$customer->address}}</td>
+                                <td class="col-md-1">{{$customer->address}}</td>
+                                <td class="col-md-1">{{$customer->notes}}</td>
                                 <td class="col-md-1">{{$customer->source}}</td>
                                 <td class="col-md-1">{{$customer->link}}</td>
-                                <td class="col-md-1">{{$customer->type}}</td>
+                                <td class="col-md-1">{{ __('customers.'.$customer->type)}}</td>
                                 <td class="col-md-2">
-                                    <a href="{{Route('customer.edit_page', $customer->id)}}" class="btn btn-primary">تعديل</a>
+                                    <a href="{{Route('customer.edit_page',$customer->id)}}" class="btn btn-primary">تعديل</a>
                                     <button type="button" @click="deleteItem({{$customer->id}})" class="btn btn-danger">حذف</button>
                                 </td>
                             </div>

@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div id="app" class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -15,11 +15,11 @@
                     <thead>
                         <tr class="row">
                             <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
+                                <th class="col-md-2"> الرقم المرجعي</th>
                                 <th class="col-md-3">اسم</th>
                                 <th class="col-md-3">البريد الالكتروني</th>
                                 <th class="col-md-2">صلحية الموظف</th>
-                                <th class="col-md-3">إجراءات</th>
+                                <th class="col-md-2">إجراءات</th>
                             </div>
                         </tr>
                     </thead>
@@ -27,20 +27,16 @@
                         @foreach($data['user'] as $employee)
                         <tr class="row">
                             <div class="col-md-12">
-                                <td class="col-md-1">{{$employee->id}}</td>
+                                <td class="col-md-2">{{$employee->id}}</td>
                                 <td class="col-md-2">{{$employee->name}}</td>
                                 <td class="col-md-3">{{$employee->email}}</td>
                                 <td class="col-md-3">{{isset($employee->roles[0]->label) ? $employee->roles[0]->label: "لا يوجد لة صلاحية" }}</td>
-                                <td class="col-md-3">
+                                <td class="col-md-2">
                                     @can('edit-employee')
                                     <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
                                     @endcan
                                     @can('delete-employee')
-                                    <form style="display:inline" action="{{Route('employee.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="type_id" value="{{$employee->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
+                                    <button type="submit" @click="deleteItem({{$employee->id}})" class="btn btn-danger">حذف</button>
                                     @endcan
                                 </td>
                             </div>
@@ -57,4 +53,48 @@
         <!-- /.card -->
     </div>
 </div>
+@endsection
+
+
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.type_id = id
+                            axios.post("{{Route('employee.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
 @endsection

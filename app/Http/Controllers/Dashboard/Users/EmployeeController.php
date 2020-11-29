@@ -42,10 +42,9 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'type_id' => 'required|exists:users,id',
-            // 'role_id' => 'required|exists:role,id',
+            'role_id' => 'required|exists:roles,id',
             'name' => 'required|min:3',
-            'email' => 'min:3|unique:users,email,' . Auth::user()->id,
-            'password' => 'confirmed'
+            'email' => 'min:3|unique:users,email,'. $request->type_id,
         ]);
 
         $user = User::find($request->type_id);
