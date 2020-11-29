@@ -40,9 +40,9 @@
                             <div class="form-group">
                                 <label for="user">المشتري</label>
                                 <select class="form-control" name="user_id" id="user" class="@error('user_id') is-danger @enderror">
-                                    @foreach($data['users'] as $user)
                                     <option value="" disabled selected>حدد المشتري</option>
-                                    <option value="{{$user->id}}" {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
+                                    @foreach($data['users'] as $user)
+                                        <option value="{{$user->id}}" {{$data['material']->buyer_id == $user->id ? 'selected' : ''}}>{{$user->name}}
                                     </option>
                                     @endforeach
                                 </select>
@@ -76,13 +76,13 @@
                                 <label>النوع</label>
                                 <select id="type" class="form-control" name="type" disabled>
                                     <option value="" disabled selected>حدد النوع</option>
-                                    <option value="material" {{old('type') == 'material' ?  'selected' : ''}}>خامة</option>
-                                    <option value="accessory" {{old('type') == 'accessory' ?  'selected' : ''}}>اكسسوار</option>
+                                    <option value="material" {{ !$data['material']->qty ?  'selected' : ''}}>خامة</option>
+                                    <option value="accessory"{{ $data['material']->qty  ?  'selected' : ''}}>اكسسوار</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div id="material" style="display:none" class="row">
+                    <div id="material" style="{{!$data['material']->qty ? '' : 'display:none' }}" class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="weight">الوزن</label>
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="accessory" style="display:none" class="row">
+                    <div id="accessory" style="{{$data['material']->qty ? '' : 'display:none' }}" class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="qty">الكمية</label>

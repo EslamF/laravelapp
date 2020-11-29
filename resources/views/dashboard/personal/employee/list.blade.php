@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div class="row" id = "app">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -30,14 +30,10 @@
                             <td>{{isset($employee->roles[0]->label) ? $employee->roles[0]->label: "لا يوجد لة صلاحية" }}</td>
                             <td>
                                 @can('edit-employee')
-                                <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
+                                    <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
                                 @endcan
                                 @can('delete-employee')
-                                <form style="display:inline" action="{{Route('employee.delete')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="type_id" value="{{$employee->id}}">
-                                    <button type="submit" class="btn btn-danger">حذف</button>
-                                </form>
+                                    <button type="submit" class="btn btn-danger" @click = "deleteItem({{$employee->id}})">حذف</button>
                                 @endcan
                             </td>
                         </tr>
@@ -53,4 +49,47 @@
         <!-- /.card -->
     </div>
 </div>
+@endsection
+
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.type_id = id
+                            axios.post("{{Route('employee.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
 @endsection

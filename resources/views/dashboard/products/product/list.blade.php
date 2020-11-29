@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div class="row" id = "app">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -32,11 +32,7 @@
                             <td>{{$value->status}}</td>
                             <td>
                                 <a href="{{Route('product.edit_page', $value->id)}}" class="btn btn-primary">تعديل</a>
-                                <form style="display:inline" action="{{Route('product.delete')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{$value->id}}">
-                                    <button type="submit" class="btn btn-danger">حذف</button>
-                                </form>
+                                <button type="submit" class="btn btn-danger" @click = "deleteItem({{$value->id}})">حذف</button>
                             </td>
                         </tr>
                         @endforeach
@@ -51,4 +47,47 @@
         <!-- /.card -->
     </div>
 </div>
+@endsection
+
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.product_id = id
+                            axios.post("{{Route('product.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
 @endsection

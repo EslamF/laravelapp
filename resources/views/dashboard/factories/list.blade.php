@@ -73,7 +73,7 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             var data = {};
-                            data.factory_id = id
+                            data.factory_type_id = id
                             axios.post("{{Route('factory.delete')}}", data)
                                 .then(res => {
                                     swal("تم المسح بنجاح", {

@@ -75,7 +75,7 @@
 
                 <div class="card-footer">
                     <button type="button" @click="submitForm" class="btn btn-primary">تأكيد</button>
-                    <a href="{{Route('spreading.material.list')}}" class="btn btn-info">رجوع</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>

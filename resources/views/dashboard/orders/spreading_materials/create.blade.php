@@ -72,7 +72,7 @@
 
                 <div class="card-footer">
                     <button type="button" :disabled="button" @click="submitForm" class="btn btn-primary">إضافة</button>
-                    <a href="{{Route('spreading.material.list')}}" class="btn btn-info">رحوع</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-info">رحوع</a>
                 </div>
             </form>
         </div>

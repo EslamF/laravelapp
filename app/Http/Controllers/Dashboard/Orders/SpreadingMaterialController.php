@@ -53,7 +53,7 @@ class SpreadingMaterialController extends Controller
             $material->weight = $material->weight - $request->weight;
             $material->save();
         }
-        return redirect()->route('spreading.material.list');
+        return redirect()->route('spreading.material.hold_list');
     }
 
     public function editPage($spreading_id)
@@ -105,7 +105,7 @@ class SpreadingMaterialController extends Controller
         $material->weight = $material->weight + $order->weight;
         $material->save();
         $order->delete();
-        return redirect()->route('spreading.material.list');
+        return back();
     }
 
     public function getAll()

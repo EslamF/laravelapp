@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div class="row" id = "app">
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
@@ -27,11 +27,8 @@
                             <td>{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
                             <td>
                                 <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">رؤية</a>
-                                <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="cutting_order_id" value="{{$value->id}}">
-                                    <button type="submit" class="btn btn-danger">حذف</button>
-                                </form>
+                                <button type="submit" class="btn btn-danger" @click = "deleteItem({{$value->id}})">حذف</button>
+                                
                             </td>
                         </tr>
                         @endforeach
@@ -46,4 +43,47 @@
         <!-- /.card -->
     </div>
 </div>
+@endsection
+
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.material_id = id
+                            axios.post("{{Route('cutting.material.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
 @endsection

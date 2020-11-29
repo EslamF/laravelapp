@@ -25,7 +25,17 @@ class ReceivingMaterialController extends Controller
             'color' => 'requiredIf:type,material',
         ]);
 
-        Material::create($request->all());
+        $request_data = [];
+        
+        if($request->type == 'material')
+        {
+            $request_data = $request->except(['qty']);
+        }
+        else 
+        {
+            $request_data = $request->except(['weight' , 'material_type_id' , 'color' ]);
+        }
+        Material::create($request_data);
         return redirect()->route('order.receiving.material');
     }
 
@@ -51,7 +61,12 @@ class ReceivingMaterialController extends Controller
     public function editPage($material_id)
     {
         $data = [];
-        $data['users'] = User::select('id', 'name')->get();
+        //$data['users'] = User::select('id', 'name')->get();
+        $data['users'] = User::select('id', 'name')->whereHas('roles', function ($q) {
+            $q->whereHas('peremissions', function ($query) {
+                $query->where('name', 'buy-material');
+            });
+        })->get();
         $data['suppliers'] = Supplier::select('id', 'name')->get();
         $data['material_types'] = MaterialType::select('id', 'name')->get();
         $data['material'] = Material::where('id', $material_id)->first();

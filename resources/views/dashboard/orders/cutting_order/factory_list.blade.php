@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div class="row" id = "app">
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
@@ -12,33 +12,26 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-2"> الرقم المرجعي</th>
-                                <th class="col-md-2">الشركة</th>
-                                <th class="col-md-3">كود الخامة</th>
-                                <th class="col-md-2">موظف الفرش</th>
-                                <th class="col-md-3">إجراءات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>الشركة</th>
+                            <th>كود الخامة</th>
+                            <th>موظف الفرش</th>
+                            <th>إجراءات</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data as $value)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-2">{{$value->id}}</td>
-                                <td class="col-md-2">{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
-                                <td class="col-md-3">{{$value->spreadingOutMaterialOrder->material->mq_r_code}}</td>
-                                <td class="col-md-2">{{$value->spreadingOutMaterialOrder->user->name}}</td>
-                                <td class="col-md-3">
-                                    <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">رؤية</a>
-                                    <form style="display:inline" action="{{Route('cutting.material.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="cutting_order_id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$value->id}}</td>
+                            <td>{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
+                            <td>{{$value->spreadingOutMaterialOrder->material->mq_r_code}}</td>
+                            <td>{{$value->spreadingOutMaterialOrder->user->name}}</td>
+                            <td>
+                                <a href="{{Route('cutting_order.show_products', $value->id)}}" class="btn btn-primary">رؤية</a>
+                                <button type="submit" class="btn btn-danger" @click = "deleteItem({{$value->id}})">حذف</button>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -52,4 +45,47 @@
         <!-- /.card -->
     </div>
 </div>
+@endsection
+
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.cutting_order_id = id
+                            axios.post("{{Route('cutting.material.delete')}}", data)
+                                .then(res => {
+                                    swal("تم المسح بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
 @endsection
