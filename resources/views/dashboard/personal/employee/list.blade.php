@@ -1,10 +1,6 @@
 @extends('index')
 @section('content')
-<<<<<<< HEAD
 <div id="app" class="row">
-=======
-<div class="row" id = "app">
->>>>>>> d06e9b0d1369f53f61a5f1d560a6e382f83ffa27
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">

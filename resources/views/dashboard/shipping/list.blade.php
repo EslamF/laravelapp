@@ -19,22 +19,6 @@
                     </thead>
                     <tbody>
                         @foreach($types as $shipping)
-<<<<<<< HEAD
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$shipping->id}}</td>
-                                <td class="col-md-8">{{$shipping->name}}</td>
-                                <td class="col-md-2">
-                                    <a href="{{Route('shippingcompany.edit_page', $shipping->id)}}" class="btn btn-primary">تعديل</a>
-                                    <form style="display:inline" action="{{Route('shippingcompany.delete_company')}}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <input type="hidden" name="type_id" value="{{$shipping->id}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
-=======
                         <tr>
                             <td>{{$shipping->id}}</td>
                             <td>{{$shipping->name}}</td>
@@ -49,7 +33,6 @@
                                 --}}
                                 <button type="submit" @click="deleteItem({{$shipping->id}})" class="btn btn-danger">حذف</button>
                             </td>
->>>>>>> d06e9b0d1369f53f61a5f1d560a6e382f83ffa27
                         </tr>
                         @endforeach
                     </tbody>
@@ -88,7 +71,7 @@
                         if (willDelete) {
                             var data = {};
                             data.type_id = id
-                            axios.post("{{Route('shippingcompany.delete')}}", data)
+                            axios.post("{{Route('shippingcompany.delete_company')}}", data)
                                 .then(res => {
                                     swal("تم المسح بنجاح", {
                                         icon: "success",

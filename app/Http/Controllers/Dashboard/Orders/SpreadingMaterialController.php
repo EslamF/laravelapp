@@ -91,7 +91,7 @@ class SpreadingMaterialController extends Controller
             ]);
         }
         $order->update($request->all());
-        return redirect()->route('spreading.material.list');
+        return back();
     }
 
 

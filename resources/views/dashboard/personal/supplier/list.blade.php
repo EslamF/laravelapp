@@ -2,11 +2,7 @@
 
 @extends('index')
 @section('content')
-<<<<<<< HEAD
 <div id="app" class="row">
-=======
-<div class="row" id = "app">
->>>>>>> d06e9b0d1369f53f61a5f1d560a6e382f83ffa27
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -28,6 +24,7 @@
                         <tr>
                             <td>{{$supplier->id}}</td>
                             <td>{{$supplier->name}}</td>
+                            <td>
                                     @can('edit-supplier')
                                     <a href="{{Route('supplier.edit_page', $supplier->id)}}" class="btn btn-primary">تعديل</a>
                                     @endcan
@@ -72,7 +69,7 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             var data = {};
-                            data.supplier_id = id
+                            data.type_id = id
                             axios.post("{{Route('supplier.delete')}}", data)
                                 .then(res => {
                                     swal("تم المسح بنجاح", {

@@ -21,12 +21,12 @@ class UserSeeder extends Seeder
                 'password'=>'$2y$10$IEadymMtBNB2fXXIGx55FOAnnAqmEjPipFDhhsv4qVzZDtkjTcqBq',
                 'email_verified_at' => now(),
             ] , 
-            [
-                'email' => 'admin@gmail.com' ,
+            /*[
+                'email' => 'i@gmail.com' ,
                 'name' => 'Admin' ,
                 'password' => '$2y$10$eSA/JZilXgKTj1wAYd8TFOXdr2zyCF/RhglPNXSDimlXOUgGxd4PC',
                 'email_verified_at' => now(),
-            ]
+            ]*/
         ]);
 
     }
