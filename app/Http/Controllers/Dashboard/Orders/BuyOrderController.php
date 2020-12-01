@@ -35,6 +35,8 @@ class BuyOrderController extends Controller
             ->where('received', 1)
             ->get()->groupBy('produce_code');
 
+        //return response()->json($companyProducts, 200);
+
         $data = $this->customizeProducts($companyProducts);
         return response()->json(array_values($data), 200);
     }

@@ -140,7 +140,8 @@ Route::group([
             Route::group([
                 'prefix' => 'factory'
             ], function () {
-                         Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list')->middleware('can:show-factory');
+                Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list')->middleware('can:show-factory');
+                Route::get('get-by-id/{factory_type_id}', 'FactoryController@getByType')->name('factory.by_type');
                 Route::get('get', 'FactoryController@getAll')->name('factory_get_all')->middleware('can:show-factory');
                 Route::get('get-by-cutting/{id}', 'FactoryController@getFactoryByCuttingOrder')->name('factory_by_cutting')->middleware('can:show-factory');
                 Route::get('get/{id}', 'FactoryController@getById')->name('factory.get_by_id')->middleware('can:show-factory');

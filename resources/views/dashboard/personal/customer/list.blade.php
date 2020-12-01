@@ -31,9 +31,9 @@
                             <td>{{$customer->name}}</td>
                             <td>{{$customer->phone}}</td>
                             <td>{{$customer->address}}</td>
-                            <td>{{$customer->notes}}</td>
+                            <td>{{ Str::limit( $customer->notes , 20)}}</td>
                             <td>{{$customer->source}}</td>
-                            <td>{{$customer->link}}</td>
+                            <td><a href= "{{$customer->link}}" target = "_Blank">{{ Str::limit( $customer->link , 20)}}</a></td>
                             <td>{{ __('customers.'.$customer->type)}}</td>
                             <td>
                                 <a href="{{Route('customer.edit_page',$customer->id)}}" class="btn btn-primary">تعديل</a>

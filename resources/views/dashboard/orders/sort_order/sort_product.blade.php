@@ -33,45 +33,41 @@
             <div class="card-body">
                 <table class="table ">
                     <thead>
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <th class="col-md-1"> الرقم المرجعي</th>
-                                <th class="col-md-3">كود الخامة</th>
-                                <th class="col-md-2">حالة المنتج</th>
-                                <th class="col-md-3">تاريخ الفرز</th>
-                                <th class="col-md-3">إجراءات</th>
-                            </div>
+                        <tr>
+                            <th> الرقم المرجعي</th>
+                            <th>كود الخامة</th>
+                            <th>حالة المنتج</th>
+                            <th>تاريخ الفرز</th>
+                            <th>إجراءات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data['records'] as $product)
-                        <tr class="row">
-                            <div class="col-md-12">
-                                <td class="col-md-1">{{$product->id}}</td>
-                                <td class="col-md-3">{{$product->prod_code}}</td>
-                                @switch($product->damage_type)
-                                @case('ironing')
-                                <td class="col-md-2">كي</td>
-                                @break
-                                @case('tailoring')
-                                <td class="col-md-2">خياطة</td>
-                                @break
-                                @case('dyeing')
-                                <td class="col-md-2">صباغ</td>
-                                @break
-                                @default
-                                <td class="col-md-2">صالح</td>
-                                @endswitch
-                                <td class="col-md-3">{{$product->sort_date}}</td>
-                                <td class="col-md-3">
-                                    <form style="display:inline" action="{{Route('product.sort.delete')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="product_id" value="{{$product->id}}">
-                                        <input type="hidden" name="sort_id" value="{{$data['sort_id']}}">
-                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                    </form>
-                                </td>
-                            </div>
+                        <tr>
+                            <td>{{$product->id}}</td>
+                            <td>{{$product->prod_code}}</td>
+                            @switch($product->damage_type)
+                            @case('ironing')
+                            <td>كي</td>
+                            @break
+                            @case('tailoring')
+                            <td>خياطة</td>
+                            @break
+                            @case('dyeing')
+                            <td>صباغ</td>
+                            @break
+                            @default
+                            <td>صالح</td>
+                            @endswitch
+                            <td>{{$product->sort_date}}</td>
+                            <td>
+                                <form style="display:inline" action="{{Route('product.sort.delete')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                                    <input type="hidden" name="sort_id" value="{{$data['sort_id']}}">
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

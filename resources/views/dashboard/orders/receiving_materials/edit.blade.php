@@ -15,7 +15,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="mq_r_code">كود الخامة</label>
-                                <input type="text" class="form-control" value="{{$data['material']->mq_r_code}}" name="mq_r_code" id="mq_r_code" class="@error('mq_r_code') is-danger @enderror">
+                                <input type="text" class="form-control" value="{{ old('mq_r_code') ?? $data['material']->mq_r_code}}" name="mq_r_code" id="mq_r_code" class="@error('mq_r_code') is-danger @enderror">
                                 @error('mq_r_code')
                                 <p class="help is-danger">
                                     {{$message}}
@@ -26,7 +26,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="bill_number"> الرقم المرجعي الفتورة</label>
-                                <input type="text" class="form-control" value="{{$data['material']->bill_number}}" name="bill_number" id="bill_number" class="@error('bill_number') is-danger @enderror" value="{{old('bill_number')}}">
+                                <input type="text" class="form-control" value="{{ old('bill_number') ?? $data['material']->bill_number}}" name="bill_number" id="bill_number" class="@error('bill_number') is-danger @enderror" value="{{old('bill_number')}}">
                                 @error('bill_number')
                                 <p class="help is-danger">
                                     {{$message}}
@@ -39,18 +39,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="user">المشتري</label>
-                                <select class="form-control" name="user_id" id="user" class="@error('user_id') is-danger @enderror">
+                                <select class="form-control" name="buyer_id" id="user" class="@error('buyer_id') is-danger @enderror">
                                     <option value="" disabled selected>حدد المشتري</option>
                                     @foreach($data['users'] as $user)
-<<<<<<< HEAD
-                                    <option value="{{$user->id}}" {{$data['material']->user_id == $user->id ? 'selected' : ''}}>{{$user->name}}
-=======
-                                        <option value="{{$user->id}}" {{$data['material']->buyer_id == $user->id ? 'selected' : ''}}>{{$user->name}}
->>>>>>> d06e9b0d1369f53f61a5f1d560a6e382f83ffa27
-                                    </option>
+                                        <option value="{{$user->id}}" {{ old('buyer_id') == $user->id  ? 'seleted' : (  $data['material']->buyer_id  == $user->id ? 'selected' : '' )}}>{{$user->name}}</option>
                                     @endforeach
                                 </select>
-                                @error('user_id')
+                                @error('buyer_id')
                                 <p class="help is-danger">
                                     {{$message}}
                                 </p>
@@ -85,12 +80,14 @@
                                 </select>
                             </div>
                         </div>
+
+                        <input type = "hidden" name = "type" value = "{{ !$data['material']->qty ?  'material' : 'accessory'}}">
                     </div>
                     <div id="material" style="{{!$data['material']->qty ? '' : 'display:none' }}" class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="weight">الوزن</label>
-                                <input type="text" class="form-control" name="weight" id="weight" value="{{$data['material']->weight}}" class="@error('weight') is-danger @enderror" value="{{old('weight')}}">
+                                <input type="text" class="form-control" name="weight" id="weight" value="{{ old('weight') ?? $data['material']->weight}}" class="@error('weight') is-danger @enderror" value="{{old('weight')}}">
                                 @error('weight')
                                 <p class="help is-danger">
                                     {{$message}}
@@ -144,8 +141,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description">ملاحظات</label>
-                        <textarea class="form-control" name="description" id="description" class="@error('description') is-danger @enderror">
-                        {{$data['material']->description}}</textarea>
+                        <textarea class="form-control" name="description" id="description" class="@error('description') is-danger @enderror">{{$data['material']->description}}</textarea>
 
                         @error('description')
                         <p class="help is-danger">

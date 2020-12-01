@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">اسم العميل</label>
-                        <input type="text" class="form-control @error('name') is-danger @enderror " name="name" id="name" placeholder="ادخل اسم العميل">
+                    <input type="text" class="form-control @error('name') is-danger @enderror " name="name" value = "{{ old('name') }}" id="name" placeholder="ادخل اسم العميل">
                         @error('name')
                         <p class="help is-danger">
                             {{ $message }}
@@ -26,7 +26,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="phone"> رقم الهاتف</label>
-                                <input type="text" class="form-control @error('phone') is-danger @enderror " name="phone" id="phone" placeholder="ادخل رقم الهاتف">
+                                <input type="text" class="form-control @error('phone') is-danger @enderror " name="phone" value = "{{ old('phone') }}" id="phone" placeholder="ادخل رقم الهاتف">
                                 @error('phone')
                                 <p class="help is-danger">
                                     {{ $message }}
@@ -37,7 +37,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="source">المصدر </label>
-                                <input type="text" class="form-control @error('source') is-danger @enderror" name="source" id="source" placeholder="مصدر وصولك الينا">
+                                <input type="text" class="form-control @error('source') is-danger @enderror" name="source" value = "{{ old('source') }}"  id="source" placeholder="مصدر وصولك الينا">
                                 @error('source')
                                 <p class="help is-danger">
                                     {{ $message }}
@@ -48,7 +48,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="notes">ملاحظات علي العميل </label>
-                                <input type="text" class="form-control @error('notes') is-danger @enderror " name="notes" id="notes" placeholder="ادخل ملاحظات علي العميل">
+                                <input type="text" class="form-control @error('notes') is-danger @enderror " name="notes"  value = "{{ old('notes') }}"  id="notes" placeholder="ادخل ملاحظات علي العميل">
                                 @error('notes')
                                 <p class="help is-danger">
                                     {{ $message }}
@@ -60,7 +60,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="link">صفحة العميل الخاصة</label>
-                            <input type="text" class="form-control  @error('link') is-danger @enderror " name="link" id="link" placeholder="من اين علمت بنا">
+                            <input type="text" class="form-control  @error('link') is-danger @enderror " name="link" value = "{{ old('link') }}"  id="link" placeholder="من اين علمت بنا">
                             @error('link')
                             <p class="help is-danger">
                                 {{ $message }}
@@ -73,10 +73,10 @@
                             <label for="type">نوع العميل</label>
                             <select class="form-control  @error('type') is-danger @enderror " name="type" id="type">
                                 <option value="" disabled selected>حدد نوع تعامل العميل</option>
-                                <option value="individual">عميل عادي</option>
-                                <option value="related">عميل مميز</option>
-                                <option value="wholesaler">تاجر جملة</option>
-                                <option value="retailer">تاجر قطاعي</option>
+                                <option value="individual" {{ old('type') == 'individual' ? 'selected' : '' }} >عميل عادي</option>
+                                <option value="related" {{ old('type') == 'related' ? 'selected' : '' }} >عميل مميز</option>
+                                <option value="wholesaler" {{ old('type') == 'wholesaler' ? 'selected' : '' }} >تاجر جملة</option>
+                                <option value="retailer" {{ old('type') == 'retailer' ? 'selected' : '' }} >تاجر قطاعي</option>
                             </select>
                             @error('type')
                             <p class="help is-danger">
@@ -88,7 +88,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="address">العنوان</label>
-                                    <input type="text" class="form-control  @error('address') is-danger @enderror " name="address" id="address" placeholder="ادخل العنوان">
+                                    <input type="text" class="form-control  @error('address') is-danger @enderror " name="address" value = "{{ old('address') }}" id="address" placeholder="ادخل العنوان">
                                     @error('address')
                                     <p class="help is-danger">
                                         {{ $message }}

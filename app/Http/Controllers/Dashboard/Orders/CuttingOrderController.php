@@ -74,13 +74,15 @@ class CuttingOrderController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        //return $request ;
+        //dd($request->all());
         $order = CuttingOrder::create($request->all());
         $material = Material::whereHas('spreadingOutMaterialOrders', function ($q) use ($order) {
             $q->whereHas('cuttingOrders', function ($query) use ($order) {
                 $query->where('id', $order->id);
             });
         })->first();
+        
         if ($request->extra_returns_weight) {
             $material->weight = $request->extra_returns_weight + $material->weight;
             $material->save();
@@ -113,6 +115,7 @@ class CuttingOrderController extends Controller
 
     public function storeExtra(Request $request)
     {
+        //return $request;
         $order = CuttingOrder::where('id', $request->cutting_order_id)->first();
         $material = Material::whereHas('spreadingOutMaterialOrders', function ($q) use ($order) {
             $q->whereHas('cuttingOrders', function ($query) use ($order) {
@@ -207,6 +210,8 @@ class CuttingOrderController extends Controller
                 'size'         => $item[0]->size->name
             ];
         });
+
+        //return $orders;
         
         $orders = array_values($orders->toArray());
         // return $orders;

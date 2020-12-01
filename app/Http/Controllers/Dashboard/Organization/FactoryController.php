@@ -50,7 +50,7 @@ class FactoryController extends Controller
         $request->validate([
             
             'type_id' => 'required|exists:factory_types,id',
-            'name' => 'required|min:3|unique:factories,name,' . $request->name,
+            'name' => 'required|min:3|unique:factories,name,' . $request->type_id,
             'phone' => 'min:11',
             'address' => 'max:100'
         ]);

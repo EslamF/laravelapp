@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="mq_r_code">Customers</label>
+                                <label for="customer_id">Customers</label>
                                 <select class="form-control" @change="getCustomer" v-model="customer_id" id="">
                                     <option :value="customer.id" v-for="customer in customers" :key="customer.id">@{{customer.name}}</option>
                                 </select>
@@ -30,35 +30,35 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="weight">Name</label>
+                                <label for="name">Name</label>
                                 <span style="color:red" v-if="customer_errors.name">@{{customer_errors.name}}</span>
                                 <input type="text" v-model="customer.name" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="weight">Phone</label>
+                                <label for="phone">Phone</label>
                                 <span style="color:red" v-if="customer_errors.phone">@{{customer_errors.phone}}</span>
                                 <input type="text" v-model="customer.phone" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="weight">Address</label>
+                                <label for="address">Address</label>
                                 <span style="color:red" v-if="customer_errors.address">@{{customer_errors.address}}</span>
                                 <input type="text" v-model="customer.address" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="weight">Source</label>
+                                <label for="source">Source</label>
                                 <span style="color:red" v-if="customer_errors.source">@{{customer_errors.source}}</span>
                                 <input type="text" v-model="customer.source" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="weight">Link</label>
+                                <label for="link">Link</label>
                                 <span style="color:red" v-if="customer_errors.link">@{{customer_errors.link}}</span>
                                 <input type="text" v-model="customer.link" class="form-control">
                             </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="weight">Delivery Date</label>
+                                <label for="delivery_date">Delivery Date</label>
                                 <input type="date" v-model="delivery_date" class="form-control">
                             </div>
                         </div>

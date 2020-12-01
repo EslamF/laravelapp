@@ -41,12 +41,14 @@ class ReceivingMaterialController extends Controller
 
     public function createPage()
     {
+        
         $data = [];
         $data['users'] = User::select('id', 'name')->whereHas('roles', function ($q) {
             $q->whereHas('peremissions', function ($query) {
                 $query->where('name', 'buy-material');
             });
         })->get();
+ 
         $data['suppliers'] = Supplier::select('id', 'name')->get();
         $data['material_types'] = MaterialType::select('id', 'name')->get();
         return view('dashboard.orders.receiving_materials.create')->with('data', $data);
@@ -67,23 +69,38 @@ class ReceivingMaterialController extends Controller
                 $query->where('name', 'buy-material');
             });
         })->get();
+
+        
         $data['suppliers'] = Supplier::select('id', 'name')->get();
         $data['material_types'] = MaterialType::select('id', 'name')->get();
         $data['material'] = Material::where('id', $material_id)->first();
+
 
         return view('dashboard.orders.receiving_materials.edit')->with('data', $data);
     }
 
     public function update(Request $request)
     {
+        //return $request;
+        
+            /*'mq_r_code' => 'required|unique:materials,mq_r_code',
+            'type' => 'required',
+            'material_type_id' => 'requiredIf:type,material|exists:material_types,id',
+            'buyer_id' => 'required|exists:users,id',
+            'supplier_id' => 'required|exists:suppliers,id',
+            'qty' => 'requiredIf:type,accessory',
+            'weight' => 'requiredIf:type,material',
+            'bill_number' => 'required',
+            'color' => 'requiredIf:type,material',*/
+        
 
         $request->validate([
             'material_id' => 'required|exists:materials,id',
-            'mq_r_code' => 'unique:materials,mq_r_code,' . $request->material_id,
+            'mq_r_code' => 'required|unique:materials,mq_r_code,' . $request->material_id,
             'material_type_id' => 'requiredIf:type,material|exists:material_types,id',
-            'user_id'     => 'exists:users,id',
-            'supplier_id' => 'exists:suppliers,id',
-            'bill_number' => 'min:3',
+            'buyer_id'     => 'required|exists:users,id',
+            'supplier_id' => 'required|exists:suppliers,id',
+            'bill_number' => 'required|min:3',
             'color' => 'requiredIf:type,material',
             'weight' => 'requiredIf:type,material',
             'qty'   => 'requiredIf:type,accessory'

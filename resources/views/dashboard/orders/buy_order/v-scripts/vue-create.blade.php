@@ -69,6 +69,7 @@
                     'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                 };
                 axios.get('{{url("customers/get")}}' + '/' + this.customer_id).then(res => {
+                    console.log(res);
                     this.customer = res.data;
                 }).catch(err => {
 
@@ -82,6 +83,7 @@
                     'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                 };
                 axios.get('{{url("orders/buy/get-material")}}' + '/' + this.mq_r_code).then(res => {
+                    console.log(res.data);
                     this.data = res.data;
                     this.addToProduct();
                 }).catch(err => {
