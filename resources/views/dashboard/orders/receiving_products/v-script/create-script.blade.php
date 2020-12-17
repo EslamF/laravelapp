@@ -56,9 +56,9 @@
                     var all_required = 0;
 
                     $.each(this.products, function(index, product) {
-                        all_count+= product.count ;
-                        all_received+= product.number_of_received ;
-                        all_required+= product.required ;
+                        all_count+= parseInt(product.count) ;
+                        all_received+= parseInt(product.number_of_received) ;
+                        all_required+= parseInt(product.required) ;
                     });
                     
                     all_count = parseInt(all_count);
