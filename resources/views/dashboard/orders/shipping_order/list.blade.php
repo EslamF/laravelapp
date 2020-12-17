@@ -9,11 +9,12 @@
                 </div>
                 <a href="{{Route('shipping.create_page')}}" class="btn btn-success float-right {{ Laratrust::isAbleTo('add-shipping-order') ? '' : 'disabled' }}" >{{__('words.add')}}</a>
 
+                
                 @permission('upload-file-shipping-order')
                 <form action="{{Route('shipping.import_excel')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="file" value="fileupload" class="hidden" id="fileupload">
-                    <input type = "submit" class = "btn btn-primary" value = "{{__('words.upload')}}">
+                    {{--<input type = "submit" class = "btn btn-primary" value = "{{__('words.upload')}}">--}}
                 </form>
                 @endpermission
             </div>
