@@ -6,6 +6,7 @@
             <div class="card-header">
                 <h3 class="card-title">أنواع مصنع</h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" id = "myForm" action="{{Route('factory.type.store')}}" method="POST">
@@ -46,6 +47,7 @@
             form.submit();
             //disable the submit button
             $("#btnSubmit").attr("disabled", true);
+            document.getElementById('loader').style.display = 'block';
 
             return true;
 

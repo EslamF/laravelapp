@@ -21,7 +21,7 @@ class OrderProcessController extends Controller
             })
             ->where('confirmation', '!=', 'canceled')
             ->where('preparation', 'need_prepare')
-            ->where('status', 0)
+            //->where('status', 0)
             ->count();
 
         $prepared = BuyOrder::where('status', 1)
@@ -33,12 +33,14 @@ class OrderProcessController extends Controller
                 $q->where('factory_qty', 0);
             })
             ->where('preparation', 'shipped')
-            ->where('status', 1)
+            //->where('status', 1)
             ->count();
 
         $readyToShip = ShippingOrder::where('status', 0)->count();
 
-        return view('dashboard.orders.buy_process.list', ['new' => $new, 'prepared' => $prepared, 'done' => $done, 'ready' => $readyToShip]);
+        $rejected = BuyOrder::where('status' , 'rejected')->count();
+
+        return view('dashboard.orders.buy_process.list', ['new' => $new, 'prepared' => $prepared, 'done' => $done, 'ready' => $readyToShip , 'rejected' => $rejected]);
     }
 
     public function getNewOrders()
@@ -49,10 +51,63 @@ class OrderProcessController extends Controller
             })
             ->where('confirmation', '!=', 'canceled')
             ->where('preparation', 'need_prepare')
-            ->where('status', 0)
+            //->where('status', 0)
             ->paginate();
 
         return view('dashboard.orders.buy_process.new_orders', ['orders' => $orders]);
+    }
+
+    public function getRejectedOrders()
+    {
+        $orders = BuyOrder::with('shippingOrders' , 'shippingOrders.shippingCompany')
+                            ->select('id', 'bar_code', 'delivery_date', 'confirmation')
+                            ->where('status', 'rejected')
+                            ->paginate();
+
+        //return $orders;
+        return view('dashboard.orders.buy_process.rejected_orders', ['orders' => $orders]);
+    }
+
+    public function receive_rejected_orders_page($id)
+    {
+        $order = BuyOrder::with('buyOrderProducts')->findOrFail($id);
+        $order->buyOrderProducts->map(function($item , $key) use($order){
+
+            $product = Product::with('productType' , 'size' , 'material' , 'material.materialType')->where('produce_code' , $item->produce_code)->first();
+            //$order->buyOrderProducts[$key]->put('type' , $product->productType->name);
+            //$order->buyOrderProducts['type'] = $product->productType->name ;
+            $item->type      = $product->productType->name ;
+            $item->size      = $product->size->name ;
+            $item->mq_r_code = $product->material->mq_r_code ;
+            $item->material  = $product->material->materialType->name ;
+            return $item;
+
+        });
+        //return $order;
+        return view('dashboard.orders.buy_process.receive_rejected_orders_page' , compact('order'));
+    }
+
+    public function receive_rejected_orders_submit(Request $request)
+    {
+        $order = BuyOrder::with('buyOrderProducts')->findOrFail($request->id);
+        if($order)
+        {
+            $products = Product::whereHas('buyOrders', function ($q) use ($request) {
+                $q->where('buy_orders.id', $request->id);
+            })->get()->pluck('id');
+    
+            Product::whereIn('id', $products)->update([
+                'status' => 'available'
+            ]);
+
+            $order->products()->detach();
+
+            $order->update(['status' => 'returned']);
+
+            return response()->json('success' , 200);
+        }
+
+        return response()->json('error' , 200);
     }
 
     public function getToPrepare($id)
@@ -93,8 +148,6 @@ class OrderProcessController extends Controller
             ->where('status', '!=', 'reserved')
             ->first();
 
-
-
         if ($product) {
             return response()->json($product, 200);
         }
@@ -105,7 +158,7 @@ class OrderProcessController extends Controller
     {
         $order = BuyOrder::where('id', $request->buy_order_id)->first();
         $order->preparation = 'prepared';
-        $order->status = 1;
+        //$order->status = 1;
         $order->save();
         $buyOrderProduct = BuyOrderProduct::where('buy_order_id', $order->id)->first();
 
@@ -119,9 +172,8 @@ class OrderProcessController extends Controller
 
     public function readyOrderPage()
     {
-        $orders = BuyOrder::where('status', 1)
-            ->where('preparation', 'prepared')
-            ->paginate();
+        $orders = BuyOrder::where('preparation', 'prepared')
+                            ->paginate();
 
         return view('dashboard.orders.buy_process.ready_orders', ['orders' => $orders]);
     }
@@ -155,19 +207,45 @@ class OrderProcessController extends Controller
 
     public function doneOrder()
     {
-        $orders = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation')
-            ->whereHas('buyOrderProducts', function ($q) {
-                $q->where('factory_qty', 0);
-            })
-            ->where('preparation', 'shipped')
-            ->where('status', 1)
-            ->paginate();
+        $orders = BuyOrder::with('shippingOrders' , 'shippingOrders.shippingCompany')
+                            ->whereHas('buyOrderProducts', function ($q) {
+                                $q->where('factory_qty', 0);
+                            })
+                            ->where('preparation', 'shipped')
+                            //->where('status', 1)
+                            ->paginate();
 
         return view('dashboard.orders.buy_process.done_orders', ['orders' => $orders]);
     }
 
     public function doneOrderPage($id)
     {
-        return view('dashboard.orders.buy_process.ready_single_order', ['id' => $id]);
+        return view('dashboard.orders.buy_process.done_single_order', ['id' => $id]);
+    }
+
+    public function update_the_status_of_done_order(Request $request)
+    {
+        $validator = validator()->make($request->all() , [
+            'order_id'     => 'required|exists:buy_orders,id' ,
+            'order_status' => 'required|in:pending,rejected,done'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json('error' , 200);
+        }
+
+        $order = BuyOrder::find($request->order_id);
+        if($order->status != 'returned')
+        {
+            $order->status = $request->order_status;
+            $order->save();
+            return response()->json('success' , 200);
+        }
+
+        else 
+        {
+            return response()->json('error' , 200);
+        }
     }
 }

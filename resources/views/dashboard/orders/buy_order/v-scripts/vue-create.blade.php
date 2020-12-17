@@ -1,6 +1,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+    Vue.config.devtools = true
     var app = new Vue({
         el: '#app',
         data: {
@@ -10,11 +11,13 @@
             customer: {
                 id: '',
                 name: '',
+                notes: '',
                 address: '',
                 link: '',
                 phone: '',
                 source: '',
                 type: '',
+                buy_orders: []
             },
             product: {
                 qty: '',
@@ -23,6 +26,7 @@
             },
             description: '',
             mq_r_code: '',
+            mq_r_code_err : '' ,
             products: [],
             data: [],
             errors: [],
@@ -58,7 +62,7 @@
                 var y = someDate.getFullYear();
 
                 this.delivery_date = y + '-' + mm + '-' + dd;
-                document.getElementById('loader').style.display = 'block';
+                //document.getElementById('loader').style.display = 'block';
 
             },
             getCustomer() {
@@ -69,7 +73,7 @@
                     'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                 };
                 axios.get('{{url("customers/get")}}' + '/' + this.customer_id).then(res => {
-                    console.log(res);
+                    console.log(res.data);
                     this.customer = res.data;
                 }).catch(err => {
 
@@ -83,6 +87,7 @@
                     'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                 };
                 axios.get('{{url("orders/buy/get-material")}}' + '/' + this.mq_r_code).then(res => {
+                    this.mq_r_code_err = '' ;
                     console.log(res.data);
                     this.data = res.data;
                     this.addToProduct();
@@ -91,13 +96,19 @@
                 });
             },
             addToProduct() {
-                for (i = 0; i < this.data.length; i++) {
+                
+                for (var i = 0; i < this.data.length; i++) {
+                    //console.log("i " + i);
                     this.checkIfExistsInProduct(this.data[i]);
+                    
                 }
             },
             checkIfExistsInProduct(item) {
+                //console.log('item');
+                //console.log(item);
+                
                 if (this.products.length > 0) {
-                    for (i = 0; i < this.products.length; i++) {
+                    for (var i = 0; i < this.products.length; i++) {
                         if (this.products[i].produce_code == item.produce_code &&
                             this.products[i].product_type == item.product_type &&
                             this.products[i].size == item.size) {
@@ -120,19 +131,33 @@
             updateStock(index, qty) {
                 this.have_error = false;
                 this.products[index].err = '';
+
                 if (this.products[index].company_count + this.products[index].factory_count < qty) {
                     this.products[index].err = "You can't use this amount";
                     this.have_error = true;
                 }
+                else if(qty != '' && qty > 0)
+                {
+                    this.have_value = true;
+                }
+
             },
             sendOrder() {
+                //console.log("new");
+                
                 this.customerValidate();
+                //console.log('have value : ' + this.have_value + ' .. have error : ' + this.have_error);
                 if (!this.have_error && this.have_value) {
+                    $("#btnSubmit").attr("disabled", true);
+                    //console.log(document.getElementById('loader'));
+                    document.getElementById('loader').style.display = 'block';
                     let data = {};
                     data.customer = this.customer;
                     data.products = this.products;
                     data.description = this.description;
                     data.delivery_date = this.delivery_date;
+                    console.log('products');
+                    console.log(data.products);
                     const metas = document.getElementsByTagName('meta');
                     axios.defaults.headers = {
                         'Content-Type': 'application/json',
@@ -172,8 +197,11 @@
                     this.have_error = true;
                 }
                 this.productsValidate();
+
+                //console.log()
             },
             productsValidate() {
+                //console.log("products validation");
                 this.error = {
                     qty: '',
                     price: ''
@@ -181,34 +209,72 @@
 
                 var reg = new RegExp('^(?:0|00)\d+$')
 
-                this.have_value = false;
-                for (i = 0; i < this.products.length; i++) {
+                this.have_value = false ;
+                this.mq_r_code_err = '' ;
+
+
+                /*if(!this.mq_r_code)
+                {
+                    //console.log("mq r code validation");
+                    this.mq_r_code_err = 'يجب إدخال كود الخامة';
+                    this.have_error = true;
+                }*/
+                for (var i = 0; i < this.products.length; i++) {
                     let error = {}
                     this.products[i].error_qty = '';
                     this.products[i].error_price = '';
                     this.products[i].price_err = '';
-                    if (this.products[i].qty > this.products[i].company_count) {
+                    //extra
+                    this.products[i].err = "";
+                    /*if (this.products[i].qty > this.products[i].company_count) {
                         this.setDate(7);
-                    }
+                    }*/
 
-                    if ((this.products[i].qty <= 0 && this.products[i].qty !== "")) {
+                    /*if ((this.products[i].qty <= 0 && this.products[i].qty !== "")) {
+                        console.log(i + ' : ' + 1);
                         this.products[i].error_qty = "* يجب ادخال هذا الحقل";
                         this.have_error = true;
-                    }
+                    }*/
 
                     if (this.products[i].price > 0 && !this.products[i].qty || reg.test(this.products[i].qty)) {
+                        console.log(i + ' : ' + 2);
                         this.products[i].error_qty = "* يجب ادخال هذا الحقل";
                         this.have_error = true;
                     }
 
-                    if ((this.products[i].qty > 0 && !this.products[i].price) || this.products[i].price <= 0) {
-                        this.products[i].price_err = "* يجب ادخال هذا الحقل";
+                    if(   !(this.products[i].price <= 0 && this.products[i].qty <=0 ))
+                    {
+                        if (   (this.products[i].qty > 0 && !this.products[i].price) || (this.products[i].qty > 0 && this.products[i].price <= 0)  )   {
+                            //!(this.products[i].price <= 0 && this.products[i].qty <=0)
+                            console.log(i + ' : ' + 3);
+                            console.log( 'condition 1 : ' + (this.products[i].qty > 0 && !this.products[i].price) );
+                            console.log( 'condition 1 : ' + (this.products[i].price <= 0) );
+                            console.log('price : ' + this.products[i].price);
+                            this.products[i].price_err = "* يجب ادخال هذا الحقل";
 
-                        this.have_error = true;
-                    }
+                            this.have_error = true;
+                        }
+                    }   
+                    
 
-                    if (this.products[i].qty) {
+                    //extra : if the price and quantity are 0 in the same time => success
+
+
+
+                    if (this.products[i].qty && this.products[i].qty > 0) {
+                        console.log(i + ' : ' + 4);
                         this.have_value = true;
+                    }
+                    //extra
+                    if (this.products[i].company_count + this.products[i].factory_count < this.products[i].qty) {
+                        //console.log(i + ' : ' + 1);
+                        //console.log('index : ' + i);
+                        //console.log('company_count :  ' + this.products[i].company_count);
+                        //console.log('factory_count :  ' + this.products[i].factory_count);
+                        //console.log('qty :  ' + this.products[i].qty);
+                        console.log(i + ' : ' + 5);
+                        this.products[i].error_qty = "You can't use this amount";
+                        this.have_error = true;
                     }
                 }
 

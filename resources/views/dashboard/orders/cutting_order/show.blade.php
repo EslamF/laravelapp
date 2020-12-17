@@ -1,46 +1,60 @@
 @extends('index')
 @section('content')
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12"> 
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"> المنتجات الخاصة بإذن القص</h3>
-                <a href="{{Route('cutting_order.add_page', $cutting_order->id)}}" class="btn btn-success float-right">إنشاء</a>
+                {{--<a href="{{Route('cutting_order.add_page', $cutting_order->id)}}" class="btn btn-success float-right">إنشاء</a>--}}
             </div>
-            <h4 class="ml-3 mt-2">{{$cutting_order->factory ?'الشركة المسؤلة عن القص:'. $cutting_order->factory->name: 'الموظف المسؤل عن القص: '.$cutting_order->user->name}}</h3>
+            <h4 class="ml-3 mt-2">{{$cutting_order->factory ?'الشركة المسؤلة عن القص:'. $cutting_order->factory->name: 'الموظف المسؤل عن القص: '.$cutting_order->cuttinguser->name}}</h3>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <table class="table ">
                         <thead>
-                            <tr class="row">
-                                <div class="col-md-12">
-                                    <th class="col-md-2">الرقم المرجعي</th>
-                                    <th class="col-md-4">اسم المنتج</th>
-                                    <th class="col-md-3">مقاس المنتج</th>
-                                    <th class="col-md-1">الكمية</th>
-                                    <th class="col-md-2">إجراءات</th>
-                                </div>
+                            <tr>
+                                <th>الرقم المرجعي</th>
+                                <th>اسم المنتج</th>
+                                <th>مقاس المنتج</th>
+                                <th>الكمية</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($orders as $value)
-                            <tr class="row">
-                                <div class="col-md-12">
-                                    <td class="col-md-2">{{$value['id']}}</td>
-                                    <td class="col-md-4">{{$value['product_type']}}</td>
-                                    <td class="col-md-3">{{$value['size']}}</td>
-                                    <td class="col-md-1">{{$value['qty']}}</td>
-                                    <td class="col-md-2">
-                                        <form style="display:inline" action="{{Route('cutting.delete_product')}}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{$value['id']}}">
-                                            <button type="submit" class="btn btn-danger">حذف</button>
-                                        </form>
-                                    </td>
-                                </div>
+                            <tr>
+                                <td>{{$value['id']}}</td>
+                                <td>{{$value['product_type']}}</td>
+                                <td>{{$value['size']}}</td>
+                                <td>{{$value['qty']}}</td>
                             </tr>
                             @endforeach
                         </tbody>
+                    </table>
+
+                    <br><br>
+                    <h4>بيانات إذن الفرش</h4>
+
+                    <table class = "table">
+                        <thead>
+                            <tr>
+                                <th>الرقم المرجعي</th>
+                                <th>موظف الفرش</th>
+                                <th>الوزن</th>
+                                <th>كود الخامة</th>
+
+                            </tr>
+                        </thead> 
+
+                        <tbody>
+                            <tr>
+                                <td>{{$cutting_order->spreadingOutMaterialOrder->id}}</td>
+                                <td>{{$cutting_order->spreadingOutMaterialOrder->spreadinguser->name}}</td>
+                                <td>{{$cutting_order->spreadingOutMaterialOrder->weight}}</td>
+                                <td>{{$cutting_order->spreadingOutMaterialOrder->material->mq_r_code}}</td>
+                            </tr>
+                        </tbody> 
+
+
                     </table>
                 </div>
                 <!-- /.card-body -->

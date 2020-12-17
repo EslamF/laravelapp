@@ -65,6 +65,7 @@
                 $(this).attr('disabled', 'disabled');
             });
         </script>
+        @stack('scripts')
         </body>
 
         </html>

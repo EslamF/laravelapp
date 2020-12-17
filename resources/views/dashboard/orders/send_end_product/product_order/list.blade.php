@@ -4,17 +4,17 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">إذن تخزين</h3>
-                <a href="{{url()->previous()}}" class="btn btn-info float-right">رجوع</a>
+                <h3 class="card-title">{{__('words.store_order')}}</h3>
+                <a href="{{url()->previous()}}" class="btn btn-info float-right">{{__('words.back')}}</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <h3 style="display: block;">Shipped by <span> {{$order->user ? $order->user->name : ''}} </span></h3>
-                    <h3 style="display: block;">Code <span> {{$order->code}}</span></h3>
+                <h3 style="display: block;">{{__('words.shipping_employee')}} : <span> {{$order->shippinguser ? $order->shippinguser->name : ''}} </span></h3>
+                    <h3 style="display: block;">{{__('words.order_code')}} : <span> {{$order->code}}</span></h3>
                     <table class="table ">
                         <thead>
                             <tr>
-                                <th>كود المنتج</th>
+                                <th>{{__('words.product_code')}}</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -5,31 +5,37 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"> المقاسات</h3>
-                <a href="{{Route('size.create_page')}}" class="btn btn-success float-right">انشاء</a>
+                <a href="{{Route('size.create_page')}}" class="btn btn-success float-right {{ Laratrust::isAbleTo('edit-size') ? '' : 'disabled' }}" >انشاء</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th> الرقم المرجعي</th>
-                            <th>المقاسات</th>
-                            <th>الالخيارات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($types as $size)
-                        <tr>
-                                <td>{{$size->id}}</td>
-                                <td>{{$size->name}}</td>
-                                <td>
-                                    <a href="{{Route('size.edit_page', $size->id)}}" class="btn btn-primary">تعديل</a>
-                                    <button type="submit" class="btn btn-danger" @click = "deleteItem({{$size->id}})">حذف</button>
-                                </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if($types->count())
+                    @include('includes.flash-message')
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> الرقم المرجعي</th>
+                                <th>المقاسات</th>
+                                <th>الالخيارات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($types as $size)
+                            <tr>
+                                    <td>{{$size->id}}</td>
+                                    <td>{{$size->name}}</td>
+                                    <td>
+                                        <a href="{{Route('size.edit_page', $size->id)}}" class="btn btn-primary {{ Laratrust::isAbleTo('edit-size') ? '' : 'disabled' }}" >تعديل</a>
+                                        <button type="submit" class="btn btn-danger" @click = "deleteItem({{$size->id}})" {{ Laratrust::isAbleTo('delete-size') ? '' : 'disabled' }} >حذف</button>
+                                    </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="text-center">لا يوجد بيانات</p>
+                @endif
+
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">

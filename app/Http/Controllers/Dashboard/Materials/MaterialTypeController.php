@@ -20,7 +20,7 @@ class MaterialTypeController extends Controller
             'name' => 'required|min:3|unique:material_types,name'
         ]);
         MaterialType::create($request->all());
-        return redirect()->route('material.type.list');
+        return redirect()->route('material.type.list')->with('success' , __('words.added_successfully') );
     }
     /**
      * 
@@ -36,7 +36,7 @@ class MaterialTypeController extends Controller
         ]);
 
         MaterialType::find($request->type_id)->update($request->all());
-        return redirect()->route('material.type.list');
+        return redirect()->route('material.type.list')->with('success' , __('words.updated_successfully')) ;
     }
     /**
      * 

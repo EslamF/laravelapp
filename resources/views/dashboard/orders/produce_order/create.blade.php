@@ -1,11 +1,13 @@
 @extends('index')
 @section('content')
 <div id="app" class="row">
-    <div style="display: none;" id="loader" class="col-md-12">
+    <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">انشاء إذن تصنيع </h3>
             </div>
+
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
 
@@ -17,7 +19,7 @@
                             <div class="form-group">
                                 <label for="mq_r_code">إذن القص</label>
                                 <span style="color:red" v-if="error.cutting_order_id">*@{{error.cutting_order_id}}</span>
-                                <select class="form-control" @change="getFactoryByCuttingId(cutting_order_id)" v-model="cutting_order_id" id="user">
+                                <select class="form-control" @change="getFactoryByCuttingId(cutting_order_id)" v-model="cutting_order_id">
                                     <option value="" disabled selected>اختر إذن القص</option>
                                     <option :value="order.id" v-for="order in cutting_orders">@{{order.id}}</option>
                                 </select>
@@ -34,7 +36,7 @@
                             <div class="form-group">
                                 <label for="mq_r_code">نوع المصنع</label>
                                 <span style="color:red" v-if="error.factory_id">*@{{error.factory_type_id}}</span>
-                                <select class="form-control" v-model="factory_type_id" @change="getFactory()" id="user">
+                                <select class="form-control" v-model="factory_type_id" @change="getFactory()">
                                     <option value="" disabled selected>حدد نوع المصنع</option>
                                     <option :value="factory.id" v-for="factory in factory_types">@{{factory.name}}</option>
                                 </select>
@@ -44,7 +46,7 @@
                             <div class="form-group">
                                 <label for="mq_r_code">المصنع</label>
                                 <span style="color:red" v-if="error.factory_id">*@{{error.factory_id}}</span>
-                                <select class="form-control" v-model="factory_id" id="user">
+                                <select class="form-control" v-model="factory_id">
                                     <option value="" disabled selected>حدد اسم المصنع</option>
                                     <option :value="factory.id" v-for="factory in factories" :selected="factory_id == factory.id">@{{factory.name}}</option>
 
@@ -67,11 +69,37 @@
                         </div>
                     </div>
 
+                    <table class="table" v-show="available_products.length > 0">
+                        <p v-if = "!have_value"  v-show="available_products.length > 0" style = "color:red">يجب إدخال منتجات</p>
+                        <thead>
+                            <tr>
+                                <th>المنتج</th>
+                                <th>المقاس</th>
+                                <th>الكمية المتاحة</th>
+                                <th>الكمية المطلوبة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr v-for="(product,index) in available_products" :key="index">
+
+                                    <td>@{{product.name}}</td>
+                                    <td>@{{product.size}}</td>
+                                    <td>@{{product.quantity}}</td>
+                                    <td>
+                                        <span v-if="have_error" style="color:red">@{{product.err}}</span>
+                                        {{--<span v-if="have_error" style="color:red">@{{available_products[index].error_qty}}</span>--}}
+                                        <input type="number" min="0" :max = "product.quantity" style="width:60%" class="form-control" v-model="product.required_quantity" v-bind:id="'product' + index">
+                                    </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="button" @click="store" class="btn btn-primary">إضافة</button>
+                    <button type="button" id = "btnSubmit" @click="store" class="btn btn-primary">إضافة</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

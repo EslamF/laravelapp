@@ -14,7 +14,7 @@ class ReceivingMaterialController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'mq_r_code' => 'required|unique:materials,mq_r_code',
+            'mq_r_code' => 'required',
             'type' => 'required',
             'material_type_id' => 'requiredIf:type,material|exists:material_types,id',
             'buyer_id' => 'required|exists:users,id',
@@ -35,8 +35,39 @@ class ReceivingMaterialController extends Controller
         {
             $request_data = $request->except(['weight' , 'material_type_id' , 'color' ]);
         }
-        Material::create($request_data);
-        return redirect()->route('order.receiving.material');
+
+        $old_material = Material::where('mq_r_code' , $request->mq_r_code)->first();
+        if($old_material && $request->type == 'material' )
+        {
+            $old_material->weight = $old_material->weight + $request->weight;
+            $old_material->save();
+
+            $old_material->update([
+                'material_type_id' => $request->material_type_id , 
+                'buyer_id'         => $request->buyer_id ,
+                'supplier_id'      => $request->supplier_id ,
+                'bill_number'      => $request->bill_number ,
+                'color'            => $request->color
+            ]);
+        }
+
+        else if($old_material && $request->type == 'accessory')
+        {
+            $old_material->qty = $old_material->qty + $request->qty;
+            $old_material->save();
+
+            $old_material->update([
+                'buyer_id'         => $request->buyer_id ,
+                'supplier_id'      => $request->supplier_id ,
+                'bill_number'      => $request->bill_number ,
+            ]);
+        }
+        else 
+        {
+            Material::create($request_data);
+        }
+        
+        return redirect()->route('order.receiving.material')->with('success' , __('words.added_successfully'));
     }
 
     public function createPage()
@@ -44,7 +75,7 @@ class ReceivingMaterialController extends Controller
         
         $data = [];
         $data['users'] = User::select('id', 'name')->whereHas('roles', function ($q) {
-            $q->whereHas('peremissions', function ($query) {
+            $q->whereHas('permissions', function ($query) {
                 $query->where('name', 'buy-material');
             });
         })->get();
@@ -56,7 +87,7 @@ class ReceivingMaterialController extends Controller
 
     public function getAllPaginate()
     {
-        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'createdBy:id,name', 'buyer:id,name')->paginate();
+        $receiving = Material::with('materialType:id,name', 'supplier:id,name', 'user:id,name', 'buyer:id,name')->paginate();
         return view('dashboard.orders.receiving_materials.list')->with('receiving', $receiving);
     }
 
@@ -65,7 +96,7 @@ class ReceivingMaterialController extends Controller
         $data = [];
         //$data['users'] = User::select('id', 'name')->get();
         $data['users'] = User::select('id', 'name')->whereHas('roles', function ($q) {
-            $q->whereHas('peremissions', function ($query) {
+            $q->whereHas('permissions', function ($query) {
                 $query->where('name', 'buy-material');
             });
         })->get();
@@ -103,12 +134,13 @@ class ReceivingMaterialController extends Controller
             'bill_number' => 'required|min:3',
             'color' => 'requiredIf:type,material',
             'weight' => 'requiredIf:type,material',
-            'qty'   => 'requiredIf:type,accessory'
+            'qty'   => 'requiredIf:type,accessory' ,
+            'type'  => 'required|in:material,accessory'
 
         ]);
 
         Material::find($request->material_id)->update($request->all());
-        return redirect()->route('order.receiving.material');
+        return redirect()->route('order.receiving.material')->with('success' , __('words.updated_successfully'));
     }
 
     public function delete(Request $request)
@@ -125,5 +157,19 @@ class ReceivingMaterialController extends Controller
     {
         $material = Material::select('id', 'mq_r_code', 'weight')->where('id', $material_code)->first();
         return response()->json($material, 200);
+    }
+
+    public function getMaterialData($mq_r_code)
+    {
+        $material = Material::where('mq_r_code' , $mq_r_code)->first();
+        if($material)
+        {
+            return response()->json($material , 200);
+        }
+
+        else 
+        {
+            return response()->json('error' , 200);
+        }
     }
 }

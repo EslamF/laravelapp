@@ -34,7 +34,8 @@
             }],
             submited: false,
             factory_type_url: '{{Route("factory.type_all")}}',
-            employee_url: '{{route("employee.get_all")}}',
+            //employee_url: '{{route("employee.get_all")}}',
+            employee_url: '{{route("getCuttingEmployees")}}' ,
             employee_id: '',
             factory_type_id: ''
         },
@@ -61,7 +62,7 @@
                 };
                 axios.get('{{route("spreading.get_all")}}').then(res => {
                     this.spreading_orders = res.data;
-                    document.getElementById('loader').style.display = 'block';
+                    //document.getElementById('loader').style.display = 'block';
                 }).catch(err => {
 
                 });
@@ -206,6 +207,8 @@
                     data.spreading_out_material_order_id = this.spreading_out_material_order_id;
                     if (!this.have_error) {
                         this.submited = true;
+                        $("#btnSubmit").attr("disabled", true);
+                        document.getElementById("loader").style.display = "block";
                         const metas = document.getElementsByTagName('meta');
                         axios.defaults.headers = {
                             'Content-Type': 'application/json',
@@ -214,6 +217,7 @@
                         };
                         axios.post("{{Route('cutting.material.store')}}", data).then(res => {
 
+                            
                             window.location.href = '{{Route("cutting.outer_list")}}';
 
                         }).catch(err => {
@@ -229,6 +233,7 @@
                     data.spreading_out_material_order_id = this.spreading_out_material_order_id;
                     if (!this.have_error) {
                         this.submited = true;
+                        $("#btnSubmit").attr("disabled", true);
                         const metas = document.getElementsByTagName('meta');
                         axios.defaults.headers = {
                             'Content-Type': 'application/json',
@@ -237,6 +242,7 @@
                         };
                         axios.post("{{Route('cutting.material.store')}}", data).then(res => {
 
+                            
                             window.location.href = '{{Route("cutting.factory_list")}}';
                         }).catch(err => {
                             this.submited = false;

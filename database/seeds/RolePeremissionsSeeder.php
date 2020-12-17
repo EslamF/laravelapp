@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Users\Peremission;
+use App\Permission;
 
 
 
@@ -15,14 +15,14 @@ class RolePeremissionsSeeder extends Seeder
      */
     public function run()
     {
-        $peremissions = Peremission::select('id', 'lable')->get();
-        foreach($peremissions as $peremission)
+        $permissions = Permission::select('id')->get();
+        foreach($permissions as $permission)
         {
 
-            DB::table('peremission_role')->insert([
+            DB::table('permission_role')->insert([
                 [
                 'role_id'=> 1,
-                'peremission_id'=>$peremission->id,
+                'permission_id'=>$permission->id,
             ]
     ]);
         }

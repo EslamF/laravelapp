@@ -6,6 +6,8 @@
             <div class="card-header">
                 <h3 class="card-title">إذن إستلام الخامات</h3>
             </div>
+
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" id="myForm" action="{{Route('receiving.material.store')}}" method="POST">
@@ -15,7 +17,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="mq_r_code">كود الخامة</label>
-                                <input type="text" class="form-control" name="mq_r_code" id="mq_r_code" placeholder="كود الخامة" class="@error('mq_r_code') is-danger @enderror" value="{{old('mq_r_code')}}">
+                                <input type="text" class="form-control" name = "mq_r_code" id="mq_r_code" placeholder="كود الخامة" class="@error('mq_r_code') is-danger @enderror" value="{{old('mq_r_code')}}">
                                 @error('mq_r_code')
                                 <p class="help is-danger">
                                     {{$message}}
@@ -42,9 +44,9 @@
                             <div class="form-group">
                                 <label for="user">المشتري</label>
                                 <select class="form-control" name="buyer_id" id="user" class="@error('buyer_id') is-danger @enderror">
-                                    <option disabled selected>حدد اسم المشتري</option>
+                                    <option value= "" disabled selected>حدد اسم المشتري</option>
                                     @foreach($data['users'] as $user)
-                                    <option value="{{$user->id}}" {{old('buyer_id') == $user->id ? 'selected': '' }}>{{$user->name}}</option>
+                                        <option value="{{$user->id}}" {{old('buyer_id') == $user->id ? 'selected': '' }}>{{$user->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('buyer_id')
@@ -78,6 +80,11 @@
                                     <option value="material" {{old('type') == 'material' ?  'selected' : ''}}>خامة</option>
                                     <option value="accessory" {{old('type') == 'accessory' ?  'selected' : ''}}>اكسسوار</option>
                                 </select>
+                                @error('type')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -186,8 +193,58 @@
             form.submit();
             //disable the submit button
             $("#btnSubmit").attr("disabled", true);
+            $("#loader").css("display" , "block");
 
         });
+
+        $("#mq_r_code").change(function(){
+            var id = $("#mq_r_code").val();
+
+            $.ajax({
+                method:'GET',
+                url:'{{url("orders/receiving-material/getMaterialData/")}}' + '/' + id, 
+                success: function(data) {
+                    $("#bill_number").val('');
+                        $("#user").val(''); //select
+                        $("#supplier").val('');
+                        $("#color").val('');
+                        //$("#weight").val('');
+                        $("#material_types").val('');
+                        $("#qty").val('');
+                        $("#type").val('');
+                        
+
+                    if(data != 'error')
+                    {
+                        document.getElementById('accessory').style.display = 'none';
+                        document.getElementById('material').style.display = 'none';
+
+                        $("#bill_number").val(data.bill_number);
+                        $("#user").val(data.buyer_id); //select
+                        $("#supplier").val(data.supplier_id);
+                        $("#description").val(data.description);
+
+                        if(data.material_type_id)
+                        {
+                            document.getElementById('material').style.display = 'flex';
+                            $("#color").val(data.color);
+                            //$("#weight").val(data.weight);
+                            $("#material_types").val(data.material_type_id);
+                            $("#type").val("material");
+                        }
+                        else 
+                        {
+                            document.getElementById('accessory').style.display = 'flex';
+                            //$("#qty").val(data.qty);
+                            $("#type").val("accessory");
+                        }
+                        
+
+                    }
+                } 
+                });
+        });
+
     })
 </script>
 @endsection

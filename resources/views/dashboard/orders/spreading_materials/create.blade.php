@@ -1,11 +1,12 @@
 @extends('index')
 @section('content')
 <div id="app" class="row">
-    <div id="loader" style="display:none" class="col-md-12">
+    <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">انشاء إذن الفرش</h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" id="myForm" action="{{Route('spreading.material.store')}}" method="POST">
@@ -71,7 +72,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="button" :disabled="button" @click="submitForm" class="btn btn-primary">إضافة</button>
+                    <button type="button" id = "btnSubmit" :disabled="button" @click="submitForm" class="btn btn-primary">إضافة</button>
                     <a href="{{Route('spreading.material.hold_list')}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
@@ -94,12 +95,12 @@
             have_error: false
         },
         mounted() {
-            this.loader();
+            //this.loader();
         },
         methods: {
-            loader() {
+            /*loader() {
                 document.getElementById('loader').style.display = 'block'
-            },
+            },*/
             checkWeight() {
                 this.material_code = this.$refs['material_code'].value;
                 axios.get('{{url("orders/receiving-material/check-weight")}}' + '/' + this.material_code)
@@ -118,11 +119,16 @@
                 if (weight <= this.material_weight) {
                     var form = document.getElementById('myForm');
                     form.submit();
+
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#loader").css("display" , "block");
                 } else {
                     this.error = 'الكمية غير متوفرة'
                     this.have_error = true;
                     this.button = false;
                 }
+
+                
             }
         }
 

@@ -6,11 +6,13 @@ use App\Models\Materials\Material;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Users\Role;
+use App\Role;
+use Laratrust\Traits\LaratrustUserTrait;
 
 
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use Notifiable;
 
     /**

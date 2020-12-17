@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Products\Product;
+use App\Http\Controllers\Dashboard\Alarms\ProductsAlarmController;
 
 class HomeController extends Controller
 {
@@ -25,5 +27,16 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function home()
+    {
+        $object = new ProductsAlarmController();
+        
+        $about_to_run_products_count = count($object->get_about_to_run_products());
+        $low_sale_products_count     = count($object->get_low_sale_products());
+        $best_selling_products_count = count($object->get_best_selling_products());
+
+        return view('main_page' , compact('about_to_run_products_count' , 'low_sale_products_count' , 'best_selling_products_count'));
     }
 }

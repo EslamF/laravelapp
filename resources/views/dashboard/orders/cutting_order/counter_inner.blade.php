@@ -5,7 +5,7 @@
         <!-- small box -->
         <div class="small-box bg-primary" style="padding-top:10px">
             <div class="hold" style="margin-right:30px">
-                <h3>{{$hold ?? 0}}<sup style="font-size: 20px"></sup></h3>
+                <h3>{{$current ?? 0}}<sup style="font-size: 20px"></sup></h3>
                 <h4>أذونات القص الداخلية الحالية</h4>
             </div>
             <div class="icon">
@@ -18,7 +18,7 @@
         <!-- small box -->
         <div class="small-box bg-success" style="padding-top:10px">
             <div class="used" style="margin-right:30px">
-                <h3>{{$used ?? 0}}<sup style="font-size: 20px"></sup></h3>
+                <h3>{{$previous ?? 0}}<sup style="font-size: 20px"></sup></h3>
                 <h4>أذونات القص الداخلية السابقة</h4>
             </div>
             <div class="icon">

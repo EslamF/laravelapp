@@ -7,17 +7,24 @@
                 <!-- /.card-header -->
                 <h3 class="card-title">انشاءمقاس </h3>
             </div>
+            @include('includes.loading')
             <!-- form start  -->
-            <form role="form" action="{{Route('size.store')}}" method="POST">
+            <form role="form" id = "myForm" action="{{Route('size.store')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">اسم المقاس</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="ادخل المقاس">
+                        @error('name')
+                            <p class="help is-danger">
+                                {{$message}}
+                            </p>
+                        @enderror
                     </div>
+                    
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">تأكيد</button>
+                        <button id = "btnSubmit" type="submit" class="btn btn-primary">تأكيد</button>
                         <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                     </div>
                     <!-- /.card-body -->
@@ -26,4 +33,25 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('footer-script')
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function() {
+        $("#btnSubmit").click(function(e) {
+            //stop submitting the form to see the disabled button effect
+            e.preventDefault();
+            var form = document.getElementById('myForm');
+            form.submit();
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
+            document.getElementById('loader').style.display = 'block';
+            
+            return true;
+
+        });
+    })
+</script>
 @endsection

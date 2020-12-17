@@ -56,9 +56,11 @@
             },
             addNewProduct() {
                 this.add_error = '';
+                var not_found = true;
                 if (Object.keys(this.item).length != 0 && this.item.constructor === Object) {
                     for (i = 0; i < this.items.length; i++) {
                         if (this.item.produce_code == this.items[i].produce_code) {
+                            not_found = false;
                             if (this.products_qty[i].qty != this.items[i].qty && this.products_qty[i].qty < this.items[i].qty) {
                                 if (!this.products_code[i].includes(this.item.id)) {
                                     this.count++;
@@ -71,6 +73,11 @@
                                 this.add_error = 'You Can\'t add more of this item';
                             }
                         }
+                    }
+
+                    if(not_found)
+                    {
+                        this.invalid_error = "Invalid Product";
                     }
                 };
             },

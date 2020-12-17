@@ -4,18 +4,19 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Prepared orders</h3>
-                <a href="{{Route('process.get_list')}}" class="btn btn-dark float-right">Back</a>
+                <h3 class="card-title">{{__('words.ready_orders')}}</h3>
+                <a href="{{Route('process.get_list')}}" class="btn btn-dark float-right">{{__('words.back')}}</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table ">
+                @if($orders->count())
+                <table class="table">
                     <thead>
                         <tr>
-                            <th>id</th>
-                            <th>Order Code</th>
-                            <th>Delivery Date</th>
-                            <th>Action</th>
+                            <th>{{__('words.id')}}</th>
+                            <th>{{__('words.code')}}</th>
+                            <th>{{__('words.delivery_date')}}</th>
+                            <th>{{__('words.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,12 +27,15 @@
                             <td>{{$order->delivery_date}}</td>
 
                             <td>
-                                <a href="{{Route('process.ready_order_page', $order->id)}}" class="btn btn-primary">Show</a>
+                                <a href="{{Route('process.ready_order_page', $order->id)}}" class="btn btn-primary">{{__('words.show')}}</a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                @else
+                    <p class="text-center">لا يوجد بيانات</p>
+                @endif
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">

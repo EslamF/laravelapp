@@ -31,9 +31,9 @@ class ShippingOrderController extends Controller
 
     public function getShippingOrder($id)
     {
-        $shipping = ShippingOrder::with('buyOrders:buy_order_id as id,bar_code')->where('id', $id)->first();
+        $shipping = ShippingOrder::with('buyOrders:id,bar_code as id,bar_code')->where('id', $id)->first();
         //     $orders = BuyOrder::select('id', 'delivery_date', 'customer_id')
-        //     ->with('customer:id,address')
+        //     ->with('customer:id,address') 
         //     ->whereHas('shippingOrders', function ($q) use ($id) {
         //         $q->where('shipping_orders.id', $id);
         //     })
@@ -54,6 +54,7 @@ class ShippingOrderController extends Controller
         $orders = BuyOrder::select('id', 'delivery_date', 'customer_id')
             ->with('customer:id,address')
             ->where('preparation', 'prepared')
+            ->where('confirmation' , 'confirmed')
             ->doesntHave('shippingOrders')
             ->get();
 
@@ -174,6 +175,6 @@ class ShippingOrderController extends Controller
     public function importShippingStatus(Request $request)
     {
 
-        Excel::import(new OrderStatusImport, $request->file);
+        return Excel::import(new OrderStatusImport, $request->file);
     }
 }

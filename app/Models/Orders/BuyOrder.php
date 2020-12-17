@@ -22,6 +22,8 @@ class BuyOrder extends Model
         'pending_date'
     ];
 
+    protected $appends = ['confirmation_color' , 'status_color' , 'translate_confirmation' , 'translate_preparation' , 'translate_status']; 
+
     /**
      * 
      * relations 
@@ -65,5 +67,81 @@ class BuyOrder extends Model
     public function orderStatus()
     {
         return $this->hasMany(OrderStatus::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User' , 'created_by');
+    }
+
+    public function getConfirmationColorAttribute()
+    {
+        if($this->confirmation == 'pending')
+        {
+            return 'bg-primary' ;
+        }
+
+        else if($this->confirmation == 'confirmed')
+        {
+            return 'bg-success' ;
+        }
+
+        else if($this->confirmation == 'canceled')
+        {
+            return 'bg-danger' ;
+        }
+
+        else if($this->confirmation == 'delayed')
+        {
+            return 'bg-warning' ;
+        }
+
+        else 
+        {
+            return '';
+        }
+    }
+
+    public function getStatusColorAttribute()
+    {
+        if($this->status == 'pending')
+        {
+            return 'bg-primary' ;
+        }
+
+        else if($this->status == 'done')
+        {
+            return 'bg-success' ;
+        }
+
+        else if($this->status == 'rejected')
+        {
+            return 'bg-danger' ;
+        }
+
+        else if($this->status == 'returned')
+        {
+            return 'bg-warning' ;
+        }
+
+        else 
+        {
+            return '';
+        }
+    }
+
+    public function getTranslateConfirmationAttribute()
+    {
+        return __('words.' . $this->confirmation);
+    }
+
+    public function getTranslatePreparationAttribute()
+    {
+        return __('words.' . $this->preparation);
+    }
+
+    public function getTranslateStatusAttribute()
+    {
+        return __('words.' . $this->status . '_order');
     }
 }

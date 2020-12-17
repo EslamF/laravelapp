@@ -5,41 +5,46 @@
         <div class="card ">
             <div class="card-header">
                 <h3 class="card-title"> أذونات إستلام الخامات</h3>
-                <a href="{{Route('order.receiving_material.create_page')}}" class="btn btn-success float-right">انشاء إذن إستلام </a>
+                <a href="{{Route('order.receiving_material.create_page')}}" class="btn btn-success float-right {{ Laratrust::isAbleTo('add-receiving-material') ? '' : 'disabled' }}"   >انشاء إذن إستلام </a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table ">
-                    <thead>
-                        <tr>
-                                <th> الرقم المرجعي</th>
-                                <th>كود الخامة</th>
-                                <th>إسم الخامة</th>
-                                <th>المورد</th>
-                                <th>الرقم المرجعي الفاتورة</th>
-                                <th>المستلم</th>
-                                <th>المشتري</th>
-                                <th>الخيارات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($receiving as $material)
-                        <tr>
-                                <td>{{$material->id}}</td>
-                                <td>{{$material->mq_r_code}}</td>
-                                <td>{{$material->materialType ? 'خامة  : '.  $material->materialType->name : 'اكسسوار'}}</td>
-                                <td>{{$material->supplier->name}}</td>
-                                <td>{{$material->bill_number}}</td>
-                                <td>{{$material->createdBy->name}}</td>
-                                <td>{{$material->buyer->name}}</td>
-                                <td>
-                                    <a href="{{Route('receiving.material.edit_page', $material->id)}}" class="btn btn-primary">تعديل</a>
-                                    <button type="submit" @click="deleteItem({{$material->id}})" class="btn btn-danger">حذف</button>
-                                </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if($receiving->count())
+                    @include('includes.flash-message')
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                    <th> الرقم المرجعي</th>
+                                    <th>كود الخامة</th>
+                                    <th>إسم الخامة</th>
+                                    <th>المورد</th>
+                                    <th>الرقم المرجعي الفاتورة</th>
+                                    <th>المستلم</th>
+                                    <th>المشتري</th>
+                                    <th>الخيارات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($receiving as $material)
+                            <tr>
+                                    <td>{{$material->id}}</td>
+                                    <td>{{$material->mq_r_code}}</td>
+                                    <td>{{$material->materialType ? 'الخامة   : '.  $material->materialType->name : 'اكسسوار'}}</td>
+                                    <td>{{$material->supplier->name}}</td>
+                                    <td>{{$material->bill_number}}</td>
+                                    <td>{{$material->user->name}}</td>
+                                    <td>{{$material->buyer->name}}</td>
+                                    <td>
+                                        <a href="{{Route('receiving.material.edit_page', $material->id)}}" class="btn btn-primary {{ Laratrust::isAbleTo('edit-receiving-material') ? '' : 'disabled' }}" >تعديل</a>
+                                        <button type="submit" @click="deleteItem({{$material->id}})" class="btn btn-danger" {{ Laratrust::isAbleTo('delete-receiving-material') ? '' : 'disabled' }} >حذف</button>
+                                    </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="text-center">لا يوجد بيانات</p>
+                @endif
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">

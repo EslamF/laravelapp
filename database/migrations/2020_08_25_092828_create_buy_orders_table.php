@@ -29,7 +29,7 @@ class CreateBuyOrdersTable extends Migration
                 ->onDelete('cascade');
 
             $table->text('description')->nullable();
-            $table->enum('confirmation', ['pending', 'canceled', 'confirmed'])->default('pending');
+            $table->enum('confirmation', ['pending', 'canceled', 'confirmed' , 'delayed'])->default('pending');
             $table->enum('preparation', ['need_prepare', 'prepared', 'shipped'])->default('need_prepare');
             $table->string('bar_code');
             $table->boolean('status')->default(0);

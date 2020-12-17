@@ -9,6 +9,8 @@ use App\Models\Orders\StoreProductOrder;
 use Illuminate\Http\Request;
 use App\Models\Products\Product;
 use App\Models\Products\ProductType;
+use Illuminate\Support\Facades\Session;
+
 
 class StoreProductOrderController extends Controller
 {
@@ -63,7 +65,8 @@ class StoreProductOrderController extends Controller
         ]);
 
         $this->addQtyToOrders($request['save_order_id']);
-        return response()->json('success', 200);
+        Session::flash('success',  __('words.added_successfully') );
+        return response()->json('success' , 200);
     }
 
     public function addQtyToOrders($save_order_id)
@@ -91,6 +94,11 @@ class StoreProductOrderController extends Controller
             }
         }
         return true;
+    }
+
+    public function delete($id)
+    {
+        
     }
 
     public function generateCode()

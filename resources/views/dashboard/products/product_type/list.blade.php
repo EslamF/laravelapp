@@ -5,40 +5,47 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"> أنواع المنتجات</h3>
-                <a href="{{Route('product.type.create_page')}}" class="btn btn-success float-right">انشاء</a>
+                <a href="{{Route('product.type.create_page')}}" class="btn btn-success float-right {{ Laratrust::isAbleTo('add-product-type') ? '' : 'disabled' }}" >انشاء</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table ">
-                    <thead>
-                        <tr>
-                            <th> الرقم المرجعي</th>
-                            <th>النوع</th>
-                            <th>الخيارات </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($types as $type)
-                        <tr>
-                            <td>{{$type->id}}</td>
-                            <td>{{$type->name}}</td>
-                            <td>
-                                <a href="{{Route('product.type.edit_page', $type->id)}}"
-                                    class="btn btn-primary">تعديل</a>
-                                    {{--
-                                <form style="display:inline" action="{{Route('product.type.delete')}}"
-                                    method="POST">
-                                    @csrf
-                                    <input type="hidden" name="type_id" value="{{$type->id}}">
-                                    <button type="submit" class="btn btn-danger">حذف</button>
-                                </form>
-                                --}}
-                                <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger">حذف</button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if($types->count())
+                    @include('includes.flash-message')
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th> الرقم المرجعي</th>
+                                <th>النوع</th>
+                                <th>الخيارات </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($types as $type)
+                            <tr>
+                                <td>{{$type->id}}</td>
+                                <td>{{$type->name}}</td>
+                                <td>
+                                    <a href="{{Route('product.type.edit_page', $type->id)}}"
+                                        class="btn btn-primary {{ Laratrust::isAbleTo('edit-product-type') ? '' : 'disabled' }}" >تعديل</a>
+                                        {{--
+                                    <form style="display:inline" action="{{Route('product.type.delete')}}"
+                                        method="POST">
+                                        @csrf
+                                        <input type="hidden" name="type_id" value="{{$type->id}}">
+                                        <button type="submit" class="btn btn-danger">حذف</button>
+                                    </form>
+                                    --}}
+                                    <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger" {{ Laratrust::isAbleTo('delete-product-type') ? '' : 'disabled' }} >حذف</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="text-center">لا يوجد بيانات</p>
+                @endif
+
+
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">

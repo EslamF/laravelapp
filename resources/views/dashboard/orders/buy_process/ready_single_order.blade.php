@@ -4,20 +4,20 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title" style="display: block;">Order code @{{orders[0].order_code}}</h3>
-                <h3 class="card-title float-right">Delivery date @{{orders[0].delivery_date}}</h3>
+                <h3 class="card-title" style="display: block;">{{__('words.order_number')}} :  @{{orders[0].order_code}}</h3>
+                <h3 class="card-title float-right">{{__('words.delivery_date')}} : @{{orders[0].delivery_date}}</h3>
             </div>
             <h4 class="ml-3 mt-2">
                 </h3>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table ">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th>Product code</th>
-                                <th>Product</th>
-                                <th>Size</th>
-                                <th>Qty</th>
+                                <th>{{__('words.code')}}</th>
+                                <th>{{__('words.product')}}</th>
+                                <th>{{__('words.size')}}</th>
+                                <th>{{__('words.qty')}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,7 +32,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
-                    <a href="{{url()->previous()}}" class="btn btn-dark float-right">Back</a>
+                    <a href="{{url()->previous()}}" class="btn btn-dark float-right">{{__('words.back')}}</a>
                 </div>
         </div>
         <!-- /.card -->

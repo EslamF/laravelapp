@@ -18,10 +18,10 @@ class ShippingCompanyController extends Controller
     {
         // dd($request->all());N
         $request->validate([
-            'name' => 'required|min:3'
+            'name' => 'required|min:3|unique:shipping_companies,name'
         ]);
         ShippingCompany::create($request->all());
-        return redirect()->route('shippingcompany.list');
+        return redirect()->route('shippingcompany.list')->with('success' , __('words.added_successfully') );
     }
     /**
      * 
@@ -32,11 +32,12 @@ class ShippingCompanyController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'type_id' => 'required|exists:shipping_companies,id'
+            'type_id' => 'required|exists:shipping_companies,id' ,
+            'name' => 'required|min:3|unique:shipping_companies,name,' . $request->type_id
         ]);
 
         ShippingCompany::find($request->type_id)->update($request->all());
-        return redirect()->route('shippingcompany.list');
+        return redirect()->route('shippingcompany.list')->with('success' , __('words.updated_successfully') );
     }
     /**
      * 

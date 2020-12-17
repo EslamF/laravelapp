@@ -5,44 +5,48 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"> العملاء</h3>
-                <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right">إضافة عميل</a>
+                <a href="{{Route('customer.create_page')}}" class="btn btn-success float-right  {{ Laratrust::isAbleTo('add-customer') ? '' : 'disabled' }}" >إضافة عميل</a>
             </div>
             <!-- /.card-header -->
         <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th> الرقم المرجعي</th>
-                            <th>الاسم</th>
-                            <th>الهاتف</th>
-                            <th>العنوان</th>
-                            <th>وصف</th>
-                            <th>المصدر</th>
-                            <th>الوصول</th>
-                            <th>النوع </th>
-                            <th>إجراءات</th>
-                           
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($customers as $customer)
-                        <tr>
-                            <td>{{$customer->id}}</td>
-                            <td>{{$customer->name}}</td>
-                            <td>{{$customer->phone}}</td>
-                            <td>{{$customer->address}}</td>
-                            <td>{{ Str::limit( $customer->notes , 20)}}</td>
-                            <td>{{$customer->source}}</td>
-                            <td><a href= "{{$customer->link}}" target = "_Blank">{{ Str::limit( $customer->link , 20)}}</a></td>
-                            <td>{{ __('customers.'.$customer->type)}}</td>
-                            <td>
-                                <a href="{{Route('customer.edit_page',$customer->id)}}" class="btn btn-primary">تعديل</a>
-                                <button type="button" @click="deleteItem({{$customer->id}})" class="btn btn-danger">حذف</button>
-                            </td>
-                        </tr> 
-                        @endforeach
-                    </tbody>
-                </table>
+                @if($customers->count())
+                    @include('includes.flash-message')
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> الرقم المرجعي</th>
+                                <th>الاسم</th>
+                                <th>الهاتف</th>
+                                <th>العنوان</th>
+                                <th>المصدر</th>
+                                <th>الوصول</th>
+                                <th>النوع </th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($customers as $customer)
+                            <tr>
+                                <td>{{$customer->id}}</td>
+                                <td>{{$customer->name}}</td>
+                                <td>{{$customer->phone}}</td>
+                                <td>{{$customer->address}}</td>
+                                <td>{{$customer->source}}</td>
+                                <td><a href= "{{$customer->link}}" target = "_Blank">{{ Str::limit( $customer->link , 20)}}</a></td>
+                                <td>{{ __('customers.'.$customer->type)}}</td>
+                                <td>
+                                    <a href="{{Route('customer.show',$customer->id)}}" class="btn btn-info btn-sm" >عرض</a>
+                                    <a href="{{Route('customer.edit_page',$customer->id)}}" class="btn btn-primary btn-sm {{ Laratrust::isAbleTo('edit-customer') ? '' : 'disabled' }} " >تعديل</a>
+                                    <button type="button" @click="deleteItem({{$customer->id}})" class="btn btn-danger btn-sm" {{ Laratrust::isAbleTo('delete-customer') ? '' : 'disabled' }} >حذف</button>
+                                </td>
+                            </tr> 
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @else
+                    <p class="text-center">لا يوجد بيانات</p>
+                @endif
+
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">

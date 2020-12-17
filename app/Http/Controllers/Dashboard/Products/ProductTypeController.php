@@ -18,11 +18,11 @@ class ProductTypeController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3'
+            'name' => 'required|min:3|unique:product_types,name'
         ]);
 
         ProductType::create($request->all());
-        return redirect()->route('product.type.list');
+        return redirect()->route('product.type.list')->with('success' , __('words.added_successfully') );
     }
     /**
      * 
@@ -33,11 +33,12 @@ class ProductTypeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'type_id' => 'required|exists:product_types,id'
+            'type_id' => 'required|exists:product_types,id' ,
+            'name'    => 'required|min:3|unique:product_types,name,' . $request->type_id
         ]);
 
         ProductType::find($request->type_id)->update($request->all());
-        return redirect()->route('product.type.list');
+        return redirect()->route('product.type.list')->with('success' , __('words.updated_successfully') );
     }
     /**
      * 

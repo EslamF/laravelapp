@@ -4,6 +4,13 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
+
+                <div class = "text-center">
+                    <h3 >موظف الفرز : {{$data['sort_order']->user->name}}</h3>
+                    <br>
+                    <h3>البار كود : {{$data['sort_order']->code}}</h3>
+                </div>
+                {{--
                 <form action="{{Route('sort.product')}}" method="POST" style="display:inline">
                     @csrf
                     <div class="row">
@@ -28,9 +35,12 @@
                         </div>
                     </div>
                 </form>
+                --}}
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+                <h5>منتجات إذن الفرز </h5>
+                <br>
                 <table class="table ">
                     <thead>
                         <tr>
@@ -65,7 +75,7 @@
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{$product->id}}">
                                     <input type="hidden" name="sort_id" value="{{$data['sort_id']}}">
-                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                    <button type="submit" class="btn btn-danger" {{ Laratrust::isAbleTo('delete-sort-order-products') ? '' : 'disabled' }} >حذف</button>
                                 </form>
                             </td>
                         </tr>

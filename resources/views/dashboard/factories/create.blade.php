@@ -6,6 +6,7 @@
             <div class="card-header">
                 <h3 class="card-title">إضافة مصنع</h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" id="myForm" action="{{Route('factory.store')}}" method="POST">
@@ -16,9 +17,9 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="ادخل اسم المصنع"
                         class="@error('name') is-danger @enderror" value="{{old('name')}}">
                         @error('name')
-                        <p class="help is-danger">
-                            {{$message}}
-                        </p>
+                            <p class="help is-danger">
+                                {{$message}}
+                            </p>
                         @enderror
                     </div>
             <div class="row ">
@@ -41,7 +42,7 @@
                         class="@error('factory_type_id') is-danger @enderror" value="{{old('factory_type_id')}}">
                             <option value="" disabled selected>حدد نوع المصنع</option>
                             @foreach($types as $type)
-                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                <option value="{{$type->id}}" {{ $type->id == old('factory_type_id') ? 'selected' : '' }} >{{$type->name}}</option>
                             @endforeach
                         </select>
                         @error('factory_type_id')
@@ -73,6 +74,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 @section('footer-script')
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
@@ -86,11 +88,11 @@
             form.submit();
             //disable the submit button
             $("#btnSubmit").attr("disabled", true);
-
+            document.getElementById('loader').style.display = 'block';
+            
             return true;
 
         });
     })
 </script>
-@endsection
 @endsection

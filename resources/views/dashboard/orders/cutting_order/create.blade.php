@@ -6,9 +6,11 @@
             <div class="card-header">
                 <h3 class="card-title">انشاء اذن القص</h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form">
+                
                 @csrf
                 <div class="card-body">
                     <div class="row">
@@ -25,11 +27,12 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">اذن الفرش</label>
-                                <span style="color:red" v-if="spreading_order_error">@{{spreading_order_error}}</span>
+                                
                                 <select v-model="spreading_out_material_order_id" class="form-control" id="" required>
                                     <option value="" disabled seelcted>حدد اذن الفرش</option>
                                     <option :value="order.id" v-for="order in spreading_orders">@{{order.id}}</option>
                                 </select>
+                                <span style="color:red" v-if="spreading_order_error">@{{spreading_order_error}}</span>
                             </div>
                         </div>
                        
@@ -107,7 +110,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="layer"></label>
+                            <label for="layer">عدد الراقات</label>
                             <span style="color:red" id="layer" v-if="layer_error">*@{{layer_error}}</span>
                             <input class="form-control" v-model="layers" type="number" required>
                         </div>
@@ -120,7 +123,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <button type="button" @click="createOrder" class="btn btn-primary">إنشاء</button>
+                    <button type="button" id = "btnSubmit" @click="createOrder" class="btn btn-primary">إنشاء</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>

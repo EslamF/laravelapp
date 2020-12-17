@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Orders\SortOrder;
 use App\Models\Products\Product;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+
 
 class SortOrderController extends Controller
 {
@@ -28,21 +30,22 @@ class SortOrderController extends Controller
         ]);
 
         SortOrder::create($request->all());
-        return redirect()->route('sort.order.list');
+        return redirect()->route('sort.order.list')->with('success' , __('words.added_successfully') );
     }
 
     public function update(Request $request)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'code'    => 'unique:sort_orders,code,' . $request->sort_id
+            'code'    => 'required|unique:sort_orders,code,' . $request->sort_id ,
+            'sort_id' => 'required|exists:sort_orders,id' , 
         ]);
 
         SortOrder::find($request->sort_id)->update([
             'code' => $request->code,
             'user_id' => $request->user_id
         ]);
-        return redirect()->route('sort.order.list');
+        return redirect()->route('sort.order.list')->with('success' , __('words.updated_successfully') );
     }
 
 
@@ -89,10 +92,13 @@ class SortOrderController extends Controller
             return $q->where('id', $sort_id);
         })->orderBy('sort_date', 'DESC')->paginate();
         $data['sort_id'] = $sort_id;
+
+        $order = SortOrder::findOrFail($sort_id);
+        $data['sort_order'] = $order;
         return view('dashboard.orders.sort_order.sort_product')->with('data', $data);
     }
 
-    public function sortProduct(Request $request)
+    /*public function sortProduct(Request $request)
     {
         $request->validate([
             'prod_code' => 'required|exists:products,prod_code',
@@ -113,6 +119,69 @@ class SortOrderController extends Controller
             ]);
         }
         return redirect()->route('sort.product.list', $request->sort_id);
+    }*/
+
+    public function sortProduct(Request $request)
+    {
+        $validator = validator()->make( $request->all() ,  [
+            'products'    => 'required|array',
+            'products.*'  => 'exists:products,prod_code' ,
+            'damage_type' => 'required|in:ironing,tailoring,dyeing,fine'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json('error' , 200);
+        }
+
+        $dateNow = Carbon::now();
+
+        foreach($request->products as $code)
+        {
+            $product = Product::where('prod_code', $code)->first();
+
+            if (isset($product)) {
+    
+                $product->update([
+                    'damage_type' => $request->damage_type == 'fine' ? '' : $request->damage_type,
+                    'sort_date' => $dateNow->toDateTimeString(),
+                    'sort_order_id' => $request->sort_id,
+                    'sorted' => 1,
+                    'status' => $request->damage_type == 'fine' ? 'available' : 'damaged',
+                ]);
+            }
+        }
+        Session::flash('success' , __('words.added_successfully'));
+        return response()->json('success' , 200);
+        //return redirect()->route('sort.product.list', $request->sort_id);
+    }
+
+    public function scanningPage($sort_order_id)
+    {
+        return view('dashboard.orders.sort_order.scanning' , compact('sort_order_id'));
+    }
+
+    public function checkProduct(Request $request)
+    {
+        if($request->filled('prod_code'))
+        {
+            $product = Product::where('prod_code' , $request->prod_code)->where('sorted' , 0)->first();
+            if($product)
+            {
+
+                return response()->json('success' , 200);
+            }
+
+            else 
+            {
+                return response()->json('error' , 200);
+            }
+        }
+
+        else 
+        {
+            return response()->json('error' , 200);
+        }
     }
 
     public function removeSortedProduct(Request $request)

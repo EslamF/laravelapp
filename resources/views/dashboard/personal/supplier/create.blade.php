@@ -6,6 +6,7 @@
             <div class="card-header">
                 <h3 class="card-title">إضافةالمورد</h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start  -->
 
@@ -16,28 +17,42 @@
                     <div class="form-group">
                         <label for="name">اسم المورد</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="ادخل اسم المورد">
+                        @error('name')
+                        <p class="help is-danger">
+                            {{ $message }}
+                        </p>
+                        @enderror
                     </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit"id="reg" onclick="test()"  class="btn btn-primary">إضافة</button>
+                    <button type="submit"id="btnSubmit" onclick="test()"  class="btn btn-primary">إضافة</button>
                     <a href="{{ route('supplier.list') }}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+@endsection
 
+@section('footer-script')
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+</script>
 <script>
-    var count = 0;
+    $(document).ready(function() {
+        $("#btnSubmit").click(function(e) {
+            //stop submitting the form to see the disabled button effect
+            e.preventDefault();
+            var form = document.getElementById('myForm');
+            form.submit();
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
+            document.getElementById('loader').style.display = 'block';
 
-    function test() {
-        count++;
-        if (count == 2) {
-            var button = document.getElementById('reg');
-            button.disabled = true;
-        }
-    }
+            return true;
+
+        });
+    })
 </script>
 @endsection

@@ -6,6 +6,7 @@
             <div class="card-header">
                 <h3 class="card-title">بيانات إذن إستلام الخامة</h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" id="myForm" action="{{Route('receiving.material.update')}}" method="POST">
@@ -57,8 +58,8 @@
                             <div class="form-group">
                                 <label for="supplier">المورد</label>
                                 <select class="form-control" name="supplier_id" id="supplier">
-                                    @foreach($data['suppliers'] as $supplier)
                                     <option value="" disabled selected>حدد اسم المورد</option>
+                                    @foreach($data['suppliers'] as $supplier)
                                     <option value="{{$supplier->id}}" {{$data['material']->supplier_id == $supplier->id ? 'selected':''}}>
                                         {{$supplier->name}}</option>
                                     @endforeach
@@ -99,8 +100,9 @@
                             <div class="form-group">
                                 <label for="material_types">نوع الخامة</label>
                                 <select class="form-control" name="material_type_id" id="material_types" class="@error('material_type_id') is-danger @enderror">
-                                    @foreach($data['material_types'] as $type)
                                     <option value="" disabled selected>حدد نوع الخامة</option>
+                                    @foreach($data['material_types'] as $type)
+                                    
                                     <option value="{{$type->id}}" {{$data['material']->material_type_id == $type->id ? 'selected' : ''}}>
                                         {{$type->name}}</option>
                                     @endforeach
@@ -154,16 +156,16 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" id="btnSubmit" onclick="submitForm()" class="btn btn-primary">تأكيد</button>
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">تأكيد</button>
                     <a href="{{Route('order.receiving.material')}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
-</div>
+
 @section('footer-script')
-<script src="https://code.jquery.com/jquery-3.3.1  .min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
 </script>
 <script>
     $(document).ready(function() {
@@ -193,13 +195,14 @@
         });
 
         $("#btnSubmit").click(function(e) {
-
             //stop submitting the form to see the disabled button effect
             e.preventDefault();
             var form = document.getElementById('myForm');
             form.submit();
             //disable the submit button
             $("#btnSubmit").attr("disabled", true);
+            $("#loader").css("display" , "block");
+
             return true;
 
         });

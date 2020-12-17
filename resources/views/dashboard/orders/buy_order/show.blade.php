@@ -7,16 +7,17 @@
                 <div class="row">
 
                     <div class="col-md-3">
-                        <label for="">Confirmation</label>
+                        <label for="">{{__('words.confirmation')}}</label>
                         <select id="confrimation" class="form-control" v-if="data.order.preparation != 'shipped'" v-model="data.order.confirmation" id="">
-                            <option value="" dsiabled>Choose One</option>
-                            <option value="confirmed" :selected="data.order.confirmation == 'confirmed'">Confirmed</option>
-                            <option value="pending" :selected="data.order.confirmation == 'pending'">Pending</option>
-                            <option value="canceled" :selected="data.order.confirmation == 'canceled'">Canceled</option>
+                            <option value="" disabled>{{__('words.choose')}}</option>
+                            <option value="confirmed" :selected="data.order.confirmation == 'confirmed'">{{__('words.confirmed')}}</option>
+                            <option value="pending" :selected="data.order.confirmation == 'pending'">{{__('words.pending')}}</option>
+                            <option value="canceled" :selected="data.order.confirmation == 'canceled'">{{__('words.canceled')}}</option>
+                            <option value="delayed" :selected="data.order.confirmation == 'delayed'">{{__('words.delayed')}}</option>
                         </select>
                     </div>
-                    <div v-if="data.order.confirmation == 'pending'" class="col-md-3 flex">
-                        <label for="">Pending Until</label>
+                    <div v-if="data.order.confirmation == 'delayed'" class="col-md-3 flex">
+                        <label for="">{{__('words.pending_until')}}</label>
                         <input class="form-control" type="date" v-model="data.order.pending_date">
                     </div>
                     <!-- <div class="col-md-3  flex">
@@ -48,18 +49,22 @@
                             <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Product</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Size</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Company Qty</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Factory Qty</th>
-                                        <th style="width: 12%;" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Price</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Total</th>
+                                        {{--<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">{{__('words.product')}}</th>--}}
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">{{__('words.mq_r_code')}}</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">{{__('words.product')}}</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">{{__('words.size')}}</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">{{__('words.company_qty')}}</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">{{__('words.factory_qty')}}</th>
+                                        <th style="width: 12%;" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">{{__('words.price')}}</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">{{__('words.total')}}</th>
                                         <!-- <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Remove</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr role="row" v-for="(product,index) in data.products" class="odd">
-                                        <td tabindex="0" class="sorting_1">@{{product.product_type}}</td>
+                                        {{--<td tabindex="0" class="sorting_1">@{{product.product_type}}</td>--}}
+                                        <td tabindex="0" class="sorting_1">@{{product.mq_r_code}}</td>
+                                        <td>@{{product.product_type}}</td>
                                         <td>@{{product.product_size}}</td>
                                         <td>@{{product.company_qty}}</td>
                                         <td>@{{product.factory_qty}}</td>
@@ -81,7 +86,8 @@
                                         <th rowspan="1" colspan="1"></th>
                                         <th rowspan="1" colspan="1"></th>
                                         <th rowspan="1" colspan="1"></th>
-                                        <th rowspan="1" colspan="1">Grand Total</th>
+                                        <th rowspan="1" colspan="1"></th>
+                                        <th rowspan="1" colspan="1">{{__('words.grand_total')}}</th>
                                         <th rowspan="1" colspan="1">@{{grand_total}}</th>
                                         <!-- <th rowspan="1" colspan="1"></th> -->
                                     </tr>
@@ -89,8 +95,8 @@
                             </table>
                         </div>
                         <div class="col-md-12">
-                            <button @click="updateData()" class="mr-4 float-right btn btn-primary">
-                                Update
+                            <button @click="updateData()" class="mr-4 float-right btn btn-primary" {{ Laratrust::isAbleTo('edit-buy-order') ? '' : 'disabled' }} >
+                                {{__('words.edit')}}
                             </button>
                         </div>
                     </div>

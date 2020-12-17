@@ -14,7 +14,8 @@ class RoleSeeder extends Seeder
     {
         DB::table('roles')->insert([
             [
-                'label' => 'مدير عام',
+                'name' => 'admin',
+                'display_name' => 'مدير عام',
                 'description' => 'مضاف له كل الصلحيات',
             ]
         ]);

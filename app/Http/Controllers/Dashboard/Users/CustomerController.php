@@ -18,7 +18,7 @@ class CustomerController extends Controller
     { 
         $request->validate([
             'name' => 'required|min:3',
-            'phone' => 'required|min:11',
+            'phone' => 'required|min:11|unique:customers,phone',
             'address' => 'required|min:3',
             'source' => 'required|min:3',
             'notes' => 'required|min:3',
@@ -30,7 +30,7 @@ class CustomerController extends Controller
 
         Customer::create($request->all());
 
-        return redirect()->route('customer.list');
+        return redirect()->route('customer.list')->with('success' , __('words.added_successfully') );
     }
     public function createPage()
     {
@@ -46,17 +46,17 @@ class CustomerController extends Controller
     {
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
-            'name' => '|min:3',
-            'phone' => '|min:11',
-            'address' => 'min:4',
-            'source' => 'min:3',
-            'notes' => 'min:3',
-            'link' => 'min:2',
-            'type' => 'in:individual,related,wholesaler,retailer'
+            'name' => 'required|min:3',
+            'phone' => 'required|min:11|unique:customers,phone,' . $request->customer_id ,
+            'address' => 'required|min:4',
+            'source' => 'required|min:3',
+            'notes' => 'required|min:3',
+            'link' => 'required|min:2',
+            'type' => 'required|in:individual,related,wholesaler,retailer'
         ]);
 
         Customer::find($request->customer_id)->update($request->all());
-        return redirect()->route('customer.list');
+        return redirect()->route('customer.list')->with('success' , __('words.updated_successfully') );
     }
     public function delete(Request $request)
     {
@@ -113,6 +113,13 @@ class CustomerController extends Controller
 
     public function getById($id)
     {
-        return response()->json(Customer::where('id', $id)->first(), 200);
+        return response()->json(Customer::where('id', $id)->with('buyOrders')->first(), 200);
+    }
+
+    public function show($id)
+    {
+        $customer = Customer::with('buyOrders')->findOrFail($id);
+        //return $customer;
+        return view('dashboard.personal.customer.show' , compact('customer'));
     }
 }

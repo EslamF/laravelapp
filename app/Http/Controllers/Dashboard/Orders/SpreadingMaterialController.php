@@ -35,7 +35,13 @@ class SpreadingMaterialController extends Controller
     public function createPage()
     {
         $data = [];
-        $data['users'] = User::select('id', 'name')->get();
+        //$data['users'] = User::select('id', 'name')->get();
+        $data['users'] = User::select('id', 'name')->whereHas('roles', function ($q) {
+            $q->whereHas('permissions', function ($query) {
+                $query->where('name', 'spreading-material');
+            });
+        })->get();
+
         $data['material'] = Material::select('id', 'mq_r_code')->where('weight', '!=', null)->get();
         return view('dashboard.orders.spreading_materials.create')->with('data', $data);
     }
@@ -54,13 +60,19 @@ class SpreadingMaterialController extends Controller
             $material->weight = $material->weight - $request->weight;
             $material->save();
         }
-        return redirect()->route('spreading.material.hold_list');
+        return redirect()->route('spreading.material.hold_list')->with('success' , __('words.added_successfully'));
     }
 
     public function editPage($spreading_id)
     {
         $data = [];
-        $data['users'] = User::select('id', 'name')->get();
+        //$data['users'] = User::select('id', 'name')->get();
+        $data['users'] = User::select('id', 'name')->whereHas('roles', function ($q) {
+            $q->whereHas('permissions', function ($query) {
+                $query->where('name', 'spreading-material');
+            });
+        })->get();
+        
         $data['material'] = Material::select('id', 'mq_r_code')->where('weight', '!=', null)->get();
         $data['spreading'] = SpreadingOutMaterialOrder::where('id', $spreading_id)
             ->with('user:id,name', 'material:id,mq_r_code')
@@ -91,7 +103,7 @@ class SpreadingMaterialController extends Controller
             ]);
         }
         $order->update($request->all());
-        return back();
+        return back()->with('success' , __('words.updated_successfully'));
     }
 
 

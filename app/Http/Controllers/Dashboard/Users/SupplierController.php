@@ -17,10 +17,10 @@ class SupplierController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3'
+            'name' => 'required|min:3|unique:suppliers,name' 
         ]);
         Supplier::create($request->all());
-        return redirect()->route('supplier.list');
+        return redirect()->route('supplier.list')->with('success' , __('words.added_successfully') );
     }
     /**
      * 
@@ -31,11 +31,12 @@ class SupplierController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'supplier_id' => 'required|exists:suppliers,id'
+            'supplier_id' => 'required|exists:suppliers,id' , 
+            'name' => 'required|min:3|unique:suppliers,name,' . $request->supplier_id
         ]);
 
         Supplier::find($request->supplier_id)->update($request->all());
-        return redirect()->route('supplier.list');
+        return redirect()->route('supplier.list')->with('success' , __('words.updated_successfully') );
 
     }
     public function delete(Request $request)

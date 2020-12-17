@@ -5,7 +5,9 @@
         el: '#app',
         data: {
             type: '',
-            clicked: false
+            clicked: false , 
+            mq_r_code: '' ,
+
         },
         mounted() {
             this.loader();
@@ -18,6 +20,11 @@
             loader() {
                 document.getElementById('loader').style.display = 'block';
             }
+
+            getMaterialData() {
+                console.log('hello');
+            }
+
         }
 
     })

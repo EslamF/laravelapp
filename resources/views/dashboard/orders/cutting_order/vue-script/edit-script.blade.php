@@ -4,9 +4,12 @@
     var app = new Vue({
         el: '#app',
         data: {
+            type: "{{$data['type']}}",
+            cutting_order_id: "{{$data['order']->id}}",
             users: [],
             productTypes: [],
             sizes: [],
+            factories: [],
             errors: [{
                 product_id: '',
                 size_id: '',
@@ -14,30 +17,44 @@
             }],
             error: '',
             have_error: false,
-            extra_returns_weight: '',
-            cutting_order: {},
-            layers: '',
+            extra_returns_weight: "{{$data['order']->extra_returns_weight}}",
+            layers: "{{$data['order']->layers}}",
+            factory_error: '',
+            factory_id: '',
+            factoryTypes: [],
             spreading_orders: [],
+            spreading_out_material_order_id: "{{$data['order']->spreading_out_material_order_id}}",
             employee_error: '',
             layer_error: '',
             spreading_order_error: '',
             extra_return_error: '',
-            products: [],
+            items: [],
             submited: false,
             factory_type_url: '{{Route("factory.type_all")}}',
-            employee_url: '{{route("employee.get_all")}}',
-            employee_id: '',
-
+            employee_url: '{{route("getCuttingEmployees")}}',
+            employee_id: "{{$data['order']->user_id}}",
+            factory_type_id: ''
         },
         mounted() {
-            this.getData();
+            
             this.getSpreadingOrders();
-            this.getProductType();
-            this.getSizes();
-            this.getBy();
+            this.getOrderBy();
+            this.getProducts();
+            
         },
         methods: {
+            getOrderBy() {
+                if (this.type == 'employee') {
+
+                    this.getBy(this.employee_url);
+                    this.getProductType();
+                    this.getSizes();
+                } else {
+                    this.getBy(this.factory_type_url);
+                }
+            },
             getSpreadingOrders() {
+                document.getElementById("loader").style.display = "block";
                 const metas = document.getElementsByTagName('meta');
                 axios.defaults.headers = {
                     'Content-Type': 'application/json',
@@ -46,11 +63,48 @@
                 };
                 axios.get('{{route("spreading.get_all")}}').then(res => {
                     this.spreading_orders = res.data;
-                    document.getElementById('loader').style.display = 'block';
+                    //document.getElementById('loader').style.display = 'block';
                 }).catch(err => {
 
                 });
             },
+
+            getProducts() {
+                const metas = document.getElementsByTagName('meta');
+                axios.defaults.headers = {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
+                };
+                axios.get("{{url('orders/cutting/getProducts')}}" + '/' + this.cutting_order_id).then(res => {
+                    console.log(res.data);
+                    if(res.data != 'error')
+                    {
+                        for (i = 0; i < res.data.length; i++)
+                        {
+                            this.items.push({
+                                                product_type_id: res.data[i].product_type_id,
+                                                size_id: res.data[i].size_id,
+                                                qty: res.data[i].qty
+                                            });
+
+                            this.errors.push({
+                                product_type_id: '',
+                                size_id: '',
+                                qty: ''
+                            });
+                        }
+                        
+                    }
+
+                    console.log(this.items);
+                    
+                }).catch(err => {
+
+                });
+                document.getElementById("loader").style.display = "none";
+            },
+
             getBy(url) {
                 const metas = document.getElementsByTagName('meta');
                 axios.defaults.headers = {
@@ -58,17 +112,21 @@
                     'Access-Control-Allow-Origin': '*',
                     'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                 };
-                axios.get("{{Route('cutting_order.employee')}}").then(res => {
-                    this.users = res.data;
+                axios.get(url).then(res => {
+                    if (this.type == 'employee') {
+                        this.users = res.data;
+                    } else {
+                        this.factoryTypes = res.data;
 
+                    }
                 }).catch(err => {
 
                 });
             },
             addRow() {
-                this.products.push({
-                    type: '',
-                    size: '',
+                this.items.push({
+                    product_type_id: '',
+                    size_id: '',
                     qty: ''
                 });
                 this.errors.push({
@@ -77,9 +135,23 @@
                     qty: ''
                 });
             },
+            getFactory(id) {
+                const metas = document.getElementsByTagName('meta');
+                axios.defaults.headers = {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
+                };
+                axios.get("{{url('/factory/get')}}" + '/' + id).then(res => {
+                    this.factories = [];
+                    this.factories = res.data;
+                }).catch(err => {
+
+                });
+            },
             deleteRow(index) {
-                if (this.products.length > 1) {
-                    this.products.splice(index, 1);
+                if (this.items.length > 1) {
+                    this.items.splice(index, 1);
                 }
             },
             getProductType() {
@@ -111,54 +183,34 @@
 
                 });
             },
-            getData() {
-                axios.get("{{Route('cutting.inner_factory_edit_data', $id)}}").then(res => {
-                    console.log(res);
-                    this.cutting_order = res.data.cutting_order;
-                    this.products = res.data.products;
-                    for (i = 0; i < this.products.length; i++) {
-                        if (i > 0) {
-                            this.errors.push({
-                                product_type_id: '',
-                                size_id: '',
-                                qty: ''
-                            });
-                        }
-                    }
-                    console.log(this.errors);
-
-                }).catch(err => {
-
-                });
-            },
             itemsValidation() {
-                if (!this.cutting_order.user_id) {
+                if (!this.employee_id) {
                     this.employee_error = "* You must Choose Employee";
                 } else {
                     this.employee_error = '';
                 }
-                if (!this.cutting_order.layers) {
+                if (!this.layers) {
                     this.layer_error = "* You must Add Layers";
                 } else {
                     this.layer_error = '';
                 }
-                for (i = 0; i < this.products.length; i++) {
+                for (i = 0; i < this.items.length; i++) {
 
-                    if (!this.products[i].type) {
+                    if (!this.items[i].product_type_id) {
                         this.have_error = true;
                         this.errors[i].product_type_id = '* Select Product type'
                     } else {
                         this.errors[i].product_type_id = ''
                     }
 
-                    if (!this.products[i].size) {
+                    if (!this.items[i].size_id) {
                         this.have_error = true;
                         this.errors[i].size_id = '* Select Size'
                     } else {
                         this.errors[i].size_id = ''
                     }
 
-                    if (!this.products[i].qty) {
+                    if (!this.items[i].qty) {
                         this.have_error = true;
                         this.errors[i].qty = '* Add Qty'
                     } else {
@@ -169,41 +221,72 @@
                     }
                 }
             },
-
+            factoryValidation() {
+                if (!this.factory_id) {
+                    this.factory_error = 'Must Choose Company';
+                    this.have_error = true;
+                }
+            },
             createOrder() {
                 let data = {};
-                if (!this.cutting_order.spreading_out_material_order_id) {
+                if (!this.spreading_out_material_order_id) {
                     this.have_error = true;
                     this.spreading_order_error = "You Must Choose Spreading Order"
                 } else {
                     this.spreading_order_error = ""
                 }
+                if (this.type == 'employee') {
+                    this.have_error = false;
+                    this.itemsValidation();
+                    data.items = this.items;
+                    data.user_id = this.employee_id;
+                    data.extra_returns_weight = this.extra_returns_weight;
+                    data.layers = this.layers;
+                    data.spreading_out_material_order_id = this.spreading_out_material_order_id;
+                    data.cutting_order_id = this.cutting_order_id;
+                    if (!this.have_error) {
+                        this.submited = true;
+                        $("#btnSubmit").attr("disabled", true);
+                        document.getElementById("loader").style.display = "block";
+                        const metas = document.getElementsByTagName('meta');
+                        axios.defaults.headers = {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',
+                            'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
+                        };
+                        axios.post("{{Route('cutting.material.update')}}", data).then(res => {
+                            
+                                //console.log(res.data);
+                            window.location.href = '{{Route("cutting.outer_list")}}';
 
-                this.have_error = false;
-                this.itemsValidation();
-                data.products = this.products;
-                data.user_id = this.cutting_order.user_id;
-                data.extra_returns_weight = this.cutting_order.extra_returns_weight;
-                data.layers = this.cutting_order.layers;
-                data.cutting_order_id = this.cutting_order.id;
-                data.spreading_out_material_order_id = this.cutting_order.spreading_out_material_order_id;
-                if (!this.have_error) {
-                    this.submited = true;
-                    const metas = document.getElementsByTagName('meta');
-                    axios.defaults.headers = {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*',
-                        'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
-                    };
-                    axios.post("{{Route('cutting_order.update_inneer')}}", data).then(res => {
+                        }).catch(err => {
+                            this.submited = false
+                        });
+                    } else {
+                        console.log(this.have_error)
+                    }
+                }
+                if (this.type == 'company') {
+                    this.factoryValidation();
+                    data.factory_id = this.factory_id;
+                    data.spreading_out_material_order_id = this.spreading_out_material_order_id;
+                    if (!this.have_error) {
+                        this.submited = true;
+                        $("#btnSubmit").attr("disabled", true);
+                        const metas = document.getElementsByTagName('meta');
+                        axios.defaults.headers = {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',
+                            'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
+                        };
+                        axios.post("{{Route('cutting.material.store')}}", data).then(res => {
 
-                        window.location.href = '{{Route("cutting.material.list")}}';
-
-                    }).catch(err => {
-                        this.submited = false
-                    });
-                } else {
-                    console.log(this.have_error)
+                            
+                            window.location.href = '{{Route("cutting.factory_list")}}';
+                        }).catch(err => {
+                            this.submited = false;
+                        });
+                    }
                 }
             }
         }

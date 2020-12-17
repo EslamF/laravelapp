@@ -35,29 +35,80 @@ class FactoryController extends Controller
 
     public function create(Request $request)
     {
-        $request->validate([
-            'name' => 'required|min:3|unique:factories,name',
+        /*$request->validate([
+            'name' => 'required|min:3',
             'phone' => 'min:11',
             'address' => 'max:100',
             'factory_type_id' => 'required|exists:factory_types,id'
-        ]);
+        ]);*/
+
+        $validator = validator()->make($request->all() , [
+            'name' => 'required|min:3',
+            'phone' => 'min:11',
+            'address' => 'max:100',
+            'factory_type_id' => 'required|exists:factory_types,id'
+        ] );
+
+
+
+        $exists = Factory::where([  ['name' , $request->name] , ['factory_type_id' , $request->factory_type_id] ])->exists();
+        if($exists)
+        {
+            $validator->after(function ($validator) {
+                
+                $validator->errors()->add('name', 'إسم ونوع المصنع موجودين من قبل ! ');
+                
+            });
+        }
+
+        if($validator->fails())
+        {
+            return back()->withErrors($validator->errors())->withInput();
+        }
         Factory::create($request->all());
 
-        return redirect()->route('factory.list');
+        return redirect()->route('factory.list')->with('success' , __('words.added_successfully') );
     }
     public function update(Request $request)
     {
-        $request->validate([
+        /*$request->validate([
             
-            'type_id' => 'required|exists:factory_types,id',
-            'name' => 'required|min:3|unique:factories,name,' . $request->type_id,
+            'factory_id' => 'required|exists:factories,id' ,
+            'factory_type_id' => 'required|exists:factory_types,id',
+            'name' => 'required|min:3|unique:factories,name,' . $request->factory_id,
+            'phone' => 'min:11',
+            'address' => 'max:100'
+        ]);*/
+
+        $validator = validator()->make($request->all() , [
+            
+            'factory_id' => 'required|exists:factories,id' ,
+            'factory_type_id' => 'required|exists:factory_types,id',
+            'name' => 'required|min:3' ,
             'phone' => 'min:11',
             'address' => 'max:100'
         ]);
-        $factory= Factory::findOrFail($request->type_id); 
+
+        $exists = Factory::where([  ['name' , $request->name] , ['factory_type_id' , $request->factory_type_id] , ['id' , '!=' , $request->factory_id ] ])->exists();
+        if($exists)
+        {
+            $validator->after(function ($validator) {
+                
+                $validator->errors()->add('name', 'إسم ونوع المصنع موجودين من قبل ! ');
+                
+            });
+        }
+        
+        if($validator->fails())
+        {
+            return back()->withErrors($validator->errors())->withInput();
+        }
+
+        
+        $factory= Factory::findOrFail($request->factory_id); 
         
         $factory->update($request->all());
-        return redirect()->route('factory.list');
+        return redirect()->route('factory.list')->with('success' , __('words.updated_successfully') );
     }
 
     public function getById($id)
@@ -76,7 +127,8 @@ class FactoryController extends Controller
         $data = [];
         $data['factory'] = Factory::where('id', $fact_id)->first();
         $data['type'] = FactoryType::select('id', 'name')->get();
-        
+
+       
         return view('dashboard.factories.edit')->with('data', $data);
     }
 

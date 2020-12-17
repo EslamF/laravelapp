@@ -5,36 +5,40 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"> أنواع الخامات</h3>
-                <a href="{{Route('material.type.create_page')}}" class="btn btn-success float-right">انشاء نوع جديد</a>
+                <a href="{{Route('material.type.create_page')}}" class="btn btn-success float-right {{ Laratrust::isAbleTo('add-material') ? '' : 'disabled' }}" >انشاء نوع جديد</a>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
-                <table class="table ">
-                    <thead>
-                        <tr>
-                            <th> الرقم المرجعي</th>
-                            <th>النوع</th>
-                            <th>الخيارات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($types as $type)
-                        <tr>
-                            <td>{{$type->id}}</td>
-                            <td>{{$type->name}}</td>
-                            <td>
-                                <a href="{{Route('material.type.edit_page', $type->id)}}" class="btn btn-primary">تعديل</a>
-                                <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger">حذف</button>
+            
+                <div class="card-body">
+                    @if($types->count())
+                        @include('includes.flash-message')
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th> الرقم المرجعي</th>
+                                    <th>النوع</th>
+                                    <th>الخيارات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($types as $type)
+                                <tr>
+                                    <td>{{$type->id}}</td>
+                                    <td>{{$type->name}}</td>
+                                    <td>
+                                        <a href="{{Route('material.type.edit_page', $type->id)}}" class="btn btn-primary {{ Laratrust::isAbleTo('edit-material') ? '' : 'disabled' }}" >تعديل</a>
+                                        <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger"  {{ Laratrust::isAbleTo('delete-material') ? '' : 'disabled' }} >حذف</button>
 
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            @if(!$types->count())
-            <p class="text-center">لا يوجد بيانات</p>
-            @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <p class="text-center">لا يوجد بيانات</p>
+                    @endif
+                </div>
+            
             <!-- /.card-body -->
             <div class="card-footer clearfix">
                 {{$types->links()}}

@@ -26,13 +26,13 @@
             },
             checkIfSorted() {
                 var data = {};
-                data.product_code = this.product_code;
+                data.product_code = this.product_code.trim();
                 axios.post('{{Route("send_end_product.check_if_sorted")}}', data)
                     .then(res => {
                         this.have_error = false;
                         if (res.data) {
-                            if (!this.codes.includes(this.product_code)) {
-                                this.codes.push(this.product_code);
+                            if (!this.codes.includes(this.product_code.trim())) {
+                                this.codes.push(this.product_code.trim());
                                 this.product_code = '';
                             } else {
                                 this.have_error = true;
@@ -51,6 +51,9 @@
                 this.have_error = false;
                 this.validateUser();
                 if (this.codes.length > 0 && !this.have_error) {
+                    //disable the submit button
+                    $("#btnSubmit").attr("disabled", true);
+                    document.getElementById('loader').style.display = 'block';
                     var sendData = {};
                     sendData.products = this.codes;
                     sendData.user_id = this.user_id;

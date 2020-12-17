@@ -18,6 +18,9 @@ class OrderStatusImport implements ToCollection
     {
         ini_set('max_execution_time', 0);
         foreach ($collection as $key => $value) {
+
+            dd($value[5]);
+            //return response()->json($value[0]);
             if ($key == 0) {
                 if ((isset($value[39]) && $value[39] == 'id') && (isset($value[4]) && $value[4] == 'System_Result') && (isset($value[5]) && $value[5] == 'System_Status')) {
                     continue;

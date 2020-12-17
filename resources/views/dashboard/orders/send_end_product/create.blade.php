@@ -6,6 +6,7 @@
             <div class="card-header">
                 <h3 class="card-title">شحن المنتج الي الشركة </h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <!-- <form role="form" onSubmit="return false" name="myform2" action="{{Route('send.end_product.store')}}" method="POST"> -->
@@ -17,7 +18,7 @@
                             <label for="name">موظف الشحن</label>
                             <span v-if="have_error" style="color:red;font-weight:700">@{{errors.user}}</span>
                             <select class="form-control" v-model="user_id"> 
-                                <option value="" disabled selected>اختر موظف</option>
+                                <option value="" disabled>اختر موظف</option>
                                 <option :value="employee.id" v-for="employee in employees">@{{employee.name}}</option>
                             </select>
                         </div>
@@ -34,7 +35,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="button" @click="send" class="btn btn-primary">إضافة</button>
+                <button type="button" id = "btnSubmit" @click="send" class="btn btn-primary">إضافة</button>
                 <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
             </div>
         </div>

@@ -9,13 +9,13 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="">Add Orders</label>
+            <label for="">{{__('words.add_orders')}}</label>
             <input-tag v-model="tags" @change="checkIfExist()"></input-tag>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="">Shipping Order</label>
+            <label for="">{{__('words.shipping_number')}}</label>
             <input type="text" :value="order.company_name + ' --- ' + order.shipping_date" class="form-control" id="" disabled>
             <!-- <select name="" class="form-control" @change="getBuyOrders" v-model="order.id" id="">
                 <option value="" disabled selected>Choose Order</option>
@@ -24,8 +24,8 @@
         </div>
     </div>
     <div class="col-md-12 mt-5">
-        <a href="{{url()->previous()}}" class="btn btn-dark float-right ml-2">Back</a>
-        <button @click="packageOrders" class="btn btn-success float-right">Save</button>
+        <a href="{{url()->previous()}}" class="btn btn-dark float-right ml-2">{{__('words.back')}}</a>
+        <button @click="packageOrders" class="btn btn-success float-right">{{__('words.save')}}</button>
     </div>
     @include('dashboard.orders.shipping_order.ready-to-ship.vue-script.v-create')
 </div>

@@ -51,16 +51,23 @@ class BuyOrderController extends Controller
 
             if ($oldOrders && $oldOrders->count() > 0) {
                 foreach ($oldOrders as $order) {
-                    $old_factory_qty += empty($order->factory_qty) ? 0 : $order->factory_qty;
-                    $old_company_qty += empty($order->company_qty) ? 0 : $order->company_qty;
+                    //except the returned orders
+                    $buy_order = BuyOrder::where('id' , $order->buy_order_id)->first();
+                    if($buy_order->status != 'returned')
+                    {
+                        $old_factory_qty += empty($order->factory_qty) ? 0 : $order->factory_qty;
+                        $old_company_qty += empty($order->company_qty) ? 0 : $order->company_qty;
+                    }
+                    
                 }
             }
 
-            $data[$key]['produce_code'] = $key;
+            $data[$key]['produce_code']  = $key;
+            $data[$key]['mq_r_code']     = Product::where('produce_code' , $key)->first()->material->mq_r_code ;
             $data[$key]['factory_count'] = intval($product->where('status', 'available')->where('save_order_id', null)->count() / 100 * 90 - $old_factory_qty);
             $data[$key]['company_count'] = ($product->where('status', 'available')->where('save_order_id', '!=', null)->count() + $product->where('status', 'reserved')->where('save_order_id', '!=', null)->count()) - $old_company_qty;
-            $data[$key]['size'] = $product->first()->size->name;
-            $data[$key]['product_type'] = $product->first()->productType->name;
+            $data[$key]['size']          = $product->first()->size->name;
+            $data[$key]['product_type']  = $product->first()->productType->name;
         }
         return $data;
     }
@@ -68,7 +75,6 @@ class BuyOrderController extends Controller
     public function receiveOrder(Request $request)
     {
         $customer = Customer::updateOrCreate(['phone' => $request->customer['phone']], $request->customer);
-
         $order = BuyOrder::create([
             'customer_id' => $customer->id,
             'description' => $request->description,
@@ -77,10 +83,9 @@ class BuyOrderController extends Controller
             'source'        => $customer->source
         ]);
         foreach ($request->products as $product) {
-            if (!isset($product['qty'])) {
+            if (!isset($product['qty'])   ) {
                 continue;
             }
-
             if ($product['company_count'] != 0) {
                 if ($product['company_count'] >= $product['qty']) {
                     $product['company_qty'] = $product['qty'];
@@ -91,16 +96,127 @@ class BuyOrderController extends Controller
             } else {
                 $product['factory_qty'] = $product['qty'];
             }
-
-            BuyOrderProduct::create([
-                'buy_order_id'             => $order->id,
-                'produce_code'             => $product['produce_code'],
-                'factory_qty'              => $product['factory_qty'] ?? 0,
-                'company_qty'              => $product['company_qty'] ?? 0,
-                'price'                    => $product['price']
-            ]);
+            if(array_key_exists("price",$product) &&  $product['price'] > 0 && $product['qty'] > 0   )
+            {
+                BuyOrderProduct::create([
+                    'buy_order_id'             => $order->id,
+                    'product_material_code'    => Product::where('produce_code' , $product['produce_code'])->first()->product_material_code ,
+                    'produce_code'             => $product['produce_code'],
+                    'factory_qty'              => $product['factory_qty'] ?? 0,
+                    'company_qty'              => $product['company_qty'] ?? 0,
+                    'price'                    => $product['price']
+                ]);
+            }
         }
     }
+
+    public function editOrder(Request $request)
+    {
+        $validator = validator()->make($request->all() , [
+            'buy_order_id' => 'required|exists:buy_orders,id' ,
+            'products' => 'required'
+        ]);
+        if($validator->fails())
+        {
+            return response()->json('error' , 200);
+        }
+
+        $order = BuyOrder::find($request->buy_order_id);
+        if($order->preparation == 'need_prepare')
+        {
+            $order->buyOrderProducts()->delete();
+            $order->update($request->all());
+    
+            foreach ($request->products as $product) {
+                if (!isset($product['qty'])   ) {
+                    continue;
+                }
+                if ($product['company_count'] != 0) {
+                    if ($product['company_count'] >= $product['qty']) {
+                        $product['company_qty'] = $product['qty'];
+                    } else {
+                        $product['company_qty'] = $product['company_count'];
+                        $product['factory_qty'] = $product['qty'] - $product['company_count'];
+                    }
+                } else {
+                    $product['factory_qty'] = $product['qty'];
+                }
+                if(array_key_exists("price",$product) &&  $product['price'] > 0 && $product['qty'] > 0   )
+                {
+                    BuyOrderProduct::create([
+                        'buy_order_id'             => $order->id,
+                        'produce_code'             => $product['produce_code'],
+                        'product_material_code'    => Product::where('produce_code' , $product['produce_code'])->first()->product_material_code ,
+                        'factory_qty'              => $product['factory_qty'] ?? 0,
+                        'company_qty'              => $product['company_qty'] ?? 0,
+                        'price'                    => $product['price']
+                    ]);
+                }
+            }
+        }
+
+        else if($order->preparation == 'prepared')
+        {
+            
+        }
+
+        return response()->json('success' , 200);
+
+    } 
+
+    public function editPage($id)
+    {
+        $order = BuyOrder::findOrFail($id);
+        //return $order->buyOrderProducts()->pluck('produce_code')->toArray();
+        //return $order->buyOrderProducts->first();
+        return view('dashboard.orders.buy_order.edit' , compact('order'));
+    }
+
+    public function showOrderInEditPage($id)
+    {
+        //$data = [];
+        $buy_order = BuyOrder::where('id', $id)->with('buyOrderProducts')->first();
+        $order_produce_codes = $buy_order->buyOrderProducts()->pluck('produce_code')->toArray();
+       
+        $products = Product::with('productType:id,name', 'size:id,name')
+                            ->whereIn('produce_code' , $order_produce_codes)
+                            ->where('received', 1)
+                            ->get()
+                            ->groupBy('produce_code');
+
+        $data = [];
+        foreach ($products as $key => $product) {
+            $buy_order_record = BuyOrderProduct::where([  ['buy_order_id' , $buy_order->id] , ['produce_code' , $key] ])->first();
+
+            $old_factory_qty = 0;
+            $old_company_qty = 0;
+            $oldOrders = BuyOrderProduct::where('produce_code', $key)->get();
+
+            if ($oldOrders && $oldOrders->count() > 0) {
+                foreach ($oldOrders as $order) {
+                    $buy_order = BuyOrder::where('id' , $order->buy_order_id)->first();
+                    if($buy_order->status != 'returned')
+                    {
+                        $old_factory_qty += empty($order->factory_qty) ? 0 : $order->factory_qty;
+                        $old_company_qty += empty($order->company_qty) ? 0 : $order->company_qty;
+                    }
+                }
+            }
+
+            $data[$key]['produce_code']  = $key;
+            $data[$key]['mq_r_code']     = Product::where('produce_code' , $key)->first()->material->mq_r_code ;
+            $data[$key]['factory_count'] = intval($product->where('status', 'available')->where('save_order_id', null)->count() / 100 * 90 - $old_factory_qty) + $buy_order_record->factory_qty;
+            $data[$key]['company_count'] = ($product->where('status', 'available')->where('save_order_id', '!=', null)->count() + $product->where('status', 'reserved')->where('save_order_id', '!=', null)->count()) - $old_company_qty + $buy_order_record->company_qty;
+            $data[$key]['size']          = $product->first()->size->name;
+            $data[$key]['product_type']  = $product->first()->productType->name;
+            $data[$key]['price']         = $buy_order_record->price;
+            $data[$key]['qty']           = $buy_order_record->factory_qty + $buy_order_record->company_qty ;
+        }
+     
+
+        return response()->json(array_values($data), 200);
+    }
+
 
     public function generateCode()
     {
@@ -149,13 +265,15 @@ class BuyOrderController extends Controller
                 'product_size' => $product->size->name,
                 'factory_qty'  => intval($item->factory_qty),
                 'company_qty'  => intval($item->company_qty),
-                'price'        => intval($item->price)
+                'price'        => intval($item->price),
+                'mq_r_code'    => $product && $product->material ? $product->material->mq_r_code : ''
             ];
         });
 
         return response()->json($data, 200);
     }
 
+    
     public function getOrderStatus($id)
     {
         $status = OrderStatus::where('buy_order_id', $id)->first();

@@ -152,6 +152,8 @@ return [
 
     'attributes' => [
         'name'                  => 'الاسم',
+        'label'                 => 'الاسم' ,
+        'size_id'               => 'المقاس' ,
         'username'              => 'اسم المُستخدم',
         'email'                 => 'البريد الالكتروني',
         'first_name'            => 'الاسم الأول',

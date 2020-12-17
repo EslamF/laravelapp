@@ -6,6 +6,7 @@
             <div class="card-header">
                 <h3 class="card-title">المنتجات المخزنة </h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <div class="card-body">
                 <table class="table ">

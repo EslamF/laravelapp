@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Dashboard\Users;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\UsersRequest;
 use Illuminate\Http\Request;
-use App\Models\Users\Role;
-use App\Models\Users\Peremission;
+use App\Role;
+use App\Permission;
 
 
 class RoleController extends Controller
@@ -17,13 +17,19 @@ class RoleController extends Controller
      * request input name required
      * 
      */
-    public function create(UsersRequest $request)
+    public function create(Request $request)
     {
-
-
+        $request->validate([
+            'name'         => 'required|min:3|max:191|unique:roles,name',
+            'display_name' => 'required|min:3|max:191',
+            'description'  => 'nullable|min:3|max:191',
+            'permissions'  => 'nullable|array'
+        ]);
         $role=Role::create($request->all());
-        $role->allowTo($request->peremissions);
-        return redirect()->route('role.list');
+        //$role->allowTo($request->permissions);
+        $role->attachPermissions($request->permissions); // parameter can be a Permission object, array or id
+
+        return redirect()->route('role.list')->with('success' , __('words.added_successfully') );
     }
     /**
      * 
@@ -31,22 +37,25 @@ class RoleController extends Controller
      * request input type_id required
      * 
      */
-    public function update(UsersRequest $request)
+    public function update(Request $request)
     {
+        //return $request->type_id;
         // dd($request->all());
         // dd($request->all());
-        $request->validate([
+        $request->validate([ 
                  'type_id' => 'required|exists:roles,id',
-                 ' label' => 'min:3',
-                //  'description' => 'required',
-                //  'peremissions.*' => 'exists|peremission,id'
+                 'name' => 'required|min:3|unique:roles,name,'.$request->type_id ,
+                 'display_name' => 'required|min:3|max:191',
+                'description'  => 'nullable|min:3|max:191',
+                'permissions'  => 'nullable|array'
         ]); 
-        $role= Role::where('id', $request->type_id)->first();
+        $role = Role::findOrFail($request->type_id);
         $role->update($request->all());
-        // $role->peremissions()->detach();
-        $role->allowTo($request->peremissions);
+        //$role->permissions()->detach();
+        //$role->allowTo($request->permissions);
+        $role->syncPermissions($request->permissions);
 
-        return redirect()->route('role.list');
+        return redirect()->route('role.list')->with('success' , __('words.updated_successfully') );
     }
     /**
      * 
@@ -89,16 +98,16 @@ class RoleController extends Controller
     }
     public function createPage()
     {
-        $peremissions = Peremission::select('id', 'lable')->get();
-        return view('auth.role.create')->with('peremissions', $peremissions);
+        $permissions = Permission::get();
+        return view('auth.role.create')->with('permissions', $permissions);
     }
 
     public function editPage(Request $request)
     {
         $data=[];
-        $data['role']=Role::where('id', $request->type_id)->with('peremissions')->first();
-        $data['peremissions']=Peremission::select('id', 'lable')->get();
-        $data['peremission_id']=$data['role']->peremissions->pluck('id')->toArray();
+        $data['role'] = Role::where('id', $request->type_id)->with('permissions')->first();
+        $data['permissions'] = Permission::get();
+        $data['permission_id'] = $data['role']->permissions->pluck('id')->toArray();
         // dd($data['peremission_id']);
         return view('auth.role.edit')->with('data', $data);
 

@@ -1,31 +1,38 @@
 @extends('index')
 @section('content')
-<div class="row">
+<div id="app" class="row">
     <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">تعديل في إذن التصنيع</h3>
+                <h3 class="card-title">التعديل على إذن التصنيع </h3>
             </div>
+
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
-            <ul>
-                @foreach($errors as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
+
             <form role="form" action="{{Route('produce.order.update')}}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="factory">المصنع</label>
-                                <select class="form-control" name="factory_id" id="factory" class="@error('factory_id') is-danger @enderror" value="{{old('factory_id')}}">
-                                    <option value="" disabled selected>حدد المصنع</option>
-                                    @foreach($data['factories'] as $factory)
-                                    <option value="{{$factory->id}}" {{$data['records']->factory_id == $factory->id?'selected':''}}>
-                                        {{$factory->name}}</option>
-                                    @endforeach
+                                <label for="mq_r_code">نوع المصنع</label>
+                                <span style="color:red" v-if="error.factory_id">*@{{error.factory_type_id}}</span>
+                                <select class="form-control" v-model="factory_type_id" @change="getFactory()" id="user">
+                                    <option value="" disabled selected>حدد نوع المصنع</option>
+                                    <option :value="factory.id" v-for="factory in factory_types">@{{factory.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mq_r_code">المصنع</label>
+                                <span style="color:red" v-if="error.factory_id">*@{{error.factory_id}}</span>
+                                <select class="form-control" v-model="factory_id" id="user">
+                                    <option value="" disabled selected>حدد اسم المصنع</option>
+                                    <option :value="factory.id" v-for="factory in factories" :selected="factory_id == factory.id">@{{factory.name}}</option>
+
                                 </select>
                                 @error('factory_id')
                                 <p class="help is-danger">
@@ -38,46 +45,50 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="mq_r_code">إذن القص</label>
-                                <select class="form-control" name="cutting_order_id" id="user" class="@error('cutting_order_id') is-danger @enderror" value="{{old('cutting_order_id')}}">
-                                    <option value="" disabled selected>حدد إذن القص</option>
-                                    @foreach($data['cutting_orders'] as $order)
-                                    <option value="{{$order->id}}" {{$data['records']->cutting_order_id == $order->id?'selected':''}}>
-                                        {{$order->id}}</option>
-                                    @endforeach
-                                </select>
-                                @error('cutting_order_id')
-                                <p class="help is-danger">
-                                    {{$message}}
-                                </p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
                                 <label for="weight">تاريخ الإستلام</label>
-                                <input type="date" class="form-control" name="receiving_date" value="{{$data['records']->receiving_date}}" id="weight" placeholder="تاريخ الإستلام" class="@error('receiving_date') is-danger @enderror" value="{{old('receiving_date')}}">
-                                @error('receiving_date')
-                                <p class="help is-danger">
-                                    {{$message}}
-                                </p>
-                                @enderror
+                                <span style="color:red" v-if="error.receiving_date">*@{{error.receiving_date}}</span>
+                                <input type="date" class="form-control" v-model="receiving_date" id="weight" placeholder="تاريخ الإستلام">
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="produce_id" value="{{$data['records']->id}}">
+
+                    <table class="table" v-show="available_products.length > 0">
+                        <p v-if = "!have_value"  v-show="available_products.length > 0" style = "color:red">يجب إدخال منتجات</p>
+                        <thead>
+                            <tr>
+                                <th>المنتج</th>
+                                <th>المقاس</th>
+                                <th>الكمية المتاحة</th>
+                                <th>الكمية المطلوبة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr v-for="(product,index) in available_products" :key="index">
+
+                                    <td>@{{product.name}}</td>
+                                    <td>@{{product.size}}</td>
+                                    <td>@{{product.quantity}}</td>
+                                    <td>
+                                        <span v-if="have_error" style="color:red">@{{product.err}}</span>
+                                        {{--<span v-if="have_error" style="color:red">@{{available_products[index].error_qty}}</span>--}}
+                                        <input type="number" min="0" :max = "product.quantity" style="width:60%" class="form-control" v-model="product.required_quantity" v-bind:id="'product' + index">
+                                    </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">تعديل</button>
+                    <button type="button" id = "btnSubmit" @click="store" class="btn btn-primary">تعديل</button>
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+@include('dashboard.orders.produce_order.v-script.edit-script')
 </div>
 @endsection

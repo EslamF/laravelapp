@@ -81,7 +81,7 @@
                 data.items = this.items;
                 data.layers = this.layers;
                 data.extra_returns_weight = this.extra_returns_weight;
-                data.cutting_order_id = '{{$order->id}}';
+                //data.cutting_order_id = '{{$order->id}}';
                 this.have_error = false;
                 this.itemsValidation();
                 if (!this.have_error) {

@@ -4,42 +4,52 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">  الموظفين</h3>
+                <h3 class="card-title">الموظفين</h3>
                 @can('add-employee')
-                <a href="{{Route('employee.create_page')}}" class="btn btn-success float-right">انشاء</a>
+                <a href="{{Route('employee.create_page')}}" class="btn btn-success float-right {{ Laratrust::isAbleTo('add-employee') ? '' : 'disabled' }}" >انشاء</a>
                 @endcan
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table ">
-                    <thead>
-                        <tr>
-                            <th> الرقم المرجعي</th>
-                            <th>الإسم</th>
-                            <th>البريد الالكتروني</th>
-                            <th>صلاحية الموظف</th>
-                            <th>الخيارات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($data['user'] as $employee)
-                        <tr>
-                            <td>{{$employee->id}}</td>
-                            <td>{{$employee->name}}</td>
-                            <td>{{$employee->email}}</td>
-                            <td>{{isset($employee->roles[0]->label) ? $employee->roles[0]->label: "لا يوجد لة صلاحية" }}</td>
-                            <td>
-                                @can('edit-employee')
-                                    <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary">تعديل</a>
-                                @endcan
-                                @can('delete-employee')
-                                    <button type="submit" class="btn btn-danger" @click = "deleteItem({{$employee->id}})">حذف</button>
-                                @endcan
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if($data['user']->count())
+                    @include('includes.flash-message')
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> الرقم المرجعي</th>
+                                <th>الإسم</th>
+                                <th>البريد الالكتروني</th>
+                                <th>الوظيفة</th>
+                                <th>الخيارات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($data['user'] as $employee)
+                            <tr>
+                                <td>{{$employee->id}}</td>
+                                <td>{{$employee->name}}</td>
+                                <td>{{$employee->email}}</td>
+                                <td>
+                                    <span class = "bg-info" style = "padding: 8px;border-radius:10px;">
+                                        {{isset($employee->roles[0]->display_name) ? $employee->roles[0]->display_name: "" }}
+                                    </span>
+                                </td>
+                                <td>
+                                    @can('edit-employee')
+                                        <a href="{{Route('employee.edit_page', $employee->id)}}" class="btn btn-primary {{ Laratrust::isAbleTo('edit-employee') ? '' : 'disabled' }}" >تعديل</a>
+                                    @endcan
+                                    @can('delete-employee')
+                                        <button type="submit" class="btn btn-danger" @click = "deleteItem({{$employee->id}})" {{ Laratrust::isAbleTo('delete-employee') ? '' : 'disabled' }} >حذف</button>
+                                    @endcan
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="text-center">لا يوجد بيانات</p>
+                @endif
+
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">

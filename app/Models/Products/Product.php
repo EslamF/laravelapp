@@ -34,7 +34,9 @@ class Product extends Model
         'cutting_order_product_id',
         'cutting_order_id',
         'produce_code',
-        'received'
+        'received',
+        'produce_order_id',
+        'product_material_code'
     ];
 
 
@@ -86,5 +88,10 @@ class Product extends Model
     public function buyOrders()
     {
         return $this->belongsToMany(BuyOrder::class);
+    }
+
+    public function produce_orders()
+    {
+        return $this->belongsTo('App\Models\Orders\ProduceOrder');
     }
 }

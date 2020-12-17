@@ -6,6 +6,7 @@
             <div class="card-header">
                 <h3 class="card-title">بيانات في إذن إستلام الخامات</h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" action="{{Route('receiving.product.update')}}" method="POST">

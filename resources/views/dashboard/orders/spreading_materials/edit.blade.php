@@ -1,16 +1,18 @@
 @extends('index')
 @section('content')
 <div id="app" class="row">
-    <div id="loader" style="display: none;" class="col-md-12">
+    <div class="col-md-12">
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">بيانات إذن الفرش</h3>
             </div>
+            @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" id="myForm" action="{{Route('spreading.material.update')}}" method="POST">
                 @csrf
                 <div class="card-body">
+                    @include('includes.flash-message')
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -74,7 +76,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="button" @click="submitForm" class="btn btn-primary">تأكيد</button>
+                    <button type="button" id = "btnSubmit" @click="submitForm" class="btn btn-primary">تأكيد</button>
                     <a href="{{ url()->previous() }}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
@@ -98,13 +100,13 @@
             old_weight: ''
         },
         mounted() {
-            this.loader();
+            //this.loader();
             this.getSize();
         },
         methods: {
-            loader() {
+            /*loader() {
                 document.getElementById('loader').style.display = 'block'
-            },
+            },*/
             checkWeight() {
                 this.material_code = this.$refs['material_code'].value;
                 axios.get('{{url("orders/receiving-material/check-weight")}}' + '/' + this.material_code)
@@ -134,6 +136,9 @@
                 if (weight <= this.material_weight + parseInt(this.old_weight)) {
                     var form = document.getElementById('myForm');
                     form.submit();
+
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#loader").css("display" , "block");
                 } else {
                     this.error = 'الكمية غير متوفرة'
                     this.have_error = true;

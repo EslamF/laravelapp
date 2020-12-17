@@ -13,21 +13,54 @@ use App\Models\Orders\CuttingOrderProduct;
 use App\Models\Organization\FactoryType;
 use App\Models\Products\Product;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use stdClass ;
 
 class CuttingOrderController extends Controller
 {
     public function getAllForHold()
     {
-        $data = CuttingOrder::where('user_id', '!=', null)->doesntHave('produceOrders')->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
+        $data = CuttingOrder::where('user_id', '!=', null)
+                            ->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')
+                            ->orderBy('id', 'DESC')
+                            ->get()
+                            ->filter( function($order) {
+                                        return $order->status == 'current' ;
+                            }) ;
+                            //->paginate();
 
-        return view('dashboard.orders.cutting_order.list')->with('data', $data);
+        $paginator = new \Illuminate\Pagination\Paginator($data, 10);
+
+
+        //return CuttingOrder::paginate(10);
+        //return $paginator;
+
+        /*$previous = CuttingOrder::where('user_id', '!=', null)->get()->filter( function($order) {
+            return $order->status == 'previous' ;
+        }) ;*/
+
+
+        //$data = CuttingOrder::where('user_id', '!=', null)->doesntHave('produceOrders')->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
+
+        return view('dashboard.orders.cutting_order.list')->with('data', $paginator);
     }
 
     public function getAllForUsed()
     {
-        $data = CuttingOrder::where('user_id', '!=', null)->has('produceOrders')->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
+        //$data = CuttingOrder::where('user_id', '!=', null)->has('produceOrders')->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')->orderBy('id', 'DESC')->paginate();
 
-        return view('dashboard.orders.cutting_order.list')->with('data', $data);
+        $data = CuttingOrder::where('user_id', '!=', null)
+                            ->with('user:id,name', 'spreadingOutMaterialOrder', 'spreadingOutMaterialOrder.material', 'spreadingOutMaterialOrder.user')
+                            ->orderBy('id', 'DESC')
+                            ->get()
+                            ->filter( function($order) {
+                                        return $order->status == 'previous' ;
+                            }) ;
+                           
+        $paginator = new \Illuminate\Pagination\Paginator($data, 10);
+
+
+        return view('dashboard.orders.cutting_order.list')->with('data', $paginator);
     }
 
     public function companyList()
@@ -52,25 +85,53 @@ class CuttingOrderController extends Controller
 
     public function getAllCounterInnerList()
     {
-        $hold = CuttingOrder::where('factory_id', '!=', null)->has('produceOrders')->count();
-        $used = CuttingOrder::where('factory_id', '!=', null)->doesntHave('produceOrders')->count();
+        $current = CuttingOrder::where('user_id', '!=', null)->get()->filter( function($order) {
+            return $order->status == 'current' ;
+        }) ;
 
-        return view('dashboard.orders.cutting_order.counter_inner', ['hold' => $hold, 'used' => $used]);
+        $previous = CuttingOrder::where('user_id', '!=', null)->get()->filter( function($order) {
+            return $order->status == 'previous' ;
+        }) ;
+
+        return view('dashboard.orders.cutting_order.counter_inner', ['current' => $current->count(), 'previous' => $previous->count()]);
     }
     public function getAll()
     {
-        return response()->json(CuttingOrder::select('id')->doesntHave('produceOrders')->get(), 200);
+        $cutting_orders_ids = CuttingOrder::select('id')->get()->filter( function($order) {
+            return $order->status == 'current' ;
+
+        } ) ;
+        return response()->json( $cutting_orders_ids , 200);
     }
 
     public function createPage()
     {
         $data = [];
-        $data['users'] = User::select('id', 'name')->get();
+        //$data['users'] = User::select('id', 'name')->get();
+        $data['users'] = User::select('id', 'name')->whereHas('roles', function ($q) {
+            $q->whereHas('permissions', function ($query) {
+                $query->where('name', 'cutting-material');
+            });
+        })->get();
+        //return $data['users'];
         $data['productTypes'] = ProductType::select('id', 'name')->get();
         $data['sizes'] = Size::select('id', 'name')->get();
 
         return view('dashboard.orders.cutting_order.create')->with('data', $data);
     }
+
+    public function getCuttingEmployees()
+    {
+        $users = User::select('id', 'name')->whereHas('roles', function ($q) {
+            $q->whereHas('permissions', function ($query) {
+                $query->where('name', 'cutting-material');
+            });
+        })->get();
+
+        return response()->json($users , 200);
+
+    }
+
 
     public function store(Request $request)
     {
@@ -97,6 +158,10 @@ class CuttingOrderController extends Controller
                         ->where('material_id', $material->id)
                         ->first();
 
+                    $product_material_code = Product::where('product_type_id' , $item['product_type_id'])
+                        ->where('material_id' , $material->id)
+                        ->first();
+
                     Product::create([
                         'prod_code' => $this->generateCode(),
                         'cutting_order_id' => $order->id,
@@ -104,12 +169,16 @@ class CuttingOrderController extends Controller
                         'material_id' => $material->id,
                         'product_type_id' => $item['product_type_id'],
                         'size_id' => $item['size_id'],
-                        'produce_code' => $product->produce_code ?? $this->generateOrderCode()
+                        'produce_code' => $product->produce_code ?? $this->generateOrderCode() ,
+                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
                     ]);
                     $count--;
                 }
             }
         }
+
+
+        Session::flash('success',  __('words.added_successfully') );
         return response()->json('success', 200);
     }
 
@@ -143,6 +212,10 @@ class CuttingOrderController extends Controller
                     ->where('material_id', $material->id)
                     ->first();
 
+                $product_material_code = Product::where('product_type_id' , $item['product_type_id'])
+                    ->where('material_id' , $material->id)
+                    ->first();
+
                 while ($count > 0) {
                     Product::create([
                         'prod_code' => $this->generateCode(),
@@ -151,7 +224,8 @@ class CuttingOrderController extends Controller
                         'material_id' => $material->id,
                         'product_type_id' => $item['product_type_id'],
                         'size_id' => $item['size_id'],
-                        'produce_code' => $product->produce_code ?? $this->generateOrderCode()
+                        'produce_code' => $product->produce_code ?? $this->generateOrderCode() ,
+                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
                     ]);
                     $count--;
                 }
@@ -166,23 +240,137 @@ class CuttingOrderController extends Controller
         $data['productTypes'] = ProductType::select('id', 'name')->get();
         $data['sizes'] = Size::select('id', 'name')->get();
 
-        $data['records'] = CuttingOrder::where('id', $cutting_order_id)->first();
+        $data['order'] = CuttingOrder::findOrFail($cutting_order_id);
+        $products      = Product::where('cutting_order_id' , $cutting_order_id)
+                                ->get()
+                                ->groupBy('produce_code');
 
-        return view('dashboard.orders.cutting_order.edit')->with('data', $data);
+        if(! $data['order']->can_edit)
+        {
+            abort(404);
+        }
+
+        /*$data['items'] = [];
+
+        foreach($products as $key => $product)
+        {
+            $object = new stdClass();
+            $object->product_type_id = $product[0]->product_type_id ;
+            $object->size_id = $product[0]->size_id ;
+            $object->qty = count($product) ;
+
+            array_push($data['items'] , $object );
+        }*/
+        $data['type'] = $data['order']->type == 'inner' ? 'employee' : 'company' ;
+        //return $data;
+        //return $data;
+        //$order = CuttingOrder::where('id', $cutting_order_id)->first();
+
+        //return view('dashboard.orders.cutting_order.edit')->with('data', $data);
+        return view('dashboard.orders.cutting_order.edit' , compact('data'));
+    }
+    
+
+    public function getProducts($cutting_order_id)
+    {
+        $order = CuttingOrder::find($cutting_order_id);
+        if($order)
+        {
+            $products = Product::where('cutting_order_id' , $cutting_order_id)
+                                ->get()
+                                ->groupBy('produce_code');
+            $items = [];
+
+            foreach($products as $key => $product)
+            {
+                $object = new stdClass();
+                $object->product_type_id = $product[0]->product_type_id ;
+                $object->size_id = $product[0]->size_id ;
+                $object->qty = count($product) ;
+    
+                array_push($items , $object );
+            }
+
+            return response()->json($items , 200);
+        }
+
+        return response()->json('error' , 200);
     }
 
     public function update(Request $request)
     {
-        $request->validate([
+        $validator = validator()->make($request->all() , [
             'cutting_order_id'                => 'required|exists:cutting_orders,id',
-            'product_type_id'                 => 'exists:product_types,id',
+            'items'                           => 'required|array',
             'user_id'                         => 'exists:users,id',
-            'size_id'                         => 'exists:sizes,id',
-            'layers'                          => 'min:3',
+            'layers'                          => '',
         ]);
 
-        CuttingOrder::find($request->cutting_order_id)->update($request->all());
-        return redirect()->route('cutting.material.list');
+        if($validator->fails())
+        {
+            return response()->json($validator->errors() , 200);
+        }
+
+        $cutting_order = CuttingOrder::find($request->cutting_order_id);
+
+        if(! $cutting_order->can_edit)
+        {
+            abort(404);
+        }
+
+        $material = Material::whereHas('spreadingOutMaterialOrders', function ($q) use ($cutting_order) {
+            $q->whereHas('cuttingOrders', function ($query) use ($cutting_order) {
+                $query->where('id', $cutting_order->id);
+            });
+        })->first();
+
+        //Back 
+        $material->weight = $material->weight - $cutting_order->extra_returns_weight ;
+        $material->save();
+
+        //delete the old items
+        $old_products = Product::where('cutting_order_id' , $cutting_order->id )->delete();
+
+        if ($request->extra_returns_weight) 
+        {
+            $material->weight = $request->extra_returns_weight + $material->weight;
+            $material->save();
+        }
+
+        $cutting_order->update($request->all());
+        if (request('items')) 
+        {
+            foreach ($request->items as $item) {
+                $count = ($item['qty'] * $request->layers) / 2;
+                while ($count > 0) {
+
+                    $product = Product::where('product_type_id', $item['product_type_id'])
+                        ->where('size_id', $item['size_id'])
+                        ->where('material_id', $material->id)
+                        ->first();
+
+                    $product_material_code = Product::where('product_type_id' , $item['product_type_id'])
+                        ->where('material_id' , $material->id)
+                        ->first();
+
+                    Product::create([
+                        'prod_code' => $this->generateCode(),
+                        'cutting_order_id' => $cutting_order->id,
+                        'damage_type' => 'pending',
+                        'material_id' => $material->id,
+                        'product_type_id' => $item['product_type_id'],
+                        'size_id' => $item['size_id'],
+                        'produce_code' => $product->produce_code ?? $this->generateOrderCode() ,
+                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
+                    ]);
+                    $count--;
+                }
+            }
+        }
+
+        return response()->json('success' , 200);
+        
+        //return redirect()->route('cutting.material.list')->with('success' , __('words.updated_successfully'));
     }
 
 
@@ -198,11 +386,11 @@ class CuttingOrderController extends Controller
 
     public function getWithProduct($id)
     {
-        $cutting_order = CuttingOrder::where('id', $id)->with('user:id,name', 'factory:id,name')->first();
+        $cutting_order = CuttingOrder::where('id', $id)->with('user:id,name', 'factory:id,name' , 'spreadingOutMaterialOrder:id,user_id,material_id,weight' , 'spreadingOutMaterialOrder.material' , 'spreadingOutMaterialOrder.user')->first();
         // dd();
         $orders = Product::where('cutting_order_id', $id)->with('productType:id,name', 'size:id,name')->get()->groupBy('produce_code');
         
-        $orders = $orders->map(function ($item) {
+        $orders = $orders->map(function ($item) { 
             return [
                 'id' => $item[0]->id,
                 'qty' => $item->count(),
@@ -254,6 +442,17 @@ class CuttingOrderController extends Controller
         $check = Product::where('produce_code', $code)->exists();
         if ($check) {
             $this->generateCode();
+        } else {
+            return $code;
+        }
+    }
+
+    public function generateProductMaterialCode()
+    {
+        $code = rand(0, 6000000000000);
+        $check = Product::where('product_material_code', $code)->exists();
+        if ($check) {
+            $this->generateProductMaterialCode();
         } else {
             return $code;
         }
@@ -366,6 +565,10 @@ class CuttingOrderController extends Controller
                     ->where('material_id', $material->id)
                     ->first();
 
+                $product_material_code = Product::where('product_type_id' , $product['type'])
+                    ->where('material_id' , $material->id)
+                    ->first();
+
                 Product::create([
                     'prod_code' => $this->generateCode(),
                     'cutting_order_id' => $request->cutting_order_id,
@@ -373,7 +576,8 @@ class CuttingOrderController extends Controller
                     'material_id' => $material->id,
                     'product_type_id' => $product['type'],
                     'size_id' => $product['size'],
-                    'produce_code' => $item->produce_code ?? $this->generateOrderCode()
+                    'produce_code' => $item->produce_code ?? $this->generateOrderCode() , 
+                    'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
                 ]);
                 $count--;
             }

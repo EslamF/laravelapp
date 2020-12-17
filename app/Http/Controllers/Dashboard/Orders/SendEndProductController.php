@@ -8,6 +8,7 @@ use App\Models\Orders\SaveOrder;
 use App\Models\Products\Product;
 use App\Models\Options\Repository;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 
 class SendEndProductController extends Controller
@@ -63,7 +64,9 @@ class SendEndProductController extends Controller
                 continue;
             }
         }
-        return redirect()->route('send.end_product.list');
+        //return redirect()->route('send.end_product.list');
+        Session::flash('success',  __('words.added_successfully') );
+        return response()->json('success' , 200);
     }
 
     public function generateCode()
@@ -95,12 +98,106 @@ class SendEndProductController extends Controller
     public function checkIfSorted(Request $request)
     {
 
-        return response()->json(Product::where('prod_code', $request->product_code)
-            ->where('sorted', 1)
-            ->where('save_order_id', null)
-            ->where('damage_type', '!=', 'ironing')
-            ->where('damage_type', '!=', 'dyeing')
-            ->where('damage_type', '!=', 'tailoring')
-            ->exists(), 200);
+        if($request->filled('save_order_id')) // in edit page
+        {
+            return response()->json(Product::where('prod_code', $request->product_code)
+                            ->where('sorted', 1)
+                            //->where('save_order_id', null)
+                            ->where('status' , 'available')
+                            //->orWhere('save_order_id' , $request->save_order_id)
+                            //->whereIn('save_order_id' , [$request->save_order_id , null])
+                            ->where(function($query) use($request){
+                                $query->where('save_order_id'   , null)
+                                      ->orWhere('save_order_id' , $request->save_order_id );
+                            })
+                            ->exists(), 200);
+        }
+
+        else 
+        {
+            return response()->json(Product::where('prod_code', $request->product_code)
+                            ->where('sorted', 1)
+                            ->where('save_order_id', null)
+                            ->where('status' , 'available')
+                            ->exists(), 200);
+        }
+        
+    }
+
+
+    public function edit($id)
+    {
+        $order = SaveOrder::where('id' , $id)->where('stored' , 0)->firstOrFail();
+        $codes = Product::where('save_order_id' , $id)->pluck('prod_code')->toArray();
+    
+        return view('dashboard.orders.send_end_product.edit' , compact('order' , 'codes'));
+    }
+
+    public function getProducts(Request $request)
+    {
+        if($request->filled('save_order_id'))
+        {
+            $codes = Product::where('save_order_id' , $request->save_order_id)->pluck('prod_code')->toArray();
+            return response()->json($codes , 200);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        //return $request;
+        $validator = validator()->make($request->all() , [
+
+            'save_order_id' => 'required|exists:save_orders,id' ,
+            'products' => 'required',
+            'code'     => 'required|unique:save_orders,code,' . $request->save_order_id ,
+            'user_id' => 'required|exists:users,id' , 
+
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'error' => $validator->errors()->first()
+            ] , 200 );
+        }
+     
+
+        // id => save_order_id
+        $order = SaveOrder::findOrFail($request->save_order_id);
+
+        //if the order not stored in the company  .. the stored value is 0 
+        if($order->stored == 0)
+        {
+            $order->update(['code' => $request->code , 'user_id' => $request->user_id]);
+            // get the products with the save_order_id = $id and change the save_order_id to null
+            $old_products = Product::where('save_order_id' , $order->id)->get();
+            foreach($old_products as $old_product)
+            {
+                $old_product->update([
+                    'save_order_id' => null,
+                ]);
+            }
+            // get the products attached with the request and adjust the save_order_id to the given id 
+            foreach ($request->products as $code) 
+            {
+                $product = Product::where('prod_code', $code)->first();
+                if ($product) {
+                    $product->update([
+                        'save_order_id' => $order->id,
+                    ]);
+                }
+            }
+            Session::flash('success',  __('words.updated_successfully') );
+            return response()->json('success' , 200);
+            //return redirect()->route('send.end_product.list');
+        }
+
+        else 
+        {
+            return response()->json([
+                'error' => 'لا يمكن التعديل على الطلب'
+            ] , 200 );
+        }
+    
     }
 }

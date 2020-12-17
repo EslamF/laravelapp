@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Users;
 
 use App\Http\Controllers\Controller;
-use App\Models\Users\Role;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,8 +29,9 @@ class EmployeeController extends Controller
             'role_id' => 'required|exists:roles,id'
         ]);
         $user = User::create($request->all());
-        $user->assignRole($request->role_id);
-        return redirect()->route('employee.list');
+        $user->attachRole($request->role_id);
+        //$user->assignRole($request->role_id);
+        return redirect()->route('employee.list')->with('success' , __('words.added_successfully') );
     }
     /**
      * 
@@ -49,9 +50,10 @@ class EmployeeController extends Controller
 
         $user = User::find($request->type_id);
         $user->update($request->all());
-        $user->assignRole($request->role_id);
+        //$user->assignRole($request->role_id);
+        $user->syncRoles([$request->role_id]);
 
-        return redirect()->route('employee.list');
+        return redirect()->route('employee.list')->with('success' , __('words.updated_successfully') );;
     }
     public function delete(Request $request)
     {
@@ -85,14 +87,14 @@ class EmployeeController extends Controller
     {
         $data['user'] = User::where('id', $type_id)->with('roles')->first();
 
-        $data['roles'] = Role::select('id', 'label')->get();
+        $data['roles'] = Role::get();
 
         return view('dashboard.personal.employee.edit')->with('data', $data);
     }
 
     public function createPage()
     {
-        $roles = Role::select('id', 'label')->get();
+        $roles = Role::get();
         return view('dashboard.personal.employee.create')->with('roles', $roles);;
     }
     /**

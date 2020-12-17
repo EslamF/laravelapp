@@ -19,10 +19,10 @@ class SizeController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|unique:sizes,name'
         ]);
         Size::create($request->all());
-        return redirect()->route('size.list');
+        return redirect()->route('size.list')->with('success' , __('words.added_successfully') );
     }
     /**
      * 
@@ -33,11 +33,12 @@ class SizeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'type_id' => 'required|exists:sizes,id'
+            'type_id' => 'required|exists:sizes,id' ,
+            'name'    => 'required|unique:sizes,name,' . $request->type_id ,
         ]);
 
         Size::find($request->type_id)->update($request->all());
-        return redirect()->route('size.list');
+        return redirect()->route('size.list')->with('success' , __('words.updated_successfully') );
     }
     /**
      * 

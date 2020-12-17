@@ -7,36 +7,41 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">انواع المصانع</h3>
-                <a href="{{Route('factory.type.create_page')}}" class="btn btn-success float-right">إضافة</a>
+                <a href="{{Route('factory.type.create_page')}}" class="btn btn-success float-right {{ Laratrust::isAbleTo('add-factory-type') ? '' : 'disabled' }} " >إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table class="table ">
-                    <thead>
-                        <tr>
-                            <div>
-                                <th >الرقم المرجعي</th>
-                                <th>النوع</th>
-                                <th>الخيارات</th>
-                            </div>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($types as $type)
-                        <tr>
-                            
-                            <td class="">{{$type->id}}</td>
-                            <td class="">{{$type->name}}</td>
-                            <td class="">
-                                <a href="{{Route('factory.type.edit_page', $type->id)}}" class="btn btn-primary">تعديل</a>
-                                <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger">حذف</button>
-                            </td>
-                               
-                            
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if($types->count())
+                    @include('includes.flash-message')
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <div>
+                                    <th >الرقم المرجعي</th>
+                                    <th>النوع</th>
+                                    <th>الخيارات</th>
+                                </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($types as $type)
+                            <tr>
+                                
+                                <td class="">{{$type->id}}</td>
+                                <td class="">{{$type->name}}</td>
+                                <td class="">
+                                    <a href="{{Route('factory.type.edit_page', $type->id)}}" class="btn btn-primary {{ Laratrust::isAbleTo('edit-factory-type') ? '' : 'disabled' }}"  >تعديل</a>
+                                    <button type="submit" @click="deleteItem({{$type->id}})" class="btn btn-danger" {{ Laratrust::isAbleTo('delete-factory-type') ? '' : 'disabled' }} >حذف</button>
+                                </td>
+                                
+                                
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="text-center">لا يوجد بيانات</p>
+                @endif
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
