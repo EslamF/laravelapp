@@ -150,7 +150,7 @@ class CuttingOrderController extends Controller
         }
         if (request('items')) {
             foreach ($request->items as $item) {
-                $count = ($item['qty'] * $request->layers) / 2;
+                $count = ($item['qty'] * $request->layers);
                 while ($count > 0) {
 
                     $product = Product::where('product_type_id', $item['product_type_id'])
@@ -205,7 +205,7 @@ class CuttingOrderController extends Controller
 
         if (request('items')) {
             foreach ($request->items as $item) {
-                $count = $item['qty'] * $order->layers / 2;
+                $count = $item['qty'] * $order->layers;
 
                 $product = Product::where('product_type_id', $item['product_type_id'])
                     ->where('size_id', $item['size_id'])
@@ -341,7 +341,7 @@ class CuttingOrderController extends Controller
         if (request('items')) 
         {
             foreach ($request->items as $item) {
-                $count = ($item['qty'] * $request->layers) / 2;
+                $count = ($item['qty'] * $request->layers);
                 while ($count > 0) {
 
                     $product = Product::where('product_type_id', $item['product_type_id'])
