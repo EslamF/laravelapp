@@ -16,22 +16,32 @@ class SizeSeeder extends Seeder
     {
         DB::table('sizes')->insert([
             [
-                'name'       => 's' , 
+                'name'       => 'S' , 
                 'created_by' => User::first()->id , 
             ] , 
 
             [
-                'name'       => 'm' , 
+                'name'       => 'M' , 
                 'created_by' => User::first()->id , 
             ] , 
 
             [
-                'name'       => 'lg' , 
+                'name'       => 'L' , 
                 'created_by' => User::first()->id , 
             ] , 
 
             [
-                'name'       => 'xl' , 
+                'name'       => 'XL' , 
+                'created_by' => User::first()->id , 
+            ] , 
+
+            [
+                'name'       => 'XXL' , 
+                'created_by' => User::first()->id , 
+            ] , 
+
+            [
+                'name'       => 'XXXL' , 
                 'created_by' => User::first()->id , 
             ] , 
         ]);
