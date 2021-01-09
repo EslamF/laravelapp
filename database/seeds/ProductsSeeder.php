@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ProductsImport;
+use App\Imports\Products2Import;
 
 class ProductsSeeder extends Seeder
 {
@@ -13,6 +13,6 @@ class ProductsSeeder extends Seeder
      */
     public function run()
     {
-        Excel::import(new ProductsImport, public_path('products.xlsx'));
+        Excel::import(new Products2Import, public_path('products2.xlsx'));
     }
 }

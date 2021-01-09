@@ -29,21 +29,6 @@ class SizeSeeder extends Seeder
                 'name'       => 'L' , 
                 'created_by' => User::first()->id , 
             ] , 
-
-            [
-                'name'       => 'XL' , 
-                'created_by' => User::first()->id , 
-            ] , 
-
-            [
-                'name'       => 'XXL' , 
-                'created_by' => User::first()->id , 
-            ] , 
-
-            [
-                'name'       => 'XXXL' , 
-                'created_by' => User::first()->id , 
-            ] , 
         ]);
     }
 }
