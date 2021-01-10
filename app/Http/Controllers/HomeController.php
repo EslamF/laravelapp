@@ -33,7 +33,6 @@ class HomeController extends Controller
 
     public function home()
     {
-        return Excel::import(new BuyOrdersImport, public_path('sales1.xlsx'));
         $object = new ProductsAlarmController();
         
         //$about_to_run_products_count = count($object->get_about_to_run_products());
