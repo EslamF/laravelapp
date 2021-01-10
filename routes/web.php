@@ -131,6 +131,7 @@ Route::group([
 
             ], function () {
                 Route::get('get-all', 'ShippingCompanyController@getAllPaginate')->name('shippingcompany.list');
+                Route::get('getOrders/{id}' , 'ShippingCompanyController@getOrders')->name('shippingcompany.getOrders');
                 Route::post('test', 'ShippingCompanyController@test')->name('shippingcompany.test');
                 Route::get('create', 'ShippingCompanyController@createPage')->name('shippingcompany.create_page');
                 Route::post('store', 'ShippingCompanyController@create')->name('shippingcompany.store');

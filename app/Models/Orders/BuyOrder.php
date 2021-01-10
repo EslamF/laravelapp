@@ -7,6 +7,7 @@ use App\Models\Users\Customer;
 use App\Models\Orders\ShippingOrder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Orders\OrderStatus;
+use App\Models\Organization\ShippingCompany;
 
 class BuyOrder extends Model
 {
@@ -19,7 +20,8 @@ class BuyOrder extends Model
         'preparation',
         'delivery_date',
         'source',
-        'pending_date'
+        'pending_date',
+        'shipping_company_id',
     ];
 
     protected $appends = ['confirmation_color' , 'status_color' , 'translate_confirmation' , 'translate_preparation' , 'translate_status']; 
@@ -40,7 +42,11 @@ class BuyOrder extends Model
         return $this->hasMany(BuyOrderProduct::class);
     }
 
-
+    public function shippingCompany()
+    {
+        return $this->belongsTo(ShippingCompany::class);
+    }
+    
     public function orderTotal()
     {
         if($this->price > 0)

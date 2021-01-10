@@ -20,8 +20,8 @@
                             <th>{{__('words.customer')}}</th>
                             <th>{{__('words.delivery_date')}}</th>
                             <th>{{__('words.confirmation')}}</th>
-                            {{--<th>Deliver Status</th>--}}
                             <th>{{__('words.price')}}</th>
+                            <th>{{__('words.shipping_company')}}</th>
                             <th>{{__('words.actions')}}</th>
                         </tr>
                     </thead>
@@ -32,12 +32,11 @@
                                 <td>{{$value->bar_code}}</td>
                                 <td><span class = "{{$value->status_color}}" style = "padding:5px; border-radius:5px;">{{ $value->translate_status }}</span></td>
                                 <td>{{ __('words.' . $value->preparation)}}</td>
-                                {{--<td>{{$value->stauts == 0 ? 'waiting': 'Ready to '}}</td>--}}
-                                <td>{{$value->customer->name}}</td>
+                                <td>{{Str::limit($value->customer->name , 15)}}</td>
                                 <td>{{$value->delivery_date}}</td>
                                 <td><span class = "{{$value->confirmation_color}}" style = "padding:5px; border-radius:5px;">{{ __('words.' . $value->confirmation)}}</span></td>
-                                {{--<td>{{$value->productStatus() ? 'Ready To Deliver' : 'Waiting for Products'}}</td>--}}
                                 <td>{{$value->orderTotal()}}</td>
+                                <td>{{$value->shippingCompany ? $value->shippingCompany->name : ''}}</td>
                                 <td>
                                     <a href="{{Route('buy.show_order', $value->id)}}" class="btn btn-info btn-sm">{{__('words.show')}}</a>
                                     <a href="{{Route('buy.edit_page', $value->id)}}" class="btn btn-primary btn-sm {{ Laratrust::isAbleTo('edit-buy-order') ? '' : 'disabled' }} {{$value->status == 'returned' ? 'disabled' : ''}} " >تعديل</a>

@@ -103,4 +103,21 @@ class ShippingCompanyController extends Controller
         ]);
         $type = ShippingCompany::where('id', $request->type_id)->first();
     }
+
+    public function getOrders($id) 
+    {
+        $company = ShippingCompany::where('id' , $id)->first();
+
+        if($company)
+        {
+            $orders = $company->buyOrders()->with('customer')->where('preparation' , 'prepared')->get();
+
+            return response()->json($orders, 200);
+        }
+        else 
+        {
+            return response()->json([], 200);
+        }
+        
+    }
 }

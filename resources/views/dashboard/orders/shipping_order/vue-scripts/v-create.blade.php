@@ -17,9 +17,10 @@
             shipping_company_id: '',
             shipping_date: '',
             errors: {},
-            have_error: false
+            have_error: false,
+            have_value: false
         },
-        mounted() {
+        mounted() { 
             this.getOrderToShip();
             this.getShippingCompanies();
         },
@@ -34,6 +35,19 @@
 
                     });
             },
+            getOrders() 
+            {
+                axios.get('{{url("shipping/getOrders")}}' + '/' + this.shipping_company_id).then(res => {
+                    console.log('res.data');
+                    console.log(res.data);
+                    this.value = res.data;
+                }).catch(err => {
+
+                });
+
+             
+            },
+
             dateWithAddress({
                 delivery_date,
                 address
@@ -50,19 +64,22 @@
             },
             saveOrder() {
                 this.validations();
+                console.log(this.have_error);
                 if (!this.have_error) {
                     var data = {}
                     data.shipping_date = this.shipping_date;
                     data.shipping_company_id = this.shipping_company_id;
                     data.orders = this.value;
-                }
-                axios.post('{{Route("shipping.save_to_order")}}', data)
+
+                    axios.post('{{Route("shipping.save_to_order")}}', data)
                     .then(res => {
                         window.location.href = "{{Route('shipping.get_list')}}"
                     })
                     .catch(err => {
 
                     });
+                }
+              
             },
             validations() {
                 this.have_error = false;

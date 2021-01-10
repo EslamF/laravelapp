@@ -18,7 +18,16 @@
                     </div>
                     <div v-if="data.order.confirmation == 'delayed'" class="col-md-3 flex">
                         <label for="">{{__('words.pending_until')}}</label>
+                        
                         <input class="form-control" type="date" v-model="data.order.pending_date">
+                    </div>
+
+                    <div v-if="data.order.confirmation == 'confirmed'" class="col-md-3 flex">
+                        <label for="">{{__('words.shipping_company')}}</label>
+                        <select class="form-control" v-model="shipping_company_id">
+                            <option value="" disabled selected>{{__('words.choose_company')}}</option>
+                            <option :value="company.id" v-for="company in shipping_companies">@{{company.name}}</option>
+                        </select>
                     </div>
                     <!-- <div class="col-md-3  flex">
                         <label for="">اختر حالة الاوردر</label>

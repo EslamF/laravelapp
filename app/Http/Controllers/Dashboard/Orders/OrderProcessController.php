@@ -53,8 +53,10 @@ class OrderProcessController extends Controller
             ->where('confirmation', '!=', 'canceled')
             ->where('preparation', 'need_prepare')
             //->where('status', 0)
+            ->with('shippingCompany')
             ->paginate();
 
+            //return $orders;
         return view('dashboard.orders.buy_process.new_orders', ['orders' => $orders]);
     }
 

@@ -10,9 +10,11 @@
             status_message: '',
             data: {
                 order: {
-                    confirmation: ''
+                    confirmation: '' 
                 }
             },
+            shipping_companies: [],
+            shipping_company_id: '',
             errors: [],
             have_error: false
 
@@ -20,6 +22,8 @@
         mounted() {
             this.getOrder();
             this.getOrderStatus();
+            this.getShippingCompanies();
+            //console.log(this.shipping_companies);
         },
         methods: {
             getOrder() {
@@ -28,9 +32,20 @@
                         this.data = res.data;
                         document.getElementById('loader').style.display = 'block'
                         this.getGrandTotal();
+                        console.log(res.data);
+                        this.shipping_company_id = res.data.order.shipping_company_id ?? '' ;
                     }).catch(err => {
 
                     })
+            },
+            getShippingCompanies() {
+                axios.get('{{Route("shippingcompany.get_all")}}')
+                    .then(res => {
+                        this.shipping_companies = res.data;
+                        //console.log(this.shipping_companies);
+                    }).catch(err => {
+
+                    });
             },
             getOrderStatus() {
                 axios.get('{{Route("buy.order_status",$id)}}')
@@ -61,11 +76,13 @@
                     })
             },
             updateData() {
-                this.validatePrice();
+                //this.validatePrice();
                 var data = {};
                 data.data = this.data;
                 data.order_status = this.order_status;
                 data.status_message = this.status_message;
+                data.shipping_company_id = this.shipping_company_id;
+                //console.log(data);
                 if (!this.have_error) {
                     axios.post('{{Route("buy.update_order")}}', data)
                         .then(res => {

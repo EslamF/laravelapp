@@ -16,6 +16,7 @@ class ProductsAlarmController extends Controller
     public function about_to_run_products()
     {
         $about_to_run_products = $this->get_about_to_run_products();
+        //return $about_to_run_products;
         return view('dashboard.alarms.about_to_run_products' , compact('about_to_run_products'));
     }
 
@@ -39,7 +40,8 @@ class ProductsAlarmController extends Controller
                             ->with('material' , 'material.materialType' , 'productType')
                             ->get()
                             ->groupBy('product_material_code');
-
+        
+        //return $products;
         $about_to_run_products = $products->map(function ($product , $key) use($products) {
 
             if(count($product) <= 5)

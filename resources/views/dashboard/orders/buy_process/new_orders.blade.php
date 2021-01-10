@@ -17,6 +17,7 @@
                                 <th>{{__('words.code')}}</th>
                                 <th>{{__('words.confirmation')}}</th>
                                 <th>{{__('words.delivery_date')}}</th>
+                                <th>{{__('words.shipping_company')}}</th>
                                 <th>{{__('words.actions')}}</th>
                             </tr>
                         </thead>
@@ -27,6 +28,7 @@
                                 <td>{{$value->bar_code}}</td>
                                 <td><span class = "{{$value->confirmation_color}}" style = "padding:5px; border-radius:5px;">{{__('words.' . $value->confirmation)}}</span></td>
                                 <td>{{$value->delivery_date}}</td>
+                                <td>{{$value->shippingCompany ? $value->shippingCompany->name : ''}}</td>
                                 <td>
                                     <a href="{{Route('process.prepare_order_page', $value->id)}}" class="btn btn-primary  {{ Laratrust::isAbleTo('prepare-orders') ? '' : 'disabled' }}" >{{__('words.prepare_order')}}</a>
                                 </td>

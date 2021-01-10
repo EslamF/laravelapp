@@ -16,6 +16,7 @@
                             <th>{{__('words.id')}}</th>
                             <th>{{__('words.code')}}</th>
                             <th>{{__('words.delivery_date')}}</th>
+                            <th>{{__('words.shipping_company')}}</th>
                             <th>{{__('words.actions')}}</th>
                         </tr>
                     </thead>
@@ -25,6 +26,7 @@
                             <td>{{$order->id}}</td>
                             <td>{{$order->bar_code}}</td>
                             <td>{{$order->delivery_date}}</td>
+                            <td>{{$order->shippingCompany ? $order->shippingCompany->name : ''}}</td>
 
                             <td>
                                 <a href="{{Route('process.ready_order_page', $order->id)}}" class="btn btn-primary">{{__('words.show')}}</a>
