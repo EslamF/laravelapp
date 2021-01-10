@@ -43,10 +43,18 @@ class BuyOrder extends Model
 
     public function orderTotal()
     {
-        return $this->buyOrderProducts()->get()->map(function ($item) {
-            $qty = $item->company_qty +  $item->factory_qty;
-            return $item->price * $qty;
-        })->sum();
+        if($this->price > 0)
+        {
+            return $this->price;
+        }
+        else 
+        {
+            return $this->buyOrderProducts()->get()->map(function ($item) {
+                $qty = $item->company_qty +  $item->factory_qty;
+                return $item->price * $qty;
+            })->sum();
+        }
+      
     }
 
     public function productStatus()

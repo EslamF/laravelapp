@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Products\Product;
 use App\Http\Controllers\Dashboard\Alarms\ProductsAlarmController;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\Products2Import;
+use App\Imports\BuyOrdersImport;
 
 class HomeController extends Controller
 {
@@ -33,7 +33,7 @@ class HomeController extends Controller
 
     public function home()
     {
-        //return Excel::import(new Products2Import, public_path('products2.xlsx'));
+        return Excel::import(new BuyOrdersImport, public_path('sales1.xlsx'));
         $object = new ProductsAlarmController();
         
         //$about_to_run_products_count = count($object->get_about_to_run_products());

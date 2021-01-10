@@ -13,6 +13,6 @@ class ProductsSeeder extends Seeder
      */
     public function run()
     {
-        Excel::import(new Products2Import, public_path('products2.xlsx'));
+        Excel::import(new Products2Import, public_path('products3.xlsx'));
     }
 }

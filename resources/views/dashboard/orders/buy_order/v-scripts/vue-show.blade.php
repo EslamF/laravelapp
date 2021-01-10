@@ -47,7 +47,7 @@
                 for (i = 0; i < this.data.products.length; i++) {
                     total += this.data.products[i].price * (this.data.products[i].company_qty + this.data.products[i].factory_qty);
                 }
-                this.grand_total = total;
+                this.grand_total =   total == 0 ?  this.data.order.price : total;
             },
             removeItem(index, id) {
                 let data = {};
