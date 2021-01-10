@@ -1,5 +1,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js">
+    import autofocus from 'vue-autofocus-directive';
+    Vue.directive('autofocus', autofocus);
+</script>
+
+
 <script>
     var app = new Vue({
         el: '#app',
@@ -12,22 +17,32 @@
             add_error: '',
             invalid_error: '',
             save_error: '',
-            count: 0,
+            count: 0, 
             qty_sum: 0
         },
         mounted() {
             this.getOrderToPrepare();
+            this.$nextTick(() => this.$refs.search.focus())
+
+            /*this.$nextTick(function () {
+              this.$refs.search.focus()
+          })*/
+          
         },
         methods: {
             getOrderToPrepare() {
                 axios.get('{{url("orders/process/get-order")}}' + '/' + '{{$id}}')
                     .then(res => {
+                        console.log(res.data);
                         this.items = res.data;
                         document.getElementById('loader').style.display = 'block';
                         this.addProducts();
                     }).catch(err => {
 
                     })
+
+                    //document.getElementById("search").focus();
+                    
             },
             check() {
 

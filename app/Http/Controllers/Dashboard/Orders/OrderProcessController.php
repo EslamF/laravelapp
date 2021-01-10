@@ -9,6 +9,7 @@ use App\Models\Orders\BuyOrderProduct;
 use App\Models\Orders\ShippingOrder;
 use App\Models\Products\Product;
 use App\Models\Products\ProductType;
+use App\Models\Materials\Material;
 use Illuminate\Http\Request;
 
 class OrderProcessController extends Controller
@@ -129,12 +130,16 @@ class OrderProcessController extends Controller
                 $q->where('produce_code', $item->produce_code);
             })->first()->name;
 
+            $material_id = Product::where('produce_code' , $item->produce_code)->first()->material_id;
+            $material = Material::where('id' , $material_id)->first();
+
             return [
-                'buy_order_id' => $id,
-                'produce_code' => $item->produce_code,
-                'product'      => $type,
-                'size'         => $size,
-                'qty'          => intval($item->company_qty)
+                'buy_order_id'  => $id,
+                'produce_code'  => $item->produce_code,
+                'product'       => $type,
+                'size'          => $size,
+                'qty'           => intval($item->company_qty),
+                'material_code' => $material->mq_r_code
             ];
         });
 
@@ -143,7 +148,7 @@ class OrderProcessController extends Controller
 
     public function validateProduct(Request $request)
     {
-        $product = Product::where('prod_code', $request->prod_code)
+        $product = Product::where('produce_code', $request->prod_code)
             ->where('save_order_id', '!=', null)
             ->where('status', '!=', 'reserved')
             ->first();

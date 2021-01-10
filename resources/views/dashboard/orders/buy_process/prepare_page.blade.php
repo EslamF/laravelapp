@@ -1,7 +1,7 @@
 @extends('index')
 @section('content')
 <div id="app" class="row">
-    <div id="loader" style="display:none" class="col-md-12">
+    <div id="loader" style="display:none" class="col-md-12"> 
         <div class="card">
             <div class="card-header">
                 <label for="">{{__('words.add_product')}}</label>
@@ -9,7 +9,7 @@
                 <span v-if="invalid_error" style="color: red;">@{{invalid_error}}</span>
                 <span v-if="save_error" style="color: red;">@{{save_error}}</span>
                 <label style="color: red;">count(@{{count}})</label>
-                <input type="text" @keyup.enter="validateProduct()" v-model="prod_code" class="form-control col-md-6">
+                <input type="text" @keyup.enter="validateProduct()" ref="search" v-model="prod_code" class="form-control col-md-6">
 
             </div>
             <!-- /.card-header -->
@@ -25,7 +25,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="product in items">
-                            <td>@{{product.product}}</td>
+                            <td>@{{product.material_code}}</td>
                             <td>@{{product.size}}</td>
                             <td>@{{product.qty}}</td>
                         </tr>

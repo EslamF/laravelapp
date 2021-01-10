@@ -64,6 +64,7 @@
                 console.log('test');
                 $(this).attr('disabled', 'disabled');
             });
+            $(".input_focus").focus();
         </script>
         @stack('scripts')
         </body>
