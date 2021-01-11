@@ -10,6 +10,7 @@ use App\Models\Orders\ShippingOrder;
 use App\Models\Products\Product;
 use App\Models\Products\ProductType;
 use App\Models\Materials\Material;
+use App\Models\Users\Customer;
 use Illuminate\Http\Request;
 
 class OrderProcessController extends Controller
@@ -46,14 +47,26 @@ class OrderProcessController extends Controller
 
     public function getNewOrders()
     {
-        $orders = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation')
+        $orders = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation' , 'shipping_company_id' , 'customer_id')
             ->whereHas('buyOrderProducts', function ($q) {
                 $q->where('factory_qty', 0);
+            })
+            ->where(function($query){
+                if(request()->filled('search'))
+                {
+                    $customers = Customer::where('name' , 'like' , '%' . request()->search . '%')
+                                            ->orWhere('phone' , 'like' , '%' . request()->search . '%')
+                                            ->get()
+                                            ->pluck('id')
+                                            ->toArray();
+
+                    $query->whereIn('customer_id' , $customers);
+                }
             })
             ->where('confirmation', '!=', 'canceled')
             ->where('preparation', 'need_prepare')
             //->where('status', 0)
-            ->with('shippingCompany')
+            ->with(['shippingCompany' , 'customer'])
             ->paginate();
 
             //return $orders;

@@ -148,5 +148,7 @@ return [
     'product_code' => 'كود المنتج' ,
     'choose_order' => 'إختر الطلب' ,
     'products'  => 'المنتجات' ,
+
+    'search' => 'بحث',
     
  ];

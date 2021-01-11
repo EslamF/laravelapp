@@ -9,9 +9,44 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+                <div> 
+                    <form method = "GET" id = "get_form">
+                        <div class = "row">
+
+                            <div class = "col-md-3">
+                                <div class = "form-group">
+                                    <label>{{__('words.mq_r_code')}}</label>
+                                    <input type = "text" name = "material_code" value = "{{request()->material_code}}" class = "form-control"> 
+                                </div>
+                            </div>
+
+                            <div class = "col-md-3">
+                                <div class = "form-group">
+                                    <label>{{__('words.size')}}</label>
+                                    <select class = "form-control" name = "size_id">
+                                        @inject('sizes' , 'App\Models\Options\Size')
+                                            <option value = "">كل المقاسات</option>
+                                        @foreach($sizes->get() as $size)
+                                            <option value = "{{$size->id}}" {{$size->id == request()->size_id ? 'selected' : ''}}>{{$size->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class = "col-md-3">
+                                <div class = "form-group">
+                                    <label>{{__('words.product')}}</label>
+                                    <input type = "text" name = "product_type" value = "{{request()->product_type}}" class = "form-control"> 
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 @include('includes.flash-message')
                 @if($products->count())
                     <table class="table">
+                        <p style = "color: #a31616;"> إجمالي المنتجات  : {{ $products->total() }}</p>
+                       
                         <thead>
                             <tr>
 
@@ -57,7 +92,8 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                {{$products->links()}}
+                {!! $products->appends(['size_id' => request()->size_id , 'material_code' => request()->material_code , 'product_type' => request()->product_type])->links()!!}
+            
             </div>
         </div>
         <!-- /.card -->
@@ -105,5 +141,16 @@
         }
 
     })
+</script>
+<script>
+    $("input[name='material_code']").change(function(){
+        $("#get_form").submit();
+    });
+    $("input[name='product_type']").change(function(){
+        $("#get_form").submit();
+    });
+    $("select[name='size_id']").change(function(){
+        $("#get_form").submit();
+    });
 </script>
 @endsection

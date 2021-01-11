@@ -5,7 +5,7 @@
                 <b>Version</b> 3.0.1-pre
             </div>
         </footer>
-        @yield('footer-script')
+        
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
@@ -66,6 +66,7 @@
             });
             $(".input_focus").focus();
         </script>
+        @yield('footer-script')
         @stack('scripts')
         </body>
 

@@ -19,7 +19,31 @@ class ProductController extends Controller
 
     public function getAllPaginate()
     {
-        $products = Product::with('productType' , 'size')->paginate();
+        // size (select)
+        // material code (input) 
+        // product type
+        $products = Product::where(function($query){
+
+            if(request()->filled('size_id'))
+            {
+                $query->where('size_id' , request()->size_id);
+            }
+
+            if(request()->filled('material_code'))
+            {
+                $materials = Material::where('mq_r_code' , 'like' , '%' . request()->material_code . '%')->get()->pluck('id')->toArray();
+               
+                $query->whereIn('material_id' , $materials);
+            }
+
+            if(request()->filled('product_type'))
+            {
+                $product_types = ProductType::where('name' , 'like' , '%' . request()->product_type . '%')->get()->pluck('id')->toArray();
+
+                $query->whereIn('product_type_id' , $product_types);
+            }
+            
+        })->with('productType' , 'size')->paginate();
         return view('dashboard.products.product.list')->with('products', $products);
     }
 
