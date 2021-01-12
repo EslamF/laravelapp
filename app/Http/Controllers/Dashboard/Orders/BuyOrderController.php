@@ -80,7 +80,8 @@ class BuyOrderController extends Controller
             'description' => $request->description,
             'bar_code' => $this->generateCode(),
             'delivery_date' => $request->delivery_date,
-            'source'        => $customer->source
+            'source'        => $customer->source,
+            'price'         => $request->price
         ]);
         foreach ($request->products as $product) {
             if (!isset($product['qty'])   ) {
@@ -96,7 +97,7 @@ class BuyOrderController extends Controller
             } else {
                 $product['factory_qty'] = $product['qty'];
             }
-            if(array_key_exists("price",$product) &&  $product['price'] > 0 && $product['qty'] > 0   )
+            if(/*array_key_exists("price",$product) &&  $product['price'] > 0 &&*/ $product['qty'] > 0   )
             {
                 BuyOrderProduct::create([
                     'buy_order_id'             => $order->id,
@@ -104,7 +105,7 @@ class BuyOrderController extends Controller
                     'produce_code'             => $product['produce_code'],
                     'factory_qty'              => $product['factory_qty'] ?? 0,
                     'company_qty'              => $product['company_qty'] ?? 0,
-                    'price'                    => $product['price']
+                    'price'                    => 0 //$product['price']
                 ]);
             }
         }
@@ -141,7 +142,7 @@ class BuyOrderController extends Controller
                 } else {
                     $product['factory_qty'] = $product['qty'];
                 }
-                if(array_key_exists("price",$product) &&  $product['price'] > 0 && $product['qty'] > 0   )
+                if(/*array_key_exists("price",$product) &&  $product['price'] > 0 &&*/ $product['qty'] > 0   )
                 {
                     BuyOrderProduct::create([
                         'buy_order_id'             => $order->id,
@@ -149,7 +150,7 @@ class BuyOrderController extends Controller
                         'product_material_code'    => Product::where('produce_code' , $product['produce_code'])->first()->product_material_code ,
                         'factory_qty'              => $product['factory_qty'] ?? 0,
                         'company_qty'              => $product['company_qty'] ?? 0,
-                        'price'                    => $product['price']
+                        'price'                    => 0 //$product['price']
                     ]);
                 }
             }
@@ -256,7 +257,7 @@ class BuyOrderController extends Controller
     public function showOrder($id)
     {
         $data = [];
-        $data['order'] = BuyOrder::where('id', $id)->with('buyOrderProducts')->first();
+        $data['order'] = BuyOrder::where('id', $id)->with('buyOrderProducts' , 'customer')->first();
         $data['products'] = $data['order']->buyOrderProducts->map(function ($item) {
             $product = Product::where('produce_code', $item->produce_code)->first();
             return [

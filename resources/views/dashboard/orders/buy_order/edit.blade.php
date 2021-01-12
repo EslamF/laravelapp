@@ -82,7 +82,7 @@
                                 <th>{{__('words.company_stock')}}</th>
                                 <th>{{__('words.factory_stock')}}</th>
                                 <th>{{__('words.qty')}}</th>
-                                <th>{{__('words.price')}}</th>
+                                {{--<th>{{__('words.price')}}</th>--}}
                             </tr>
                         </thead>
                         <tbody>
@@ -99,16 +99,25 @@
                                         <span v-if="have_error" style="color:red">@{{products[index].error_qty}}</span>
                                         <input type="number" min="1" style="width:60%" @keyup="updateStock(index, product.qty)" class="form-control" v-model="product.qty" v-bind:id="'product' + index">
                                     </td>
+                                    {{--
                                     <td>
                                         <span v-if="have_error" style="color:red">@{{product.price_err}}</span>
                                         <span v-if="have_error" style="color:red">@{{product.error_price}}</span>
                                         <input type="number" min="1" class="form-control" style="width:60%" v-model="product.price">
                                     </td>
+                                    --}}
                                 
                             </tr>
                         </tbody>
                     </table>
                         <div>
+                            <br>
+
+                            <div class="form-group col-md-6" v-show="products.length > 0">
+                                <label for="">{{__('words.price')}}</label>
+                                <span style="color:red" v-if="price_error">@{{price_error}}</span>
+                                <input type = "number" min = "1" v-model="price" class="form-control">
+                            </div>
 
                             <div class="form-group" v-show="products.length > 0">
                                 <label for="">{{__('words.description')}}</label>

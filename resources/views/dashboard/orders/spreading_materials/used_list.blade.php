@@ -25,7 +25,7 @@
                             @foreach($data as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
-                                <td>{{$value->user->name}}</td>
+                                <td>{{$value->spreadinguser->name}}</td>
                                 <td>{{$value->material->mq_r_code}}</td>
                                 <td>{{$value->weight}}</td>
                             </tr>

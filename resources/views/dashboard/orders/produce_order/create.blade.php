@@ -20,8 +20,8 @@
                                 <label for="mq_r_code">إذن القص</label>
                                 <span style="color:red" v-if="error.cutting_order_id">*@{{error.cutting_order_id}}</span>
                                 <select class="form-control" @change="getFactoryByCuttingId(cutting_order_id)" v-model="cutting_order_id">
-                                    <option value="" disabled selected>اختر إذن القص</option>
-                                    <option :value="order.id" v-for="order in cutting_orders">@{{order.id}}</option>
+                                    <option value="" disabled selected>اختر إذن القص</option> 
+                                    <option :value="order.id" v-for="order in cutting_orders">@{{order.id + ' - ' + (order.cuttinguser ? order.cuttinguser.name : '') + ' - ' + order.created_at}}</option>
                                 </select>
                                 @error('cutting_order_id')
                                 <p class="help is-danger">

@@ -16,7 +16,8 @@
             shipping_companies: [],
             shipping_company_id: '',
             errors: [],
-            have_error: false
+            have_error: false,
+            customer: {}
 
         },
         mounted() {
@@ -32,8 +33,9 @@
                         this.data = res.data;
                         document.getElementById('loader').style.display = 'block'
                         this.getGrandTotal();
-                        console.log(res.data);
+                        console.log(this.data);
                         this.shipping_company_id = res.data.order.shipping_company_id ?? '' ;
+                        this.customer = res.data.order.customer;
                     }).catch(err => {
 
                     })

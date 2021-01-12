@@ -117,7 +117,7 @@ class ReportController extends Controller
                 $query->where('created_at' , '<=' , request()->to);
                 
             }
-        })->get();
+        })->paginate(25);
 
         $employees = User::get(); //created by
 
@@ -380,7 +380,7 @@ class ReportController extends Controller
                 $query->where('name' , 'like' , '%' . request()->customer . '%')
                         ->orWhere('phone' , 'like' , '%' . request()->customer . '%');
             }
-        })->get();
+        })->paginate(25);
 
         return view('dashboard.reports.customers' , compact('customers'));
     }

@@ -34,7 +34,9 @@
             error: '',
             have_error: false,
             customer_errors: {},
-            have_value: false
+            have_value: false,
+            price: 0,
+            price_error: '',
         },
         mounted() {
             this.setDate(2);
@@ -156,8 +158,13 @@
                     data.products = this.products;
                     data.description = this.description;
                     data.delivery_date = this.delivery_date;
+                    data.price = this.price;
                     console.log('products');
                     console.log(data.products);
+                    console.log('data');
+                    console.log(data);
+                    console.log('price');
+                    console.log(data.price);
                     const metas = document.getElementsByTagName('meta');
                     axios.defaults.headers = {
                         'Content-Type': 'application/json',
@@ -174,7 +181,8 @@
             customerValidate() {
 
                 this.have_error = false;
-                this.customer_errors = {}
+                this.customer_errors = {};
+                this.price_error = "";
 
                 if (!this.customer.name) {
                     this.customer_errors.name = "* يجب ادخال هذا الحقل";
@@ -197,6 +205,12 @@
                     this.have_error = true;
                 }
                 this.productsValidate();
+
+                //price
+                if(!this.price || this.price < 1) {
+                    this.price_error = "يجب إدخال السعر";
+                    this.have_error = true;
+                }
 
                 //console.log()
             },
@@ -236,6 +250,7 @@
                         this.have_error = true;
                     }*/
 
+                    /*
                     if (this.products[i].price > 0 && !this.products[i].qty || reg.test(this.products[i].qty)) {
                         console.log(i + ' : ' + 2);
                         this.products[i].error_qty = "* يجب ادخال هذا الحقل";
@@ -255,6 +270,7 @@
                             this.have_error = true;
                         }
                     }   
+                    */
                     
 
                     //extra : if the price and quantity are 0 in the same time => success

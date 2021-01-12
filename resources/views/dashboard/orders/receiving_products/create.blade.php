@@ -16,10 +16,10 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="factory">إذن التصنيع</label>
-                                <span style="color:red" v-if="error.produce_order_id">*@{{error.produce_order_id}}</span>
+                                <span style="color:red" v-if="error.produce_order_id">*@{{error.produce_order_id}}</span> 
                                 <select class="form-control" @change="listProducts(produce_order_id)" v-model="produce_order_id">
                                     <option value="" disabled selected>حدد إذن التصنيع</option>
-                                    <option :value="order.id" v-for="order in produce_orders">@{{order.id}}</option>
+                                    <option :value="order.id" v-for="order in produce_orders">@{{order.id + ' - ' + order.factory.name + ' - ' + order.user.name}}</option>
                                 </select>
                                 @error('produce_order_id')
                                 <p class="help is-danger">

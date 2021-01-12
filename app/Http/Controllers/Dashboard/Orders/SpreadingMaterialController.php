@@ -123,6 +123,6 @@ class SpreadingMaterialController extends Controller
 
     public function getAll()
     {
-        return response()->json(SpreadingOutMaterialOrder::select('id')->whereDoesntHave('cuttingOrders')->get(), 200);
+        return response()->json(SpreadingOutMaterialOrder::with('spreadinguser')->select('id' , 'user_id' , 'created_at')->whereDoesntHave('cuttingOrders')->get(), 200);
     }
 }

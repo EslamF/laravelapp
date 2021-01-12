@@ -8,7 +8,7 @@
             </div>
             @include('includes.loading')
             <!-- /.card-header -->
-            <!-- form start -->
+            <!-- form start --> 
             <form role="form">
                 
                 @csrf
@@ -24,13 +24,13 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="">اذن الفرش</label>
                                 
                                 <select v-model="spreading_out_material_order_id" class="form-control" id="" required>
                                     <option value="" disabled seelcted>حدد اذن الفرش</option>
-                                    <option :value="order.id" v-for="order in spreading_orders">@{{order.id}}</option>
+                                    <option :value="order.id" v-for="order in spreading_orders">@{{order.id + ' - ' +  order.spreadinguser.name + ' - ' + order.created_at}}</option>
                                 </select>
                                 <span style="color:red" v-if="spreading_order_error">@{{spreading_order_error}}</span>
                             </div>

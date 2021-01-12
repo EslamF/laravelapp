@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Orders\BuyOrder;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('test' , function(){
+    return BuyOrder::with('buyOrderProducts')->where('bar_code' , "X624")->first();
+    //return BuyOrder::doesntHave('buyOrderProducts')->get();
+});
 Auth::routes(['register' => false, 'verify' => true]);
 
 Route::group([

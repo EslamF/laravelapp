@@ -61,7 +61,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                
+                {{$customers->appends(['customer' => request()->customer])->links()}}
             </div>
         </div>
         <!-- /.card -->

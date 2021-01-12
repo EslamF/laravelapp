@@ -26,7 +26,7 @@
                             <tr>
                                 <td>{{$order->id}}</td>
                                 <td>{{$order->code}}</td>
-                                <td>{{$order->user->name}}</td>
+                                <td>{{$order->sortinguser->name}}</td>
                                 <td>{{$order->created_at}}</td>
                                 <td>
                                     <a href="{{Route('sort.product.list', $order->id)}}"

@@ -6,7 +6,7 @@
             <div class="card-header">
 
                 <div class = "text-center">
-                    <h3 >موظف الفرز : {{$data['sort_order']->user->name}}</h3>
+                    <h3 >موظف الفرز : {{$data['sort_order']->sortinguser->name}}</h3>
                     <br>
                     <h3>البار كود : {{$data['sort_order']->code}}</h3>
                 </div>

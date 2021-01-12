@@ -47,7 +47,31 @@
                 </div> -->
             </div>
             <!-- /.card-header -->
+            
             <div class="card-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class = "row row_style">
+                            <div class = "col-md-3 first_col">  {{__('words.customer')}} </div>
+                            <div class = "col-md-6 second_col">@{{customer.name + ' - ' + customer.phone}}  </div>
+                        </div>
+    
+                        <div class = "row row_style">
+                            <div class = "col-md-3 first_col">  {{__('words.bar_code')}} </div>
+                            <div class = "col-md-6 second_col">@{{data.order.bar_code}}  </div>
+                        </div>
+    
+                        <div class = "row row_style">
+                            <div class = "col-md-3 first_col">  {{__('words.delivery_date')}} </div>
+                            <div class = "col-md-6 second_col">@{{data.order.delivery_date}} </div>
+                        </div>
+    
+                    </div> 
+                </div>
+                <br>
+
+                
                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-12 col-md-6"></div>
@@ -117,3 +141,25 @@
     @include('dashboard.orders.buy_order.v-scripts.vue-show')
 </div>
 @endsection
+
+@push('styles')
+<style>
+    .row_style
+    {
+        margin: 10px 5px;
+    }
+
+    .second_col
+    {
+        border: solid 1px #2359a5;
+        padding: 3px 5px ;
+        font-size: 1.2em;
+    }
+
+    .first_col
+    {
+        color: #2359a5;
+        font-size: 1.2em;
+    }
+</style>
+@endpush

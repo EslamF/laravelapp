@@ -35,7 +35,9 @@
             error: '',
             have_error: false,
             customer_errors: {},
-            have_value: true
+            have_value: true,
+            price: '{{$order->price}}',
+            price_error: '',
         },
         mounted() {
             this.getCustomer();
@@ -189,7 +191,7 @@
                     data.description = this.description;
                     data.delivery_date = this.delivery_date;
                     data.customer_id = this.customer_id;
-                    
+                    data.price = this.price;
                     const metas = document.getElementsByTagName('meta');
                     axios.defaults.headers = {
                         'Content-Type': 'application/json',
@@ -209,6 +211,12 @@
                 this.customer_errors = {}
 
                 this.productsValidate();
+
+                //price
+                if(!this.price || this.price < 1) {
+                    this.price_error = "يجب إدخال السعر";
+                    this.have_error = true;
+                }
 
             },
             productsValidate() {
@@ -246,6 +254,7 @@
                         this.have_error = true;
                     }*/
 
+                    /*
                     if (this.products[i].price > 0 && !this.products[i].qty || reg.test(this.products[i].qty)) {
                         console.log(i + ' : ' + 2);
                         this.products[i].error_qty = "* يجب ادخال هذا الحقل";
@@ -264,7 +273,7 @@
 
                             this.have_error = true;
                         }
-                    }   
+                    }   */
                     
 
                     //extra : if the price and quantity are 0 in the same time => success

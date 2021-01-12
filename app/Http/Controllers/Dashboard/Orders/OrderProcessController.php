@@ -17,6 +17,21 @@ class OrderProcessController extends Controller
 {
     public function getAllPaginate()
     {
+        //return Product::where('material_id' , 10)->where('size_id' , 3)->first();
+        /*$value[8] = "Code 934";
+        $products_array = str_replace("Code","/", $value[8]); 
+        
+        $products_array = str_replace("code","/", $products_array); 
+
+        $products_array = str_replace(" ","", $products_array); 
+        
+        $products_array = explode("/" , $products_array);
+        
+        $products_array = array_filter($products_array);
+        
+        $products_array = array_values($products_array);
+        return $products_array;*/
+
         $new = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation')
             ->whereHas('buyOrderProducts', function ($q) {
                 $q->where('factory_qty', 0);
@@ -47,6 +62,9 @@ class OrderProcessController extends Controller
 
     public function getNewOrders()
     {
+        //return BuyOrder::with('buyOrderProducts')->where('bar_code' , "X624")->first();
+        //$orders =  BuyOrder::doesntHave('buyOrderProducts')->paginate();
+        //return view('dashboard.orders.buy_process.new_orders', ['orders' => $orders]);
         $orders = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation' , 'shipping_company_id' , 'customer_id')
             ->whereHas('buyOrderProducts', function ($q) {
                 $q->where('factory_qty', 0);
@@ -60,7 +78,8 @@ class OrderProcessController extends Controller
                                             ->pluck('id')
                                             ->toArray();
 
-                    $query->whereIn('customer_id' , $customers);
+                    $query->whereIn('customer_id' , $customers)
+                           ->orWhere('bar_code' , request()->search );
                 }
             })
             ->where('confirmation', '!=', 'canceled')
@@ -68,6 +87,8 @@ class OrderProcessController extends Controller
             //->where('status', 0)
             ->with(['shippingCompany' , 'customer'])
             ->paginate();
+
+            //return $orders()->where('bar_code' , )
 
             //return $orders;
         return view('dashboard.orders.buy_process.new_orders', ['orders' => $orders]);

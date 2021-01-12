@@ -150,5 +150,6 @@ return [
     'products'  => 'المنتجات' ,
 
     'search' => 'بحث',
+    'bar_code' => 'البار كود' ,
     
  ];

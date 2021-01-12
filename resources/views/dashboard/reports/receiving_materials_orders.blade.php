@@ -91,7 +91,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                
+                {!! $orders->appends(['from' => request()->from , 'to' => request()->to , 'employee_id' => request()->employee_id , 'buyer_id' => request()->buyer_id])->links()!!}
             </div>
         </div>
         <!-- /.card -->

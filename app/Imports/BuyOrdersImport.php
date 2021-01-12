@@ -22,6 +22,7 @@ class BuyOrdersImport implements ToCollection
 {
     
     public $date;
+    public $i = 0;
 
     public function  __construct($date)
     {
@@ -53,6 +54,7 @@ class BuyOrdersImport implements ToCollection
                 $products_array = array_filter($products_array);
                 $products_array = array_values($products_array);
                 dd($products_array);*/
+                
                 $customer = Customer::updateOrCreate(['phone' => $value[5]], [
                     'name' => $value[2] ,
                     'address' => $value[3] ,
@@ -60,61 +62,94 @@ class BuyOrdersImport implements ToCollection
                     'link'   => 'https://www.google.com/'
                 ]);
 
-                $order = BuyOrder::create([
-                    'customer_id' => $customer->id,
-                    'description' => $value[7],
-                    'bar_code' => $value[1],
-                    'delivery_date' => $this->date,
-                    'source'        => $customer->source ,
-                    'price'     => $value[6]
-                ]);
-
-                //check if number of pieces > 0
-                if($value[13] > 0)
+                $order = BuyOrder::with('buyOrderProducts')->where('bar_code' , $value[1])->first();
+                if($order)
                 {
-                    if($value[8] != 0) // medium
+                    $count = count($order->buyOrderProducts);
+                }
+                if(!$order)
+                {
+                    $order = BuyOrder::create([
+                        'customer_id' => $customer->id,
+                        'description' => $value[7],
+                        'bar_code' => $value[1],
+                        'delivery_date' => $this->date,
+                        'source'        => $customer->source ,
+                        'price'     => $value[6]
+                    ]);
+
+                    $count = 0;
+                }
+
+                if($value[1] == "X624")
+                {
+                    error_log($order);
+                }
+
+                $counting = $count > 0 ? true : false;
+                
+                
+                //check if number of pieces > 0
+                
+                if($value[13] > 0 && !$counting   )
+                {
+                    error_log('order : ' . $order->bar_code . ' count : ' . count($order->buyOrderProducts) . ' = ' . ($counting ? 'yes' : 'no') );
+                    //error_log($value);
+                    //$this->i++;
+                    //error_log('i : ' . $this->i);
+                    if(true ) // medium
                     {
-                        $products_array = str_replace("Code","", $value[8]); 
-                        $products_array = str_replace("code","", $value[8]);  
-                        $products_array = explode("/" , $value[8]);
+                        $products_array = str_replace("Code","/", $value[8]); 
+                        $products_array = str_replace("code","/", $products_array);  
+                        $products_array = str_replace(" ","", $products_array); 
+                        $products_array = explode("/" , $products_array);
                         $products_array = array_filter($products_array);
                         $products_array = array_values($products_array);
+                        error_log('array medium : ' . reset($products_array));
                         $this->add_products($m_size->id , $products_array , $order->id );
                     }
-                    if($value[9] != 0) // large
+                    if(true) // large
                     {
-                        $products_array = str_replace("Code","", $value[9]); 
-                        $products_array = str_replace("code","", $value[9]);  
-                        $products_array = explode("/" , $value[9]);
+                        $products_array = str_replace("Code","/", $value[9]); 
+                        $products_array = str_replace("code","/", $products_array);  
+                        $products_array = str_replace(" ","", $products_array);
+                        $products_array = explode("/" , $products_array);
                         $products_array = array_filter($products_array);
                         $products_array = array_values($products_array);
+                        error_log('array large : ' . reset($products_array));
                         $this->add_products($l_size->id , $products_array , $order->id );
                     }
-                    if($value[10] != 0) // x large
+                    if(true) // x large
                     {
-                        $products_array = str_replace("Code","", $value[10]); 
-                        $products_array = str_replace("code","", $value[10]);  
-                        $products_array = explode("/" , $value[10]);
+                        $products_array = str_replace("Code","/", $value[10]); 
+                        $products_array = str_replace("code","/", $products_array);  
+                        $products_array = str_replace(" ","", $products_array);
+                        $products_array = explode("/" , $products_array);
                         $products_array = array_filter($products_array);
                         $products_array = array_values($products_array);
-                        $this->add_products($m_size->id , $products_array , $order->id );
+                        error_log('array x large : ' . reset($products_array));
+                        $this->add_products($xl_size->id , $products_array , $order->id );
                     }
-                    if($value[11] != 0) // 2x large
+                    if(true) // 2x large
                     {
-                        $products_array = str_replace("Code","", $value[11]); 
-                        $products_array = str_replace("code","", $value[11]);  
-                        $products_array = explode("/" , $value[11]);
+                        $products_array = str_replace("Code","/", $value[11]); 
+                        $products_array = str_replace("code","/", $products_array);  
+                        $products_array = str_replace(" ","", $products_array);
+                        $products_array = explode("/" , $products_array);
                         $products_array = array_filter($products_array);
                         $products_array = array_values($products_array);
+                        error_log('array xx large : ' . reset($products_array));
                         $this->add_products($xxl_size->id , $products_array , $order->id );
                     }
-                    if($value[12] != 0) // 3xl
+                    if(true) // 3xl
                     {
-                        $products_array = str_replace("Code","", $value[12]); 
-                        $products_array = str_replace("code","", $value[12]);  
-                        $products_array = explode("/" , $value[12]);
+                        $products_array = str_replace("Code","/", $value[12]); 
+                        $products_array = str_replace("code","/", $products_array);  
+                        $products_array = str_replace(" ","", $products_array);
+                        $products_array = explode("/" , $products_array);
                         $products_array = array_filter($products_array);
                         $products_array = array_values($products_array);
+                        error_log('array xxx large : ' . reset($products_array));
                         $this->add_products($xxxl_size->id , $products_array , $order->id );
                     }
                     
@@ -131,9 +166,11 @@ class BuyOrdersImport implements ToCollection
             $material = Material::where('mq_r_code' , $code )->first();
             if($material)
             {
+                error_log('material code : ' . $material->mq_r_code);
                 $product = Product::where('size_id' , $size_id)->where('material_id' , $material->id)->first();
                 if($product)
                 {
+                    error_log('product material id : ' . $product->material_id);
                     $record = BuyOrderProduct::where('buy_order_id' , $buy_order_id)
                                     ->where('product_material_code' , $product->product_material_code )
                                     ->where('produce_code' , $product->produce_code)

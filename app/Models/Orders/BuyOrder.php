@@ -22,6 +22,7 @@ class BuyOrder extends Model
         'source',
         'pending_date',
         'shipping_company_id',
+        'price',
     ];
 
     protected $appends = ['confirmation_color' , 'status_color' , 'translate_confirmation' , 'translate_preparation' , 'translate_status']; 

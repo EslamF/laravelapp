@@ -27,7 +27,7 @@ class ProduceOrderController extends Controller
     public function getAll()
     {
         $done_receiving_orders = ReceivingOrder::where('status' , 1)->pluck('produce_order_id');
-        $orders = ProduceOrder::whereNotIn('id' , $done_receiving_orders)->get();
+        $orders = ProduceOrder::with('factory' , 'user')->whereNotIn('id' , $done_receiving_orders)->get();
         return response()->json($orders, 200);
     }
 

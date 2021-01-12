@@ -42,6 +42,7 @@
                 };
                 axios.get('{{Route("cutting_order.all")}}').then(res => {
                     this.cutting_orders = res.data;
+                    console.log(res.data);
                     //document.getElementById('loader').style.display = 'block';
                 }).catch(err => {
 

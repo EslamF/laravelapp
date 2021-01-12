@@ -78,8 +78,8 @@
                     <tbody>
                         @foreach($orders as $order)
                         <tr>
-                            <td>{{$order->spreadinguser->name}}</td>
                             <td>{{$order->user->name}}</td>
+                            <td>{{$order->spreadinguser->name}}</td>
                             <td>{{$order->material->mq_r_code}}</td>
                             <td>{{$order->weight}}</td>
                         </tr>

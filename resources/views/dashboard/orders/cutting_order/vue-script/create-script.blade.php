@@ -62,6 +62,7 @@
                 };
                 axios.get('{{route("spreading.get_all")}}').then(res => {
                     this.spreading_orders = res.data;
+                    console.log(res.data);
                     //document.getElementById('loader').style.display = 'block';
                 }).catch(err => {
 
