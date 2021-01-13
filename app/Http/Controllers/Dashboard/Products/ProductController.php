@@ -13,6 +13,9 @@ use App\Models\Products\ProductType;
 use App\Policies\ProductPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Milon\Barcode\DNS1D;
+
 
 class ProductController extends Controller
 {
@@ -57,6 +60,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        //return $request;
         $request->validate([
             'product_type_id' => 'required|exists:product_types,id',
             'size_id'   => 'required|exists:sizes,id',
@@ -79,21 +83,38 @@ class ProductController extends Controller
         ]);
 
         for ($i = 0; $i < $request->qty; $i++) {
-            Product::create([
-                'prod_code' => $this->generateCode(),
-                'produce_code' => $product->produce_code ?? $this->generateOrderCode(),
-                'sorted'     => 1,
-                'size_id'   => $request->size_id,
-                'material_id'   => $request->material_id,
-                'product_type_id' => $request->product_type_id,
-                'received'  => 1,
-                'status'    => 'available',
-                'save_order_id' => $save_order->id,
-                'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
+            $p = Product::create([
+                    'prod_code' => $this->generateCode(),
+                    'produce_code' => $product->produce_code ?? $this->generateOrderCode(),
+                    'sorted'     => 1,
+                    'size_id'   => $request->size_id,
+                    'material_id'   => $request->material_id,
+                    'product_type_id' => $request->product_type_id,
+                    'received'  => 1,
+                    'status'    => 'available',
+                    'save_order_id' => $save_order->id,
+                    'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
 
             ]);
+
+            //DNS1D::getBarcodePNG('4', 'C39+')
+            $dns1d = new DNS1D();
+            Storage::disk('barcodes')->put($p->prod_code . '.png', base64_decode($dns1d->getBarcodePNG($p->prod_code, "C39", 1 , 50 , array(0 , 0 , 0) , true)));
+
         }
-        return redirect()->route('product.list')->with('success' , __('words.added_successfully') );;
+
+        $products = Product::select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->where('save_order_id' , $save_order->id)->get();
+
+
+        if(request()->has('print'))
+        {
+            return view('dashboard.products.product.print' , compact('products'));
+        }
+        else 
+        {
+            return redirect()->route('product.list')->with('success' , __('words.added_successfully') );
+        }
+        
     }
 
     public function editPage($product_id)
@@ -177,5 +198,13 @@ class ProductController extends Controller
         } else {
             return $code;
         }
+    }
+
+    public function print($id)
+    {
+        $ids = [];
+        array_push($ids , $id);
+        $products = Product::whereIn('id' , $ids)->select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->get();
+        return view('dashboard.products.product.print' , compact('products'));
     }
 }

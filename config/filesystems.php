@@ -64,6 +64,12 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+        'barcodes' => [
+            'driver' => 'local',
+            'root' => public_path() . '/barcodes',
+            'url' => env('APP_URL') . '/public/barcodes',
+            'visibility' => 'public',
+        ],
 
     ],
 

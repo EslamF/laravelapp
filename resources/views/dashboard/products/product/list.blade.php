@@ -78,6 +78,7 @@
                                 <td class = "text-center">{{$value->damage_type ?  __('words.damaged') . ' ( ' . __('words.' .$value->damage_type) . ' ) ' : __('words.valid')  }}</td>
                                 {{--<td class = "text-center">{{$value->status}}</td>--}}
                                 <td class = "text-center">
+                                    <a href="{{Route('product.print', $value->id)}}" class="btn btn-info {{ Laratrust::isAbleTo('print-product') ? '' : 'disabled' }}" >طباعة</a>
                                     <a href="{{Route('product.edit_page', $value->id)}}" class="btn btn-primary {{ Laratrust::isAbleTo('edit-product') ? '' : 'disabled' }}" >تعديل</a>
                                     <button type="submit" class="btn btn-danger" @click = "deleteItem({{$value->id}})" {{ Laratrust::isAbleTo('delete-product') ? '' : 'disabled' }} >حذف</button>
                                 </td>

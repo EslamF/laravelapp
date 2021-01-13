@@ -86,6 +86,15 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        <div class = "col-md-3">
+                            <div class="form-group">
+                                <label for = "print">طباعة الأكواد </label>
+                                <input type = "checkbox" name = "print" id = "print">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.card-body -->
 
@@ -118,5 +127,6 @@
 
         });
     })
+
 </script>
 @endsection
