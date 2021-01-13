@@ -119,42 +119,46 @@
                                 </div>
                             </div>
                     </div>
-                    <table class="table" v-show="products.length > 0">
-                        <p v-if = "!have_value"  v-show="products.length > 0" style = "color:red">يجب إدخال منتجات</p>
-                        <thead>
-                            <tr>
-                                <th>{{__('words.product')}}</th>
-                                <th>{{__('words.mq_r_code')}}</th>
-                                <th>{{__('words.size')}}</th>
-                                <th>{{__('words.company_stock')}}</th>
-                                <th>{{__('words.factory_stock')}}</th>
-                                <th>{{__('words.qty')}}</th>
-                                {{--<th>{{__('words.price')}}</th>--}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            <tr v-for="(product,index) in products" :key="index">
+                   
+                        <div class="table-responsive-sm">
+                            <table class="table" v-show="products.length > 0">
+                                <p v-if = "!have_value"  v-show="products.length > 0" style = "color:red">يجب إدخال منتجات</p>
+                                <thead>
+                                    <tr>
+                                        <th>{{__('words.product')}}</th>
+                                        <th>{{__('words.mq_r_code')}}</th>
+                                        <th>{{__('words.size')}}</th>
+                                        <th>{{__('words.company_stock')}}</th>
+                                        <th>{{__('words.factory_stock')}}</th>
+                                        <th>{{__('words.qty')}}</th>
+                                        {{--<th>{{__('words.price')}}</th>--}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr v-for="(product,index) in products" :key="index">
 
-                                    <td>@{{product.product_type}}</td>
-                                    <td>@{{product.mq_r_code}}</td>
-                                    <td>@{{product.size}}</td>
-                                    <td>@{{product.company_count}}</td>
-                                    <td>@{{product.factory_count}}</td>
-                                    <td>
-                                        <span v-if="have_error" style="color:red">@{{product.err}}</span>
-                                        <span v-if="have_error" style="color:red">@{{products[index].error_qty}}</span>
-                                        <input type="number" min="1" style="width:60%" @keyup="updateStock(index, product.qty)" class="form-control" v-model="product.qty" v-bind:id="'product' + index">
-                                    </td>
-                                    {{--<td>
-                                        <span v-if="have_error" style="color:red">@{{product.price_err}}</span>
-                                        <span v-if="have_error" style="color:red">@{{product.error_price}}</span>
-                                        <input type="number" min="1" class="form-control" style="width:60%" v-model="product.price">
-                                    </td>--}}
-                                
-                            </tr>
-                        </tbody>
-                    </table>
+                                            <td>@{{product.product_type}}</td>
+                                            <td>@{{product.mq_r_code}}</td>
+                                            <td>@{{product.size}}</td>
+                                            <td>@{{product.company_count}}</td>
+                                            <td>@{{product.factory_count}}</td>
+                                            <td>
+                                                <span v-if="have_error" style="color:red">@{{product.err}}</span>
+                                                <span v-if="have_error" style="color:red">@{{products[index].error_qty}}</span>
+                                                <input type="number" min="1" style="width:60%" @keyup="updateStock(index, product.qty)" class="form-control" v-model="product.qty" v-bind:id="'product' + index">
+                                            </td>
+                                            {{--<td>
+                                                <span v-if="have_error" style="color:red">@{{product.price_err}}</span>
+                                                <span v-if="have_error" style="color:red">@{{product.error_price}}</span>
+                                                <input type="number" min="1" class="form-control" style="width:60%" v-model="product.price">
+                                            </td>--}}
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                       
                         <div>
                             <br>
 
