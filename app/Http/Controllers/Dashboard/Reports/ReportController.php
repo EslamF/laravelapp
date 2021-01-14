@@ -49,15 +49,15 @@ class ReportController extends Controller
 
             if(request()->filled('from'))
             {
-                $query->where('created_at' , '>=' , request()->from); 
+                $query->where('delivery_date' , '>=' , request()->from); 
             }
 
             if(request()->filled('to'))
             {
-                $query->where('created_at' , '<=' , request()->to);  
+                $query->where('delivery_date' , '<=' , request()->to);  
             }
 
-        })->get();
+        })->paginate(30);
         $employees = User::get();
         return view('dashboard.reports.buy_orders' , compact('orders' , 'employees'));
     }

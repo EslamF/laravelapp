@@ -9,12 +9,21 @@
             <!-- /.card-header -->
             <div class="card-body">
 
+                <form method = "post" action = "{{route('buy.export')}}">
+                    @csrf 
+                    <input type = "hidden" name = "from" value = "{{request()->from}}">
+                    <input type = "hidden" name = "to" value = "{{request()->to}}">
+                    <input type = "hidden" name = "employee_id" value = "{{request()->employee_id}}">
+                    <input type = "hidden" name = "confirmation" value = "{{request()->confirmation}}">
+                    <input type = "submit" class = "btn btn-success" value = "شيت إكسيل" >
+                </form>
+
                 <form method = "get">
                 <div class = "row">
             
                     
                         <div class = "form-group" style = "margin: 10px;">
-                            <label>من</label>
+                            <label>تاريخ التوصل من</label>
                             <input type = "date" name = "from" class = "form-control" value = "{{request()->from}}">
                         </div>
 
@@ -90,7 +99,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                
+                {!! $orders->appends(['from' => request()->from , 'to' => request()->to , 'employee_id' => request()->employee_id , 'confirmation' => request()->confirmation ])->links()!!}
             </div>
         </div>
         <!-- /.card -->

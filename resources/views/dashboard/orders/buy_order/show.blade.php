@@ -3,7 +3,7 @@
 <div id="app" class="row">
     <div id="loader" style="display: none;" class="col-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header noprint">
                 <div class="row">
 
                     <div class="col-md-3">
@@ -29,17 +29,11 @@
                             <option :value="company.id" v-for="company in shipping_companies">@{{company.name}}</option>
                         </select>
                     </div>
-                    <!-- <div class="col-md-3  flex">
-                        <label for="">اختر حالة الاوردر</label>
-                        <select v-model="order_status" class="form-control">
-                            <option value="" disabled selected>اختر</option>
-                            <option :value="'Delivered'">Delivered</option>
-                            <option :value="'InProgress'">InProgress</option>
-                            <option :value="'LOST'">LOST</option>
-                            <option :value="'Returned'">Returned</option>
-                            <option :value="'UnDelivered'">UnDelivered</option>
-                        </select>
-                    </div> -->
+                </div>
+                <br><br>
+                <div>
+                    
+                    <button onclick="printing()" class = "btn btn-info float-left noprint">طباعة</button>
                 </div>
                 <!-- <div v-if="order_status" class="row  mt-4">
                     <label for="">تعليق علي حالة الاوردر</label>
@@ -49,12 +43,17 @@
             <!-- /.card-header -->
             
             <div class="card-body">
-
+                
                 <div class="row">
                     <div class="col-sm-12">
                         <div class = "row row_style">
                             <div class = "col-md-3 first_col">  {{__('words.customer')}} </div>
                             <div class = "col-md-6 second_col">@{{customer.name + ' - ' + customer.phone}}  </div>
+                        </div>
+
+                        <div class = "row row_style">
+                            <div class = "col-md-3 first_col">  {{__('words.address')}} </div>
+                            <div class = "col-md-6 second_col">@{{customer.address}}  </div>
                         </div>
     
                         <div class = "row row_style">
@@ -66,13 +65,18 @@
                             <div class = "col-md-3 first_col">  {{__('words.delivery_date')}} </div>
                             <div class = "col-md-6 second_col">@{{data.order.delivery_date}} </div>
                         </div>
+
+                        <div class = "row row_style">
+                            <div class = "col-md-3 first_col">  {{__('words.shipping_company')}} </div>
+                            <div class = "col-md-6 second_col">@{{data.order.shipping_company ? data.order.shipping_company.name : ''}} </div>
+                        </div>
     
                     </div> 
                 </div>
                 <br>
 
                 
-                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-print">
                     <div class="row">
                         <div class="col-sm-12 col-md-6"></div>
                         <div class="col-sm-12 col-md-6"></div>
@@ -128,7 +132,7 @@
                             </table>
                         </div>
                         <div class="col-md-12">
-                            <button @click="updateData()" class="mr-4 float-right btn btn-primary" {{ Laratrust::isAbleTo('edit-buy-order') ? '' : 'disabled' }} >
+                            <button @click="updateData()" class="mr-4 float-right btn btn-primary noprint" {{ Laratrust::isAbleTo('edit-buy-order') ? '' : 'disabled' }} >
                                 {{__('words.edit')}}
                             </button>
                         </div>
@@ -161,5 +165,25 @@
         color: #2359a5;
         font-size: 1.2em;
     }
+
+    /* Screen Only */
+    @media screen {
+        .noprint {display:block !important;}
+        .noshow {display:none !important;}
+    }
+
+    /* Print Only */
+    @media print {
+        .noprint {display:none !important;}
+        .noshow {display:block !important;}
+    }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+    function printing(){
+        window.print();
+    }
+</script>
 @endpush

@@ -352,6 +352,8 @@ Route::group([
                 Route::get('edit/{id}', 'BuyOrderController@editPage')->name('buy.edit_page');
                 Route::post('edit-order', 'BuyOrderController@editOrder')->name('buy.edit_order');
                 Route::get('show-order-in-edit-page/{id}', 'BuyOrderController@showOrderInEditPage')->name('buy.showOrderInEditPage');
+
+                Route::post('export', 'BuyOrderController@export')->name('buy.export');
                 
             });
 

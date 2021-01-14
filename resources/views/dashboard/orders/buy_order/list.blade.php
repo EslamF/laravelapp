@@ -11,7 +11,16 @@
             <div class="card-body">
                 @if($data->count())
                 <div class="table-responsive-sm">
-                    <table class="table ">
+                    <form method = "post" action = "{{route('buy.export')}}">
+                        @csrf 
+                        <input type = "hidden" name = "from" value = "{{request()->from}}">
+                        <input type = "hidden" name = "to" value = "{{request()->to}}">
+                        <input type = "hidden" name = "employee_id" value = "{{request()->employee_id}}">
+                        <input type = "hidden" name = "confirmation" value = "{{request()->confirmation}}">
+                        <input type = "submit" class = "btn btn-success" value = "شيت إكسيل" >
+                    </form>
+                    <br>
+                    <table class="table">
                         <thead>
                             <tr>
                                 {{--<th>{{__('words.id')}}</th>--}}

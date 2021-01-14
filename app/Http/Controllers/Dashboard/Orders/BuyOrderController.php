@@ -12,6 +12,8 @@ use App\Models\Orders\OrderStatus;
 use App\Models\Products\Product;
 use App\Models\Users\Customer;
 use Illuminate\Http\Request;
+use App\Exports\BuyOrdersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BuyOrderController extends Controller
 {
@@ -257,7 +259,7 @@ class BuyOrderController extends Controller
     public function showOrder($id)
     {
         $data = [];
-        $data['order'] = BuyOrder::where('id', $id)->with('buyOrderProducts' , 'customer')->first();
+        $data['order'] = BuyOrder::where('id', $id)->with('buyOrderProducts' , 'customer' , 'shippingCompany')->first();
         $data['products'] = $data['order']->buyOrderProducts->map(function ($item) {
             $product = Product::where('produce_code', $item->produce_code)->first();
             return [
@@ -312,5 +314,11 @@ class BuyOrderController extends Controller
             $q->where('shipping_orders.id', $id);
         })->get();
         return response()->json($orders->pluck('bar_code'), 200);
+    }
+
+    public function export()
+    {
+        $export = new BuyOrdersExport();
+        return Excel::download($export, 'orders.xlsx');
     }
 }

@@ -109,7 +109,7 @@
                                 <div class="form-group">
                                     <label for="">{{__('words.mq_r_code')}}</label>
                                     <span style="color:red" v-if="mq_r_code_err">@{{mq_r_code_err}}</span>
-                                    <input type="text" class="form-control" @keyup.enter="cuttingOrders" v-model="mq_r_code">
+                                    <input type="text" class="form-control" @change="cuttingOrders" v-model="mq_r_code">
                                 </div>
                             </div>
                             <div class="col-md-4">
