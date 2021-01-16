@@ -22,7 +22,7 @@
                         <input class="form-control" type="date" v-model="data.order.pending_date">
                     </div>
 
-                    <div v-if="data.order.confirmation == 'confirmed'" class="col-md-3 flex">
+                    <div class="col-md-3 flex">
                         <label for="">{{__('words.shipping_company')}}</label>
                         <select class="form-control" v-model="shipping_company_id">
                             <option value="" disabled selected>{{__('words.choose_company')}}</option>
@@ -76,7 +76,7 @@
                 <br>
 
                 
-                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-print">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-12 col-md-6"></div>
                         <div class="col-sm-12 col-md-6"></div>
@@ -131,7 +131,7 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 no-print">
                             <button @click="updateData()" class="mr-4 float-right btn btn-primary noprint" {{ Laratrust::isAbleTo('edit-buy-order') ? '' : 'disabled' }} >
                                 {{__('words.edit')}}
                             </button>

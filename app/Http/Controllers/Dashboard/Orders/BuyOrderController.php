@@ -288,7 +288,7 @@ class BuyOrderController extends Controller
         BuyOrder::find($request->data['order']['id'])->update([
             'confirmation' => $request->data['order']['confirmation'],
             'pending_date' => $request->data['order']['pending_date'] ?? null,
-            'shipping_company_id' => $request->data['order']['confirmation'] == 'confirmed' ? $request->shipping_company_id : null
+            'shipping_company_id' => $request->shipping_company_id ?? null 
         ]);
 
 
