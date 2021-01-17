@@ -17,8 +17,73 @@
                         <input type = "hidden" name = "to" value = "{{request()->to}}">
                         <input type = "hidden" name = "employee_id" value = "{{request()->employee_id}}">
                         <input type = "hidden" name = "confirmation" value = "{{request()->confirmation}}">
+                        <input type = "hidden" name = "shipping_company_id" value = "{{request()->shipping_company_id}}">
                         <input type = "submit" class = "btn btn-success" value = "شيت إكسيل" >
                     </form>
+                    <br>
+                    <form method = "get" action = "{{route('buy.print')}}">
+                        @csrf 
+                        <input type = "hidden" name = "from" value = "{{request()->from}}">
+                        <input type = "hidden" name = "to" value = "{{request()->to}}">
+                        <input type = "hidden" name = "employee_id" value = "{{request()->employee_id}}">
+                        <input type = "hidden" name = "confirmation" value = "{{request()->confirmation}}">
+                        <input type = "hidden" name = "shipping_company_id" value = "{{request()->shipping_company_id}}">
+                        <input type = "submit" class = "btn btn-info" value = "طباعة" >
+                    </form>
+                    <br>
+
+                    <form method = "get">
+                        <div class = "row">
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>تاريخ التوصل من</label>
+                                    <input type = "date" name = "from" class = "form-control" value = "{{request()->from}}">
+                                </div>
+        
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>إلى</label>
+                                    <input type = "date" name = "to" class = "form-control" value = "{{request()->to}}">
+                                </div>
+        
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>الموظف</label>
+                                    <select class = "form-control" name = "employee_id">
+                                            <option value = "">كل الموظفين</option>
+                                        @foreach($employees as $employee)
+                                            <option value = "{{$employee->id}}" {{ $employee->id == request()->employee_id ? 'selected' : '' }} >{{ $employee->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>شركة الشحن</label>
+                                    <select class = "form-control" name = "shipping_company_id">
+                                            <option value = "">كل الشركات</option>
+                                        @foreach($shipping_companies as $shipping_company)
+                                            <option value = "{{$shipping_company->id}}" {{ $shipping_company->id == request()->shipping_company_id ? 'selected' : '' }} >{{ $shipping_company->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+        
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>حالة الطلب</label>
+                                    <select class = "form-control" name = "confirmation">
+                                        <option value = "">كل الحالات</option>
+                                        <option value = "pending"  {{ request()->confirmation == 'pending'   ? 'selected' : '' }}> {{ __('words.pending_orders') }}</option>
+                                        <option value = "delayed"  {{ request()->confirmation == 'delayed'   ? 'selected' : '' }}> {{ __('words.delayed_orders') }}</option>
+                                        <option value = "confirmed"{{ request()->confirmation == 'confirmed' ? 'selected' : '' }}> {{ __('words.confirmed_orders') }}</option>
+                                        <option value = "canceled" {{ request()->confirmation == 'canceled'  ? 'selected' : '' }}> {{ __('words.canceled_orders') }}</option>
+                                    </select>
+                                </div>
+        
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label  style = "visibility:hidden;">بحث</label>
+                                    <input type = "submit" value = "بحث" class = "form-control btn btn-success">
+                                </div>
+                            
+        
+                        </div>
+                    </form>
+
                     <br>
                     <table class="table">
                         <thead>
@@ -70,7 +135,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                {{$data->links()}}
+                {{$data->appends(['from' => request()->from , 'to' => request()->to , 'employee_id' => request()->employee_id , 'shipping_company_id' => request()->shipping_company_id ])->links()}}
             </div>
         </div>
         <!-- /.card -->

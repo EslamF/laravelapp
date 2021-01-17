@@ -354,6 +354,7 @@ Route::group([
                 Route::get('show-order-in-edit-page/{id}', 'BuyOrderController@showOrderInEditPage')->name('buy.showOrderInEditPage');
 
                 Route::post('export', 'BuyOrderController@export')->name('buy.export');
+                Route::get('print', 'BuyOrderController@print')->name('buy.print');
                 
             });
 

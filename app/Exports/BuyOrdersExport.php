@@ -60,6 +60,11 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
                 $query->where('delivery_date' , '<=' , request()->to);  
             }
 
+            if(request()->filled('shipping_company_id'))
+            {
+                $query->where('shipping_company_id' , request()->shipping_company_id);
+            }
+
 
         })->select('id' , 'delivery_date' , 'bar_code' , 'customer_id' , 'price' , 'description');
     }

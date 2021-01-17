@@ -22,6 +22,11 @@
                         <input class="form-control" type="date" v-model="data.order.pending_date">
                     </div>
 
+                    <div class="col-md-3">
+                        <label for="">{{__('words.status_message')}}</label>
+                        <input type = "text" id="status_message" class="form-control" v-model="status_message">
+                    </div>
+
                     <div class="col-md-3 flex">
                         <label for="">{{__('words.shipping_company')}}</label>
                         <select class="form-control" v-model="shipping_company_id">

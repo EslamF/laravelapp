@@ -15,6 +15,7 @@ use App\Models\Orders\SaveOrder;
 use App\Models\Orders\StoreProductOrder;
 use App\Models\Materials\Material;
 use App\User;
+use App\Models\Organization\ShippingCompany;
 
 class ReportController extends Controller
 {
@@ -42,6 +43,11 @@ class ReportController extends Controller
                 $query->where('created_by' , request()->employee_id);
             }
 
+            if(request()->filled('shipping_company_id'))
+            {
+                $query->where('shipping_company_id' , request()->shipping_company_id);
+            }
+
             if(request()->filled('confirmation'))
             {
                 $query->where('confirmation' , request()->confirmation);
@@ -59,7 +65,8 @@ class ReportController extends Controller
 
         })->paginate(30);
         $employees = User::get();
-        return view('dashboard.reports.buy_orders' , compact('orders' , 'employees'));
+        $shipping_companies = ShippingCompany::get();
+        return view('dashboard.reports.buy_orders' , compact('orders' , 'employees' , 'shipping_companies'));
     }
 
     public function sales()

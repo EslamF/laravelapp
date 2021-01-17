@@ -20,8 +20,6 @@
 
                 <form method = "get">
                 <div class = "row">
-            
-                    
                         <div class = "form-group" style = "margin: 10px;">
                             <label>تاريخ التوصل من</label>
                             <input type = "date" name = "from" class = "form-control" value = "{{request()->from}}">
@@ -38,6 +36,16 @@
                                     <option value = "">كل الموظفين</option>
                                 @foreach($employees as $employee)
                                     <option value = "{{$employee->id}}" {{ $employee->id == request()->employee_id ? 'selected' : '' }} >{{ $employee->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class = "form-group" style = "margin: 10px;">
+                            <label>شركة الشحن</label>
+                            <select class = "form-control" name = "shipping_company_id">
+                                    <option value = "">كل الشركات</option>
+                                @foreach($shipping_companies as $shipping_company)
+                                    <option value = "{{$shipping_company->id}}" {{ $shipping_company->id == request()->shipping_company_id ? 'selected' : '' }} >{{ $shipping_company->name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -151,5 +151,7 @@ return [
 
     'search' => 'بحث',
     'bar_code' => 'البار كود' ,
+
+    'status_message' => 'وصف الحالة' ,
     
  ];

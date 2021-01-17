@@ -14,6 +14,8 @@ use App\Models\Users\Customer;
 use Illuminate\Http\Request;
 use App\Exports\BuyOrdersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\User;
+use App\Models\Organization\ShippingCompany;
 
 class BuyOrderController extends Controller
 {
@@ -24,8 +26,37 @@ class BuyOrderController extends Controller
 
     public function getAllPaginate()
     {
-        $data = BuyOrder::with('customer:id,name')->paginate();
-        return view('dashboard.orders.buy_order.list', ['data' => $data]);
+        $data = BuyOrder::where(function($query){
+
+            if(request()->filled('employee_id'))
+            {
+                $query->where('created_by' , request()->employee_id);
+            }
+
+            if(request()->filled('shipping_company_id'))
+            {
+                $query->where('shipping_company_id' , request()->shipping_company_id);
+            }
+
+            if(request()->filled('confirmation'))
+            {
+                $query->where('confirmation' , request()->confirmation);
+            }
+
+            if(request()->filled('from'))
+            {
+                $query->where('delivery_date' , '>=' , request()->from); 
+            }
+
+            if(request()->filled('to'))
+            {
+                $query->where('delivery_date' , '<=' , request()->to);  
+            }
+
+        })->with('customer:id,name')->paginate();
+        $employees = User::get();
+        $shipping_companies = ShippingCompany::get();
+        return view('dashboard.orders.buy_order.list', ['data' => $data , 'employees' => $employees , 'shipping_companies' => $shipping_companies]);
     }
 
     public function cuttingOrdersByMaterial($mq_r_code)
@@ -260,6 +291,15 @@ class BuyOrderController extends Controller
     {
         $data = [];
         $data['order'] = BuyOrder::where('id', $id)->with('buyOrderProducts' , 'customer' , 'shippingCompany')->first();
+        $order_status = OrderStatus::latest('id')->where('buy_order_id' , $id)->first();
+        if($order_status && $order_status->status == $data['order']->confirmation)
+        {
+            $data['status_message'] = $order_status->status_message;
+        }
+        else 
+        {
+            $data['status_message'] = '';
+        }
         $data['products'] = $data['order']->buyOrderProducts->map(function ($item) {
             $product = Product::where('produce_code', $item->produce_code)->first();
             return [
@@ -284,20 +324,29 @@ class BuyOrderController extends Controller
     }
     public function updateOrder(Request $request)
     {
+        $order = BuyOrder::find($request->data['order']['id']);
 
-        BuyOrder::find($request->data['order']['id'])->update([
-            'confirmation' => $request->data['order']['confirmation'],
-            'pending_date' => $request->data['order']['pending_date'] ?? null,
-            'shipping_company_id' => $request->shipping_company_id ?? null 
-        ]);
+        if($order)
+        {
+            $order->update([
+                'confirmation' => $request->data['order']['confirmation'],
+                'pending_date' => $request->data['order']['pending_date'] ?? null,
+                'shipping_company_id' => $request->shipping_company_id ?? null 
+            ]);
+    
+            OrderHistory::create([
+                'buy_order_id' => $order->id,
+                'status'       => $request->data['order']['confirmation'],
+                'pending_date' => $request->data['order']['pending_date'] ?? null
+            ]);
 
-
-
-        OrderHistory::create([
-            'buy_order_id' => $request->data['order']['id'],
-            'status'       => $request->data['order']['confirmation'],
-            'pending_date' => $request->data['order']['pending_date'] ?? null
-        ]);
+            $order->orderStatus()->create([
+                'buy_order_id'   => $order->id,
+                'status'         => $request->data['order']['confirmation'],
+                'status_message' => $request->status_message
+            ]);
+        }
+        
 
         return response()->json('success', 200);
     }
@@ -320,5 +369,63 @@ class BuyOrderController extends Controller
     {
         $export = new BuyOrdersExport();
         return Excel::download($export, 'orders.xlsx');
+    }
+
+    public function print()
+    {
+        $orders = BuyOrder::where(function($query){
+
+            if(request()->filled('employee_id'))
+            {
+                $query->where('created_by' , request()->employee_id);
+            }
+
+            if(request()->filled('shipping_company_id'))
+            {
+                $query->where('shipping_company_id' , request()->shipping_company_id);
+            }
+
+            if(request()->filled('confirmation'))
+            {
+                $query->where('confirmation' , request()->confirmation);
+            }
+
+            if(request()->filled('from'))
+            {
+                $query->where('delivery_date' , '>=' , request()->from); 
+            }
+
+            if(request()->filled('to'))
+            {
+                $query->where('delivery_date' , '<=' , request()->to);  
+            }
+
+        })->with('customer' , 'shippingCompany' )->get();
+
+        foreach($orders as $order)
+        {
+            $order->buyProducts = $order->buyOrderProducts->map(function($item){
+
+                $product = Product::where('produce_code', $item->produce_code)->first();
+                return [
+                    'id'           => $item->id,
+                    'product_type' => $product->productType->name,
+                    'product_size' => $product->size->name,
+                    'factory_qty'  => intval($item->factory_qty),
+                    'company_qty'  => intval($item->company_qty),
+                    'price'        => intval($item->price),
+                    'mq_r_code'    => $product && $product->material ? $product->material->mq_r_code : ''
+                ];
+            });
+
+            
+        }
+
+        ///return $orders;
+
+       
+        return view('dashboard.orders.buy_order.print' , compact('orders'));
+   
+
     }
 }

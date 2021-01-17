@@ -10,7 +10,7 @@
             status_message: '',
             data: {
                 order: {
-                    confirmation: '' 
+                    confirmation: '' ,
                 }
             },
             shipping_companies: [],
@@ -27,7 +27,7 @@
             //console.log(this.shipping_companies);
         },
         methods: {
-            getOrder() {
+            getOrder() { 
                 axios.get('{{url("orders/buy/show")}}' + '/' + '{{$id}}')
                     .then(res => {
                         this.data = res.data;
@@ -36,6 +36,7 @@
                         console.log(this.data);
                         this.shipping_company_id = res.data.order.shipping_company_id ?? '' ;
                         this.customer = res.data.order.customer;
+                        this.status_message = res.data.status_message;
                     }).catch(err => {
 
                     })
