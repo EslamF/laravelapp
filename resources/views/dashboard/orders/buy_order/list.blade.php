@@ -107,7 +107,11 @@
                                     <td>{{$value->bar_code}}</td>
                                     <td><span class = "{{$value->status_color}}" style = "padding:5px; border-radius:5px;">{{ $value->translate_status }}</span></td>
                                     <td>{{ __('words.' . $value->preparation)}}</td>
-                                    <td>{{Str::limit($value->customer->name , 15)}}</td>
+                                    <td>
+                                        {{Str::limit($value->customer->name , 15)}}
+                                        <br>
+                                        {{$value->customer->phone}}
+                                    </td>
                                     <td>{{$value->delivery_date}}</td>
                                     <td><span class = "{{$value->confirmation_color}}" style = "padding:5px; border-radius:5px;">{{ __('words.' . $value->confirmation)}}</span></td>
                                     <td>{{$value->orderTotal()}}</td>

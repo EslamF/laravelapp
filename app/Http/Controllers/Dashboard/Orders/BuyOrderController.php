@@ -53,7 +53,7 @@ class BuyOrderController extends Controller
                 $query->where('delivery_date' , '<=' , request()->to);  
             }
 
-        })->with('customer:id,name')->paginate();
+        })->with('customer:id,name,phone')->paginate();
         $employees = User::get();
         $shipping_companies = ShippingCompany::get();
         return view('dashboard.orders.buy_order.list', ['data' => $data , 'employees' => $employees , 'shipping_companies' => $shipping_companies]);
@@ -283,8 +283,9 @@ class BuyOrderController extends Controller
 
     public function showOrderPage($id)
     {
+        $order = BuyOrder::findOrFail($id);
 
-        return view('dashboard.orders.buy_order.show', ['id' => $id]);
+        return view('dashboard.orders.buy_order.show', ['id' => $id , 'order' => $order]);
     }
 
     public function showOrder($id)

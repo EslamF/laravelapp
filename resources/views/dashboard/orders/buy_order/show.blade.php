@@ -48,6 +48,12 @@
             <!-- /.card-header -->
             
             <div class="card-body">
+
+                <div class = "row">
+                    <div class="col-sm-12 text-center">
+                        <img src = "{{asset(DNS1D::getBarcodePNGPath($order->bar_code, 'C39' , 2 , 100 , array(0 , 0 , 0) , true))}}">
+                    </div>
+                </div>
                 
                 <div class="row">
                     <div class="col-sm-12">

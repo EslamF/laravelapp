@@ -184,7 +184,7 @@ class OrderProcessController extends Controller
 
     public function validateProduct(Request $request)
     {
-        $product = Product::where('produce_code', $request->prod_code)
+        $product = Product::where('prod_code', $request->prod_code)
             ->where('save_order_id', '!=', null)
             ->where('status', '!=', 'reserved')
             ->first();
