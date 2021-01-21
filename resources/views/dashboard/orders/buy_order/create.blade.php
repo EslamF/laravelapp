@@ -73,6 +73,16 @@
                         </div>
 
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="order_number">{{__('words.order_reference')}}</label>
+                                <input type="text" v-model="order_number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
                     <br>
 
                     <div class = "row" v-show="customer.buy_orders.length > 0">

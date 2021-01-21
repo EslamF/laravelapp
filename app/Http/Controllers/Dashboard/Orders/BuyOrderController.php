@@ -114,7 +114,8 @@ class BuyOrderController extends Controller
             'bar_code' => $this->generateCode(),
             'delivery_date' => $request->delivery_date,
             'source'        => $customer->source,
-            'price'         => $request->price
+            'price'         => $request->price,
+            'order_number'  => $request->order_number ?? null,
         ]);
         foreach ($request->products as $product) {
             if (!isset($product['qty'])   ) {

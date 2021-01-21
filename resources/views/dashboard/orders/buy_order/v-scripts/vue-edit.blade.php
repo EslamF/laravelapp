@@ -38,6 +38,7 @@
             have_value: true,
             price: '{{$order->price}}',
             price_error: '',
+            order_number: '{{$order->order_number}}',
         },
         mounted() {
             this.getCustomer();
@@ -192,6 +193,7 @@
                     data.delivery_date = this.delivery_date;
                     data.customer_id = this.customer_id;
                     data.price = this.price;
+                    data.order_number = this.order_number;
                     const metas = document.getElementsByTagName('meta');
                     axios.defaults.headers = {
                         'Content-Type': 'application/json',

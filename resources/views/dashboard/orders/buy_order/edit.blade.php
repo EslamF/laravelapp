@@ -72,6 +72,16 @@
                                 </div>
                             </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="order_number">{{__('words.order_reference')}}</label>
+                                <input type="text" v-model="order_number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    
                     <table class="table" v-show="products.length > 0">
                         <p v-if = "!have_value"  v-show="products.length > 0" style = "color:red">يجب إدخال منتجات</p>
                         <thead>

@@ -14,6 +14,7 @@
                         <thead>
                             <tr>
                                 <th>{{__('words.order_number')}}</th>
+                                <th>{{__('words.order_reference')}}</th>
                                 <th>{{__('words.shipping_company')}}</th>
                                 <th>{{__('words.delivery_date')}}</th>
                                 <th>{{__('words.order_status')}}</th>
@@ -24,6 +25,7 @@
                             @foreach($orders as $order)
                             <tr>
                                 <td>{{$order->bar_code}}</td>
+                                <td>{{$order->order_number}}</td>
                                 <td>{{$order->shippingOrders->last()->shippingCompany->name}}</td>
                                 <td>{{$order->delivery_date}}</td>
                                 <td><span class = "{{$order->status_color}}" style = "padding:5px; border-radius:5px;">{{ $order->translate_status }}</span></td>

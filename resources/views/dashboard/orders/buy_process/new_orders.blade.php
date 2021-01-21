@@ -26,6 +26,7 @@
                             <tr>
                                 <th>{{__('words.id')}}</th>
                                 <th>{{__('words.code')}}</th>
+                                <th>{{__('words.order_reference')}}</th>
                                 <th>{{__('words.customer')}}</th>
                                 <th>{{__('words.confirmation')}}</th>
                                 <th>{{__('words.delivery_date')}}</th>
@@ -38,6 +39,7 @@
                             <tr>
                                 <td>{{$value->id}}</td>
                                 <td>{{$value->bar_code}}</td>
+                                <td>{{Str::limit($value->order_number , 15)}}</td>
                                 <td>{{Str::limit($value->customer->name , 15)}}<br>{{$value->customer->phone}}</td>
                                 <td><span class = "{{$value->confirmation_color}}" style = "padding:5px; border-radius:5px;">{{__('words.' . $value->confirmation)}}</span></td>
                                 <td>{{$value->delivery_date}}</td>

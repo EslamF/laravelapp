@@ -15,6 +15,7 @@
                         <tr>
                             <th>{{__('words.id')}}</th>
                             <th>{{__('words.code')}}</th>
+                            <th>{{__('words.order_reference')}}</th>
                             <th>{{__('words.delivery_date')}}</th>
                             <th>{{__('words.shipping_company')}}</th>
                             <th>{{__('words.actions')}}</th>
@@ -25,6 +26,7 @@
                         <tr>
                             <td>{{$order->id}}</td>
                             <td>{{$order->bar_code}}</td>
+                            <td>{{$order->order_number}}</td>
                             <td>{{$order->delivery_date}}</td>
                             <td>{{$order->shippingCompany ? $order->shippingCompany->name : ''}}</td>
 

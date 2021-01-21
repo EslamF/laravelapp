@@ -32,7 +32,7 @@ class OrderProcessController extends Controller
         $products_array = array_values($products_array);
         return $products_array;*/
 
-        $new = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation')
+        $new = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation', 'order_number')
             ->whereHas('buyOrderProducts', function ($q) {
                 $q->where('factory_qty', 0);
             })
@@ -45,7 +45,7 @@ class OrderProcessController extends Controller
             ->where('preparation', 'prepared')
             ->count();
 
-        $done = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation')
+        $done = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation', 'order_number')
             ->whereHas('buyOrderProducts', function ($q) {
                 $q->where('factory_qty', 0);
             })
@@ -65,7 +65,7 @@ class OrderProcessController extends Controller
         //return BuyOrder::with('buyOrderProducts')->where('bar_code' , "X624")->first();
         //$orders =  BuyOrder::doesntHave('buyOrderProducts')->paginate();
         //return view('dashboard.orders.buy_process.new_orders', ['orders' => $orders]);
-        $orders = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation' , 'shipping_company_id' , 'customer_id')
+        $orders = BuyOrder::select('id', 'bar_code', 'delivery_date', 'confirmation' , 'shipping_company_id' , 'customer_id' , 'order_number')
             ->whereHas('buyOrderProducts', function ($q) {
                 $q->where('factory_qty', 0);
             })
@@ -97,7 +97,7 @@ class OrderProcessController extends Controller
     public function getRejectedOrders()
     {
         $orders = BuyOrder::with('shippingOrders' , 'shippingOrders.shippingCompany')
-                            ->select('id', 'bar_code', 'delivery_date', 'confirmation')
+                            ->select('id', 'bar_code', 'delivery_date', 'confirmation', 'order_number')
                             ->where('status', 'rejected')
                             ->paginate();
 

@@ -13,6 +13,7 @@
                         <thead>
                             <tr>
                                 <th>{{__('words.id')}}</th>
+                                <th>{{__('words.order_reference')}}</th>
                                 <th>{{__('words.shipping_number')}}</th>
                                 <th>{{__('words.shipping_date')}}</th>
                                 <th>{{__('words.shipping_company')}}</th>
@@ -23,6 +24,7 @@
                             @foreach($orders as $order)
                             <tr>
                                 <td>{{$order->id}}</td>
+                                <td>{{$order->order_number}}</td>
                                 <td>{{$order->shipping_code}}</td>
                                 <td>{{$order->shipping_date}}</td>
                                 <td>{{$order->shippingCompany->name}}</td>

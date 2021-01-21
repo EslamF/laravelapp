@@ -90,6 +90,7 @@
                             <tr>
                                 {{--<th>{{__('words.id')}}</th>--}}
                                 <th>{{__('words.order_number')}}</th>
+                                <th>{{__('words.order_reference')}}</th>
                                 <th>{{__('words.order_status')}}</th>
                                 <th>{{__('words.order_preparation')}}</th>
                                 <th>{{__('words.customer')}}</th>
@@ -105,6 +106,7 @@
                             <tr>
                                     {{--<td>{{$value->id}}</td>--}}
                                     <td>{{$value->bar_code}}</td>
+                                    <td>{{Str::limit($value->order_number , 15)}}</td>
                                     <td><span class = "{{$value->status_color}}" style = "padding:5px; border-radius:5px;">{{ $value->translate_status }}</span></td>
                                     <td>{{ __('words.' . $value->preparation)}}</td>
                                     <td>

@@ -37,6 +37,7 @@
             have_value: false,
             price: 0,
             price_error: '',
+            order_number: '',
         },
         mounted() {
             this.setDate(2);
@@ -159,6 +160,7 @@
                     data.description = this.description;
                     data.delivery_date = this.delivery_date;
                     data.price = this.price;
+                    data.order_number = this.order_number;
                     console.log('products');
                     console.log(data.products);
                     console.log('data');

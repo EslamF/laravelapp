@@ -153,5 +153,6 @@ return [
     'bar_code' => 'البار كود' ,
 
     'status_message' => 'وصف الحالة' ,
+    'order_reference' => 'رقم الاوردر' ,
     
  ];

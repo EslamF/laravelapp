@@ -37,6 +37,11 @@
                             <div class = "col-md-3 first_col">  {{__('words.shipping_company')}} </div>
                             <div class = "col-md-6 second_col">{{$order->shippingCompany ? $order->shippingCompany->name : ''}} </div>
                         </div>
+
+                        <div class = "row row_style">
+                            <div class = "col-md-3 first_col">  {{__('words.order_reference')}} </div>
+                            <div class = "col-md-6 second_col">{{$order->order_number}} </div>
+                        </div>
     
                     </div> 
                 </div>
