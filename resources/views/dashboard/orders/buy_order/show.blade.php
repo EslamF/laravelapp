@@ -54,42 +54,104 @@
                         <img src = "{{asset(DNS1D::getBarcodePNGPath($order->bar_code, 'C39' , 2 , 100 , array(0 , 0 , 0) , true))}}">
                     </div>
                 </div>
+                <br>
+
+                <div class = "row" dir = "ltr">
+                    <div class = "col-sm-12">
+                        <table class = "table table-bordered">
+                            <thead>
+                                <th>{{__('words.order_reference_en')}}</th>
+                                <th>{{__('words.delivery_date_en')}}</th>
+                                <th>{{__('words.shipping_company_en')}}</th> 
+                            </thead>
+
+                            <tbody>
+                                <td>@{{data.order.order_number}}</td>
+                                <td>@{{data.order.delivery_date}}</td>
+                                <td>@{{data.order.shipping_company ? data.order.shipping_company.name : ''}}</td>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
                 
-                <div class="row">
-                    <div class="col-sm-12">
+                <div class="row " dir = "ltr">
+                    <div class="col-sm-7 bordering">
                         <div class = "row row_style">
-                            <div class = "col-md-3 first_col">  {{__('words.customer')}} </div>
-                            <div class = "col-md-6 second_col">@{{customer.name + ' - ' + customer.phone}}  </div>
+                            <div>
+                                <p>{{__('words.customer_en')}} : <strong>  @{{customer.name}} </strong> </p>
+                            </div>
                         </div>
 
                         <div class = "row row_style">
-                            <div class = "col-md-3 first_col">  {{__('words.address')}} </div>
-                            <div class = "col-md-6 second_col">@{{customer.address}}  </div>
-                        </div>
-    
-                        <div class = "row row_style">
-                            <div class = "col-md-3 first_col">  {{__('words.bar_code')}} </div>
-                            <div class = "col-md-6 second_col">@{{data.order.bar_code}}  </div>
-                        </div>
-    
-                        <div class = "row row_style">
-                            <div class = "col-md-3 first_col">  {{__('words.delivery_date')}} </div>
-                            <div class = "col-md-6 second_col">@{{data.order.delivery_date}} </div>
+                            <div>
+                                <p>{{__('words.phone_en')}} : <strong>  @{{customer.phone}} </strong> </p>
+                            </div>
                         </div>
 
                         <div class = "row row_style">
-                            <div class = "col-md-3 first_col">  {{__('words.shipping_company')}} </div>
-                            <div class = "col-md-6 second_col">@{{data.order.shipping_company ? data.order.shipping_company.name : ''}} </div>
+                            <div>
+                                <p>{{__('words.address_en')}} : <strong>  @{{customer.address}} </strong> </p>
+                            </div>
                         </div>
-
-                        <div class = "row row_style">
-                            <div class = "col-md-3 first_col">  {{__('words.order_reference')}} </div>
-                            <div class = "col-md-6 second_col">@{{data.order.order_number}} </div>
-                        </div>
-    
                     </div> 
+
+                    <div class = "col-sm-1">
+                    </div>
+
+
+                    <div class = "col-sm-4 bordering">
+                        <table class = "table table-bordered">
+                            <thead>
+                                <th>{{__('words.code_en')}}</th>
+                                <th>{{__('words.size_en')}}</th>
+                                <th>{{__('words.qunatity_en')}}</th> 
+                            </thead>
+
+                            <tbody>
+                                <tr role="row" v-for="(product,index) in data.products" class="odd">
+                                    <td>@{{product.mq_r_code}}</td>
+                                    <td>@{{product.product_size}}</td>
+                                    <td>@{{product.company_qty + product.factory_qty }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <br>
+
+                <div class = "row" dir = "ltr">
+                    <div>
+                        <p>{{__('words.description_en')}} : <strong>  @{{data.order.description}} </strong> </p>
+                    </div>
+                </div>
+                <div class = "row" dir = "ltr">
+                    <div>
+                        <p>{{__('words.cash_en')}} : <strong>  @{{data.order.price}} </strong> </p>
+                    </div>
+                </div>
+                    {{--
+                    <div class = "col-sm-12">
+
+                        <table class = "table table-bordered">
+                            <thead>
+                                <th>{{__('words.description_en')}}</th>
+                                <th>{{__('words.cash_en')}}</th>
+                            </thead>
+
+                            <tbody>
+                                <td>@{{data.order.description}}</td>
+                                <td>@{{data.order.price}}</td>
+                            </tbody>
+                        </table>
+                    </div>
+                    --}}
+
+            
+                <!-- logo -->
+                <div> 
+                    <img src = "{{asset('logo2.jpeg')}}" style = "width:150px;">
+                </div>
 
                 
                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -97,62 +159,7 @@
                         <div class="col-sm-12 col-md-6"></div>
                         <div class="col-sm-12 col-md-6"></div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
-                                <thead>
-                                    <tr role="row">
-                                        {{--<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">{{__('words.product')}}</th>--}}
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">{{__('words.mq_r_code')}}</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">{{__('words.product')}}</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">{{__('words.size')}}</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">{{__('words.company_qty')}}</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">{{__('words.factory_qty')}}</th>
-                                        <th style="width: 12%;" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">{{__('words.price')}}</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">{{__('words.total')}}</th>
-                                        <!-- <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Remove</th> -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr role="row" v-for="(product,index) in data.products" class="odd">
-                                        {{--<td tabindex="0" class="sorting_1">@{{product.product_type}}</td>--}}
-                                        <td tabindex="0" class="sorting_1">@{{product.mq_r_code}}</td>
-                                        <td>@{{product.product_type}}</td>
-                                        <td>@{{product.product_size}}</td>
-                                        <td>@{{product.company_qty}}</td>
-                                        <td>@{{product.factory_qty}}</td>
-                                        <td>
-                                            @{{product.price}}
-                                            <!-- <span style="color:red" v-if="have_error">@{{errors[index].price_err}}</span> -->
-                                            <!-- <input type="number" @keyup="getGrandTotal()" class="form-control" v-model="product.price"> -->
-                                        </td>
-                                        <td>@{{product.price * (product.company_qty + product.factory_qty)}}</td>
-                                        <!-- <td>
-                                            <button type="button" @click="removeItem(index, product.id)" class="btn btn-danger">Remove</button>
-                                        </td> -->
-
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th rowspan="1" colspan="1"></th>
-                                        <th rowspan="1" colspan="1"></th>
-                                        <th rowspan="1" colspan="1"></th>
-                                        <th rowspan="1" colspan="1"></th>
-                                        <th rowspan="1" colspan="1"></th>
-                                        <th rowspan="1" colspan="1">{{__('words.grand_total')}}</th>
-                                        <th rowspan="1" colspan="1">@{{grand_total}}</th>
-                                        <!-- <th rowspan="1" colspan="1"></th> -->
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div class="col-md-12 no-print">
-                            <button @click="updateData()" class="mr-4 float-right btn btn-primary noprint" {{ Laratrust::isAbleTo('edit-buy-order') ? '' : 'disabled' }} >
-                                {{__('words.edit')}}
-                            </button>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
             <!-- /.card-body -->
@@ -164,15 +171,20 @@
 
 @push('styles')
 <style>
+    .bordering 
+    {
+        border: solid 1px #4d4e50;
+        /*margin-left: 5px;*/
+    }
     .row_style
     {
-        margin: 10px 5px;
+        margin: 3px 5px;
     }
 
     .second_col
     {
-        border: solid 1px #2359a5;
-        padding: 3px 5px ;
+        /*border: solid 1px #2359a5;*/
+        padding: 0 ;
         font-size: 1.2em;
     }
 

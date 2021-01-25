@@ -154,5 +154,17 @@ return [
 
     'status_message' => 'وصف الحالة' ,
     'order_reference' => 'رقم الاوردر' ,
+
+    'customer_en' => 'RECEIVER' ,
+    'address_en'  => 'ADDRESS'  ,
+    'phone_en'    => 'MOBILE No. ',
+    'delivery_date_en' => 'DELIVERY DATE',
+    'shipping_company_en' => 'SHIPPING COMPANY',
+    'order_reference_en' => 'Order REFERENCE',
+    'code_en' => 'CODE' ,
+    'size_en' => 'SIZE' ,
+    'qunatity_en' => 'QUANTITY',
+    'description_en' => 'DESCRIPTION',
+    'cash_en' => 'CASH',
     
  ];
