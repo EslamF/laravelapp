@@ -128,6 +128,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="factory_id">المصنع</label>
+                                <select class="form-control" name="factory_id">
+                                    <option value="" disabled selected>اختر المصنع</option>
+                                    @foreach($factories as $factory)
+                                        <option value="{{$factory->id}}" {{ $factory->id == $product->factory_id ? 'selected' : '' }}  >{{$factory->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('factory_id')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">

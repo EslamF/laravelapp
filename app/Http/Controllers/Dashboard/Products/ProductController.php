@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Milon\Barcode\DNS1D;
+use App\Models\Organization\Factory;
 
 
 class ProductController extends Controller
@@ -45,6 +46,11 @@ class ProductController extends Controller
 
                 $query->whereIn('product_type_id' , $product_types);
             }
+
+            if(request()->filled('factory_id'))
+            {
+                $query->where('factory_id' , request()->factory_id);
+            }
             
         })->with('productType' , 'size')->paginate();
         return view('dashboard.products.product.list')->with('products', $products);
@@ -54,8 +60,9 @@ class ProductController extends Controller
     {
         $product_types = ProductType::get();
         $sizes = Size::get();
+        $factories = Factory::get();
         $materials = Material::where('weight', '!=', null)->get();
-        return view('dashboard.products.product.create', ['product_types' => $product_types, 'sizes' => $sizes, 'materials' => $materials]);
+        return view('dashboard.products.product.create', ['product_types' => $product_types, 'sizes' => $sizes, 'materials' => $materials, 'factories' => $factories]);
     }
 
     public function store(Request $request)
@@ -66,7 +73,8 @@ class ProductController extends Controller
             'size_id'   => 'required|exists:sizes,id',
             'material_id' => 'required|exists:materials,id',
             'qty'   => 'required',
-            'description'        => 'nullable|min:3'
+            'description'        => 'nullable|min:3',
+            'factory_id'    => 'nullable|exists:factories,id'
         ]);
 
         $product = Product::where('product_type_id', $request->product_type_id)
@@ -93,7 +101,9 @@ class ProductController extends Controller
                     'received'  => 1,
                     'status'    => 'available',
                     'save_order_id' => $save_order->id,
-                    'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
+                    'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode() ,
+                    'factory_id'    => $request->factory_id,
+                    'description' => $request->description
 
             ]);
 
@@ -120,19 +130,21 @@ class ProductController extends Controller
     public function editPage($product_id)
     {
         $product = Product::where('id', $product_id)
-            ->with('material', 'productType', 'size')
+            ->with('material', 'productType', 'size', 'factory')
             ->first();
 
         $materials = Material::get();
         $productTypes = ProductType::get();
         $sizes = Size::get();
+        $factories = Factory::get();
         return view(
             'dashboard.products.product.edit',
             [
                 'product' => $product,
                 'materials' => $materials,
                 'product_types' => $productTypes,
-                'sizes' => $sizes
+                'sizes' => $sizes,
+                'factories' => $factories
             ]
         );
     }
@@ -140,16 +152,17 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
-        
+        //return $request->product_material_code;
         $request->validate([
             'product_id'            => 'required|exists:products,id',
             'prod_code'             => 'required|unique:products,prod_code,' . $request->product_id,
-            'product_material_code' => 'required|unique:products,product_material_code,' . $request->product_material_code,
+            //'product_material_code' => 'required|unique:products,product_material_code,' . $request->product_material_code,
 
             'product_type_id' => 'required|exists:product_types,id',
             'size_id'   => 'required|exists:sizes,id',
             'material_id' => 'required|exists:materials,id',
-            'description'        => 'nullable|min:3'
+            'description'        => 'nullable|min:3',
+            'factory_id'    => 'nullable|exists:factories,id',
 
         ]);
 

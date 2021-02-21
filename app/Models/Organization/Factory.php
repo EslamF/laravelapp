@@ -24,4 +24,9 @@ class Factory extends Model
     {
         return $this->hasMany(CuttingOrder::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Products\Product');
+    }
 }

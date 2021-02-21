@@ -35,6 +35,19 @@
 
                             <div class = "col-md-3">
                                 <div class = "form-group">
+                                    <label>{{__('words.factory')}}</label>
+                                    <select class = "form-control" name = "factory_id">
+                                        @inject('factories' , 'App\Models\Organization\Factory')
+                                            <option value = "">كل المصانع</option>
+                                        @foreach($factories->get() as $factory)
+                                            <option value = "{{$factory->id}}" {{$factory->id == request()->factory_id ? 'selected' : ''}}>{{$factory->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class = "col-md-3">
+                                <div class = "form-group">
                                     <label>{{__('words.product')}}</label>
                                     <input type = "text" name = "product_type" value = "{{request()->product_type}}" class = "form-control"> 
                                 </div>
@@ -54,6 +67,7 @@
                                 <th class = "text-center">كود الخامة</th>
                                 <th class = "text-center">نوع المنتج</th>
                                 <th class = "text-center">المقاس</th>
+                                <th class = "text-center">المصنع</th>
                                 <th class = "text-center">كود المنتج</th>
                                 <th class = "text-center">حالة المنتج</th>
                                 {{--<th class = "text-center">الحالة البيعية</th>--}}
@@ -74,6 +88,7 @@
                                 <td class = "text-center">{{$value->material->mq_r_code}}</td>
                                 <td class = "text-center">{{$value->productType->name}}</td>
                                 <td class = "text-center">{{$value->size->name}}</td>
+                                <td class = "text-center">{{$value->factory ? $value->factory->name : ''}}</td>
                                 <td class = "text-center">{{$value->prod_code}}</td>
                                 <td class = "text-center">{{$value->damage_type ?  __('words.damaged') . ' ( ' . __('words.' .$value->damage_type) . ' ) ' : __('words.valid')  }}</td>
                                 {{--<td class = "text-center">{{$value->status}}</td>--}}
@@ -151,6 +166,9 @@
         $("#get_form").submit();
     });
     $("select[name='size_id']").change(function(){
+        $("#get_form").submit();
+    });
+    $("select[name='factory_id']").change(function(){
         $("#get_form").submit();
     });
 </script>

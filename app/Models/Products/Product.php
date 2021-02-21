@@ -36,7 +36,8 @@ class Product extends Model
         'produce_code',
         'received',
         'produce_order_id',
-        'product_material_code'
+        'product_material_code',
+        'factory_id'
     ];
 
 
@@ -93,5 +94,10 @@ class Product extends Model
     public function produce_orders()
     {
         return $this->belongsTo('App\Models\Orders\ProduceOrder');
+    }
+
+    public function factory()
+    {
+        return $this->belongsTo('App\Models\Organization\Factory');
     }
 }
