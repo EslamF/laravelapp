@@ -6,7 +6,11 @@
             <div class="card-header">
 
                 <div class = "text-center">
-                    <h3 >موظف الفرز : {{$data['sort_order']->sortinguser->name}}</h3>
+                    {{--<h3 >موظف الفرز : {{$data['sort_order']->sortinguser->name}}</h3>--}}
+                    <h3>موظفين الفرز</h3>
+                    @foreach($data['sort_order']->users as $user)
+                        <p class = "bg-primary text-center" style = "width: 10%; margin: 0 auto 2px auto;">{{$user->name}}</p>
+                    @endforeach
                     <br>
                     <h3>البار كود : {{$data['sort_order']->code}}</h3>
                 </div>

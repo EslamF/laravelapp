@@ -13,7 +13,24 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">الجهة</label>
+                                <select v-model="type" class="form-control" name = "type" required>
+                                    <option value="">اختر النوع</option>
+                                    <option value="factory">مصنع</option>
+                                    <option value="employee">موظف</option>
+                                </select>
+                                @error('type')
+                                <p class="help text-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" v-if="type == 'employee'"> 
                             <div class="form-group">
                                 <label for="user">موظف الفرش</label>
                                 <select class="form-control" name="user_id" id="user" class="@error('user_id') is-danger @enderror">
@@ -29,6 +46,26 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="col-md-12" v-if="type == 'factory'"> 
+                            <div class="form-group">
+                                <label for="factory_id">المصنع</label>
+                                <select class="form-control" name="factory_id" class="@error('factory_id') is-danger @enderror">
+                                    <option value="" disabled selected>المصنع</option>
+                                    @foreach($data['factories'] as $factory)
+                                        <option value="{{$factory->id}}" {{old('factory_id') == $factory->id? 'selected':'' }}>{{$factory->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('factory_id')
+                                <p class="help text-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -88,6 +125,7 @@
     var app = new Vue({
         el: '#app',
         data: {
+            type: "{{old('type') ? old('type') : ''}}",
             material_weight: '',
             button: false,
             material_code: '',
@@ -101,6 +139,15 @@
             /*loader() {
                 document.getElementById('loader').style.display = 'block'
             },*/
+            getOrderBy() {
+                if (this.type == 'employee') {
+
+                    
+                } else {
+                    
+                }
+            },
+
             checkWeight() {
                 this.material_code = this.$refs['material_code'].value;
                 axios.get('{{url("orders/receiving-material/check-weight")}}' + '/' + this.material_code)
@@ -116,6 +163,8 @@
                 this.have_error = false;
                 this.error = '';
                 var weight = document.getElementById('weight').value;
+
+                    
                 if (weight <= this.material_weight) {
                     var form = document.getElementById('myForm');
                     form.submit();
@@ -127,6 +176,7 @@
                     this.have_error = true;
                     this.button = false;
                 }
+                
 
                 
             }

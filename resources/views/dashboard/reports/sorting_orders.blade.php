@@ -55,7 +55,7 @@
                     <thead>
                         <tr>
                             <th>الموظف</th>
-                            <th>موظف الفرز</th>
+                            <th>موظفين الفرز</th>
                             <th>رقم إذن الفرز</th>
                             <th>إجراءات</th>
                         </tr>
@@ -64,7 +64,11 @@
                         @foreach($orders as $order)
                         <tr>
                             <td>{{$order->user->name}}</td>
-                            <td>{{$order->sortinguser ? $order->sortinguser->name : '--'}}</td>
+                            <td>
+                                @foreach($order->users as $user)
+                                    <p class = "bg-primary text-center" style = "margin-bottom:1px;width: 50%;">{{$user->name}}</p>
+                                @endforeach
+                            </td>
                             <td>{{$order->code}}</td>
                             <td>
                                 <a href="{{Route('sort.product.list', $order->id)}}" class="btn btn-primary">رؤية</a>             

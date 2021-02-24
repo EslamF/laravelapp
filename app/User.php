@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->roles->map->peremissions->flatten()->pluck('name')->unique();
     }
+
+    public function sortOrders()
+    {
+        return $this->belongsToMany(SortOrder::class);
+    }
 }

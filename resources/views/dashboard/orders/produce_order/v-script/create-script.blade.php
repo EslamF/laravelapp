@@ -10,11 +10,13 @@
             factory_id: '',
             cutting_order_id: '',
             receiving_date: '',
+            out_date: '',
             factory_type_id: '',
             error: {
                 factory_id: '',
                 cutting_order_id: '',
-                receiving_date: ''
+                receiving_date: '',
+                out_date: ''
             },
             factory_types: [],
             have_error: false,
@@ -141,6 +143,7 @@
                 data.factory_type_id = this.factory_type_id;
                 data.cutting_order_id = this.cutting_order_id;
                 data.receiving_date = this.receiving_date;
+                data.out_date = this.out_date;
                 data.products = this.available_products;
                 //console.log(this.have_error);
                 this.validations();
@@ -226,7 +229,8 @@
                 this.error = {
                     factory_id: '',
                     cutting_order_id: '',
-                    receiving_date: ''
+                    receiving_date: '',
+                    out_date: ''
                 }
                 if (!this.cutting_order_id) {
                     console.log('cutting_order_id');
@@ -243,6 +247,12 @@
                 if (!this.receiving_date) {
                     console.log('receiving_date');
                     this.error.receiving_date = "* this field is required";
+                    this.have_error = true;
+                }
+
+                if (!this.out_date) {
+                    console.log('out_date');
+                    this.error.out_date = "* this field is required";
                     this.have_error = true;
                 }
 

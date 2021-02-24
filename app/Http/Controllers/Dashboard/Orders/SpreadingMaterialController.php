@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Materials\Material;
 use App\Models\Orders\SpreadingOutMaterialOrder;
+use App\Models\Organization\Factory;
 // use App\Models\Orders\CuttingOrder;
 
 
@@ -43,18 +44,31 @@ class SpreadingMaterialController extends Controller
         })->get();
 
         $data['material'] = Material::select('id', 'mq_r_code')->where('weight', '!=', null)->get();
+        $data['factories'] = Factory::select('id' , 'name')->get();
         return view('dashboard.orders.spreading_materials.create')->with('data', $data);
     }
 
     public function store(Request $request)
     {
+        //return $request;
         $request->validate([
+            'type'        => 'required|in:employee,factory',
             'material_id' => 'required|exists:materials,id',
-            'user_id'     => 'required|exists:users,id',
+            'user_id'     => 'required_if:type,employee|exists:users,id',
+            'factory_id'  => 'required_if:type,factory|exists:factories,id',
             'weight'      => 'required|numeric|gt:0'
         ]);
 
-        $order = SpreadingOutMaterialOrder::create($request->all());
+        if($request->type == 'employee')
+        {
+            $order = SpreadingOutMaterialOrder::create($request->except(['factory_id']));
+        }
+
+        else 
+        {
+            $order = SpreadingOutMaterialOrder::create($request->except(['user_id']));
+        }
+        
         if ($order) {
             $material = Material::where('id', $request->material_id)->first();
             $material->weight = $material->weight - $request->weight;
@@ -77,6 +91,8 @@ class SpreadingMaterialController extends Controller
         $data['spreading'] = SpreadingOutMaterialOrder::where('id', $spreading_id)
             ->with('user:id,name', 'material:id,mq_r_code')
             ->first();
+
+        $data['factories'] = Factory::select('id' , 'name')->get();
         return view('dashboard.orders.spreading_materials.edit')->with('data', $data);
     }
 

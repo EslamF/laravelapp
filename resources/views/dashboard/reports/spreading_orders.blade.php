@@ -24,6 +24,15 @@
                         </div>
 
                         <div class = "form-group" style = "margin: 10px;">
+                            <label>النوع</label>
+                            <select class = "form-control" name = "type">
+                                    <option value = "">الكل</option>
+                                    <option value = "inner" {{ request()->type == 'inner' ? 'selected' : ''}} >داخلي</option>
+                                    <option value = "outer" {{ request()->type == 'outer' ? 'selected' : ''}}>خارجي</option>
+                            </select>
+                        </div>
+
+                        <div class = "form-group" style = "margin: 10px;">
                             <label>الموظف</label>
                             <select class = "form-control" name = "employee_id">
                                     <option value = "">كل الموظفين</option>
@@ -70,7 +79,7 @@
                     <thead>
                         <tr>
                             <th>الموظف</th>
-                            <th>موظف الفرش</th>
+                            <th>النوع</th>
                             <th>كود الخامة</th>
                             <th>الوزن</th>
                         </tr>
@@ -79,7 +88,13 @@
                         @foreach($orders as $order)
                         <tr>
                             <td>{{$order->user->name}}</td>
-                            <td>{{$order->spreadinguser->name}}</td>
+                            <td>
+                                @if($order->type == 'inner' && $order->spreadinguser)
+                                    داخلى ({{$order->spreadinguser->name}})
+                                @elseif($order->type == 'outer' && $order->factory)
+                                    خارجي ({{$order->factory->name}})
+                                @endif
+                            </td>
                             <td>{{$order->material->mq_r_code}}</td>
                             <td>{{$order->weight}}</td>
                         </tr>

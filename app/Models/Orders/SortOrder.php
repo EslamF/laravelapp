@@ -20,9 +20,14 @@ class SortOrder extends Model
         return $this->belongsTo(User::class , 'created_by'); //created_by
     }
 
-    public function sortinguser()
+    /*public function sortinguser()
     {
         return $this->belongsTo(User::class , 'user_id'); // sorting employee user_id
+    }*/
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 
     public function products()

@@ -68,6 +68,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="out_date">تاريخ الخروج</label>
+                                <span style="color:red" v-if="error.out_date">*@{{error.out_date}}</span>
+                                <input type="date" class="form-control" v-model="out_date" id="out_date" placeholder="تاريخ الإستلام">
+                            </div>
+                        </div>
+                    </div>
 
                     <table class="table" v-show="available_products.length > 0">
                         <p v-if = "!have_value"  v-show="available_products.length > 0" style = "color:red">يجب إدخال منتجات</p>

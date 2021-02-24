@@ -65,12 +65,21 @@ class ReceivingDamagedOrdersController extends Controller
         {
             $product = Product::where('prod_code', $request->prod_code)->first();
 
-            $exists = DamagedProductFixOrder::where('product_id', $product->id)->exists();
+            $can_receive = false;
 
-            return response()->json($exists, 200);
+            $order = DamagedProductFixOrder::where('product_id', $product->id)->first();
+            if($order)
+            {
+                $can_receive = $order->factory ? $order->factory->name : '' ;
+            }
+
+            else 
+            {
+                $can_receive = false;
+            }
+
+            return response()->json($can_receive, 200);
         }
-
-        
     }
 
     /*public function store(Request $request)

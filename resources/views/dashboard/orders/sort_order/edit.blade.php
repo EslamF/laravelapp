@@ -12,6 +12,7 @@
             <form role="form" id = "myForm" action="{{Route('sort.order.update')}}" method="POST">
                 @csrf
                 <div class="card-body">
+                    {{--
                     <div class="form-group">
                         <label for="name">موظف الفرز</label>
                         <select class="form-control" name="user_id" id="">
@@ -19,6 +20,15 @@
                             @foreach($data['users'] as $user)
                                 <option value="{{$user->id}}" {{$data['sort']->user_id == $user->id ? "selected": ""}}>{{$user->name}}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    --}}
+
+                    <div class = "form-group">
+                        <select class = "select2 form-control w-100" name = "users[]" multiple>
+                                @foreach($data['users'] as $user)
+                                    <option value="{{$user->id}}" {{ in_array($user->id , $data['sort']->users->pluck('id')->toArray() ) ? 'selected' : '' }}>{{$user->name}}</option>
+                                @endforeach
                         </select>
                     </div>
 
@@ -47,10 +57,15 @@
 @endsection
 
 @section('footer-script')
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
-</script>
 <script>
+    
+          
     $(document).ready(function() {
+
+        $('.select2').select2({
+            placeholder: 'موظفين الفرز'
+          });
+
         $("#btnSubmit").click(function(e) {
             //stop submitting the form to see the disabled button effect
             e.preventDefault();
@@ -64,5 +79,7 @@
 
         });
     })
+
+    
 </script>
 @endsection

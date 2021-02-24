@@ -127,6 +127,17 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="number_of_vestments">عدد الأتواب</label>
+                                <input type="text" class="form-control" name="number_of_vestments" id="number_of_vestments" placeholder="عدد الأتواب" class="@error('number_of_vestments') is-danger @enderror" value="{{$data['material']->number_of_vestments}}">
+                                @error('number_of_vestments')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <div id="accessory" style="{{$data['material']->qty ? '' : 'display:none' }}" class="row">
                         <div class="col-md-12">

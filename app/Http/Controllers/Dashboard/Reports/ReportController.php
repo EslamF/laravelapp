@@ -16,6 +16,7 @@ use App\Models\Orders\StoreProductOrder;
 use App\Models\Materials\Material;
 use App\User;
 use App\Models\Organization\ShippingCompany;
+use Illuminate\Database\Eloquent\Builder;
 
 class ReportController extends Controller
 {
@@ -161,7 +162,18 @@ class ReportController extends Controller
                 $query->where('created_at' , '<=' , request()->to);
                 
             }
-        })->get();
+        })->get()->filter(function($order){
+
+            if(request()->filled('type'))
+            {
+                return $order->type == request()->type ;
+            }
+            else 
+            {
+                return true;
+            }
+
+        });
 
         $employees = User::get(); //created by
 
@@ -287,7 +299,10 @@ class ReportController extends Controller
 
             if(request()->filled('sorting_employee_id'))
             {
-                $query->where('user_id' , request()->sorting_employee_id);
+                $query->whereHas('users' , function(Builder $query2){
+                    $query2->where('users.id' , request()->sorting_employee_id);
+                });
+                //$query->where('user_id' , request()->sorting_employee_id);
             }
 
             if(request()->filled('from'))

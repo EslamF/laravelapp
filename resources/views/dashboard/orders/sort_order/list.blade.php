@@ -16,7 +16,7 @@
                             <tr>
                                 <th> الرقم المرجعي</th>
                                 <th>كود</th>
-                                <th>موظف الفرز</th>
+                                <th>موظفين الفرز</th>
                                 <th>تاريخ الفرز</th>
                                 <th>الخيارات</th>
                             </tr>
@@ -26,7 +26,11 @@
                             <tr>
                                 <td>{{$order->id}}</td>
                                 <td>{{$order->code}}</td>
-                                <td>{{$order->sortinguser->name}}</td>
+                                <td>
+                                    @foreach($order->users as $user)
+                                        <p class = "bg-primary text-center" style = "margin-bottom:1px;">{{$user->name}}</p>
+                                    @endforeach
+                                </td>
                                 <td>{{$order->created_at}}</td>
                                 <td>
                                     <a href="{{Route('sort.product.list', $order->id)}}"

@@ -19,7 +19,7 @@
                             <div class="form-group">
                                 <label for="mq_r_code">نوع المصنع</label>
                                 <span style="color:red" v-if="error.factory_id">*@{{error.factory_type_id}}</span>
-                                <select class="form-control" v-model="factory_type_id" @change="getFactory()" id="user">
+                                <select class="form-control" v-model="factory_type_id" @change="getFactory()">
                                     <option value="" disabled selected>حدد نوع المصنع</option>
                                     <option :value="factory.id" v-for="factory in factory_types">@{{factory.name}}</option>
                                 </select>
@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <label for="mq_r_code">المصنع</label>
                                 <span style="color:red" v-if="error.factory_id">*@{{error.factory_id}}</span>
-                                <select class="form-control" v-model="factory_id" id="user">
+                                <select class="form-control" v-model="factory_id">
                                     <option value="" disabled selected>حدد اسم المصنع</option>
                                     <option :value="factory.id" v-for="factory in factories" :selected="factory_id == factory.id">@{{factory.name}}</option>
 
@@ -48,6 +48,15 @@
                                 <label for="weight">تاريخ الإستلام</label>
                                 <span style="color:red" v-if="error.receiving_date">*@{{error.receiving_date}}</span>
                                 <input type="date" class="form-control" v-model="receiving_date" id="weight" placeholder="تاريخ الإستلام">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="out_date">تاريخ الخروج</label>
+                                <span style="color:red" v-if="error.out_date">*@{{error.out_date}}</span>
+                                <input type="date" class="form-control" v-model="out_date" id="out_date" placeholder="تاريخ الخروج">
                             </div>
                         </div>
                     </div>

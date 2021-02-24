@@ -14,7 +14,7 @@
                 <div class="card-body">
                     @include('includes.flash-message')
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" v-if="type == 'employee'">
                             <div class="form-group">
                                 <label for="user">موظف الفرش</label>
                                 <select class="form-control" name="user_id" id="user">
@@ -31,6 +31,24 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="col-md-12" v-if="type == 'factory'"> 
+                            <div class="form-group">
+                                <label for="factory_id">المصنع</label>
+                                <select class="form-control" name="factory_id" class="@error('factory_id') is-danger @enderror">
+                                    <option value="" disabled selected>المصنع</option>
+                                    @foreach($data['factories'] as $factory)
+                                        <option value="{{$factory->id}}" {{old('factory_id') == $factory->id? 'selected':'' }}>{{$factory->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('factory_id')
+                                <p class="help text-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -92,6 +110,7 @@
     var app = new Vue({
         el: '#app',
         data: {
+            type: '{{$data["spreading"]->type == "inner" ? "employee" : "factory"}}',
             material_weight: '',
             button: false,
             material_code: '',

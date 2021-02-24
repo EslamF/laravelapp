@@ -97,7 +97,6 @@ class FixProductOrderController extends Controller
                 $record->product_id = $product->id;
                 $record->factory_id = $request->factory_id;
                 $record->save();
-                
             }
         }
 
@@ -146,6 +145,8 @@ class FixProductOrderController extends Controller
         $data = DamagedProductFixOrder::with(['product' => function ($q) {
             $q->where('damage_type', '!=', null);
         }], 'factory:id,name')->paginate();
+
+        //return $data;
         return view('dashboard.orders.fix_product.list')->with('data', $data);
     }
 

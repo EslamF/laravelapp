@@ -17,6 +17,7 @@
                                 <th> الرقم المرجعي</th>
                                 <th> الرقم المرجعي إذن القص</th>
                                 <th>المصنع</th>
+                                <th>تاريخ الخروج</th>
                                 <th>تاريخ الإستلام</th>
                                 <th>الخيارات</th>
                             </tr>
@@ -27,6 +28,7 @@
                                 <td>{{$value->id}}</td>
                                 <td>{{$value->cuttingOrder->id}}</td>
                                 <td>{{$value->factory->name}}</td>
+                                <td>{{$value->out_date}}</td>
                                 <td>{{$value->receiving_date}}</td>
                                 <td>
                                     <a href="{{Route('produce.order.edit_page', $value->id)}}" class="btn btn-primary {{$value->can_edit ? '' : 'disabled'}}  {{ Laratrust::isAbleTo('edit-produce-order') ? '' : 'disabled' }}" >تعديل</a>

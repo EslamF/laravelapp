@@ -52,17 +52,27 @@
             <!--</form> -->
         </div>
 
-        <div>
-            <table class="table table-borded" v-if="codes.length > 0">
+        <div v-if="codes.length > 0">
+            <h2 class = "text-center">عدد المنتجات : @{{codes.length}}</h2>
+            <table class="table table-borded">
                 <thead>
                     <tr>
                         <th class = "text-center">كود المنتجات</th>
+                        <th class = "text-center">المصنع</th>
                         <th class = "text-center">حذف</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!--
                     <tr v-for="(code,index) in codes">
                         <td class = "text-center">@{{code}}</td>
+                        <td class = "text-center"><button type="button" @click="removeCode(index)" class="btn btn-danger">حذف</button></td>
+                    </tr>
+                    -->
+
+                    <tr v-for="(product,index) in products">
+                        <td class = "text-center">@{{product.product_code}}</td>
+                        <td class = "text-center">@{{product.factory}}</td>
                         <td class = "text-center"><button type="button" @click="removeCode(index)" class="btn btn-danger">حذف</button></td>
                     </tr>
                 </tbody>

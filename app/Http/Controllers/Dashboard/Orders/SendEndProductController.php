@@ -29,9 +29,11 @@ class SendEndProductController extends Controller
         $order = SaveOrder::findOrFail($order_code);
 
         $products = Product::where('save_order_id', $order_code)
-            ->select('id', 'save_order_id', 'prod_code')
-            ->with('user:id,name')
+            ->select('id', 'save_order_id', 'prod_code', 'size_id' , 'material_id')
+            ->with('user:id,name' , 'material:id,mq_r_code' , 'size:id,name')
             ->paginate();
+
+            //return $products;
         return view('dashboard.orders.send_end_product.product_order.list')->with([  'products' => $products  , 'order' => $order ]);
     }
     public function create()
@@ -100,26 +102,37 @@ class SendEndProductController extends Controller
 
         if($request->filled('save_order_id')) // in edit page
         {
-            return response()->json(Product::where('prod_code', $request->product_code)
-                            ->where('sorted', 1)
-                            //->where('save_order_id', null)
-                            ->where('status' , 'available')
-                            //->orWhere('save_order_id' , $request->save_order_id)
-                            //->whereIn('save_order_id' , [$request->save_order_id , null])
-                            ->where(function($query) use($request){
-                                $query->where('save_order_id'   , null)
-                                      ->orWhere('save_order_id' , $request->save_order_id );
-                            })
-                            ->exists(), 200);
+            $product = Product::with('size:id,name' , 'material:id,mq_r_code')
+                                ->select('id' , 'prod_code' , 'material_id' , 'size_id')
+                                ->where('prod_code', $request->product_code)
+                                ->where('sorted', 1)
+                                //->where('save_order_id', null)
+                                ->where('status' , 'available')
+                                //->orWhere('save_order_id' , $request->save_order_id)
+                                //->whereIn('save_order_id' , [$request->save_order_id , null])
+                                ->where(function($query) use($request){
+                                    $query->where('save_order_id'   , null)
+                                        ->orWhere('save_order_id' , $request->save_order_id );
+                                })
+                                ->first();
+
+            $response = $product ?? false; 
+
+            return response()->json($response, 200);
         }
 
         else 
         {
-            return response()->json(Product::where('prod_code', $request->product_code)
-                            ->where('sorted', 1)
-                            ->where('save_order_id', null)
-                            ->where('status' , 'available')
-                            ->exists(), 200);
+            $product = Product::with('size:id,name' , 'material:id,mq_r_code')
+                                ->select('id' , 'prod_code' , 'material_id' , 'size_id')
+                                ->where('prod_code', $request->product_code)
+                                ->where('sorted', 1)
+                                ->where('save_order_id', null)
+                                ->where('status' , 'available')
+                                ->first();
+            $response = $product ?? false; 
+
+            return response()->json($response, 200);
         }
         
     }
@@ -137,8 +150,13 @@ class SendEndProductController extends Controller
     {
         if($request->filled('save_order_id'))
         {
-            $codes = Product::where('save_order_id' , $request->save_order_id)->pluck('prod_code')->toArray();
-            return response()->json($codes , 200);
+            //$codes = Product::where('save_order_id' , $request->save_order_id)->pluck('prod_code')->toArray();
+            $products = Product::with('size:id,name' , 'material:id,mq_r_code')
+                                ->where('save_order_id' , $request->save_order_id)
+                                ->select('id' , 'prod_code' , 'material_id' , 'size_id')
+                                ->get();
+                                
+            return response()->json($products , 200);
         }
     }
 

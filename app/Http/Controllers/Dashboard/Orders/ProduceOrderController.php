@@ -46,6 +46,7 @@ class ProduceOrderController extends Controller
             'cutting_order_id' => 'required|exists:cutting_orders,id',
             'factory_id' => 'required|exists:factories,id',
             'receiving_date'   => 'required|date',
+            'out_date'   => 'required|date',
             'products'      => 'required'
         ]);
 
@@ -95,7 +96,8 @@ class ProduceOrderController extends Controller
             'produce_order_id' => 'required|exists:produce_orders,id',
             'factory_id'       => 'required|exists:factories,id',
             'receiving_date'   => 'required|date',
-            'products'         => 'required'
+            'products'         => 'required',
+            'out_date'         => 'required|date',
 
         ]);
 

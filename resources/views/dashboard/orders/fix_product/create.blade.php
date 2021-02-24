@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label for="weight"> كود المتج</label>
+                                <label for="weight"> كود المنتج</label>
                                 <span v-if="have_error" style="color:red;font-weight:700">@{{errors.exists}}</span>
                                 <input type="text" class="form-control @error('prod_code') is-danger @enderror "
                                       v-model="prod_code" placeholder="ادخل  كود المنتج" @keyup.enter="checkIfSortedAndDamaged"
@@ -69,8 +69,9 @@
         </div>
 
 
-        <div>
-                <table class="table table-borded" v-if="codes.length > 0">
+        <div v-if="codes.length > 0">
+                <h2 class = "text-center">عدد المنتجات : @{{codes.length}}</h2>
+                <table class="table table-borded">
                     <thead>
                         <tr>
                             <th class = "text-center">كود المنتجات</th>
@@ -84,7 +85,6 @@
                         </tr>
                     </tbody>
                 </table>
-            
         </div>
     
     </div>

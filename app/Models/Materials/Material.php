@@ -21,7 +21,8 @@ class Material extends Model
         'bill_number',
         'description',
         'color',
-        'created_by'
+        'created_by',
+        'number_of_vestments'
     ];
 
     /**

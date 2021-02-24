@@ -39,19 +39,25 @@
                 <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
             </div>
         </div>
-        <div class="row">
+        <div class="row" v-if="codes.length > 0">
             <div class="col-md-12">
-                <table class="table" v-if="codes.length > 0">
+                <h3 class = "text-center">إجمالي المنتجات : @{{codes.length}}</h3>
+                <br>
+                <table class="table">
                     <thead>
                         <tr>
-                            <th class="col-md-7">كود المنتجات</th>
-                            <th class="col-md-3">حذف</th>
+                            <th>كود المنتج</th>
+                            <th>كود الخامة</th>
+                            <th>المقاس</th>
+                            <th>حذف</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(code,index) in codes">
-                            <td class="col-md-7">@{{code}}</td>
-                            <td class="col-md-3"><button type="button" @click="removeCode(index)" class="btn btn-danger">حذف</button></td>
+                        <tr v-for="(product,index) in products">
+                            <td>@{{product.product_code}}</td>
+                            <td>@{{product.material_code}}</td>
+                            <td>@{{product.size}}</td>
+                            <td><button type="button" @click="removeCode(index)" class="btn btn-danger">حذف</button></td>
                         </tr>
                     </tbody>
                 </table>

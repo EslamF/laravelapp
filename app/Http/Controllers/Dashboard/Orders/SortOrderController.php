@@ -15,40 +15,44 @@ class SortOrderController extends Controller
 {
     public function getAllPaginate()
     {
-        $orders = SortOrder::with('user')->paginate();
+        $orders = SortOrder::with('user' , 'users')->paginate(); 
         return view('dashboard.orders.sort_order.list')->with('orders', $orders);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id'
+            'users'  => 'required|array' , 
+            'users.*'=> 'exists:users,id'
         ]);
 
         $request->merge([
-            'code' => $this->generateCode()
+            'code' => $this->generateCode(),
+            'user_id' => User::first()->id
         ]);
 
-        SortOrder::create($request->all());
+        $order = SortOrder::create($request->all());
+        $order->users()->attach($request->users);
         return redirect()->route('sort.order.list')->with('success' , __('words.added_successfully') );
     }
 
     public function update(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'users'  => 'required|array' , 
+            'users.*'=> 'exists:users,id',
             'code'    => 'required|unique:sort_orders,code,' . $request->sort_id ,
             'sort_id' => 'required|exists:sort_orders,id' , 
         ]);
 
-        SortOrder::find($request->sort_id)->update([
-            'code' => $request->code,
-            'user_id' => $request->user_id
+        $order = SortOrder::find($request->sort_id);
+        $order->update([
+            'code' => $request->code
         ]);
+
+        $order->users()->sync($request->users);
         return redirect()->route('sort.order.list')->with('success' , __('words.updated_successfully') );
     }
-
-
 
     public function editPage($sort_id)
     {
@@ -69,7 +73,9 @@ class SortOrderController extends Controller
         $request->validate([
             'sort_id' => 'required|exists:sort_orders,id'
         ]);
-        SortOrder::find($request->sort_id)->delete();
+        $order = SortOrder::find($request->sort_id);
+        $order->users()->detach();
+        $order->delete();
 
         return redirect()->route('sort.order.list');
     }

@@ -23,6 +23,7 @@ class ReceivingMaterialController extends Controller
             'weight' => 'requiredIf:type,material',
             'bill_number' => 'required',
             'color' => 'requiredIf:type,material',
+            'number_of_vestments' => 'requiredIf:type,material|integer'
         ]);
 
         $request_data = [];
@@ -33,7 +34,7 @@ class ReceivingMaterialController extends Controller
         }
         else 
         {
-            $request_data = $request->except(['weight' , 'material_type_id' , 'color' ]);
+            $request_data = $request->except(['weight' , 'material_type_id' , 'color','number_of_vestments' ]);
         }
 
         $old_material = Material::where('mq_r_code' , $request->mq_r_code)->first();
@@ -47,7 +48,8 @@ class ReceivingMaterialController extends Controller
                 'buyer_id'         => $request->buyer_id ,
                 'supplier_id'      => $request->supplier_id ,
                 'bill_number'      => $request->bill_number ,
-                'color'            => $request->color
+                'color'            => $request->color,
+                'number_of_vestments' => $request->number_of_vestments
             ]);
         }
 
@@ -135,7 +137,8 @@ class ReceivingMaterialController extends Controller
             'color' => 'requiredIf:type,material',
             'weight' => 'requiredIf:type,material',
             'qty'   => 'requiredIf:type,accessory' ,
-            'type'  => 'required|in:material,accessory'
+            'type'  => 'required|in:material,accessory',
+            'number_of_vestments' => 'requiredIf:type,material|integer'
 
         ]);
 

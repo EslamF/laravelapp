@@ -38,7 +38,7 @@
                         <thead>
                             <tr>
                                 <th>الرقم المرجعي</th>
-                                <th>موظف الفرش</th>
+                                <th>النوع</th>
                                 <th>الوزن</th>
                                 <th>كود الخامة</th>
 
@@ -48,7 +48,13 @@
                         <tbody>
                             <tr>
                                 <td>{{$cutting_order->spreadingOutMaterialOrder->id}}</td>
-                                <td>{{$cutting_order->spreadingOutMaterialOrder->spreadinguser->name}}</td>
+                                <td>
+                                    @if($cutting_order->spreadingOutMaterialOrder->type == 'inner' && $cutting_order->spreadingOutMaterialOrder->spreadinguser)
+                                        داخلى ({{$cutting_order->spreadingOutMaterialOrder->spreadinguser->name}})
+                                    @elseif($cutting_order->spreadingOutMaterialOrder->type == 'outer' && $cutting_order->spreadingOutMaterialOrder->factory)
+                                        خارجي ({{$cutting_order->spreadingOutMaterialOrder->factory->name}})
+                                    @endif
+                                </td>
                                 <td>{{$cutting_order->spreadingOutMaterialOrder->weight}}</td>
                                 <td>{{$cutting_order->spreadingOutMaterialOrder->material->mq_r_code}}</td>
                             </tr>

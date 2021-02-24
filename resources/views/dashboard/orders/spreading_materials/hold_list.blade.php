@@ -17,7 +17,7 @@
                         <thead>
                             <tr>
                                 <th> الرقم المرجعي</th>
-                                <th>موظف الفرش</th>
+                                <th>النوع</th>
                                 <th>كود الخامة</th>
                                 <th>الوزن</th>
                                 <th>إجراءات</th>
@@ -27,7 +27,13 @@
                             @foreach($data as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
-                                <td>{{$value->spreadinguser->name}}</td>
+                                <td>
+                                    @if($value->type == 'inner' && $value->spreadinguser)
+                                        داخلى ({{$value->spreadinguser->name}})
+                                    @elseif($value->type == 'outer' && $value->factory)
+                                        خارجي ({{$value->factory->name}})
+                                    @endif
+                                </td>
                                 <td>{{$value->material->mq_r_code}}</td>
                                 <td>{{$value->weight}}</td>
                                 <td>

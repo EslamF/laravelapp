@@ -17,6 +17,7 @@
                                     <th> الرقم المرجعي</th>
                                     <th>كود الخامة</th>
                                     <th>إسم الخامة</th>
+                                    <th>عدد الأتواب</th>
                                     <th>المورد</th>
                                     <th>الرقم المرجعي الفاتورة</th>
                                     <th>المستلم</th>
@@ -30,6 +31,7 @@
                                     <td>{{$material->id}}</td>
                                     <td>{{$material->mq_r_code}}</td>
                                     <td>{{$material->materialType ? 'الخامة   : '.  $material->materialType->name : 'اكسسوار'}}</td>
+                                    <td>{{$material->number_of_vestments}}</td>
                                     <td>{{$material->supplier->name}}</td>
                                     <td>{{$material->bill_number}}</td>
                                     <td>{{$material->user->name}}</td>

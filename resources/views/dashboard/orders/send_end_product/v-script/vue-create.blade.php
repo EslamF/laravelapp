@@ -9,6 +9,7 @@
             user_id: '',
             errors: {},
             codes: [],
+            products: [] ,
             product_code: '',
             have_error: false
         },
@@ -30,9 +31,16 @@
                 axios.post('{{Route("send_end_product.check_if_sorted")}}', data)
                     .then(res => {
                         this.have_error = false;
+                        console.log(res.data);
                         if (res.data) {
                             if (!this.codes.includes(this.product_code.trim())) {
                                 this.codes.push(this.product_code.trim());
+                                this.products.push({
+                                    product_code: res.data.prod_code ,
+                                    material_code: res.data.material.mq_r_code , 
+                                    size: res.data.size.name
+
+                                });
                                 this.product_code = '';
                             } else {
                                 this.have_error = true;
@@ -66,7 +74,8 @@
                 }
             },
             removeCode(i) {
-                this.codes.splice(i, 1)
+                this.codes.splice(i, 1);
+                this.products.splice(i, 1)
             },
             validateUser() {
                 if (!this.user_id) {

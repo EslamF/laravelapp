@@ -81,7 +81,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">الكمية</label>
+                                    <label for="">عدد القطع في الراء</label>
                                     <span style="color:red" v-if="errors[index].qty">*@{{errors[index].qty}}</span>
                                     <input class="form-control" v-model="item.qty" type="number" required>
                                 </div>

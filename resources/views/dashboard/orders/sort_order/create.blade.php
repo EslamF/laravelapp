@@ -12,6 +12,7 @@
             <form role="form" id = "myForm" action="{{Route('sort.order.store')}}" method="POST">
                 @csrf
                 <div class="card-body">
+                    {{--
                     <div class="form-group">
                         <label for="user_id">موظف الفرز</label>
                         <select class="form-control" name="user_id" id="">
@@ -26,6 +27,44 @@
                             </p>
                         @enderror
                     </div>
+                    --}}
+                    {{--
+                    <div class="form-group row">
+                        <label for = "users">موظفين الفرز</label>
+                        <div class = "form-control select2 col-10" stle = "padding:0">
+                            <select name = "users">
+                                <option value="" disabled selected>حدد موظف الفرز</option>
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    --}}
+
+                    <div class = "form-group">
+                        <select class = "select2 form-control w-100" name = "users[]" multiple>
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                        </select>
+                    </div>
+
+                    {{--
+                        <div class="form-group">
+                        @inject('nokia_requesters' , 'App\Models\NokiaRequester')
+                        {!!Form::select('nokia_requester_id' , $nokia_requesters->all()->pluck('name' , 'id')->toArray() , null , ['class'  => 'form-control nokia_requesters_select2 w-100' , 'placeholder' => 'Choose a nokia requester'])!!}
+                        </div>
+                    --}}
+
+                    {{--
+                        <div class="form-group">
+                            @inject('streams' , 'App\Models\Stream')
+                            {!!Form::select('stream_id' , $streams->all()->pluck('name' , 'id')->toArray() , null , ['class'  => 'form-control streams_select2' , 'placeholder'  => 'Choose a stream'])!!}
+                        </div>
+                    --}}
+                    
+
                 </div>
                 <!-- /.card-body -->
 
@@ -40,9 +79,12 @@
 @endsection
 
 @section('footer-script')
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
-</script>
+<!-- jQuery -->
+
 <script>
+    $('.select2').select2({
+            placeholder: 'موظفين الفرز'
+          });
     $(document).ready(function() {
         $("#btnSubmit").click(function(e) {
             //stop submitting the form to see the disabled button effect
@@ -55,7 +97,12 @@
 
             return true;
 
+
         });
+
+        
+
+        //$('.select2').select2();
     })
 </script>
 @endsection

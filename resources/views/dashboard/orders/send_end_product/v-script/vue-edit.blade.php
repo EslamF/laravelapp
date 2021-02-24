@@ -10,6 +10,7 @@
             bar_code: '{{ $order->code }} ',
             errors: {},
             codes:  []  ,
+            products : [],
             product_code: '',
             have_error: false,
             order_id: "{{ $order->id }}",
@@ -36,7 +37,23 @@
 
                 axios.post('{{Route("send.end_product.getProducts")}}' , data)
                     .then(res => {
-                        this.codes = res.data;
+                        console.log(res.data);
+                        var codes = [];
+                        var products = [];
+
+                        $.each(res.data, function(index, product) {
+                            codes.push(product.prod_code);
+                            //console.log(product);
+                            products.push({
+                                product_code:  product.prod_code ,
+                                material_code: product.material.mq_r_code , 
+                                size:          product.size.name
+                            });
+                        });
+
+                        this.codes = codes;
+                        this.products = products;
+
                     }).catch(err => {
 
                     });
@@ -53,6 +70,12 @@
                         if (res.data) {
                             if (!this.codes.includes(this.product_code.trim())) {
                                 this.codes.push(this.product_code.trim());
+                                this.products.push({
+                                    product_code: res.data.prod_code ,
+                                    material_code: res.data.material.mq_r_code , 
+                                    size: res.data.size.name
+
+                                });
                                 this.product_code = '';
                             } else {
                                 this.have_error = true;
@@ -100,7 +123,8 @@
                 }
             },
             removeCode(i) {
-                this.codes.splice(i, 1)
+                this.codes.splice(i, 1);
+                this.products.splice(i, 1)
             },
             validateUser() {
                 if (!this.user_id) {

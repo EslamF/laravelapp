@@ -7,6 +7,7 @@
         data: {
             errors: {} ,
             codes: [],
+            products: [],
             prod_code: '',
             damage_type: '',
             error: {
@@ -30,6 +31,11 @@
                         if (res.data) {
                             if (!this.codes.includes(this.prod_code.trim())) {
                                 this.codes.push(this.prod_code.trim());
+                                // push to products array (product_code , factory)
+                                this.products.push({
+                                    product_code: this.prod_code.trim() ,
+                                    factory: res.data,
+                                });
                                 
                             } else {
                                 this.have_error = true;
@@ -67,7 +73,8 @@
                 }
             },
             removeCode(i) {
-                this.codes.splice(i, 1)
+                this.codes.splice(i, 1);
+                this.products.splice(i, 1)
             },
             validateAll() {
                 if (!this.codes[0]) {

@@ -59,6 +59,11 @@
         <!-- AdminLTE for demo purposes -->
         <script src="{{asset('asset/')}}/dist/js/demo.js"></script>
         <script src="{{asset('/js/bootstrap-tagsinput.min.js')}}"></script>
+        <!-- Select2 -->
+        {{--<script src="{{asset('asset/plugins/select2/js/select2.full.min.js')}}"></script>--}}
+        <script src="{{asset('asset/jquery/jquery.min.js')}}"></script>
+        <!-- Select2 -->
+        <script src="{{asset('asset/select2/js/select2.full.min.js')}}"></script>
         <script>
             $('#submit').click(function() {
                 console.log('test');
