@@ -17,6 +17,7 @@
                         <thead>
                             <tr>
                                 <th> الرقم المرجعي</th>
+                                <th> التاريخ</th>
                                 <th>النوع</th>
                                 <th>كود الخامة</th>
                                 <th>الوزن</th>
@@ -27,6 +28,7 @@
                             @foreach($data as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
+                                <td dir = "ltr" class = "text-right">{{$value->created_at}}</td>
                                 <td>
                                     @if($value->type == 'inner' && $value->spreadinguser)
                                         داخلى ({{$value->spreadinguser->name}})

@@ -5,6 +5,8 @@ namespace App\Models\Orders;
 use App\Models\Orders\BuyOrder;
 use App\Models\Organization\ShippingCompany;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
 
 class ShippingOrder extends Model
 {
@@ -18,5 +20,19 @@ class ShippingOrder extends Model
     public function shippingCompany()
     {
         return $this->belongsTo(ShippingCompany::class);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if($value)
+        {
+            return Carbon::parse($value)
+                        ->addHours(2)
+                        ->format('Y-m-d h:i a');
+        }
+        else
+        {
+            return '';
+        }
     }
 }

@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th> الرقم المرجعي</th>
+                                <th>التاريخ</th>
                                 <th>الشركة</th>
                                 <th>كود الخامة</th>
                                 <th>موظف الفرش</th>
@@ -27,6 +28,7 @@
                             @foreach($data as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
+                                <td dir = "ltr" class = "text-right">{{$value->created_at}}</td>
                                 <td>{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
                                 <td>{{$value->spreadingOutMaterialOrder->material->mq_r_code}}</td>
                                 <td>{{$value->spreadingOutMaterialOrder->user->name}}</td>

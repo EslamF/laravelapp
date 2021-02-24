@@ -7,6 +7,7 @@ use App\Models\Materials\Material;
 use App\Models\Orders\CuttingOrder;
 use App\Models\Organization\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class SpreadingOutMaterialOrder extends Model
 {
@@ -57,6 +58,20 @@ class SpreadingOutMaterialOrder extends Model
         }
 
         else 
+        {
+            return '';
+        }
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if($value)
+        {
+            return Carbon::parse($value)
+                        ->addHours(2)
+                        ->format('Y-m-d h:i a');
+        }
+        else
         {
             return '';
         }

@@ -16,6 +16,7 @@
                         <thead>
                             <tr>
                                 <th> الرقم المرجعي</th>
+                                <th>التاريخ</th>
                                 <th>موظف القص</th>
                                 <th>الشركة</th>
                                 <th>إجراءات</th>
@@ -25,6 +26,7 @@
                             @foreach($data as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
+                                <td dir = "ltr" class = "text-right">{{$value->created_at}}</td>
                                 <td>{{$value->cuttinguser? $value->cuttinguser->name:'غير متاح'}}</td>
                                 <td>{{$value->factory ? $value->factory->name: 'غير متاح'}}</td>
                                 <td>

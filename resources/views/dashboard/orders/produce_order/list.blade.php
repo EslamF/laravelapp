@@ -15,6 +15,7 @@
                         <thead>
                             <tr>
                                 <th> الرقم المرجعي</th>
+                                <th>التاريخ</th>
                                 <th> الرقم المرجعي إذن القص</th>
                                 <th>المصنع</th>
                                 <th>تاريخ الخروج</th>
@@ -26,6 +27,7 @@
                             @foreach($data as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
+                                <td dir = "ltr" class = "text-right">{{$value->created_at}}</td>
                                 <td>{{$value->cuttingOrder->id}}</td>
                                 <td>{{$value->factory->name}}</td>
                                 <td>{{$value->out_date}}</td>

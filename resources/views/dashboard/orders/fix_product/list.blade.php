@@ -15,6 +15,7 @@
                         <thead>
                             <tr>
                                 <th> الرقم المرجعي</th>
+                                <th>التاريخ</th>
                                 <th>كود المنتج</th>
                                 <th>المصنع</th>
                                 <th>الخيارات</th>
@@ -24,6 +25,7 @@
                             @foreach($data as $order)
                             <tr>
                                 <td>{{$order->id}}</td>
+                                <td dir = "ltr" class = "text-right">{{$order->created_at}}</td>
                                 <td>{{$order->product->prod_code}}</td>
                                 <td>{{$order->factory->name}}</td>
                                 <td>

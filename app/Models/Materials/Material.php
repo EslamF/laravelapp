@@ -8,6 +8,7 @@ use App\Models\Orders\CuttingOrder;
 use App\Models\Orders\SpreadingOutMaterialOrder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Organization\Supplier;
+use Carbon\Carbon;
 
 class Material extends Model
 {
@@ -58,5 +59,19 @@ class Material extends Model
     public function spreadingOutMaterialOrders()
     {
         return $this->hasMany(SpreadingOutMaterialOrder::class);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if($value)
+        {
+            return Carbon::parse($value)
+                        ->addHours(2)
+                        ->format('Y-m-d h:i a');
+        }
+        else
+        {
+            return '';
+        }
     }
 }

@@ -25,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th>{{__('words.id')}}</th>
+                                <th>التاريخ</th>
                                 <th>{{__('words.shipping_number')}}</th>
                                 <th>{{__('words.shipping_date')}}</th>
                                 <th>{{__('words.actions')}}</th>
@@ -34,6 +35,7 @@
                             @foreach($orders as $order)
                             <tr>
                                 <td>{{$order->id}}</td>
+                                <td dir = "ltr" class = "text-right">{{$order->created_at}}</td>
                                 <td>{{$order->shipping_code}}</td>
                                 <td>{{$order->shipping_date}}</td>
 

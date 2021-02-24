@@ -9,6 +9,7 @@ use App\Models\Orders\CuttingOrderProduct;
 use App\Models\Orders\ProduceOrder;
 use App\Models\Organization\Factory;
 use App\Models\Products\Product;
+use Carbon\Carbon;
 
 class CuttingOrder extends Model
 {
@@ -94,5 +95,17 @@ class CuttingOrder extends Model
         }
     }
 
-    
+    public function getCreatedAtAttribute($value)
+    {
+        if($value)
+        {
+            return Carbon::parse($value)
+                        ->addHours(2)
+                        ->format('Y-m-d h:i a');
+        }
+        else
+        {
+            return '';
+        }
+    }
 }

@@ -15,6 +15,7 @@
                         <thead>
                             <tr>
                                     <th> الرقم المرجعي</th>
+                                    <th>التاريخ</th>
                                     <th>كود الخامة</th>
                                     <th>إسم الخامة</th>
                                     <th>عدد الأتواب</th>
@@ -29,6 +30,7 @@
                             @foreach($receiving as $material)
                             <tr>
                                     <td>{{$material->id}}</td>
+                                    <td dir = "ltr" class = "text-right">{{$material->created_at}}</td>
                                     <td>{{$material->mq_r_code}}</td>
                                     <td>{{$material->materialType ? 'الخامة   : '.  $material->materialType->name : 'اكسسوار'}}</td>
                                     <td>{{$material->number_of_vestments}}</td>

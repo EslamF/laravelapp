@@ -5,6 +5,8 @@ namespace App\Models\Orders;
 use App\Models\Products\Product;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
 
 class SaveOrder extends Model
 {
@@ -22,5 +24,19 @@ class SaveOrder extends Model
     public function shippinguser()
     {
         return $this->belongsTo(User::class , 'user_id'); //created by
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if($value)
+        {
+            return Carbon::parse($value)
+                        ->addHours(2)
+                        ->format('Y-m-d h:i a');
+        }
+        else
+        {
+            return '';
+        }
     }
 }

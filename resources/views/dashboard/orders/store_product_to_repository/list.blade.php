@@ -15,6 +15,7 @@
                         <thead>
                             <tr>
                                 <th>{{__('words.id')}}</th>
+                                <th>التاريخ</th>
                                 <th>{{__('words.order_code')}}</th>
                                 <th>{{__('words.actions')}}</th>
                             </tr>
@@ -23,6 +24,7 @@
                             @foreach($orders as $order)
                             <tr>
                                 <td>{{$order->id}}</td>
+                                <td dir = "ltr" class = "text-right">{{$order->created_at}}</td>
                                 <td>{{$order->code}}</td>
                                 <td>
                                     <a href="{{Route('send.end_product.get_order', $order->save_order_id)}}" class="btn btn-info">{{__('words.show')}}</a>

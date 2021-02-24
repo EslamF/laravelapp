@@ -8,6 +8,7 @@ use App\Models\Orders\ShippingOrder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Orders\OrderStatus;
 use App\Models\Organization\ShippingCompany;
+use Carbon\Carbon;
 
 class BuyOrder extends Model
 {
@@ -159,5 +160,19 @@ class BuyOrder extends Model
     public function getTranslateStatusAttribute()
     {
         return __('words.' . $this->status . '_order');
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if($value)
+        {
+            return Carbon::parse($value)
+                        ->addHours(2)
+                        ->format('Y-m-d h:i a');
+        }
+        else
+        {
+            return '';
+        }
     }
 }

@@ -15,6 +15,7 @@
                         <thead>
                             <tr>
                                 <th> الرقم المرجعي</th>
+                                <th>التاريخ</th>
                                 <th>إذن اتصنيع</th>
                                 <th>تاريخ الإستلام</th>
                                 <th>حالة الإذن</th>
@@ -25,6 +26,7 @@
                             @foreach($data as $value)
                             <tr>
                                 <td>{{$value->id}}</td>
+                                <td dir = "ltr" class = "text-right">{{$value->created_at}}</td>
                                 <td>{{$value->produce_order_id}}</td>
                                 <td>{{substr($value->created_at,0,10)}}</td>
                                 <td>{{$value->status == 1 ? "Approved":"Not Approved"}}</td>

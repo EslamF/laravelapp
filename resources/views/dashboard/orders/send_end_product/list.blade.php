@@ -25,7 +25,7 @@
                             <tr>
                                 <td>{{$order->id}}</td>
                                 <td>{{$order->code}}</td>
-                                <td>{{$order->created_at}}</td>
+                                <td dir = "ltr" class = "text-right">{{$order->created_at}}</td>
                                 <td>
                                     <a href="{{Route('send.end_product.get_order', $order->id)}}" class="btn btn-info">إظهار</a>
                                     <a href="{{Route('send.end_product.edit_page', $order->id)}}"  class="btn btn-primary {{ $order->stored ? 'disabled' : '' }} {{ Laratrust::isAbleTo('edit-send-order') ? '' : 'disabled' }} " >تعديل</a>
