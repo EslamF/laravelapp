@@ -416,6 +416,9 @@ Route::group([
             Route::post('update', 'ProductController@update')->name('product.update');
             Route::post('delete', 'ProductController@delete')->name('product.delete');
             Route::get('print/{id}', 'ProductController@print')->name('product.print');
+            Route::post('delete_all_products' , 'ProductController@delete_all_products')->name('product.delete_all_products');
+            Route::get('import_sheet_excel_view' , 'ProductController@import_sheet_excel_view' )->name('product.import_sheet_excel_view');
+            Route::post('import_sheet_excel' , 'ProductController@import_sheet_excel' )->name('product.import_sheet_excel');
 
             Route::group([
                 'prefix' => 'type'

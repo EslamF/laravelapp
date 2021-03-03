@@ -48,7 +48,7 @@ class Products2Import implements ToCollection
                 // value[1] => product number
                 // value[2] => codes array 
                 // value[3] => quantity
-                // value[4] => bar code
+                // value[4] => bar code prod_code
                 // value[5] => product name
                
                 $codes_array = explode(" " , $value[2]);
@@ -89,29 +89,33 @@ class Products2Import implements ToCollection
                 }
               
                 $this->store_products($product_type->id , $size->id    , $material->id ,  $quantity ,$save_order->id , $value[4] ); //Medium
-             
-                 
             }
         }
     }
 
     public function store_products($product_type_id , $size_id , $material_id , $qty , $save_order_id , $bar_code)
     {
-        
-
-        for ($i = 0; $i < $qty; $i++) {
-
-            $product = Product::where('product_type_id', $product_type_id)
+        $product = Product::where('product_type_id', $product_type_id)
                             ->where('size_id', $size_id)
                             ->where('material_id', $material_id)
                             ->first();
+        $produce_code = $product->produce_code ?? $this->generateOrderCode();
 
-            $product_material_code = Product::where('product_type_id' , $product_type_id)
-                                        ->where('material_id' , $material_id)
-                                        ->first();
-            Product::create([
-                'prod_code' => $this->generateCode(),
-                'produce_code' => $bar_code,
+
+        $product_material_code = Product::where('product_type_id' , $product_type_id)
+                            ->where('material_id' , $material_id)
+                            ->first();
+        $material_code = $product_material_code->product_material_code ?? $this->generateProductMaterialCode();
+
+
+        $all_inserted_products = [];
+
+        for ($i = 0; $i < $qty; $i++) 
+        {
+            array_push($all_inserted_products , [
+
+                'prod_code' => $bar_code,
+                'produce_code' => $produce_code,
                 'sorted'     => 1,
                 'size_id'   => $size_id,
                 'material_id'   => $material_id,
@@ -119,10 +123,11 @@ class Products2Import implements ToCollection
                 'received'  => 1,
                 'status'    => 'available',
                 'save_order_id' => $save_order_id,
-                'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
-
+                'product_material_code' => $material_code
             ]);
         }
+
+        Product::insert($all_inserted_products);
     }
 
     public function generateOrderCode()

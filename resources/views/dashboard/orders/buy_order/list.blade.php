@@ -1,7 +1,7 @@
 @extends('index')
 @section('content')
 <div class="row" id = "app">
-    <div class="col-xs-12">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">{{__('words.buy_orders')}}</h3>
@@ -138,7 +138,9 @@
                     </table>
                 </div>
                 @else
+                <div class="table-responsive-sm">
                     <p class="text-center">لا يوجد بيانات</p>
+                </div>
                 @endif
             </div>
             <!-- /.card-body -->

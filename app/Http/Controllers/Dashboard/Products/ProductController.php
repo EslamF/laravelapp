@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Milon\Barcode\DNS1D;
 use App\Models\Organization\Factory;
-
+use App\Models\Orders\BuyOrder;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\Products2Import;
 
 class ProductController extends Controller
 {
@@ -81,19 +83,27 @@ class ProductController extends Controller
             ->where('size_id', $request->size_id)
             ->where('material_id', $request->material_id)
             ->first();
+        $produce_code = $product->produce_code ?? $this->generateOrderCode();
+
 
         $product_material_code = Product::where('product_type_id' , $request->product_type_id)
                                         ->where('material_id' , $request->material_id)
                                         ->first();
+        $material_code = $product_material_code->product_material_code ?? $this->generateProductMaterialCode();
+        
+
         $save_order = SaveOrder::create([
             'code' => $this->generateOrderCode(),
             'stored' => 1
         ]);
 
-        for ($i = 0; $i < $request->qty; $i++) {
-            $p = Product::create([
+        $all_inserted_products = [];
+        $all_generated_codes = [];
+        for ($i = 0; $i < $request->qty; $i++) 
+        {
+            /*$p = Product::create([
                     'prod_code' => $this->generateCode(),
-                    'produce_code' => $product->produce_code ?? $this->generateOrderCode(),
+                    'produce_code' => $produce_code,
                     'sorted'     => 1,
                     'size_id'   => $request->size_id,
                     'material_id'   => $request->material_id,
@@ -101,17 +111,37 @@ class ProductController extends Controller
                     'received'  => 1,
                     'status'    => 'available',
                     'save_order_id' => $save_order->id,
-                    'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode() ,
+                    'product_material_code' => $material_code ,
                     'factory_id'    => $request->factory_id,
                     'description' => $request->description
+            ]);*/
+            $code = $this->genrateCodeNotInArray($all_generated_codes);
 
+            array_push($all_inserted_products , [
+
+                    'prod_code' => $code,
+                    'produce_code' => $produce_code,
+                    'sorted'     => 1,
+                    'size_id'   => $request->size_id,
+                    'material_id'   => $request->material_id,
+                    'product_type_id' => $request->product_type_id,
+                    'received'  => 1,
+                    'status'    => 'available',
+                    'save_order_id' => $save_order->id,
+                    'product_material_code' => $material_code ,
+                    'factory_id'    => $request->factory_id,
+                    'description' => $request->description
             ]);
+
+            array_push($all_generated_codes , $code );
 
             //DNS1D::getBarcodePNG('4', 'C39+')
             $dns1d = new DNS1D();
-            Storage::disk('barcodes')->put($p->prod_code . '.png', base64_decode($dns1d->getBarcodePNG($p->prod_code, "C39", 1 , 50 , array(0 , 0 , 0) , true)));
+            Storage::disk('barcodes')->put($code . '.png', base64_decode($dns1d->getBarcodePNG($code, "C39", 1 , 50 , array(0 , 0 , 0) , true)));
 
         }
+
+        Product::insert($all_inserted_products);
 
         $products = Product::select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->where('save_order_id' , $save_order->id)->get();
 
@@ -202,6 +232,27 @@ class ProductController extends Controller
         }
     }
 
+    public function genrateCodeNotInArray($array)
+    {
+        $code = rand(0, 6000000000000);
+        $check = Product::where('prod_code', $code)->exists();
+        if ($check) 
+        {
+            $this->genrateCodeNotInArray();
+        } else 
+        {
+            if(in_array($code , $array))
+            {
+                $this->genrateCodeNotInArray();
+            }
+            else 
+            {
+                return $code;
+            }
+            
+        }
+    }
+
     public function generateProductMaterialCode()
     {
         $code = rand(0, 6000000000000);
@@ -219,5 +270,30 @@ class ProductController extends Controller
         array_push($ids , $id);
         $products = Product::whereIn('id' , $ids)->select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->get();
         return view('dashboard.products.product.print' , compact('products'));
+    }
+
+    public function delete_all_products()
+    {
+        Product::query()->delete();
+        BuyOrder::query()->delete();
+        return redirect()->route('product.list')->with('success' , 'تم حذف جميع المنتجات');
+    }
+
+    public function import_sheet_excel_view()
+    {
+        return view('dashboard.products.product.import_sheet');
+    }
+
+    public function import_sheet_excel(Request $request)
+    {
+        $rules = [
+            'file' => 'required|file|mimes:csv,xlsx,xls'
+        ];
+
+        $request->validate($rules);
+
+        Excel::import(new Products2Import, $request->file);
+
+        return redirect()->route('product.list')->with('success' , __('words.added_successfully') );
     }
 }
