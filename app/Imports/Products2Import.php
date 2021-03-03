@@ -55,7 +55,7 @@ class Products2Import implements ToCollection
                 $codes_array = array_filter($codes_array);
                 $codes_array = array_values($codes_array);
 
-                if(count($codes_array) < 3 || strtoupper($codes_array[0]) != 'CODE' || !$value[4] || !$value[5] || is_numeric($codes_array[2]) )
+                if(count($codes_array) < 3 || strtoupper($codes_array[0]) != 'CODE' || !$value[4] || !$value[5] /*|| is_numeric($codes_array[2])*/ )
                 {
                     continue;
                 }
