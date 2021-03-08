@@ -17,7 +17,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">جهة</label>
-                                <select v-model="type" @change="getOrderBy()" class="form-control" id="" required>
+                                <select v-model="type" @change="getOrderBy()" class="form-control" required>
                                     <option value="" disabled seelcted>اختر النوع</option>
                                     <option value="company">شركة</option>
                                     <option value="employee">موظف</option>
@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label for="">اذن الفرش</label>
                                 
-                                <select v-model="spreading_out_material_order_id" class="form-control" id="" required>
+                                <select v-model="spreading_out_material_order_id" class="form-control" required>
                                     <option value="" disabled seelcted>حدد اذن الفرش</option>
                                     <option :value="order.id" v-for="order in spreading_orders">@{{order.id + ' - ' +  (order.type == 'inner' ? order.spreadinguser.name : (order.factory ? order.factory.name: '' )) + ' - ' + order.created_at}}</option>
                                 </select>
@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label for="">اسم المصنع</label>
                                 <span style="color:red" v-if="factory_error">@{{factory_error}}</span>
-                                <select v-model="factory_id" class="form-control" id="" required>
+                                <select v-model="factory_id" class="form-control" required>
                                     <option value="" disabled seelcted>حدداسم المصنع</option>
                                     <option :value="factory.id" v-for="factory in factories">@{{factory.name}}</option>
                                 </select>
@@ -72,6 +72,7 @@
                         </div>
                     </div>
                     <div v-if="type == 'employee'">
+                        <p style = "color:#c02525;font-size: 1.2em;">عدد المنتجات : @{{total}}</p>
                         <div class="row" v-for="(item,index) in items">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -96,8 +97,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">عدد القطع في الراء</label>
-                                    <span style="color:red" v-if="errors[index].qty">*@{{errors[index].qty}}</span>
-                                    <input class="form-control" v-model="item.qty" type="number" required>
+                                    <span style="color:red" v-if="errors[index].qty" >*@{{errors[index].qty}}</span>
+                                    <input class="form-control" v-model="item.qty"  @keyup="calculateTotal()" type="number" required>
                                 </div>
                             </div>
                             <div class="form-group mt-2">
@@ -113,6 +114,11 @@
                             <label for="layer">عدد الراقات</label>
                             <span style="color:red" id="layer" v-if="layer_error">*@{{layer_error}}</span>
                             <input class="form-control" v-model="layers" type="number" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="layers_weight">وزن الراقات</label>
+                            <span style="color:red" id="layers_weight" v-if="layers_weight_error">*@{{layers_weight_error}}</span>
+                            <input class="form-control" v-model="layers_weight" type="number" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for=""> الزيادة المرتجعة</label>

@@ -32,7 +32,7 @@
             <span class = "span-style">{{$product->productType->name}}</span>
         </div>
 
-        <img src = "{{asset(DNS1D::getBarcodePNGPath($product->prod_code, 'C128' , 1.4 , 22 , array(0 , 0 , 0) , true))}}">
+        <img src = "{{asset(DNS1D::getBarcodePNGPath($product->prod_code, 'C39' , 1 , 50 , array(0 , 0 , 0) , true))}}">
         {{--{!! DNS1D::getBarcodeHTML($product->prod_code, 'C39',1,50,'black', true) !!}--}}
     </div>
     @endforeach

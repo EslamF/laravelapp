@@ -18,7 +18,8 @@ class CuttingOrder extends Model
         'layers',
         'factory_id',
         'extra_returns_weight',
-        'spreading_out_material_order_id'
+        'spreading_out_material_order_id',
+        'layers_weight',
     ];
 
     protected $appends = ['type' , 'status' , 'can_edit'];

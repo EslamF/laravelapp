@@ -5,6 +5,7 @@
         el: '#app',
         data: {
             type: "{{$data['type']}}",
+            total: 0,
             cutting_order_id: "{{$data['order']->id}}",
             users: [],
             productTypes: [],
@@ -19,6 +20,7 @@
             have_error: false,
             extra_returns_weight: "{{$data['order']->extra_returns_weight}}",
             layers: "{{$data['order']->layers}}",
+            layers_weight: "{{$data['order']->layers_weight}}",
             factory_error: '',
             factory_id: '',
             factoryTypes: [],
@@ -26,6 +28,7 @@
             spreading_out_material_order_id: "{{$data['order']->spreading_out_material_order_id}}",
             employee_error: '',
             layer_error: '',
+            layers_weight_error: '',
             spreading_order_error: '',
             extra_return_error: '',
             items: [],
@@ -40,7 +43,8 @@
             this.getSpreadingOrders();
             this.getOrderBy();
             this.getProducts();
-            
+            //this.calculateTotal();
+
         },
         methods: {
             getOrderBy() {
@@ -80,6 +84,7 @@
                     console.log(res.data);
                     if(res.data != 'error')
                     {
+                        var total = 0;
                         for (i = 0; i < res.data.length; i++)
                         {
                             this.items.push({
@@ -93,7 +98,9 @@
                                 size_id: '',
                                 qty: ''
                             });
+                            total+= parseInt(res.data[i].qty);
                         }
+                        this.total = total;
                         
                     }
 
@@ -153,6 +160,7 @@
                 if (this.items.length > 1) {
                     this.items.splice(index, 1);
                 }
+                this.calculateTotal();
             },
             getProductType() {
                 const metas = document.getElementsByTagName('meta');
@@ -183,6 +191,21 @@
 
                 });
             },
+
+            calculateTotal() {
+                console.log('calculateTotal');
+                var total = 0;
+                for(var i =0; i<this.items.length; i++)
+                {
+                    
+                    if(this.items[i].qty)
+                    {
+                        var qty = parseInt(this.items[i].qty) ;
+                        total+= parseInt(qty);
+                    }
+                }
+                this.total = total;
+            },
             itemsValidation() {
                 if (!this.employee_id) {
                     this.employee_error = "* You must Choose Employee";
@@ -193,6 +216,11 @@
                     this.layer_error = "* You must Add Layers";
                 } else {
                     this.layer_error = '';
+                }
+                if (!this.layers_weight) {
+                    this.layers_weight_error = "* You must Add Layers Weight";
+                } else {
+                    this.layers_weight_error = '';
                 }
                 for (i = 0; i < this.items.length; i++) {
 
@@ -244,6 +272,7 @@
                     data.layers = this.layers;
                     data.spreading_out_material_order_id = this.spreading_out_material_order_id;
                     data.cutting_order_id = this.cutting_order_id;
+                    data.layers_weight = this.layers_weight;
                     if (!this.have_error) {
                         this.submited = true;
                         $("#btnSubmit").attr("disabled", true);

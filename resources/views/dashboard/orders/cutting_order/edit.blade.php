@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                    
+                        <p style = "color:#c02525;font-size: 1.2em;">عدد المنتجات : @{{total}}</p>
                         <div class="row" v-for="(item,index) in items">
                             
                             <div class="col-md-3">
@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <label for="">نوع المنتج</label>
                                     <span style="color:red" v-if="errors[index].product_type_id">*@{{errors[index].product_type_id}}</span>
-                                    <select v-model="item.product_type_id" class="form-control" id="" required>
+                                    <select v-model="item.product_type_id" class="form-control" required>
                                         <option value="" disabled seelcted>حدد نوع المنتج</option>
                                         <option :value="type.id" v-for="type in productTypes">@{{type.name}}</option>
                                     </select>
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label for="">المقاس</label>
                                     <span style="color:red" v-if="errors[index].size_id">*@{{errors[index].size_id}}</span>
-                                    <select v-model="item.size_id" class="form-control" id="" required>
+                                    <select v-model="item.size_id" class="form-control" required>
                                         <option value="" disabled seelcted>المقاس</option>
                                         <option :value="size.id" v-for="size in sizes">@{{size.name}}</option>
                                     </select>
@@ -83,7 +83,7 @@
                                 <div class="form-group">
                                     <label for="">عدد القطع في الراء</label>
                                     <span style="color:red" v-if="errors[index].qty">*@{{errors[index].qty}}</span>
-                                    <input class="form-control" v-model="item.qty" type="number" required>
+                                    <input class="form-control" v-model="item.qty"  @keyup="calculateTotal()"  type="number" required>
                                 </div>
                             </div>
                             <div class="form-group mt-2">
@@ -99,6 +99,11 @@
                             <label for="layer">عدد الراقات</label>
                             <span style="color:red" id="layer" v-if="layer_error">*@{{layer_error}}</span>
                             <input class="form-control" v-model="layers" type="number" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="layers_weight">وزن الراقات</label>
+                            <span style="color:red" id="layers_weight" v-if="layers_weight_error">*@{{layers_weight_error}}</span>
+                            <input class="form-control" v-model="layers_weight" type="number" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for=""> الزيادة المرتجعة</label>

@@ -5,6 +5,7 @@
         el: '#app',
         data: {
             type: '',
+            total: 0,
             users: [],
             productTypes: [],
             sizes: [],
@@ -18,6 +19,7 @@
             have_error: false,
             extra_returns_weight: '',
             layers: '',
+            layers_weight: '',
             factory_error: '',
             factory_id: '',
             factoryTypes: [],
@@ -25,6 +27,7 @@
             spreading_out_material_order_id: '',
             employee_error: '',
             layer_error: '',
+            layers_weight_error: '',
             spreading_order_error: '',
             extra_return_error: '',
             items: [{
@@ -116,6 +119,7 @@
                 if (this.items.length > 1) {
                     this.items.splice(index, 1);
                 }
+                this.calculateTotal();
             },
             getProductType() {
                 const metas = document.getElementsByTagName('meta');
@@ -146,6 +150,19 @@
 
                 });
             },
+            calculateTotal() {
+                var total = 0;
+                for(var i =0; i<this.items.length; i++)
+                {
+                    if(this.items[i].qty)
+                    {
+                        var qty = parseInt(this.items[i].qty) ;
+                        total+= parseInt(qty);
+                    }
+                }
+                this.total = total;
+            },
+            
             itemsValidation() {
                 if (!this.employee_id) {
                     this.employee_error = "* You must Choose Employee";
@@ -156,6 +173,11 @@
                     this.layer_error = "* You must Add Layers";
                 } else {
                     this.layer_error = '';
+                }
+                if (!this.layers_weight) {
+                    this.layers_weight_error = "* You must Add Layers Weight";
+                } else {
+                    this.layers_weight_error = '';
                 }
                 for (i = 0; i < this.items.length; i++) {
 
@@ -205,6 +227,7 @@
                     data.user_id = this.employee_id;
                     data.extra_returns_weight = this.extra_returns_weight;
                     data.layers = this.layers;
+                    data.layers_weight = this.layers_weight;
                     data.spreading_out_material_order_id = this.spreading_out_material_order_id;
                     if (!this.have_error) {
                         this.submited = true;
