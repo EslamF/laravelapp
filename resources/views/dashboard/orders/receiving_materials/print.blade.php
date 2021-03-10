@@ -26,6 +26,8 @@
     <div style="page-break-after: always;margin:0;" class = "page">
         <img src = "{{asset(DNS1D::getBarcodePNGPath($material->barcode, 'C128' , 1.4 , 22 , array(0 , 0 , 0) , true))}}">
     </div>
+
+    <a href="{{Route('order.receiving.material')}}" class="btn btn-info no-print float-left" style = "margin-top:10px">رجوع</a>
 @endsection
 
 @push('scripts')
