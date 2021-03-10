@@ -6,10 +6,9 @@
         @media print  {
             @page {
                 /*size: 5mm 15mm;*/
-                margin: 0;
+                margin: auto;
             }
         }
-
         .span-style 
         {
             margin-left: 5px;
@@ -25,14 +24,8 @@
 @endpush
 @section('content')
     @foreach($products as $product)
-    <div style="page-break-after: always;margin:auto;" class = "page">
-        <div style = "margin-left: 80px;"> 
-            <span class = "span-style">{{$product->size->name}}</span>
-            <span class = "span-style">{{$product->material->mq_r_code}}</span>
-            <span class = "span-style">{{$product->productType->name}}</span>
-        </div>
-
-        <img src = "{{asset(DNS1D::getBarcodePNGPath($product->prod_code, 'C128' , 1.4 , 22 , array(0 , 0 , 0) , true))}}">
+    <div style="page-break-after: always;margin:0;" class = "page">
+        <img src = "{{asset(DNS1D::getBarcodePNGPath($product->material->barcode, 'C128' , 1.4 , 22 , array(0 , 0 , 0) , true))}}">
         {{--{!! DNS1D::getBarcodeHTML($product->prod_code, 'C39',1,50,'black', true) !!}--}}
     </div>
     @endforeach

@@ -23,7 +23,8 @@ class Material extends Model
         'description',
         'color',
         'created_by',
-        'number_of_vestments'
+        'number_of_vestments',
+        'barcode'
     ];
 
     /**

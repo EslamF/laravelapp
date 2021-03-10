@@ -272,6 +272,14 @@ class ProductController extends Controller
         return view('dashboard.products.product.print' , compact('products'));
     }
 
+    public function print_material_barcode($id)
+    {
+        $ids = [];
+        array_push($ids , $id);
+        $products = Product::whereIn('id' , $ids)->select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->get();
+        return view('dashboard.products.product.print_material_barcode' , compact('products'));
+    }
+
     public function delete_all_products()
     {
         Product::query()->delete();

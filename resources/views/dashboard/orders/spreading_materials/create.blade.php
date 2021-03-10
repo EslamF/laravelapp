@@ -67,6 +67,22 @@
 
                         
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for = "material_barcode">باركود الخامة</label> 
+                                <span style="color:red">@{{material_barcode_error}}</span>
+                                <input class = "form-control" @keyup.enter="findMaterial" type = "text" v-model = "material_barcode" placeholder="الباركود">
+                                @error('material_barcode')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -130,7 +146,9 @@
             button: false,
             material_code: '',
             error: '',
-            have_error: false
+            have_error: false,
+            material_barcode: '',
+            material_barcode_error: ''
         },
         mounted() {
             //this.loader();
@@ -158,6 +176,28 @@
 
                     });
             },
+            findMaterial() {
+
+                axios.get('{{url("orders/receiving-material/getMaterialData")}}' + '/' + this.material_barcode)
+                    .then(res => {
+                        if(res.data != 'error')
+                        {
+                            //this.material_code = res.data.id;
+                            $("select[name='material_id']").val(res.data.id);
+                            this.checkWeight();
+                            this.material_barcode = '';
+                            this.material_barcode_error = '';
+                        }
+                        else 
+                        {
+                            this.material_barcode_error = 'الخامة غير موجودة';
+                        }
+                        //this.material_code = res.data.weight;
+                    })
+                    .catch(err => {
+
+                    });
+            }, 
             submitForm() {
                 this.button = true;
                 this.have_error = false;

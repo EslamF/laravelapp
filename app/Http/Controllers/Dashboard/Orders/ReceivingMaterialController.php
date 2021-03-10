@@ -23,7 +23,8 @@ class ReceivingMaterialController extends Controller
             'weight' => 'requiredIf:type,material',
             'bill_number' => 'required',
             'color' => 'requiredIf:type,material',
-            'number_of_vestments' => 'requiredIf:type,material|integer'
+            'number_of_vestments' => 'requiredIf:type,material|integer',
+            //'barcode'   => ''
         ]);
 
         $request_data = [];
@@ -41,6 +42,11 @@ class ReceivingMaterialController extends Controller
         if($old_material && $request->type == 'material' )
         {
             $old_material->weight = $old_material->weight + $request->weight;
+
+            if(!$old_material->barcode)
+            {
+                $old_material->barcode = $this->generateBarcode();
+            }
             $old_material->save();
 
             $old_material->update([
@@ -56,6 +62,10 @@ class ReceivingMaterialController extends Controller
         else if($old_material && $request->type == 'accessory')
         {
             $old_material->qty = $old_material->qty + $request->qty;
+            if(!$old_material->barcode)
+            {
+                $old_material->barcode = $this->generateBarcode();
+            }
             $old_material->save();
 
             $old_material->update([
@@ -66,7 +76,9 @@ class ReceivingMaterialController extends Controller
         }
         else 
         {
-            Material::create($request_data);
+            $material = Material::create($request_data);
+            $material->barcode = $this->generateBarcode();
+            $material->save();
         }
         
         return redirect()->route('order.receiving.material')->with('success' , __('words.added_successfully'));
@@ -139,7 +151,6 @@ class ReceivingMaterialController extends Controller
             'qty'   => 'requiredIf:type,accessory' ,
             'type'  => 'required|in:material,accessory',
             'number_of_vestments' => 'requiredIf:type,material|integer'
-
         ]);
 
         Material::find($request->material_id)->update($request->all());
@@ -162,9 +173,10 @@ class ReceivingMaterialController extends Controller
         return response()->json($material, 200);
     }
 
-    public function getMaterialData($mq_r_code)
+    public function getMaterialData($mq_r_code) 
     {
-        $material = Material::where('mq_r_code' , $mq_r_code)->first();
+        $material = Material::where('mq_r_code' , $mq_r_code)
+                              ->orWhere('barcode' , $mq_r_code)->first();
         if($material)
         {
             return response()->json($material , 200);
@@ -173,6 +185,17 @@ class ReceivingMaterialController extends Controller
         else 
         {
             return response()->json('error' , 200);
+        }
+    }
+
+    public function generateBarcode()
+    {
+        $code = rand(0, 6000000000000);
+        $check = Material::where('barcode', $code)->exists();
+        if ($check) {
+            $this->generateBarcode();
+        } else {
+            return $code;
         }
     }
 }
