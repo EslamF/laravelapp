@@ -80,8 +80,9 @@ class ReceivingMaterialController extends Controller
             $material->barcode = $this->generateBarcode();
             $material->save();
         }
-        
-        return redirect()->route('order.receiving.material')->with('success' , __('words.added_successfully'));
+        $material = $material ?? $old_material;
+        return view('dashboard.orders.receiving_materials.print' , compact('material'));
+        //return redirect()->route('order.receiving.material')->with('success' , __('words.added_successfully'));
     }
 
     public function createPage()

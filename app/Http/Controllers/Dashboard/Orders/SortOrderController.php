@@ -28,7 +28,7 @@ class SortOrderController extends Controller
 
         $request->merge([
             'code' => $this->generateCode(),
-            'user_id' => User::first()->id
+            /*'user_id' => User::first()->id*/
         ]);
 
         $order = SortOrder::create($request->all());
