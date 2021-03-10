@@ -20,6 +20,7 @@
                                 <th>النوع</th>
                                 <th>كود الخامة</th>
                                 <th>الوزن</th>
+                                <th>إختيارات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,6 +37,10 @@
                                 </td>
                                 <td>{{$value->material->mq_r_code}}</td>
                                 <td>{{$value->weight}}</td>
+                                <td>
+                                    <button type="submit" @click="deleteItem({{$value->id}})" class="btn btn-danger" {{ Laratrust::isAbleTo('delete-spreading-order') ? '' : 'disabled' }} >حذف</button>
+                                    {{--<a class = "btn btn-danger" href = "{{route('spreading.material.delete' , $value->id)}}">حذف</a>--}}
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -54,4 +59,47 @@
         <!-- /.card -->
     </div>
 </div>
+@endsection
+
+@section('footer-script')
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+
+        methods: {
+            deleteItem(id) {
+                swal({
+                        title: "هل انت متأكد؟",
+                        text: "سيتم حذف جميع المنتجات والأذونات الناتجة من إذن الفرش ",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.spreading_id = id
+                            axios.post("{{Route('spreading.material.delete')}}", data)
+                                .then(res => {
+                                    swal("تم الحذف بنجاح", {
+                                        icon: "success",
+                                    });
+                                    window.location.reload();
+                                }).catch(err => {
+
+                                });
+
+                        }
+                    });
+
+            }
+        }
+
+    })
+</script>
 @endsection
