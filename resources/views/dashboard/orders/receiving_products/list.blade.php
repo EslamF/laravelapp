@@ -19,7 +19,7 @@
                                 <th>إذن اتصنيع</th>
                                 <th>تاريخ الإستلام</th>
                                 <th>حالة الإذن</th>
-                                <th>الالخيارات</th>
+                                <th>الاختيارات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,6 +31,7 @@
                                 <td>{{substr($value->created_at,0,10)}}</td>
                                 <td>{{$value->status == 1 ? "Approved":"Not Approved"}}</td>
                                 <td>
+                                    <a class = "btn btn-info {{ $value->status == 1 ? 'disabled' : ''  }}" href = "{{route('receiving_product.receive_products_after_printing_view' , $value->id)}}" >إستلام</a>
                                     <button type="button" @click="deleteItem({{$value->id}})" class="btn btn-danger" {{ Laratrust::isAbleTo('delete-receiving-product') ? '' : 'disabled' }} >حذف</button>
                                 </td>
                             </tr>

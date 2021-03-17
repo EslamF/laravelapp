@@ -82,7 +82,13 @@ class ReceivingProductController extends Controller
         ]);
 
         Product::where('receiving_order_id' , $request->receiving_id)->update(['received' => 0 , 'receiving_order_id' => null]);
-        ReceivingOrder::find($request->receiving_id)->delete();
+        
+        $receiving_order = ReceivingOrder::find($request->receiving_id);
+        if($receiving_order->produceOrder->status == 1)
+        {
+            $receiving_order->produceOrder->update(['status' => 0]);
+        }
+        $receiving_order->delete();
         Session::flash('success',  __('words.deleted_successfully') );
         return redirect()->route('receiving.product.list');
     }
@@ -161,15 +167,12 @@ class ReceivingProductController extends Controller
 
     public function changeStatus(Request $request)
     {
-        //return $request->products ;
-       
         $receiveOrder = ReceivingOrder::updateOrCreate(['produce_order_id' => $request->produce_order_id], $request->all());
         if ($request->products) 
         {
             foreach ($request->products as $product) {
 
                 $required_quantity = (int)$product['required'];
-                //return (int)$product['required'];
                 //delete the previous data
                 $data = Product::where( 'produce_code' , $product['produce_code'] )
                                 ->where( 'produce_order_id' , $request->produce_order_id ) 
@@ -200,10 +203,7 @@ class ReceivingProductController extends Controller
 
         
         $check = Product::where('produce_order_id' , $request->produce_order_id )->where('received' , 0)->exists();
-        /*$check = ReceivingOrder::whereHas('products', function ($q) {
-            $q->where('received', 0);
-        })->first();*/
-
+       
         if ($check) 
         {
 
@@ -220,6 +220,103 @@ class ReceivingProductController extends Controller
 
         Session::flash('success',  __('words.added_successfully') );
         return response()->json('success', 200);
+    }
+
+    public function print_products(Request $request)
+    {
+        //$receiveOrder = ReceivingOrder::updateOrCreate(['produce_order_id' => $request->produce_order_id], $request->all());
+        $receiveOrder = ReceivingOrder::create(['produce_order_id' => $request->produce_order_id , 'status' => 0], $request->all());
+        $arr = [];
+        if ($request->products) 
+        {
+            foreach ($request->products as $product) 
+            {
+                $required_quantity = (int)$product['required'];
+                $ids = Product::where( 'produce_code' , $product['produce_code'] )
+                                ->where( 'produce_order_id' , $request->produce_order_id )
+                                ->where('received' , 0)
+                                ->take($required_quantity)
+                                ->pluck('id')
+                                ->toArray();
+                foreach($ids as $id)
+                {
+                    array_push($arr , $id);
+                }
+                
+            }
+
+            $products = Product::whereIn('id' , $arr)->get();
+            foreach($products as $product)
+            {
+                $product->update(['receiving_order_id' => $receiveOrder->id]);
+            }
+
+            if(empty($arr))
+            {
+                $receiveOrder->delete();
+            }
+           return $arr;
+        }
+    }
+
+    public function receive_products_after_printing_view($id)
+    {
+        $receiveOrder = ReceivingOrder::findOrFail($id);
+        $receiving_order_id = $receiveOrder->id;
+        $number_of_products = Product::where('receiving_order_id' , $receiving_order_id)
+                                        ->where('received' , 0)
+                                        ->count();
+        return view('dashboard.orders.receiving_products.after-printing' , compact('receiving_order_id' , 'number_of_products') );
+    }
+
+    public function receive_products_after_printing(Request $request) 
+    {
+        //request data : receving_order_id , ids
+        $receiveOrder = ReceivingOrder::find($request->receiving_order_id);
+        $produce_order = ProduceOrder::where('id' , $receiveOrder->produce_order_id)->first();
+        $products = Product::whereIn('id' , $request->ids)
+                            ->where('receiving_order_id' , $receiveOrder->id)
+                            ->where('received' , 0)
+                            ->get();
+        //return $products;
+        //update the products to be received
+        foreach($products as $product)
+        {
+            $product->update(['received' => 1]);
+        }
+        //update the recevied order to be done(status: 1)
+        $receiveOrder->update(['status' => 1]);
+        //update the status of produce order if all products received
+        $check = Product::where('produce_order_id' , $receiveOrder->produce_order_id )->where('received' , 0)->exists();
+        if ($check) 
+        {
+            $produce_order->update(['status' => 0]);
+        } 
+        else 
+        {
+            $produce_order->update(['status' => 1]);
+        }
+
+        Session::flash('success',  __('words.added_successfully') );
+        return response()->json('success', 200);
+    }
+
+    public function check_product_before_received(Request $request)
+    {
+        // request has prod_code , receiving_order_id
+        $product = Product::with('productType:id,name', 'size:id,name' , 'material')
+                        ->where('prod_code' , $request->prod_code)
+                        ->where('receiving_order_id' , $request->receiving_order_id)
+                        ->where('received' , 0)
+                        ->first();
+        if($product)
+        {
+            return response()->json($product , 200);
+        }
+        else 
+        {
+            return response()->json('error' , 200); 
+        }
     }
 
     public function getAll()

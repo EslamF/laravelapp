@@ -9,7 +9,7 @@
             @include('includes.loading')
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" action="{{Route('receiving.product.store')}}" method="POST">
+            <form role="form" action="{{Route('receiving_product.print_products')}}" method="POST" id = "submit_form">
                 @csrf
                 <div class="card-body">
                     <div class="row">
@@ -62,7 +62,8 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="button" id = "btnSubmit" @click="goToProduceOrderList()" class="btn btn-primary">Approve</button>
+                    {{--<button type="button" id = "btnSubmit" @click="goToProduceOrderList()" class="btn btn-primary">Approve</button>--}}
+                    <button type="button" id = "btnSubmit" @click="printProducts()" class="btn btn-primary">Print</button>
                 </div>
             </form>
         </div>

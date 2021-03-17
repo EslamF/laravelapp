@@ -189,6 +189,12 @@ class ReceivingMaterialController extends Controller
         }
     }
 
+    public function print($id)
+    {
+        $material = Material::findOrFail($id);
+        return view('dashboard.orders.receiving_materials.print' , compact('material'));
+    }
+
     public function generateBarcode()
     {
         $code = rand(0, 6000000000000);

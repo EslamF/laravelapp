@@ -13,7 +13,7 @@ use Carbon\Carbon;
 
 class ProduceOrder extends Model
 {
-    protected $fillable = ['cutting_order_id', 'factory_id', 'receiving_date' , 'out_date' , 'can_edit'];
+    protected $fillable = ['cutting_order_id', 'factory_id', 'receiving_date' , 'out_date' , 'status' , 'can_edit'];
 
     /**
      * 

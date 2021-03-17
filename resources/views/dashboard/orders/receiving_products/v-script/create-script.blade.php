@@ -46,11 +46,103 @@
 
                 });
             },
+
+            printProducts() {
+
+                this.validateAll();
+                console.log(this.products);
+                if (!this.have_error) 
+                {
+                    // pop message when we not recieve all the products
+                    var all_count = 0;
+                    var all_received = 0;
+                    var all_not_received = 0;
+                    var all_required = 0;
+
+                    $.each(this.products, function(index, product) {
+                        all_count+= parseInt(product.count) ;
+                        all_received+= parseInt(product.number_of_received) ;
+                        all_not_received+= parseInt(product.number_of_not_received) ;
+                        all_required+= parseInt(product.required) ;
+                    });
+                    
+                    all_count = parseInt(all_count);
+                    all_not_received = parseInt(all_not_received);
+                    all_required = parseInt(all_required);
+
+                    if(all_required != all_not_received)
+                    {
+                        swal({
+                            title: "هل انت متأكد؟",
+                            text: "أنت لم تستلم كل المنتجات التابعة لإذن التصنيع ! ",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                        .then((sure) => {
+                            if (sure) {
+                                $("#btnSubmit").attr("disabled", true);
+                                document.getElementById('loader').style.display = 'block';
+                                var data = {};
+                                data.produce_order_id = this.produce_order_id;
+                                data.products = this.products;
+                                console.log(data);
+                                const metas = document.getElementsByTagName('meta');
+                                axios.defaults.headers = {
+                                    'Content-Type': 'application/json',
+                                    'Access-Control-Allow-Origin': '*',
+                                    'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
+                                };
+                                axios.post('{{route("receiving_product.print_products")}}', data).then(res => {
+                                    var products = res.data;
+                                    var url = "{{Route('product.print_products' , ':ids' )}}";
+                                    url = url.replace(':ids' , JSON.stringify(products));
+
+                                    window.location.href = url; ;
+                                    //window.location.href = "{{Route('receiving_product.print_products')}}";
+                                }).catch(err => {
+
+                                });
+                  
+                            }
+                        });
+                    }
+
+                    else 
+                    {
+                        $("#btnSubmit").attr("disabled", true);
+                        document.getElementById('loader').style.display = 'block';
+                        var data = {};
+                        data.produce_order_id = this.produce_order_id;
+                        data.products = this.products;
+                        //console.log(data);
+                        const metas = document.getElementsByTagName('meta');
+                        axios.defaults.headers = {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',
+                            'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
+                        };
+                        axios.post('{{route("receiving_product.print_products")}}', data).then(res => {
+                                    var products = res.data;
+                                    var url = "{{Route('product.print_products' , ':ids' )}}";
+                                    url = url.replace(':ids' , JSON.stringify(products));
+
+                                    window.location.href = url; ;
+                        }).catch(err => {
+
+                        });
+                    }
+
+
+                    
+                }
+
+            },
+
             goToProduceOrderList() {
                 this.validateAll();
                 if (!this.have_error) 
                 {
-
                     // pop message when we not recieve all the products
                     var all_count = 0;
                     var all_received = 0;
@@ -150,7 +242,7 @@
 
                 $.each(this.products, function(index, product) {
                     product.err = '';
-                    if (product.count < product.required) 
+                    if (product.number_of_not_received < product.required) 
                     {
                         console.log('You cant use this amount');
                         product.err = "You can't use this amount";

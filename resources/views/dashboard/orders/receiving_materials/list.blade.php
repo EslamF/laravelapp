@@ -40,6 +40,7 @@
                                     <td>{{$material->buyer->name}}</td>
                                     <td>
                                         <a href="{{Route('receiving.material.edit_page', $material->id)}}" class="btn btn-primary {{ Laratrust::isAbleTo('edit-receiving-material') ? '' : 'disabled' }}" >تعديل</a>
+                                        <a href="{{Route('receiving.material.print', $material->id)}}" class="btn btn-info {{ Laratrust::isAbleTo('edit-receiving-material') ? '' : 'disabled' }}" >طباعة</a>
                                         <button type="submit" @click="deleteItem({{$material->id}})" class="btn btn-danger" {{ Laratrust::isAbleTo('delete-receiving-material') ? '' : 'disabled' }} >حذف</button>
                                     </td>
                             </tr>

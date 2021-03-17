@@ -192,6 +192,7 @@ Route::group([
                 Route::post('delete', 'ReceivingMaterialController@delete')->name('receiving.material.delete');
                 Route::get('check-weight/{material_code}', 'ReceivingMaterialController@checkWeight');
                 Route::get('getMaterialData/{material_code}', 'ReceivingMaterialController@getMaterialData');
+                Route::get('print/{id}', 'ReceivingMaterialController@print')->name('receiving.material.print');
             });
 
             Route::group([
@@ -267,6 +268,10 @@ Route::group([
                 Route::post('update', 'ReceivingProductController@update')->name('receiving.product.update');
                 Route::post('delete', 'ReceivingProductController@delete')->name('receiving.product.delete');
                 Route::post('change-status', 'ReceivingProductController@approveOrUnapprove')->name('receiving_product.change_status');
+                Route::post('print_products', 'ReceivingProductController@print_products')->name('receiving_product.print_products');
+                Route::post('receive_products_after_printing', 'ReceivingProductController@receive_products_after_printing')->name('receiving_product.receive_products_after_printing');
+                Route::post('check_product_before_received', 'ReceivingProductController@check_product_before_received')->name('receiving_product.check_product_before_received');
+                Route::get('receive_products_after_printing_view/{id}', 'ReceivingProductController@receive_products_after_printing_view')->name('receiving_product.receive_products_after_printing_view');
             });
 
             Route::group([
@@ -416,6 +421,7 @@ Route::group([
             Route::post('update', 'ProductController@update')->name('product.update');
             Route::post('delete', 'ProductController@delete')->name('product.delete');
             Route::get('print/{id}', 'ProductController@print')->name('product.print');
+            Route::get('print_products/{ids}', 'ProductController@print_products')->name('product.print_products');
             Route::get('print_material_barcode/{id}', 'ProductController@print_material_barcode')->name('product.print_material_barcode');
             Route::post('delete_all_products' , 'ProductController@delete_all_products')->name('product.delete_all_products');
             Route::get('import_sheet_excel_view' , 'ProductController@import_sheet_excel_view' )->name('product.import_sheet_excel_view');

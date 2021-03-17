@@ -269,6 +269,7 @@ class ProductController extends Controller
         $ids = [];
         array_push($ids , $id);
         $products = Product::whereIn('id' , $ids)->select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->get();
+        //return view('dashboard.products.product.print' , compact('products'));
         return view('dashboard.products.product.print' , compact('products'));
     }
 
@@ -303,5 +304,17 @@ class ProductController extends Controller
         Excel::import(new Products2Import, $request->file);
 
         return redirect()->route('product.list')->with('success' , __('words.added_successfully') );
+    }
+
+    public function print_products($ids)
+    {
+        //return $ids;
+        $ids = json_decode($ids , true);
+        //$ids = $ids[0];
+        //return $ids[0];
+        $products = Product::select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->whereIn('id' , $ids)->get();
+        //return $products;
+       
+        return view('dashboard.products.product.print' , compact('products'));
     }
 }
