@@ -4,36 +4,47 @@
 @push('styles')
     <style>
         @media print  {
-            @page {
-                /*size: 5mm 15mm;*/
+            * 
+            {
                 margin: 0;
+            }
+            @page {
+                size: 38mm 25mm;
+               
+                /*size: A4 landscape;*/
+
             }
         }
 
         .span-style 
         {
             margin-left: 5px;
-            font-size: 0.5em;
+            font-size: 5pt;
+            font-family: 'Times New Roman', Times, serif;
         }
 
         footer 
         {
             display: none;
         }
+
+
     
     </style>
 @endpush
 @section('content')
     @foreach($products as $product)
-    <div style="page-break-after: always;margin:auto;" class = "page">
-        <div style = "margin-left: 80px;"> 
+    <div style="page-break-after: always;margin-bottom:10px;" class = "page">
+        <div> 
             <span class = "span-style">{{$product->size->name}}</span>
             <span class = "span-style">{{$product->material->mq_r_code}}</span>
             <span class = "span-style">{{$product->productType->name}}</span>
         </div>
 
-        <img src = "{{asset(DNS1D::getBarcodePNGPath($product->prod_code, 'C128' , 1.4 , 22 , array(0 , 0 , 0) , true))}}">
-        {{--{!! DNS1D::getBarcodeHTML($product->prod_code, 'C39',1,50,'black', true) !!}--}}
+        <div>
+            {{--<img src = "{{asset(DNS1D::getBarcodePNGPath($product->prod_code, 'C39+' , 0.7 , 40 , array(0 , 0 , 0) , true))}}">--}}
+            {!! DNS1D::getBarcodeSVG($product->prod_code, 'C39+',0.7,40,'black', true) !!}
+        </div>
     </div>
     @endforeach
 @endsection
