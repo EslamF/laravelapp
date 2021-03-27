@@ -19,7 +19,7 @@
         .span-style 
         {
             margin-left: 5px;
-            font-size: 5pt;
+            font-size: 12pt;
             font-family: 'Times New Roman', Times, serif;
         }
 
