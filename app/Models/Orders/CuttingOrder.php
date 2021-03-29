@@ -109,4 +109,5 @@ class CuttingOrder extends Model
             return '';
         }
     }
+  
 }

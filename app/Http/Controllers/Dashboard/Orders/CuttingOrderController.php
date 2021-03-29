@@ -97,7 +97,7 @@ class CuttingOrderController extends Controller
     }
     public function getAll()
     {
-        $cutting_orders_ids = CuttingOrder::with('cuttinguser')->select('id' , 'user_id' , 'created_at')->get()->filter( function($order) {
+        $cutting_orders_ids = CuttingOrder::with('cuttinguser' , 'factory' ,'spreadingOutMaterialOrder','spreadingOutMaterialOrder.spreadinguser' , 'spreadingOutMaterialOrder.factory')->select('id' , 'user_id' , 'created_at' , 'spreading_out_material_order_id')->get()->filter( function($order) {
             return $order->status == 'current' ;
 
         } ) ;

@@ -21,7 +21,14 @@
                                 <span style="color:red" v-if="error.cutting_order_id">*@{{error.cutting_order_id}}</span>
                                 <select class="form-control" @change="getFactoryByCuttingId(cutting_order_id)" v-model="cutting_order_id">
                                     <option value="" disabled selected>اختر إذن القص</option> 
-                                    <option :value="order.id" v-for="order in cutting_orders">@{{order.id + ' - ' + (order.cuttinguser ? order.cuttinguser.name : '') + ' - ' + order.created_at}}</option>
+                                    <option :value="order.id" v-for="order in cutting_orders">
+                                        @{{ 
+                                            'إذن القص : ' +  (order.cuttinguser ? order.cuttinguser.name :  (order.factory ? order.factory.name : '') ) + ' - ' + order.created_at + 
+                                            ' إذن الفرش : ' +  (order.spreading_out_material_order.spreadinguser ? order.spreading_out_material_order.spreadinguser.name :  (order.spreading_out_material_order.factory ? order.spreading_out_material_order.factory.name : '') ) + ' - ' + order.spreading_out_material_order.created_at
+                                        }}
+                                    
+                                    </option>
+                                    <option :value="order.id" v-for="order in cutting_orders">@{{order.details}}</option>
                                 </select>
                                 @error('cutting_order_id')
                                 <p class="help is-danger">
