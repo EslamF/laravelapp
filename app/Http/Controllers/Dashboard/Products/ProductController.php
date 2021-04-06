@@ -19,6 +19,7 @@ use App\Models\Organization\Factory;
 use App\Models\Orders\BuyOrder;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Products2Import;
+use DateTime;
 
 class ProductController extends Controller
 {
@@ -83,17 +84,17 @@ class ProductController extends Controller
             ->where('size_id', $request->size_id)
             ->where('material_id', $request->material_id)
             ->first();
-        $produce_code = $product->produce_code ?? $this->generateOrderCode();
+        $produce_code = $product->produce_code ?? $this->generateEANOrderCode();
 
 
         $product_material_code = Product::where('product_type_id' , $request->product_type_id)
                                         ->where('material_id' , $request->material_id)
                                         ->first();
-        $material_code = $product_material_code->product_material_code ?? $this->generateProductMaterialCode();
+        $material_code = $product_material_code->product_material_code ?? $this->generateEANProductMaterialCode();
         
 
         $save_order = SaveOrder::create([
-            'code' => $this->generateOrderCode(),
+            'code' => $this->generateEANOrderCode(),
             'stored' => 1
         ]);
 
@@ -221,6 +222,27 @@ class ProductController extends Controller
         }
     }
 
+    public function generateEANOrderCode()
+    {
+        $date = new DateTime();
+        $time = $date->getTimestamp();
+        $code = '20' . str_pad($time, 10, '0');
+        $weightflag = true;
+        $sum = 0;
+        for ($i = strlen($code) - 1; $i >= 0; $i--) {
+            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+            $weightflag = !$weightflag;
+        }
+        $code .= (10 - ($sum % 10)) % 10;
+
+        $check = Product::where('produce_code', $code)->exists();
+        if ($check) {
+            $this->generateEANOrderCode();
+        } else {
+            return $code;
+        }
+    }
+
     public function generateCode()
     {
         $code = rand(0, 6000000000000);
@@ -232,24 +254,84 @@ class ProductController extends Controller
         }
     }
 
+    public function generateEANCode()
+    {
+        $date = new DateTime();
+        $time = $date->getTimestamp();
+        $code = '20' . str_pad($time, 10, '0');
+        $weightflag = true;
+        $sum = 0;
+        for ($i = strlen($code) - 1; $i >= 0; $i--) {
+            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+            $weightflag = !$weightflag;
+        }
+        $code .= (10 - ($sum % 10)) % 10;
+
+        $check = Product::where('prod_code', $code)->exists();
+        if ($check) {
+            $this->generateEANCode();
+        } else {
+            return $code;
+        }
+    }
+
     public function genrateCodeNotInArray($array)
     {
-        $code = rand(0, 6000000000000);
+        $date = new DateTime();
+        $time = $date->getTimestamp();
+        $code = '20' . str_pad($time, 10, '0');
+        $weightflag = true;
+        $sum = 0;
+        for ($i = strlen($code) - 1; $i >= 0; $i--) {
+            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+            $weightflag = !$weightflag;
+        }
+        $code .= (10 - ($sum % 10)) % 10;
+
         $check = Product::where('prod_code', $code)->exists();
         if ($check) 
         {
-            $this->genrateCodeNotInArray();
+            $this->genrateCodeNotInArray($array);
         } else 
         {
             if(in_array($code , $array))
             {
-                $this->genrateCodeNotInArray();
+                $this->genrateCodeNotInArray($array);
             }
             else 
             {
                 return $code;
             }
-            
+        }
+    }
+
+    public function generateEANCodeNotInArray($array)
+    {
+        $date = new DateTime();
+        $time = $date->getTimestamp();
+        $code = '20' . str_pad($time, 10, '0');
+        $weightflag = true;
+        $sum = 0;
+        for ($i = strlen($code) - 1; $i >= 0; $i--) {
+            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+            $weightflag = !$weightflag;
+        }
+        $code .= (10 - ($sum % 10)) % 10;
+
+        $check = Product::where('prod_code', $code)->exists();
+        if ($check) 
+        {
+            $this->generateEANCodeNotInArray();
+        } else 
+        {
+            if(in_array($code , $array))
+            {
+                $this->generateEANCodeNotInArray();
+            }
+            else 
+            {
+                return $code;
+            }
         }
     }
 
@@ -259,6 +341,27 @@ class ProductController extends Controller
         $check = Product::where('product_material_code', $code)->exists();
         if ($check) {
             $this->generateProductMaterialCode();
+        } else {
+            return $code;
+        }
+    }
+
+    public function generateEANProductMaterialCode()
+    {
+        $date = new DateTime();
+        $time = $date->getTimestamp();
+        $code = '20' . str_pad($time, 10, '0');
+        $weightflag = true;
+        $sum = 0;
+        for ($i = strlen($code) - 1; $i >= 0; $i--) {
+            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+            $weightflag = !$weightflag;
+        }
+        $code .= (10 - ($sum % 10)) % 10;
+
+        $check = Product::where('product_material_code', $code)->exists();
+        if ($check) {
+            $this->generateEANProductMaterialCode();
         } else {
             return $code;
         }
@@ -275,10 +378,13 @@ class ProductController extends Controller
 
     public function print_material_barcode($id)
     {
-        $ids = [];
+        /*$ids = [];
         array_push($ids , $id);
         $products = Product::whereIn('id' , $ids)->select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->get();
-        return view('dashboard.products.product.print_material_barcode' , compact('products'));
+        return view('dashboard.products.product.print_material_barcode' , compact('products'));*/
+        $product = Product::findOrFail($id);
+        $material = $product->material;
+        return view('dashboard.orders.receiving_materials.print' , compact('material'));
     }
 
     public function delete_all_products()
@@ -317,4 +423,6 @@ class ProductController extends Controller
        
         return view('dashboard.products.product.print' , compact('products'));
     }
+
+    
 }

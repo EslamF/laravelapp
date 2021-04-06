@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Orders\BuyOrder;
 use App\Models\Products\Product;
+use Illuminate\Support\Facades\Log;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,8 +16,35 @@ use App\Models\Products\Product;
 |
 */
 
+function generateEANCode()
+{
+    $date = new DateTime();
+    $time = $date->getTimestamp();
+    $code = '20' . str_pad($time, 10, '0');
+    $weightflag = true;
+    $sum = 0;
+    for ($i = strlen($code) - 1; $i >= 0; $i--) {
+        $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+        $weightflag = !$weightflag;
+    }
+    $code .= (10 - ($sum % 10)) % 10;
+    Log::info('code ' . $code);
+
+    $check = Product::where('prod_code', $code)->exists();
+    if ($check) {
+        $this->generateEANCode();
+    } else {
+        return $code;
+    }
+
+}
+
 Route::get('test' , function(){
-    return Product::select('id' , 'prod_code')->take(5)->get();
+
+        Log::info('generate ean code');
+        echo generateEANCode();
+
+    //return Product::select('id' , 'prod_code')->take(5)->get();
     //return BuyOrder::with('buyOrderProducts')->where('bar_code' , "X624")->first();
     //return BuyOrder::doesntHave('buyOrderProducts')->get();
 });

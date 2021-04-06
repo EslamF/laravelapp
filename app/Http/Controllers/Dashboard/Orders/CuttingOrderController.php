@@ -15,6 +15,8 @@ use App\Models\Products\Product;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use stdClass ;
+use DateTime;
+use Illuminate\Support\Facades\Log;
 
 class CuttingOrderController extends Controller
 {
@@ -163,14 +165,14 @@ class CuttingOrderController extends Controller
                         ->first();
 
                     Product::create([
-                        'prod_code' => $this->generateCode(),
+                        'prod_code' => $this->generateEANCode() ?? $this->generateEANCode() ,
                         'cutting_order_id' => $order->id,
                         'damage_type' => 'pending',
                         'material_id' => $material->id,
                         'product_type_id' => $item['product_type_id'],
                         'size_id' => $item['size_id'],
-                        'produce_code' => $product->produce_code ?? $this->generateOrderCode() ,
-                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
+                        'produce_code' => $product->produce_code ?? ($this->generateEANOrderCode() ?? $this->generateEANOrderCode()) ,
+                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateEANProductMaterialCode()
                     ]);
                     $count--;
                 }
@@ -218,14 +220,14 @@ class CuttingOrderController extends Controller
 
                 while ($count > 0) {
                     Product::create([
-                        'prod_code' => $this->generateCode(),
+                        'prod_code' => $this->generateEANCode(),
                         'cutting_order_id' => $order->id,
                         'damage_type' => 'pending',
                         'material_id' => $material->id,
                         'product_type_id' => $item['product_type_id'],
                         'size_id' => $item['size_id'],
-                        'produce_code' => $product->produce_code ?? $this->generateOrderCode() ,
-                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
+                        'produce_code' => $product->produce_code ?? $this->generateEANOrderCode() ,
+                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateEANProductMaterialCode()
                     ]);
                     $count--;
                 }
@@ -354,14 +356,14 @@ class CuttingOrderController extends Controller
                         ->first();
 
                     Product::create([
-                        'prod_code' => $this->generateCode(),
+                        'prod_code' => $this->generateEANCode(),
                         'cutting_order_id' => $cutting_order->id,
                         'damage_type' => 'pending',
                         'material_id' => $material->id,
                         'product_type_id' => $item['product_type_id'],
                         'size_id' => $item['size_id'],
-                        'produce_code' => $product->produce_code ?? $this->generateOrderCode() ,
-                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
+                        'produce_code' => $product->produce_code ?? $this->generateEANOrderCode() ,
+                        'product_material_code' => $product_material_code->product_material_code ?? $this->generateEANProductMaterialCode()
                     ]);
                     $count--;
                 }
@@ -436,6 +438,30 @@ class CuttingOrderController extends Controller
         }
     }
 
+    public function generateEANCode()
+    {
+        Log::info('generate ean code');
+        $date = new DateTime();
+        $time = $date->getTimestamp();
+        $code = '20' . str_pad($time, 10, '0');
+        $weightflag = true;
+        $sum = 0;
+        for ($i = strlen($code) - 1; $i >= 0; $i--) {
+            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+            $weightflag = !$weightflag;
+        }
+        $code .= (10 - ($sum % 10)) % 10;
+        Log::info('code ' . $code);
+
+        $check = Product::where('prod_code', $code)->exists();
+        if ($check || !$code) {
+            $this->generateEANCode();
+        } else {
+            return $code;
+        }
+    }
+    
+
     public function generateOrderCode()
     {
         $code = rand(0, 6000000000000);
@@ -447,12 +473,54 @@ class CuttingOrderController extends Controller
         }
     }
 
+    public function generateEANOrderCode()
+    {
+        $date = new DateTime();
+        $time = $date->getTimestamp();
+        $code = '20' . str_pad($time, 10, '0');
+        $weightflag = true;
+        $sum = 0;
+        for ($i = strlen($code) - 1; $i >= 0; $i--) {
+            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+            $weightflag = !$weightflag;
+        }
+        $code .= (10 - ($sum % 10)) % 10;
+
+        $check = Product::where('produce_code', $code)->exists();
+        if ($check) {
+            $this->generateEANOrderCode();
+        } else {
+            return $code;
+        }
+    }
+
     public function generateProductMaterialCode()
     {
         $code = rand(0, 6000000000000);
         $check = Product::where('product_material_code', $code)->exists();
         if ($check) {
             $this->generateProductMaterialCode();
+        } else {
+            return $code;
+        }
+    }
+
+    public function generateEANProductMaterialCode()
+    {
+        $date = new DateTime();
+        $time = $date->getTimestamp();
+        $code = '20' . str_pad($time, 10, '0');
+        $weightflag = true;
+        $sum = 0;
+        for ($i = strlen($code) - 1; $i >= 0; $i--) {
+            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
+            $weightflag = !$weightflag;
+        }
+        $code .= (10 - ($sum % 10)) % 10;
+
+        $check = Product::where('product_material_code', $code)->exists();
+        if ($check) {
+            $this->generateEANProductMaterialCode();
         } else {
             return $code;
         }
@@ -570,14 +638,14 @@ class CuttingOrderController extends Controller
                     ->first();
 
                 Product::create([
-                    'prod_code' => $this->generateCode(),
+                    'prod_code' => $this->generateEANCode(),
                     'cutting_order_id' => $request->cutting_order_id,
                     'damage_type' => 'pending',
                     'material_id' => $material->id,
                     'product_type_id' => $product['type'],
                     'size_id' => $product['size'],
-                    'produce_code' => $item->produce_code ?? $this->generateOrderCode() , 
-                    'product_material_code' => $product_material_code->product_material_code ?? $this->generateProductMaterialCode()
+                    'produce_code' => $item->produce_code ?? $this->generateEANOrderCode() , 
+                    'product_material_code' => $product_material_code->product_material_code ?? $this->generateEANProductMaterialCode()
                 ]);
                 $count--;
             }
