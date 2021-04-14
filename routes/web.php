@@ -15,39 +15,6 @@ use Illuminate\Support\Facades\Log;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-function generateEANCode()
-{
-    $date = new DateTime();
-    $time = $date->getTimestamp();
-    $code = '20' . str_pad($time, 10, '0');
-    $weightflag = true;
-    $sum = 0;
-    for ($i = strlen($code) - 1; $i >= 0; $i--) {
-        $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
-        $weightflag = !$weightflag;
-    }
-    $code .= (10 - ($sum % 10)) % 10;
-    Log::info('code ' . $code);
-
-    $check = Product::where('prod_code', $code)->exists();
-    if ($check) {
-        $this->generateEANCode();
-    } else {
-        return $code;
-    }
-
-}
-
-Route::get('test' , function(){
-
-        Log::info('generate ean code');
-        echo generateEANCode();
-
-    //return Product::select('id' , 'prod_code')->take(5)->get();
-    //return BuyOrder::with('buyOrderProducts')->where('bar_code' , "X624")->first();
-    //return BuyOrder::doesntHave('buyOrderProducts')->get();
-});
 Auth::routes(['register' => false, 'verify' => true]);
 
 Route::group([
