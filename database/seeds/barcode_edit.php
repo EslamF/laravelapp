@@ -64,7 +64,7 @@ class barcode_edit extends Seeder
 
         $check = Material::where('barcode', $code)->exists();
         if ($check || !$code) {
-            $this->generateEANCode();
+            $this->generateEANBarcode();
         } else {
             return $code;
         }

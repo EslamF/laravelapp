@@ -45,7 +45,7 @@ class ReceivingMaterialController extends Controller
 
             if(!$old_material->barcode)
             {
-                $old_material->barcode = $this->generateEANCode() ?? generateEANCode();
+                $old_material->barcode = $this->generateEANCode() ?? $this->generateEANCode();
             }
             $old_material->save();
 
@@ -64,7 +64,7 @@ class ReceivingMaterialController extends Controller
             $old_material->qty = $old_material->qty + $request->qty;
             if(!$old_material->barcode)
             {
-                $old_material->barcode = $this->generateEANCode() ?? generateEANCode();
+                $old_material->barcode = $this->generateEANCode() ?? $this->generateEANCode();
             }
             $old_material->save();
 
@@ -77,7 +77,7 @@ class ReceivingMaterialController extends Controller
         else 
         {
             $material = Material::create($request_data);
-            $material->barcode = $this->generateEANCode() ?? generateEANCode();
+            $material->barcode = $this->generateEANCode() ?? $this->sgenerateEANCode();
             $material->save();
         }
         $material = $material ?? $old_material;
