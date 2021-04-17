@@ -100,23 +100,9 @@ class ProductController extends Controller
 
         $all_inserted_products = [];
         $all_generated_codes = [];
+        $dns1d = new DNS1D();
         for ($i = 0; $i < $request->qty; $i++) 
         {
-            /*$p = Product::create([
-                    'prod_code' => $this->generateCode(),
-                    'produce_code' => $produce_code,
-                    'sorted'     => 1,
-                    'size_id'   => $request->size_id,
-                    'material_id'   => $request->material_id,
-                    'product_type_id' => $request->product_type_id,
-                    'received'  => 1,
-                    'status'    => 'available',
-                    'save_order_id' => $save_order->id,
-                    'product_material_code' => $material_code ,
-                    'factory_id'    => $request->factory_id,
-                    'description' => $request->description
-            ]);*/
-            //$code = $this->genrateCodeNotInArray($all_generated_codes);
             $code = $this->genrateCodeNotInArray($all_generated_codes) ?? $this->genrateCodeNotInArray($all_generated_codes);
 
             array_push($all_inserted_products , [
@@ -138,8 +124,8 @@ class ProductController extends Controller
             array_push($all_generated_codes , $code );
 
             //DNS1D::getBarcodePNG('4', 'C39+')
-            $dns1d = new DNS1D();
-            Storage::disk('barcodes')->put($code . '.png', base64_decode($dns1d->getBarcodePNG($code, "C39", 1 , 50 , array(0 , 0 , 0) , true)));
+            
+            //Storage::disk('barcodes')->put($code . '.png', base64_decode($dns1d->getBarcodePNG($code, "C39", 1 , 50 , array(0 , 0 , 0) , true)));
 
         }
 
