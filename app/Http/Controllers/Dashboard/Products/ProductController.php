@@ -84,17 +84,17 @@ class ProductController extends Controller
             ->where('size_id', $request->size_id)
             ->where('material_id', $request->material_id)
             ->first();
-        $produce_code = $product->produce_code ?? $this->generateEANOrderCode();
+        $produce_code = $product->produce_code ?? generate_product_produce_code();
 
 
         $product_material_code = Product::where('product_type_id' , $request->product_type_id)
                                         ->where('material_id' , $request->material_id)
                                         ->first();
-        $material_code = $product_material_code->product_material_code ?? $this->generateEANProductMaterialCode();
+        $material_code = $product_material_code->product_material_code ?? generate_product_material_code();
         
 
         $save_order = SaveOrder::create([
-            'code' => $this->generateEANOrderCode(),
+            'code' => generate_save_order_code(),
             'stored' => 1
         ]);
 
@@ -103,8 +103,8 @@ class ProductController extends Controller
         $dns1d = new DNS1D();
         for ($i = 0; $i < $request->qty; $i++) 
         {
-            $code = $this->genrateCodeNotInArray($all_generated_codes) ?? $this->genrateCodeNotInArray($all_generated_codes);
-
+            $code = generate_product_code_not_in_array($all_generated_codes);
+        
             array_push($all_inserted_products , [
 
                     'prod_code' => $code,
@@ -125,7 +125,7 @@ class ProductController extends Controller
 
             //DNS1D::getBarcodePNG('4', 'C39+')
             
-            //Storage::disk('barcodes')->put($code . '.png', base64_decode($dns1d->getBarcodePNG($code, "C39", 1 , 50 , array(0 , 0 , 0) , true)));
+            Storage::disk('barcodes')->put($code . '.png', base64_decode($dns1d->getBarcodePNG($code, "C39", 1 , 50 , array(0 , 0 , 0) , true)));
 
         }
 
@@ -292,6 +292,7 @@ class ProductController extends Controller
             }
         }
     }
+
 
     public function generateEANCodeNotInArray($array)
     {
