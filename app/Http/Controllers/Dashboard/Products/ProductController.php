@@ -116,7 +116,8 @@ class ProductController extends Controller
                     'factory_id'    => $request->factory_id,
                     'description' => $request->description
             ]);*/
-            $code = $this->genrateCodeNotInArray($all_generated_codes);
+            //$code = $this->genrateCodeNotInArray($all_generated_codes);
+            $code = $this->genrateCodeNotInArray($all_generated_codes) ?? $this->genrateCodeNotInArray($all_generated_codes);
 
             array_push($all_inserted_products , [
 
@@ -288,13 +289,14 @@ class ProductController extends Controller
         }
         $code .= (10 - ($sum % 10)) % 10;
 
-        $check = Product::where('prod_code', $code)->exists();
+        $check = Product::where('prod_code', $code)->exists(); 
         if ($check) 
         {
+            
             $this->genrateCodeNotInArray($array);
         } else 
         {
-            if(in_array($code , $array))
+            if(in_array($code , $array) || !$code )  //if ($check || !$code) {
             {
                 $this->genrateCodeNotInArray($array);
             }
