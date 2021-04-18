@@ -1,6 +1,7 @@
 <?php
 use App\Models\Products\Product;
 use App\Models\Orders\SaveOrder;
+use App\Models\Materials\Material;
 
 function generate_product_code_not_in_array($array)
 {
@@ -63,7 +64,7 @@ function generate_product_produce_code()
     $code = rand(0, 6000000000000);
     $check = Product::where('produce_code', $code)->exists();
     if ($check) {
-        generateProduceCode();
+        generate_product_produce_code();
     } else {
         return $code;
     }
@@ -74,11 +75,31 @@ function generate_product_material_code()
     $code = rand(0, 6000000000000);
     $check = Product::where('produce_code', $code)->exists();
     if ($check) {
-        generateProduceCode();
+        generate_product_material_code();
     } else {
         return $code;
     }
 }
+
+function generate_material_barcode()
+{
+    $number = rand(0, 900000000);
+    $code = generateEAN($number);
+
+    $check = Material::where('barcode', $code)->exists();
+
+    if ($check) 
+    {
+        generate_material_barcode();
+    } 
+    else 
+    {
+        return $code;
+    }
+
+    return $code;
+}
+
 
 function generateEAN($number)
 {

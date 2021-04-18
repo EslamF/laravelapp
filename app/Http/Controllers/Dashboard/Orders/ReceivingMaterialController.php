@@ -45,7 +45,7 @@ class ReceivingMaterialController extends Controller
 
             if(!$old_material->barcode)
             {
-                $old_material->barcode = $this->generateEANCode() ?? $this->generateEANCode();
+                $old_material->barcode = generate_material_barcode();
             }
             $old_material->save();
 
@@ -64,7 +64,7 @@ class ReceivingMaterialController extends Controller
             $old_material->qty = $old_material->qty + $request->qty;
             if(!$old_material->barcode)
             {
-                $old_material->barcode = $this->generateEANCode() ?? $this->generateEANCode();
+                $old_material->barcode = generate_material_barcode() ?? generate_material_barcode();
             }
             $old_material->save();
 
@@ -77,7 +77,7 @@ class ReceivingMaterialController extends Controller
         else 
         {
             $material = Material::create($request_data);
-            $material->barcode = $this->generateEANCode() ?? $this->sgenerateEANCode();
+            $material->barcode = generate_material_barcode() ?? generate_material_barcode();
             $material->save();
         }
         $material = $material ?? $old_material;
@@ -193,37 +193,5 @@ class ReceivingMaterialController extends Controller
     {
         $material = Material::findOrFail($id);
         return view('dashboard.orders.receiving_materials.print' , compact('material'));
-    }
-
-    public function generateBarcode()
-    {
-        $code = rand(0, 6000000000000);
-        $check = Material::where('barcode', $code)->exists();
-        if ($check) {
-            $this->generateBarcode();
-        } else {
-            return $code;
-        }
-    }
-
-    public function generateEANCode()
-    {
-        $date = new DateTime();
-        $time = $date->getTimestamp();
-        $code = '20' . str_pad($time, 10, '0');
-        $weightflag = true;
-        $sum = 0;
-        for ($i = strlen($code) - 1; $i >= 0; $i--) {
-            $sum += (int)$code[$i] * ($weightflag ? 3 : 1);
-            $weightflag = !$weightflag;
-        }
-        $code .= (10 - ($sum % 10)) % 10;
-
-        $check = Material::where('barcode', $code)->exists();
-        if ($check || !$code) {
-            $this->generateEANCode();
-        } else {
-            return $code;
-        }
     }
 }
