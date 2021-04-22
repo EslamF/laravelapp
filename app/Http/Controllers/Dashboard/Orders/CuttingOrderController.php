@@ -151,20 +151,44 @@ class CuttingOrderController extends Controller
             $material->save();
         }
         if (request('items')) {
+            $all_inserted_products = [];
+            $all_generated_codes = [];
+
             foreach ($request->items as $item) {
                 $count = ($item['qty'] * $request->layers);
+
+                $product = Product::where('product_type_id', $item['product_type_id'])
+                                    ->where('size_id', $item['size_id'])
+                                    ->where('material_id', $material->id)
+                                    ->first();
+
+                $produce_code = $product->produce_code ?? generate_product_produce_code();
+
+                $product_material_code = Product::where('product_type_id' , $item['product_type_id'])
+                    ->where('material_id' , $material->id)
+                    ->first();
+
+                $material_code = $product_material_code->product_material_code ?? generate_product_material_code();
+                
                 while ($count > 0) {
 
-                    $product = Product::where('product_type_id', $item['product_type_id'])
-                        ->where('size_id', $item['size_id'])
-                        ->where('material_id', $material->id)
-                        ->first();
+                    $code = generate_product_code_not_in_array($all_generated_codes);
+        
+                    array_push($all_inserted_products , [
 
-                    $product_material_code = Product::where('product_type_id' , $item['product_type_id'])
-                        ->where('material_id' , $material->id)
-                        ->first();
+                            'prod_code' => $code,
+                            'cutting_order_id' => $order->id,
+                            'damage_type' => 'pending',
+                            'material_id' => $material->id,
+                            'product_type_id' => $item['product_type_id'],
+                            'size_id' => $item['size_id'],
+                            'produce_code' => $produce_code,
+                            'product_material_code' => $material_code ,
+                    ]);
 
-                    Product::create([
+                    array_push($all_generated_codes , $code );
+
+                    /*Product::create([
                         'prod_code' => $this->generateEANCode() ?? $this->generateEANCode() ,
                         'cutting_order_id' => $order->id,
                         'damage_type' => 'pending',
@@ -173,10 +197,13 @@ class CuttingOrderController extends Controller
                         'size_id' => $item['size_id'],
                         'produce_code' => $product->produce_code ?? ($this->generateEANOrderCode() ?? $this->generateEANOrderCode()) ,
                         'product_material_code' => $product_material_code->product_material_code ?? $this->generateEANProductMaterialCode()
-                    ]);
+                    ]);*/
                     $count--;
                 }
             }
+
+            Product::insert($all_inserted_products);
+            
         }
 
 

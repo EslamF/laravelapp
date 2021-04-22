@@ -23,7 +23,7 @@ class ReceivingMaterialController extends Controller
             'weight' => 'requiredIf:type,material',
             'bill_number' => 'required',
             'color' => 'requiredIf:type,material',
-            'number_of_vestments' => 'requiredIf:type,material|integer',
+            'number_of_vestments' => 'requiredIf:type,material',
             //'barcode'   => ''
         ]);
 
