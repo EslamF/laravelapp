@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Materials\Material;
+use App\Models\Materials\Vestment;
 use App\Models\Materials\MaterialType;
 use App\Models\Organization\Supplier;
 use DateTime;
@@ -13,6 +14,7 @@ class ReceivingMaterialController extends Controller
 {
     public function store(Request $request)
     {
+        //return $request;
         $validate = $request->validate([
             'mq_r_code' => 'required',
             'type' => 'required',
@@ -20,10 +22,12 @@ class ReceivingMaterialController extends Controller
             'buyer_id' => 'required|exists:users,id',
             'supplier_id' => 'required|exists:suppliers,id',
             'qty' => 'requiredIf:type,accessory',
-            'weight' => 'requiredIf:type,material',
+            //'weight' => 'requiredIf:type,material',
             'bill_number' => 'required',
             'color' => 'requiredIf:type,material',
             'number_of_vestments' => 'requiredIf:type,material',
+            'vestments' => 'requiredIf:type,material|array',
+            'vestments.*'  => 'required|numeric',
             //'barcode'   => ''
         ]);
 
@@ -35,53 +39,31 @@ class ReceivingMaterialController extends Controller
         }
         else 
         {
-            $request_data = $request->except(['weight' , 'material_type_id' , 'color','number_of_vestments' ]);
+            $request_data = $request->except(['weight' , 'material_type_id' , 'color','number_of_vestments','vestments' ]);
         }
 
-        $old_material = Material::where('mq_r_code' , $request->mq_r_code)->first();
-        if($old_material && $request->type == 'material' )
-        {
-            $old_material->weight = $old_material->weight + $request->weight;
+        $material = Material::create($request_data);
+        $material->barcode = generate_material_barcode() ?? generate_material_barcode();
 
-            if(!$old_material->barcode)
+
+        if($request->type == 'material')
+        {
+            for($i = 0; $i<$request->number_of_vestments; $i++)
             {
-                $old_material->barcode = generate_material_barcode();
+                $material->vestments()->create([ 
+                    'name'    => 'توب ' . ($i + 1) ,
+                    'weight'  => $request->vestments[$i] ,
+                    'barcode' =>  generate_vestment_barcode(),
+                ]);
             }
-            $old_material->save();
-
-            $old_material->update([
-                'material_type_id' => $request->material_type_id , 
-                'buyer_id'         => $request->buyer_id ,
-                'supplier_id'      => $request->supplier_id ,
-                'bill_number'      => $request->bill_number ,
-                'color'            => $request->color,
-                'number_of_vestments' => $request->number_of_vestments
-            ]);
         }
+       
+        $material->save();
 
-        else if($old_material && $request->type == 'accessory')
-        {
-            $old_material->qty = $old_material->qty + $request->qty;
-            if(!$old_material->barcode)
-            {
-                $old_material->barcode = generate_material_barcode() ?? generate_material_barcode();
-            }
-            $old_material->save();
-
-            $old_material->update([
-                'buyer_id'         => $request->buyer_id ,
-                'supplier_id'      => $request->supplier_id ,
-                'bill_number'      => $request->bill_number ,
-            ]);
-        }
-        else 
-        {
-            $material = Material::create($request_data);
-            $material->barcode = generate_material_barcode() ?? generate_material_barcode();
-            $material->save();
-        }
-        $material = $material ?? $old_material;
-        return view('dashboard.orders.receiving_materials.print' , compact('material'));
+        $vestments = $material->vestments;
+        return redirect()->route('receiving.material.print_vestments' , $material->id);
+        //return view('dashboard.orders.receiving_materials.vestment_print' , compact('vestments') );
+        //return view('dashboard.orders.receiving_materials.print' , compact('material'));
         //return redirect()->route('order.receiving.material')->with('success' , __('words.added_successfully'));
     }
 
@@ -127,34 +109,39 @@ class ReceivingMaterialController extends Controller
 
     public function update(Request $request)
     {
-        //return $request;
-        
-            /*'mq_r_code' => 'required|unique:materials,mq_r_code',
-            'type' => 'required',
-            'material_type_id' => 'requiredIf:type,material|exists:material_types,id',
-            'buyer_id' => 'required|exists:users,id',
-            'supplier_id' => 'required|exists:suppliers,id',
-            'qty' => 'requiredIf:type,accessory',
-            'weight' => 'requiredIf:type,material',
-            'bill_number' => 'required',
-            'color' => 'requiredIf:type,material',*/
-        
-
         $request->validate([
             'material_id' => 'required|exists:materials,id',
-            'mq_r_code' => 'required|unique:materials,mq_r_code,' . $request->material_id,
+            'mq_r_code' => 'required',
             'material_type_id' => 'requiredIf:type,material|exists:material_types,id',
             'buyer_id'     => 'required|exists:users,id',
             'supplier_id' => 'required|exists:suppliers,id',
             'bill_number' => 'required|min:3',
             'color' => 'requiredIf:type,material',
-            'weight' => 'requiredIf:type,material',
+            //'weight' => 'requiredIf:type,material',
             'qty'   => 'requiredIf:type,accessory' ,
             'type'  => 'required|in:material,accessory',
-            'number_of_vestments' => 'requiredIf:type,material|integer'
+            'vestments' => 'requiredIf:type,material|array',
+            'vestments.*'  => 'required|numeric',
         ]);
 
-        Material::find($request->material_id)->update($request->all());
+        $material = Material::findOrFail($request->material_id);
+      
+        
+        if($request->type == 'material')
+        {
+            $material->vestments()->delete();
+            for($i = 0; $i<$request->number_of_vestments; $i++)
+            {
+                $material->vestments()->create([ 
+                    'name'    => 'توب ' . ($i + 1) ,
+                    'weight'  => $request->vestments[$i] ,
+                    'barcode' =>  generate_vestment_barcode(),
+                ]);
+            }
+        }
+
+        $material->update($request->all());
+
         return redirect()->route('order.receiving.material')->with('success' , __('words.updated_successfully'));
     }
 
@@ -170,7 +157,10 @@ class ReceivingMaterialController extends Controller
 
     public function checkWeight($material_code)
     {
-        $material = Material::select('id', 'mq_r_code', 'weight')->where('id', $material_code)->first();
+        $material = Material::find($material_code);
+        
+        //$material->vestments
+        //$material = Material::select('id', 'mq_r_code', 'weight')->where('id', $material_code)->first();
         return response()->json($material, 200);
     }
 
@@ -194,4 +184,20 @@ class ReceivingMaterialController extends Controller
         $material = Material::findOrFail($id);
         return view('dashboard.orders.receiving_materials.print' , compact('material'));
     }
+
+    public function print_vestments($id)
+    {
+        $material = Material::findOrFail($id);
+        $vestments = $material->vestments;
+        return view('dashboard.orders.receiving_materials.vestment_print' , compact('vestments') );
+    }
+
+    public function print_vestments2($ids)
+    { 
+        //return $request;
+        $ids = json_decode($ids , true);
+        $vestments = Vestment::whereIn('id' , $ids )->get();
+        return view('dashboard.orders.receiving_materials.vestment_print' , compact('vestments') );
+    }
+
 }

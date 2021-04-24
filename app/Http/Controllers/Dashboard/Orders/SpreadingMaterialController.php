@@ -9,7 +9,7 @@ use App\Models\Materials\Material;
 use App\Models\Orders\SpreadingOutMaterialOrder;
 use App\Models\Organization\Factory;
 // use App\Models\Orders\CuttingOrder;
-
+use App\Models\Materials\Vestment;
 
 class SpreadingMaterialController extends Controller
 {
@@ -56,8 +56,13 @@ class SpreadingMaterialController extends Controller
             'material_id' => 'required|exists:materials,id',
             'user_id'     => 'required_if:type,employee|exists:users,id',
             'factory_id'  => 'required_if:type,factory|exists:factories,id',
-            'weight'      => 'required|numeric|gt:0'
+            'vestments'   => 'required|array',
+            'vestments.*' => 'exists:vestments,id',
+            //'weight'      => 'required|numeric|gt:0'
         ]);
+
+
+        $request->merge(['weight' => 0]);
 
         if($request->type == 'employee')
         {
@@ -69,10 +74,25 @@ class SpreadingMaterialController extends Controller
             $order = SpreadingOutMaterialOrder::create($request->except(['user_id']));
         }
         
+        $sum_weights = 0;
+        foreach($request->vestments as $vestment_id)
+        {
+            
+            $vestment = Vestment::find($vestment_id);
+            $sum_weights += $vestment->weight;
+
+            $vestment->status = 'done';
+            $vestment->spreading_out_material_order_id = $order->id;
+            $vestment->save();
+        }
+
+        $request->merge(['weight' => $sum_weights]);
+
+        
         if ($order) {
             $material = Material::where('id', $request->material_id)->first();
-            $material->weight = $material->weight - $request->weight;
-            $material->save();
+            // $material->weight = $material->weight - $request->weight;
+            // $material->save();
         }
         return redirect()->route('spreading.material.hold_list')->with('success' , __('words.added_successfully'));
     }
@@ -98,28 +118,33 @@ class SpreadingMaterialController extends Controller
 
     public function update(Request $request)
     {
+
         $request->validate([
             'spreading_id' => 'exists:spreading_out_material_orders,id',
             'material_id' => 'exists:materials,id',
             'user_id'     => 'exists:users,id',
-            'weight' => 'required|numeric|gt:0,'
+            'vestments'   => 'required|array',
+            'vestments.*' => 'exists:vestments,id',
+            //'weight' => 'required|numeric|gt:0,'
         ]);
 
         $order = SpreadingOutMaterialOrder::where('id', $request->spreading_id)->first();
-        $material = Material::where('id', $request->material_id)->first();
-        if ($order->weight > $request->weight) {
-            $material->update([
-                'weight' => $material->weight + ($order->weight - $request->weight)
-            ]);
+
+        $order->vestments()->update(['status' => 'pending' , 'spreading_out_material_order_id' => null]);
+        $sum_weights = 0;
+        foreach($request->vestments as $vestment_id)
+        {
+            $vestment = Vestment::find($vestment_id);
+            $sum_weights += $vestment->weight;
+
+            $vestment->status = 'done';
+            $vestment->spreading_out_material_order_id = $order->id;
+            $vestment->save();
         }
 
-        if ($order->weight < $request->weight) {
-            $material->update([
-                'weight' => $material->weight - ($request->weight - $order->weight)
-            ]);
-        }
+        $request->merge(['weight' => $sum_weights]);
         $order->update($request->all());
-        return back()->with('success' , __('words.updated_successfully'));
+        return redirect()->route('spreading.material.hold_list')->with('success' , __('words.added_successfully'));
     }
 
 
@@ -140,5 +165,66 @@ class SpreadingMaterialController extends Controller
     public function getAll()
     {
         return response()->json(SpreadingOutMaterialOrder::with('spreadinguser')->select('id' , 'user_id' , 'created_at')->whereDoesntHave('cuttingOrders')->get(), 200);
+    }
+
+    public function checkVestment(Request $request)
+    {
+        if($request->filled('vestment_barcode'))
+        {
+            if($request->filled('spreading_out_order_id'))
+            {
+                $vestment = Vestment::where('barcode' , $request->vestment_barcode)
+                                    ->where('material_id' , $request->material_id)
+                                    ->where(function($query) use($request){
+                                        $query->where('spreading_out_material_order_id' , $request->spreading_out_order_id)
+                                                ->orWhere('status' , 'pending');
+                                    })
+                                    ->first();
+            }
+            else 
+            {
+                $vestment = Vestment::where('barcode' , $request->vestment_barcode)
+                                    ->where('status' , 'pending')
+                                    ->where('material_id' , $request->material_id)
+                                    ->first();
+            }
+          
+            if($vestment)
+            {
+
+                return response()->json($vestment , 200);
+            }
+
+            else 
+            {
+                return response()->json('error' , 200);
+            }
+        }
+
+        else 
+        {
+            return response()->json('error' , 200);
+        }
+    }
+
+    public function getVestments(Request $request)
+    {
+        if($request->filled('spreading_out_order_id'))
+        {
+            $order = SpreadingOutMaterialOrder::find($request->spreading_out_order_id);
+            if($order)
+            {
+                return response()->json($order->vestments , 200);
+            }
+            else 
+            {
+                return response()->json('error' , 200);
+            }
+        }
+
+        else 
+        {
+            return response()->json('error' , 200);
+        }
     }
 }

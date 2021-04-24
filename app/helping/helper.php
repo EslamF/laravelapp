@@ -2,6 +2,7 @@
 use App\Models\Products\Product;
 use App\Models\Orders\SaveOrder;
 use App\Models\Materials\Material;
+use App\Models\Materials\Vestment;
 
 function generate_product_code_not_in_array($array)
 {
@@ -91,6 +92,25 @@ function generate_material_barcode()
     if ($check) 
     {
         generate_material_barcode();
+    } 
+    else 
+    {
+        return $code;
+    }
+
+    return $code;
+}
+
+function generate_vestment_barcode()
+{
+    $number = rand(0, 900000000);
+    $code = generateEAN($number);
+
+    $check = Vestment::where('barcode', $code)->exists();
+
+    if ($check) 
+    {
+        generate_vestment_barcode();
     } 
     else 
     {

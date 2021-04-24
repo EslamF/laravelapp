@@ -188,10 +188,12 @@ Route::group([
                 Route::get('check-weight/{material_code}', 'ReceivingMaterialController@checkWeight');
                 Route::get('getMaterialData/{material_code}', 'ReceivingMaterialController@getMaterialData');
                 Route::get('print/{id}', 'ReceivingMaterialController@print')->name('receiving.material.print');
+                Route::get('print_vestments/{id}', 'ReceivingMaterialController@print_vestments')->name('receiving.material.print_vestments');
+                Route::get('print_vestments2/{ids}', 'ReceivingMaterialController@print_vestments2')->name('receiving.material.print_vestments2');
             });
 
             Route::group([
-                'prefix' => 'spreading-material'
+                'prefix' => 'spreading-material' 
             ], function () {
                 Route::get('get-all-hold', 'SpreadingMaterialController@getAllPaginateForHold')->name('spreading.material.hold_list');
                 Route::get('get-all-used', 'SpreadingMaterialController@getAllPaginateForUsed')->name('spreading.material.used_list');
@@ -202,6 +204,8 @@ Route::group([
                 Route::get('edit/{spreading_id}', 'SpreadingMaterialController@editPage')->name('spreading.material.edit_page');
                 Route::post('update', 'SpreadingMaterialController@update')->name('spreading.material.update');
                 Route::post('delete', 'SpreadingMaterialController@delete')->name('spreading.material.delete');
+                Route::post('checkVestment', 'SpreadingMaterialController@checkVestment')->name('spreading.material.checkVestment');
+                Route::post('getVestments', 'SpreadingMaterialController@getVestments')->name('spreading.material.getVestments');
             });
 
             Route::group([

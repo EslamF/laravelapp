@@ -9,6 +9,7 @@ use App\Models\Orders\CuttingOrder;
 use App\Models\Products\ProductType;
 use App\Http\Controllers\Controller;
 use App\Models\Materials\Material;
+use App\Models\Materials\Vestment;
 use App\Models\Orders\CuttingOrderProduct;
 use App\Models\Organization\FactoryType;
 use App\Models\Products\Product;
@@ -146,10 +147,7 @@ class CuttingOrderController extends Controller
             });
         })->first();
         
-        if ($request->extra_returns_weight) {
-            $material->weight = $request->extra_returns_weight + $material->weight;
-            $material->save();
-        }
+        
         if (request('items')) {
             $all_inserted_products = [];
             $all_generated_codes = [];
@@ -206,9 +204,33 @@ class CuttingOrderController extends Controller
             
         }
 
+        if ($request->extra_returns_weight) 
+        {
+            $vestment = $material->vestments()->create([
+                            'name' => 'توب إضافي',
+                            'weight' => $request->extra_returns_weight ,
+                            'barcode' => generate_vestment_barcode()
+                        ]);
+            //return $vestment;
 
-        Session::flash('success',  __('words.added_successfully') );
-        return response()->json('success', 200);
+            
+            $ids = [];
+            array_push($ids , $vestment->id);
+    
+            return response()->json($ids, 200); 
+
+            ///return view('dashboard.orders.receiving_materials.vestment_print' , compact('vestments') );
+                //return $this->print_vestments2($ids);
+            //return redirect()->route('receiving.material.print_vestments2' , $ids);
+        }
+        else 
+        {
+            Session::flash('success',  __('words.added_successfully') );
+            return response()->json('success', 200); 
+        }
+
+
+        
     }
 
     public function storeExtra(Request $request)
@@ -679,4 +701,5 @@ class CuttingOrderController extends Controller
         }
         return response()->json('updated', 200);
     }
+
 }

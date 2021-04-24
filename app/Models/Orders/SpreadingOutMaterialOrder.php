@@ -46,6 +46,11 @@ class SpreadingOutMaterialOrder extends Model
         return $this->hasMany(CuttingOrder::class);
     }
 
+    public function vestments()
+    {
+        return $this->hasMany('App\Models\Materials\Vestment');
+    }
+
     public function getTypeAttribute()
     {
         if($this->user_id != null)

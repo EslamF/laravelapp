@@ -239,14 +239,38 @@
                             'Access-Control-Allow-Origin': '*',
                             'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                         };
-                        axios.post("{{Route('cutting.material.store')}}", data).then(res => {
+
+
+                        axios.post('{{route("cutting.material.store")}}', data).then(res => {
+                            //console.log(res.data);
+
+                            if(res.data == 'success')
+                            {
+                                window.location.href = '{{Route("cutting.outer_list")}}';
+                            }
+                            else 
+                            { 
+                                
+                                var vestment_ids = res.data;
+                                var url = "{{Route('receiving.material.print_vestments2' , ':ids' )}}";
+                                url = url.replace(':ids' , JSON.stringify(vestment_ids));
+                                //console.log(url);
+                                window.location.href = url; ;
+                            }
+                                   
+                        }).catch(err => {
+
+                        });
+
+
+                        /*axios.post("{{Route('cutting.material.store')}}", data).then(res => {
 
                             
                             window.location.href = '{{Route("cutting.outer_list")}}';
 
                         }).catch(err => {
                             this.submited = false
-                        });
+                        });*/
                     } else {
                         console.log(this.have_error)
                     }

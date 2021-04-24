@@ -130,7 +130,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="number_of_vestments">عدد الأتواب</label>
-                                <input type="text" class="form-control" name="number_of_vestments" id="number_of_vestments" placeholder="عدد الأتواب" class="@error('number_of_vestments') is-danger @enderror" value="{{$data['material']->number_of_vestments}}">
+                                <input type="text" class="form-control" name="number_of_vestments" id="number_of_vestments" placeholder="عدد الأتواب" class="@error('number_of_vestments') is-danger @enderror" value="{{old('number_of_vestments') ?? $data['material']->number_of_vestments}}">
                                 @error('number_of_vestments')
                                 <p class="help is-danger">
                                     {{$message}}
@@ -138,6 +138,62 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="col-md-10">
+                            <div class = "form-group">
+                                <label for = "vestments">الأتواب</label>
+                                @error('vestments')
+                                <span style="color:red" class="danger">
+                                    {{$message}}
+                                </span>
+                                @enderror
+                                <div id = "vestments">
+                                    @if(count($data['material']->vestments) > 0)
+                                        @foreach($data['material']->vestments as $vestment)
+                                            <div class = "form-group" style = "width: 50%;">
+                                                <label>وزن توب  {{$loop->iteration}} </label> 
+                                                <input type = "number" name = "vestments[]" class=  "form-control" value = "{{$vestment->weight}}" placeholder="الوزن">
+                                                @error('vestments.' . $loop->index)
+                                                <span style="color:red" class="danger">
+                                                    {{$message}}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        @endforeach
+                                    @elseif(old('vestments'))
+                                        
+                                        @foreach(old('vestments') as $vestment)
+                                            <div class = "form-group" style = "width: 50%;">
+                                                <label>وزن توب  {{$loop->iteration}} </label> 
+                                                <input type = "number" name = "vestments[]" class=  "form-control" value = "{{$vestment}}" placeholder="الوزن">
+                                                @error('vestments.' . $loop->index)
+                                                <span style="color:red" class="danger">
+                                                    {{$message}}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        @endforeach
+                                        
+                                    @elseif($data['material']->number_of_vestments > 0)
+
+                                        @for ($i = 0; $i < $data['material']->number_of_vestments; $i++)
+                                        <div class = "form-group" style = "width: 50%;">
+                                            <label>وزن توب  {{$i + 1}} </label> 
+                                            <input type = "number" name = "vestments[]" class=  "form-control" value = "" placeholder="الوزن">
+                                            @error('vestments.' . $i)
+                                            <span style="color:red" class="danger">
+                                                {{$message}}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        @endfor
+                                        
+                                    @endif
+                                    
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div id="accessory" style="{{$data['material']->qty ? '' : 'display:none' }}" class="row">
                         <div class="col-md-12">
@@ -219,5 +275,35 @@
         });
     })
 </script>
+
+<script>
+    $("input[name='number_of_vestments']").change(function(){
+       
+       var number_of_vestments = $(this).val();
+       number_of_vestments = parseInt(number_of_vestments);
+       if (typeof number_of_vestments === 'number') 
+       {
+           $("#vestments").empty();
+           
+           var item = '';
+
+           for (var i = 1; i<=number_of_vestments; i++) 
+           {
+               item = '<div class = "form-group" style = "width: 50%;">' + 
+                           '<label>وزن توب  ' + i + ' : </label>' + 
+                           '<input type = "number" name = "vestments[]" class=  "form-control"  placeholder="الوزن">' + 
+                       '</div>'
+                       ;
+               $("#vestments").append(item);
+           }
+       }
+
+       else 
+       {
+           console.log("NAN");
+       }
+   });
+</script>
+
 @endsection
 @endsection

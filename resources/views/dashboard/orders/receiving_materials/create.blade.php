@@ -89,6 +89,7 @@
                         </div>
                     </div>
                     <div class="row" id="material" style="display:none">
+                        {{--
                         <div class="col-md-4">
                             <div class="form-group">ٍ
                                 <label for="weight">الوزن</label>
@@ -100,6 +101,7 @@
                                 @enderror
                             </div>
                         </div>
+                        --}}
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="material_types">نوع الخامة</label>
@@ -138,6 +140,34 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="col-md-10">
+                            <div class = "form-group">
+                                <label for = "vestments">الأتواب</label>
+                                @error('vestments')
+                                <span style="color:red" class="danger">
+                                    {{$message}}
+                                </span>
+                                @enderror
+                                <div id = "vestments">
+                                    @if(old('vestments'))
+                                        @foreach(old('vestments') as $vestment)
+                                            <div class = "form-group" style = "width: 50%;">
+                                                <label>وزن توب  {{$loop->iteration}} </label> 
+                                                <input type = "number" name = "vestments[]" class=  "form-control" value = "{{$vestment}}" placeholder="الوزن">
+                                                @error('vestments.' . $loop->index)
+                                                <span style="color:red" class="danger">
+                                                    {{$message}}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                     <div id="accessory" style="display:none" class="row">
                         <div class="col-md-12">
@@ -257,6 +287,36 @@
         });
 
     })
+</script>
+
+
+<script>
+    $("input[name='number_of_vestments']").change(function(){
+       
+       var number_of_vestments = $(this).val();
+       number_of_vestments = parseInt(number_of_vestments);
+       if (typeof number_of_vestments === 'number') 
+       {
+           $("#vestments").empty();
+           
+           var item = '';
+
+           for (var i = 1; i<=number_of_vestments; i++) 
+           {
+               item = '<div class = "form-group" style = "width: 50%;">' + 
+                           '<label>وزن توب  ' + i + ' : </label>' + 
+                           '<input type = "number" name = "vestments[]" class=  "form-control"  placeholder="الوزن">' + 
+                       '</div>'
+                       ;
+               $("#vestments").append(item);
+           }
+       }
+
+       else 
+       {
+           console.log("NAN");
+       }
+   });
 </script>
 @endsection
 </div>

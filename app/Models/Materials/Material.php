@@ -24,8 +24,10 @@ class Material extends Model
         'color',
         'created_by',
         'number_of_vestments',
-        'barcode'
+        'barcode',
     ];
+
+    protected $appends = ['total_weight'];
 
     /**
      * 
@@ -60,6 +62,22 @@ class Material extends Model
     public function spreadingOutMaterialOrders()
     {
         return $this->hasMany(SpreadingOutMaterialOrder::class);
+    }
+
+    public function vestments()
+    {
+        return $this->hasMany('App\Models\Materials\Vestment');
+    }
+
+    public function getTotalWeightAttribute()
+    {
+        $sum = 0;
+        foreach($this->vestments()->where('status' , 'pending')->get() as $vestment)
+        {
+            $sum += $vestment->weight;
+        }
+        return $sum;
+        
     }
 
     public function getCreatedAtAttribute($value)

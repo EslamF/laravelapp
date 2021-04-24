@@ -68,6 +68,7 @@
                         
                     </div>
 
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -82,24 +83,30 @@
                             </div>
                         </div>
                     </div>
+                   
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="mq_r_code">كود الخامة</label>
+                                <input type = "hidden" v-model = "material_id" name = "material_id">
+                                <input disabled class="form-control" v-model="material_code" class="@error('material_id') is-danger @enderror">
+                                {{--
                                 <select class="form-control" @change="checkWeight()" name="material_id" ref="material_code" class="@error('material_id') is-danger @enderror">
                                     <option value="" disabled selected>حدد كود الخامة</option>
                                     @foreach($data['material'] as $material)
                                     <option value="{{$material->id}}">
-                                        {{$material->mq_r_code}}</option>
+                                        {{$material->mq_r_code}}</option> 
                                     @endforeach
                                 </select>
+                                --}}
                                 @error('material_id')
                                 <p class="help is-danger">
                                     {{$message}}
                                 </p>
                                 @enderror
                             </div>
+                            <span style="color:red" v-if="errors.material_code">*@{{errors.material_code}}</span>
                         </div>
                         <div class="col-md-6">
                             <label for="weight">الوزن المتاح</label>
@@ -107,6 +114,7 @@
 
                         </div>
                     </div>
+                    {{--
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -121,6 +129,15 @@
                             </div>
                         </div>
                     </div>
+                    --}}
+                    <div class = "row">
+
+                        <div class="col-md-4">
+                            <label for="vestment_barcode">بار كود التوب</label>
+                            <input type="text" @keyup.enter="checkIfCanScanned" v-model="vestment_barcode" class="form-control" placeholder="بار كود التوب">
+                            <span style="color:red" v-if="errors.code">*@{{errors.code}}</span>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.card-body -->
 
@@ -128,6 +145,35 @@
                     <button type="button" id = "btnSubmit" :disabled="button" @click="submitForm" class="btn btn-primary">إضافة</button>
                     <a href="{{Route('spreading.material.hold_list')}}" class="btn btn-info">رجوع</a>
                 </div>
+
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>التوب</th>
+                                <th>كود التوب</th>
+                                <th>الوزن</th>
+                                <!--<th>حالة المنتج</th>-->
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(vestment,index) in vestments">
+                                <td>@{{vestment.name}}</td>
+                                <td>@{{vestment.barcode}}</td>
+                                <td>@{{vestment.weight}}</td>
+                               
+                                <!--<td>@{{status}}</td> -->
+                                <td>
+                                    <button type="button" @click="removeVestment(index)" class="btn btn-danger">حذف</button>
+                                </td>
+                                <input type = "hidden" name = "vestments[]" v-model = "vestment.id">
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </form>
         </div>
     </div>
@@ -145,10 +191,17 @@
             material_weight: '',
             button: false,
             material_code: '',
+            material_id: '',
             error: '',
             have_error: false,
+            have_value: false,
             material_barcode: '',
-            material_barcode_error: ''
+            material_barcode_error: '',
+            codes: [],
+            vestments: [],
+            vestment_barcode: '',
+            errors: {},
+
         },
         mounted() {
             //this.loader();
@@ -176,15 +229,20 @@
 
                     });
             },
-            findMaterial() {
+            findMaterial() { 
 
                 axios.get('{{url("orders/receiving-material/getMaterialData")}}' + '/' + this.material_barcode)
                     .then(res => {
                         if(res.data != 'error')
                         {
+                            console.log(res.data);
                             //this.material_code = res.data.id;
-                            $("select[name='material_id']").val(res.data.id);
-                            this.checkWeight();
+                            //$("input[name='material_id']").val(res.data.id);
+                            //$("input[name='material_code']").val(res.data.mq_r_code);
+                            //this.checkWeight();
+                            this.material_code = res.data.mq_r_code;
+                            this.material_id   = res.data.id;
+                            this.material_weight = res.data.total_weight;
                             this.material_barcode = '';
                             this.material_barcode_error = '';
                         }
@@ -198,27 +256,96 @@
 
                     });
             }, 
+
+            checkIfCanScanned() {
+                console.log(this.vestments);
+
+                this.errors.code = '';
+
+                if (!this.material_code) {
+                    console.log('errors.material_code');
+                    this.errors.material_code = "*  يجب إدخال كود الخامة";
+                    this.have_error = true;
+                    this.vestment_barcode = '';
+                }
+
+                else 
+                {
+                    this.errors.material_code = "";
+                    
+                    var data = {};
+                    data.vestment_barcode = this.vestment_barcode.trim();
+                    data.material_id = this.material_id;
+
+                    
+                    axios.post('{{Route("spreading.material.checkVestment")}}', data)
+                        .then(res => {
+                            this.have_error = false;
+                            if (res.data != 'error') {
+                                console.log(res.data);
+                                if (!this.codes.includes(this.vestment_barcode.trim())) {
+                                    this.codes.push(this.vestment_barcode.trim());
+                                    this.vestments.push(res.data);
+                                    
+                                } else {
+                                    this.have_error = true;
+                                    this.errors.code = '* لا يمكن إضافة هذا التوب مره اخري'
+                                }
+                            } else {
+                                this.have_error = true;
+                                this.errors.code = '* لا يمكن إضافة هذا التوب'
+                            }
+
+                            this.vestment_barcode = '';
+                        })
+                        .catch(err => {
+
+                        })
+                }
+
+
+            },
+
+            removeVestment(i) {
+                this.codes.splice(i, 1)
+                this.vestments.splice(i, 1)
+            },
+
             submitForm() {
                 this.button = true;
                 this.have_error = false;
                 this.error = '';
-                var weight = document.getElementById('weight').value;
+                //var weight = document.getElementById('weight').value;
+                this.validateAll();
 
-                    
-                if (weight <= this.material_weight) {
-                    var form = document.getElementById('myForm');
-                    form.submit();
+                console.log('error : ' + this.have_error);
 
+                if (this.codes.length > 0 && !this.have_error) 
+                {
                     $("#btnSubmit").attr("disabled", true);
                     $("#loader").css("display" , "block");
-                } else {
-                    this.error = 'الكمية غير متوفرة'
-                    this.have_error = true;
-                    this.button = false;
-                }
-                
 
-                
+                    var form = document.getElementById('myForm');
+                    form.submit();
+                } 
+            },
+            validateAll() {
+
+                this.have_error = false;
+
+               
+
+                if (!this.material_code) {
+                    this.errors.material_code = "*  يجب إدخال كود الخامة";
+                    this.have_error = true;
+                    this.vestment_barcode = '';
+                }
+
+                if (!this.vestments[0]) {
+                    this.errors.code = '* يجب إضافة أتواب الفرش'
+                    this.have_error = true;
+                    this.have_value = false;
+                }
             }
         }
 
