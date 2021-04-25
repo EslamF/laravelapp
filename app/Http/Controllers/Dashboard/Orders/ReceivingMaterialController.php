@@ -142,7 +142,10 @@ class ReceivingMaterialController extends Controller
 
         $material->update($request->all());
 
-        return redirect()->route('order.receiving.material')->with('success' , __('words.updated_successfully'));
+        //$vestments = $material->vestments;
+        return redirect()->route('receiving.material.print_vestments' , $material->id);
+
+        //return redirect()->route('order.receiving.material')->with('success' , __('words.updated_successfully'));
     }
 
     public function delete(Request $request)
@@ -177,6 +180,19 @@ class ReceivingMaterialController extends Controller
         {
             return response()->json('error' , 200);
         }
+    }
+
+    public function get_material_from_vestment(Request $request)
+    {
+        if($request->filled('vestment_barcode'))
+        {
+            $vestment = Vestment::where('barcode' , $request->vestment_barcode)->first();
+            if($vestment)
+            {
+                return response()->json($vestment->material , 200);
+            }
+        }
+        return response()->json('error' , 200);
     }
 
     public function print($id)

@@ -190,6 +190,7 @@ Route::group([
                 Route::get('print/{id}', 'ReceivingMaterialController@print')->name('receiving.material.print');
                 Route::get('print_vestments/{id}', 'ReceivingMaterialController@print_vestments')->name('receiving.material.print_vestments');
                 Route::get('print_vestments2/{ids}', 'ReceivingMaterialController@print_vestments2')->name('receiving.material.print_vestments2');
+                Route::post('get_material_from_vestment', 'ReceivingMaterialController@get_material_from_vestment')->name('receiving.material.get_material_from_vestment');
             });
 
             Route::group([
@@ -206,6 +207,7 @@ Route::group([
                 Route::post('delete', 'SpreadingMaterialController@delete')->name('spreading.material.delete');
                 Route::post('checkVestment', 'SpreadingMaterialController@checkVestment')->name('spreading.material.checkVestment');
                 Route::post('getVestments', 'SpreadingMaterialController@getVestments')->name('spreading.material.getVestments');
+                
             });
 
             Route::group([

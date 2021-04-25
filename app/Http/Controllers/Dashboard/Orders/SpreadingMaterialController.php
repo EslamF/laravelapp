@@ -86,7 +86,9 @@ class SpreadingMaterialController extends Controller
             $vestment->save();
         }
 
-        $request->merge(['weight' => $sum_weights]);
+        //$request->merge(['weight' => $sum_weights]);
+        $order->weight = $sum_weights;
+        $order->save();
 
         
         if ($order) {
@@ -156,8 +158,14 @@ class SpreadingMaterialController extends Controller
 
         $order = SpreadingOutMaterialOrder::where('id', $request->spreading_id)->first();
         $material  = Material::where('id', $order->material_id)->first();
-        $material->weight = $material->weight + $order->weight;
-        $material->save();
+        /*$material->weight = $material->weight + $order->weight;
+        $material->save();*/
+        foreach($order->vestments as $vestment)
+        {
+            $vestment->spreading_out_material_order_id = null;
+            $vestment->status = 'pending';
+            $vestment->save();
+        }
         $order->delete();
         return back();
     }

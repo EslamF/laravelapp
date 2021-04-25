@@ -90,11 +90,11 @@
                             </div>
                             <span style="color:red" v-if="errors.material_code">*@{{errors.material_code}}</span>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label for="weight">الوزن المتاح</label>
                             <input type="number" class="form-control" v-model="material_weight" placeholder="حدد كود الخامة لرؤية الكمية المتاحة" disabled>
 
-                        </div>
+                        </div> --}}
                     </div>
                   
                     <div class = "row">

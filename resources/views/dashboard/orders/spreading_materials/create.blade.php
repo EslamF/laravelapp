@@ -69,7 +69,7 @@
                     </div>
 
                     
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for = "material_barcode">باركود الخامة</label> 
@@ -82,24 +82,17 @@
                                 @enderror
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                    
 
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="mq_r_code">كود الخامة</label>
                                 <input type = "hidden" v-model = "material_id" name = "material_id">
                                 <input disabled class="form-control" v-model="material_code" class="@error('material_id') is-danger @enderror">
-                                {{--
-                                <select class="form-control" @change="checkWeight()" name="material_id" ref="material_code" class="@error('material_id') is-danger @enderror">
-                                    <option value="" disabled selected>حدد كود الخامة</option>
-                                    @foreach($data['material'] as $material)
-                                    <option value="{{$material->id}}">
-                                        {{$material->mq_r_code}}</option> 
-                                    @endforeach
-                                </select>
-                                --}}
+                            
                                 @error('material_id')
                                 <p class="help is-danger">
                                     {{$message}}
@@ -108,11 +101,13 @@
                             </div>
                             <span style="color:red" v-if="errors.material_code">*@{{errors.material_code}}</span>
                         </div>
+                        {{--
                         <div class="col-md-6">
                             <label for="weight">الوزن المتاح</label>
                             <input type="number" class="form-control" v-model="material_weight" placeholder="حدد كود الخامة لرؤية الكمية المتاحة" disabled>
 
                         </div>
+                        --}}
                     </div>
                     {{--
                     <div class="row">
@@ -236,10 +231,6 @@
                         if(res.data != 'error')
                         {
                             console.log(res.data);
-                            //this.material_code = res.data.id;
-                            //$("input[name='material_id']").val(res.data.id);
-                            //$("input[name='material_code']").val(res.data.mq_r_code);
-                            //this.checkWeight();
                             this.material_code = res.data.mq_r_code;
                             this.material_id   = res.data.id;
                             this.material_weight = res.data.total_weight;
@@ -258,51 +249,81 @@
             }, 
 
             checkIfCanScanned() {
-                console.log(this.vestments);
-
+                var material_id = '';
+                
                 this.errors.code = '';
 
-                if (!this.material_code) {
-                    console.log('errors.material_code');
-                    this.errors.material_code = "*  يجب إدخال كود الخامة";
-                    this.have_error = true;
-                    this.vestment_barcode = '';
-                }
-
-                else 
+                if (!this.material_code)  
                 {
-                    this.errors.material_code = "";
-                    
                     var data = {};
                     data.vestment_barcode = this.vestment_barcode.trim();
-                    data.material_id = this.material_id;
-
                     
-                    axios.post('{{Route("spreading.material.checkVestment")}}', data)
+                    axios.post('{{Route("receiving.material.get_material_from_vestment")}}', data)
                         .then(res => {
                             this.have_error = false;
+                            console.log(res.data);
                             if (res.data != 'error') {
-                                console.log(res.data);
-                                if (!this.codes.includes(this.vestment_barcode.trim())) {
-                                    this.codes.push(this.vestment_barcode.trim());
-                                    this.vestments.push(res.data);
-                                    
-                                } else {
-                                    this.have_error = true;
-                                    this.errors.code = '* لا يمكن إضافة هذا التوب مره اخري'
-                                }
+                                this.material_code = res.data.mq_r_code;
+                                this.material_id = res.data.id;
+                                material_id = res.data.id;
+                                this.checkNewVestment();
                             } else {
                                 this.have_error = true;
-                                this.errors.code = '* لا يمكن إضافة هذا التوب'
+                                //this.errors.code = '* لا يمكن إضافة هذا التوب'
                             }
-
-                            this.vestment_barcode = '';
                         })
                         .catch(err => {
 
                         })
-                }
 
+
+                }
+                else 
+                {
+                    this.checkNewVestment();
+                }
+                
+                    /*console.log('errors.material_code');
+                    this.errors.material_code = "*  يجب إدخال كود الخامة";
+                    this.have_error = true;
+                    this.vestment_barcode = '';*/
+             
+                this.errors.material_code = "";
+
+            },
+
+            checkNewVestment() {
+
+                var data = {};
+                data.vestment_barcode = this.vestment_barcode.trim();
+                data.material_id =  this.material_id;
+
+                
+                axios.post('{{Route("spreading.material.checkVestment")}}', data)
+                    .then(res => {
+                        this.have_error = false;
+                        console.log("helloo");
+                        console.log(data);
+                        if (res.data != 'error') {
+                            //console.log(res.data);
+                            if (!this.codes.includes(this.vestment_barcode.trim())) {
+                                this.codes.push(this.vestment_barcode.trim());
+                                this.vestments.push(res.data);
+                                
+                            } else {
+                                this.have_error = true;
+                                this.errors.code = '* لا يمكن إضافة هذا التوب مره اخري'
+                            }
+                        } else {
+                            this.have_error = true;
+                            this.errors.code = '* لا يمكن إضافة هذا التوب'
+                        }
+
+                        this.vestment_barcode = '';
+                    })
+                    .catch(err => {
+
+                    })
 
             },
 
