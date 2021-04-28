@@ -19,6 +19,9 @@ use stdClass ;
 use DateTime;
 use Illuminate\Support\Facades\Log;
 
+
+ini_set('memory_limit', '1024M');
+
 class CuttingOrderController extends Controller
 {
     public function getAllForHold()

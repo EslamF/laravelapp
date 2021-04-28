@@ -238,18 +238,24 @@ class ReceivingProductController extends Controller
                                 ->take($required_quantity)
                                 ->pluck('id')
                                 ->toArray();
-                foreach($ids as $id)
+
+                $arr = array_merge($arr, $ids); 
+                /*foreach($ids as $id)
                 {
                     array_push($arr , $id);
-                }
+                }*/
                 
             }
 
-            $products = Product::whereIn('id' , $arr)->get();
+            $products = Product::whereIn('id' , $arr)
+                                ->update(['receiving_order_id' => $receiveOrder->id ])
+                                ;
+            /*$products = Product::whereIn('id' , $arr)
+                                ->get();
             foreach($products as $product)
             {
                 $product->update(['receiving_order_id' => $receiveOrder->id]);
-            }
+            }*/
 
             if(empty($arr))
             {
@@ -274,16 +280,19 @@ class ReceivingProductController extends Controller
         //request data : receving_order_id , ids
         $receiveOrder = ReceivingOrder::find($request->receiving_order_id);
         $produce_order = ProduceOrder::where('id' , $receiveOrder->produce_order_id)->first();
+        // $products = Product::whereIn('id' , $request->ids)
+        //                     ->where('receiving_order_id' , $receiveOrder->id)
+        //                     ->where('received' , 0)
+        //                     ->get();
         $products = Product::whereIn('id' , $request->ids)
                             ->where('receiving_order_id' , $receiveOrder->id)
                             ->where('received' , 0)
-                            ->get();
-        //return $products;
-        //update the products to be received
-        foreach($products as $product)
+                            ->update(['received' => 1]);
+       
+        /*foreach($products as $product)
         {
             $product->update(['received' => 1]);
-        }
+        }*/
         //update the recevied order to be done(status: 1)
         $receiveOrder->update(['status' => 1]);
         //update the status of produce order if all products received

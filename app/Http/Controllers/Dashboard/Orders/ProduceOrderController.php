@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Orders\ReceivingOrder;
 
 
+ini_set('memory_limit', '1024M');
+
 class ProduceOrderController extends Controller
 {
     public function getAllPaginate()
@@ -56,13 +58,19 @@ class ProduceOrderController extends Controller
         {
             if($product['required_quantity'] > 0 && $product['required_quantity'] <= $product['quantity'])
             {
-                $updated_products = Product::where([ [ 'produce_code' , $product['produce_code'] ], [ 'cutting_order_id' , $request->cutting_order_id  ] ])->whereNull('produce_order_id')->take($product['required_quantity'])->get() ;
-                foreach($updated_products as $updated_product)
+                $updated_products = Product::where([ 
+                                                    [ 'produce_code' , $product['produce_code'] ], 
+                                                    [ 'cutting_order_id' , $request->cutting_order_id  ]
+                                                ])
+                                            ->whereNull('produce_order_id')
+                                            ->take($product['required_quantity'])
+                                            ->update(['produce_order_id' => $produce_order->id ]) ;
+                /*foreach($updated_products as $updated_product)
                 {
                     $updated_product->produce_order_id = $produce_order->id ;
                     $updated_product->save();
                     //$updated_product->update(['produce_order_id' , $produce_order->id]); 
-                }
+                }*/
 
                 //return $updated_products;
                         
@@ -122,13 +130,18 @@ class ProduceOrderController extends Controller
         {
             if($product['required_quantity'] > 0 && $product['required_quantity'] <= $product['quantity'])
             {
-                $updated_products = Product::where([ [ 'produce_code' , $product['produce_code'] ], [ 'cutting_order_id' , $produce_order->cutting_order_id  ] ])->whereNull('produce_order_id')->take($product['required_quantity'])->get() ;
-                foreach($updated_products as $updated_product)
+                $updated_products = Product::where([ 
+                                                    [ 'produce_code' , $product['produce_code'] ],
+                                                    [ 'cutting_order_id' , $produce_order->cutting_order_id  ] ])
+                                            ->whereNull('produce_order_id')
+                                            ->take($product['required_quantity'])
+                                            ->update(['produce_order_id' => $produce_order->id]) ;
+                /*foreach($updated_products as $updated_product)
                 {
                     $updated_product->produce_order_id = $produce_order->id ;
                     $updated_product->save();
                     //$updated_product->update(['produce_order_id' , $produce_order->id]); 
-                }
+                }*/
 
                 //return $updated_products;
                         
