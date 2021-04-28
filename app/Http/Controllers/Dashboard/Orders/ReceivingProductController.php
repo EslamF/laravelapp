@@ -13,6 +13,8 @@ use App\Models\Orders\ReceivingOrder;
 use App\Models\Products\Product;
 use Illuminate\Support\Facades\Session;
 
+ini_set('memory_limit', '1024M');
+
 
 class ReceivingProductController extends Controller
 {
