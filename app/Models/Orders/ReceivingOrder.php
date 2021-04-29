@@ -3,7 +3,7 @@
 namespace App\Models\Orders;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Orders\produceOrder;
+use App\Models\Orders\ProduceOrder;
 use App\Models\Products\ProductType;
 use App\Models\Options\Size;
 use App\Models\Products\Product;
