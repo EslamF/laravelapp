@@ -123,11 +123,12 @@
                             'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                         };
                         axios.post('{{route("receiving_product.print_products")}}', data).then(res => {
-                                    var products = res.data;
-                                    var url = "{{Route('product.print_products' , ':ids' )}}";
-                                    url = url.replace(':ids' , JSON.stringify(products));
+                                    var order_id = res.data.id;
+                                    var url = "{{Route('product.print_receiving_order_products' , ':id' )}}";
+                                    url = url.replace(':id' , order_id);
 
                                     window.location.href = url; ;
+                                   
                         }).catch(err => {
 
                         });

@@ -252,5 +252,16 @@ class ProductController extends Controller
         return view('dashboard.products.product.print' , compact('products'));
     }
 
+    public function print_receiving_order_products($id)
+    {
+        $products = Product::select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')
+                            ->with('size', 'material', 'productType')
+                            ->where('receiving_order_id' , $id)
+                            ->get();
+    
+       
+        return view('dashboard.products.product.print' , compact('products'));
+    }
+
     
 }

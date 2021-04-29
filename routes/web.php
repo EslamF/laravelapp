@@ -423,6 +423,7 @@ Route::group([
             Route::post('delete', 'ProductController@delete')->name('product.delete');
             Route::get('print/{id}', 'ProductController@print')->name('product.print');
             Route::get('print_products/{ids}', 'ProductController@print_products')->name('product.print_products');
+            Route::get('print_receiving_order_products/{ids}', 'ProductController@print_receiving_order_products')->name('product.print_receiving_order_products');
             Route::get('print_material_barcode/{id}', 'ProductController@print_material_barcode')->name('product.print_material_barcode');
             Route::post('delete_all_products' , 'ProductController@delete_all_products')->name('product.delete_all_products');
             Route::get('import_sheet_excel_view' , 'ProductController@import_sheet_excel_view' )->name('product.import_sheet_excel_view');

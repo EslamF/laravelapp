@@ -230,7 +230,7 @@ class ReceivingProductController extends Controller
         $receiveOrder = ReceivingOrder::create(['produce_order_id' => $request->produce_order_id , 'status' => 0], $request->all());
         $arr = [];
         if ($request->products) 
-        {
+        { 
             foreach ($request->products as $product) 
             {
                 $required_quantity = (int)$product['required'];
@@ -263,7 +263,8 @@ class ReceivingProductController extends Controller
             {
                 $receiveOrder->delete();
             }
-           return $arr;
+           //return $arr;
+           return $receiveOrder;
         }
     }
 
