@@ -21,6 +21,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Products2Import;
 use DateTime;
 
+ini_set('memory_limit', '1024M');
+
 class ProductController extends Controller
 {
 
