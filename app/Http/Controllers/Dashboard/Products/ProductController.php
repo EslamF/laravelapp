@@ -20,6 +20,9 @@ use App\Models\Orders\BuyOrder;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Products2Import;
 use DateTime;
+use App\User;
+use App\Models\Organization\Supplier;
+
 
 ini_set('memory_limit', '1024M');
 
@@ -73,11 +76,29 @@ class ProductController extends Controller
         $request->validate([
             'product_type_id' => 'required|exists:product_types,id',
             'size_id'   => 'required|exists:sizes,id',
-            'material_id' => 'required|exists:materials,id',
+            //'material_id' => 'required|exists:materials,id',
+            'material_code' => 'required',
             'qty'   => 'required',
             'description'        => 'nullable|min:3',
             'factory_id'    => 'nullable|exists:factories,id'
         ]);
+
+        $material = Material::where('mq_r_code' , $request->material_code)->first();
+        if(!$material)
+        {
+            $material = Material::create([
+                'mq_r_code' => $request->material_code,
+                'buyer_id'  => User::first()->id,
+                'supplier_id' => Supplier::first()->id,
+                'bill_number' => '00000',
+            ]);
+        }
+
+        $request->merge([
+            'material_id' => $material->id
+        ]);
+
+
 
         $product = Product::where('product_type_id', $request->product_type_id)
             ->where('size_id', $request->size_id)
@@ -177,11 +198,29 @@ class ProductController extends Controller
 
             'product_type_id' => 'required|exists:product_types,id',
             'size_id'   => 'required|exists:sizes,id',
-            'material_id' => 'required|exists:materials,id',
+            //'material_id' => 'required|exists:materials,id',
+            'material_code' => 'required',
             'description'        => 'nullable|min:3',
             'factory_id'    => 'nullable|exists:factories,id',
 
         ]);
+
+
+        $material = Material::where('mq_r_code' , $request->material_code)->first();
+        if(!$material)
+        {
+            $material = Material::create([
+                'mq_r_code' => $request->material_code,
+                'buyer_id'  => User::first()->id,
+                'supplier_id' => Supplier::first()->id,
+                'bill_number' => '00000',
+            ]);
+        }
+
+        $request->merge([
+            'material_id' => $material->id
+        ]);
+
 
         Product::find($request->product_id)->update($request->all());
         return redirect()->route('product.list')->with('success' , __('words.updated_successfully') );;

@@ -45,6 +45,8 @@
                                 @enderror
                             </div>
                         </div>
+
+                        {{--
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="material_id">خامة المنتج</label>
@@ -61,6 +63,23 @@
                                 @enderror
                             </div>
                         </div>
+                        --}}
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="material_code">خامة المنتج</label>
+                               
+                                <input type = "text" class = "form-control" name = "material_code" value = "{{old('material_code')}}">
+                                
+                                @error('material_code')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="qty">الكمية</label>

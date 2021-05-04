@@ -18,6 +18,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="row">
+                        {{--
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="material_id">كود خامة</label>
@@ -33,6 +34,21 @@
                                 @enderror
                             </div>
                         </div>
+                        --}}
+                        <div class="col-md-3"> 
+                            <div class="form-group">
+                                <label for="material_code">خامة المنتج</label>
+                               
+                                <input type = "text" class = "form-control" name = "material_code" value = "{{$product->material ? $product->material->mq_r_code : ''}}">
+                                
+                                @error('material_code')
+                                <p class="help is-danger">
+                                    {{$message}}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="prod_code">كود المنتج</label>
