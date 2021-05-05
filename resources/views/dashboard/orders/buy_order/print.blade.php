@@ -8,7 +8,7 @@
 
                 <div class = "row">
                     <div class="col-sm-12 text-center">
-                        <img src = "{{asset(DNS1D::getBarcodePNGPath($order->bar_code, 'C39' , 2 , 100 , array(0 , 0 , 0) , true))}}">
+                        {!! DNS1D::getBarcodeSVG($order->bar_code, 'EAN13',2.1,100,'black', true) !!}
                     </div>
                 </div>
                 <br>
@@ -28,7 +28,7 @@
                                 <td>{{$order->shipping_company ? $order->shipping_company->name : ''}}</td>
                             </tbody>
                         </table>
-                    </div>
+                    </div> 
 
                 </div>
 

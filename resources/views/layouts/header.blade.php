@@ -41,5 +41,5 @@
     @stack('styles')
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed noprint"   style="text-align: right" dir="rtl">
-    <div class="wrapper noprint">
+<body class="hold-transition sidebar-mini layout-fixed "   style="text-align: right" dir="rtl">
+    <div class="wrapper ">

@@ -38,7 +38,6 @@
                 <br><br>
                 <div>
                     
-                    {{-- <a href = "{{route('buy.print' , $order->id)}}" class = "btn btn-info float-left">طباعة</a> --}}
                     <button onclick="printing()" class = "btn btn-info float-left noprint">طباعة</button>
                 </div>
                 <!-- <div v-if="order_status" class="row  mt-4">

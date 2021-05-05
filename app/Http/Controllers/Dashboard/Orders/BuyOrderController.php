@@ -109,9 +109,9 @@ class BuyOrderController extends Controller
     {
         $customer = Customer::updateOrCreate(['phone' => $request->customer['phone']], $request->customer);
         $order = BuyOrder::create([
-            'customer_id' => $customer->id,
-            'description' => $request->description,
-            'bar_code' => $this->generateCode(),
+            'customer_id'   => $customer->id,
+            'description'   => $request->description,
+            'bar_code'      => generate_buy_order_barcode(),
             'delivery_date' => $request->delivery_date,
             'source'        => $customer->source,
             'price'         => $request->price,
@@ -252,17 +252,6 @@ class BuyOrderController extends Controller
         return response()->json(array_values($data), 200);
     }
 
-
-    public function generateCode()
-    {
-        $code = rand(0, 6000000000000);
-        $check = BuyOrder::where('bar_code', $code)->exists();
-        if ($check) {
-            $this->generateCode();
-        } else {
-            return $code;
-        }
-    }
 
     public function deleteOrder(Request $request)
     {
@@ -411,8 +400,8 @@ class BuyOrderController extends Controller
                 $product = Product::where('produce_code', $item->produce_code)->first();
                 return [
                     'id'           => $item->id,
-                    'product_type' => $product->productType->name,
-                    'product_size' => $product->size->name,
+                    'product_type' => $product && $product->productType ? $product->productType->name : '',
+                    'product_size' => $product && $product->size ? $product->size->name : '',
                     'factory_qty'  => intval($item->factory_qty),
                     'company_qty'  => intval($item->company_qty),
                     'price'        => intval($item->price),

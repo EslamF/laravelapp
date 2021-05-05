@@ -3,6 +3,7 @@ use App\Models\Products\Product;
 use App\Models\Orders\SaveOrder;
 use App\Models\Materials\Material;
 use App\Models\Materials\Vestment;
+use App\Models\Orders\BuyOrder;
 
 function generate_product_code_not_in_array($array)
 {
@@ -111,6 +112,25 @@ function generate_vestment_barcode()
     if ($check) 
     {
         generate_vestment_barcode();
+    } 
+    else 
+    {
+        return $code;
+    }
+
+    return $code;
+}
+
+function generate_buy_order_barcode()
+{
+    $number = rand(0, 900000000);
+    $code = generateEAN($number);
+
+    $check = BuyOrder::where('bar_code', $code)->exists();
+
+    if ($check) 
+    {
+        generate_buy_order_barcode();
     } 
     else 
     {

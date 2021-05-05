@@ -1,5 +1,5 @@
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light noprint" style="direction: rtl">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light " style="direction: rtl">
             <!-- Left navbar links -->
             <ul class="navbar-nav" >
                 <li class="nav-item">
