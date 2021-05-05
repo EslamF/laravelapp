@@ -306,8 +306,8 @@ class BuyOrderController extends Controller
             $product = Product::where('produce_code', $item->produce_code)->first();
             return [
                 'id'           => $item->id,
-                'product_type' => $product->productType->name,
-                'product_size' => $product->size->name,
+                'product_type' => $product && $product->productType ? $product->productType->name : '',
+                'product_size' =>  $product && $product->size ? $product->size->name : '',
                 'factory_qty'  => intval($item->factory_qty),
                 'company_qty'  => intval($item->company_qty),
                 'price'        => intval($item->price),
