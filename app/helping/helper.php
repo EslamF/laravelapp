@@ -5,6 +5,17 @@ use App\Models\Materials\Material;
 use App\Models\Materials\Vestment;
 use App\Models\Orders\BuyOrder;
 
+function responseJson($status , $message , $data = null)
+{
+    $responce = [
+        'status'  => $status ,
+        'message' => $message ,
+        'data'    => $data
+    ];
+
+    return response()->json($responce, 200);
+}
+
 function generate_product_code_not_in_array($array)
 {
     $number = rand(0, 900000000);
