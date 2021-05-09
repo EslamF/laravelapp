@@ -48,6 +48,8 @@ Route::group([
 
         Route::post('fix_product_orders/store'  , 'FixProductOrderController@store');
 
+        Route::post('receiving_damaged_orders/store'  , 'ReceivingDamagedOrdersController@store');
+
 
     });
 

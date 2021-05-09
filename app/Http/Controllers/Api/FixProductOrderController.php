@@ -36,6 +36,15 @@ class FixProductOrderController extends Controller
                 return responseJson(0 , "لا يمكن إضافة المنتج $prod_code");
             }
 
+            else
+            {
+                $exists = DamagedProductFixOrder::where('product_id' , $product->id)->exists();
+                if($exists)
+                {
+                    return responseJson(0 , "لا يمكن إضافة المنتج $prod_code");
+                }
+            }
+
         }
 
         foreach($request->products as $prod_code)
