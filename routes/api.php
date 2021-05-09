@@ -31,6 +31,7 @@ Route::group([
 
         Route::get('spreading_users'                  , 'MainController@spreading_users');
         Route::get('factories'                        , 'MainController@factories');
+        Route::get('users'                            , 'MainController@users');
 
 
         Route::get('spreading_material_orders'  , 'SpreadingMaterialController@index');
@@ -50,6 +51,12 @@ Route::group([
 
         Route::post('receiving_damaged_orders/store'  , 'ReceivingDamagedOrdersController@store');
 
+
+        Route::get('send_end_products'          , 'SendEndProductController@index');
+        Route::get('send_end_products/show'     , 'SendEndProductController@show');
+        Route::post('send_end_products/store'   , 'SendEndProductController@store');
+        Route::post('send_end_products/update'  , 'SendEndProductController@update');
+ 
 
     });
 

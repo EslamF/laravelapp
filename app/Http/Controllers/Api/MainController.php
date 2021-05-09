@@ -20,6 +20,12 @@ class MainController extends Controller
         return responseJson(1 , 'success' , $users);
     }
 
+    public function users()
+    {
+        $users = User::get();
+        return responseJson(1 , 'success' , $users);
+    }
+
     public function factories() 
     {
         $factories =  Factory::get();
