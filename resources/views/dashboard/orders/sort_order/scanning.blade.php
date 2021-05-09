@@ -34,6 +34,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+                <h5>عدد المنتجات : @{{products.length}}</h5>
                 <table class="table ">
                     <thead>
                         <tr>

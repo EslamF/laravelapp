@@ -46,6 +46,8 @@ Route::group([
         //Route::get('sort_orders/show'    , 'SortOrderController@show');
         Route::post('sort_orders/store'  , 'SortOrderController@store');
 
+        Route::post('fix_product_orders/store'  , 'FixProductOrderController@store');
+
 
     });
 

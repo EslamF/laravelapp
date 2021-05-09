@@ -148,15 +148,24 @@ class SortOrderController extends Controller
 
             if (isset($product)) {
     
-                $product->update([
+                /*$product->update([
+                    'damage_type' => $request->damage_type == 'fine' ? '' : $request->damage_type,
+                    'sort_date' => $dateNow->toDateTimeString(),
+                    'sort_order_id' => $request->sort_id,
+                    'sorted' => 1,
+                    'status' => $request->damage_type == 'fine' ? 'available' : 'damaged',
+                ]);*/
+            }
+        }
+
+        Product::whereIn('prod_code' , $request->products)
+                ->update([
                     'damage_type' => $request->damage_type == 'fine' ? '' : $request->damage_type,
                     'sort_date' => $dateNow->toDateTimeString(),
                     'sort_order_id' => $request->sort_id,
                     'sorted' => 1,
                     'status' => $request->damage_type == 'fine' ? 'available' : 'damaged',
                 ]);
-            }
-        }
         Session::flash('success' , __('words.added_successfully'));
         return response()->json('success' , 200);
         //return redirect()->route('sort.product.list', $request->sort_id);
