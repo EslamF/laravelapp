@@ -41,7 +41,11 @@ Route::group([
         Route::get('receiving_products_orders'  , 'ReceivingProductController@index');
         Route::get('receiving_products_orders/show' , 'ReceivingProductController@show');
         Route::post('receiving_products_orders/store'  , 'ReceivingProductController@store');
-        //Route::post('receiving_products_orders/update' , 'ReceivingProductController@update');
+
+        Route::get('sort_orders'         , 'SortOrderController@index');
+        //Route::get('sort_orders/show'    , 'SortOrderController@show');
+        Route::post('sort_orders/store'  , 'SortOrderController@store');
+
 
     });
 
