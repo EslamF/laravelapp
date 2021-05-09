@@ -56,6 +56,9 @@ Route::group([
         Route::get('send_end_products/show'     , 'SendEndProductController@show');
         Route::post('send_end_products/store'   , 'SendEndProductController@store');
         Route::post('send_end_products/update'  , 'SendEndProductController@update');
+
+
+        Route::post('store_end_products/store'   , 'StoreEndProductController@store');
  
 
     });
