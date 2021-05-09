@@ -71,15 +71,30 @@ class ReceivingProductController extends Controller
             return responseJson(0 , "يجب إدخال $count من المنتجات" );
         }
 
+        $repeated_product = '';
+        $repeated_array = []; 
+
         foreach($request->products as $product_code)
         {
              $p = Product::where('prod_code' , $product_code)
-                        ->where('receiving_order_id' , $request->receiving_order_id)
+                        ->where('receiving_order_id' , $request->order_id)
                         ->where('received' , 0)
                         ->first();
             if(!$p)
             {
                 return responseJson(0 , "لا يمكن إضافة المنتج $product_code");
+            }
+            else 
+            {
+                if(in_array($product_code , $repeated_array))
+                {
+                    return responseJson(0 , "المنتج $product_code مكرر" );
+                }
+                else 
+                {
+                    array_push($repeated_array , $product_code);
+                }
+                
             }
         }
 
@@ -102,7 +117,7 @@ class ReceivingProductController extends Controller
             $produce_order->update(['status' => 1]);
         }
 
-        return reponseJson(1 , 'success');
+        return responseJson(1 , 'success');
 
     }
 }
