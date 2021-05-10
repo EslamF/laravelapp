@@ -83,7 +83,7 @@
                 });
             },
             cuttingOrders() {
-                const metas = document.getElementsByTagName('meta');
+                const metas = document.getElementsByTagName('meta'); 
                 axios.defaults.headers = {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',

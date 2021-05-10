@@ -59,6 +59,10 @@ Route::group([
 
 
         Route::post('store_end_products/store'   , 'StoreEndProductController@store');
+
+        Route::get('prepare_orders'      , 'PrepareOrderController@index');
+        Route::get('prepare_orders/show' , 'PrepareOrderController@show');
+        Route::post('prepare_orders/store' , 'PrepareOrderController@store');
  
 
     });
