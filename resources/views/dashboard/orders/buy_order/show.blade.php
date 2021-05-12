@@ -118,7 +118,11 @@
                             </tbody>
                         </table>
                     </div>
+
+                
+
                 </div>
+                
                 <br>
 
                 <div class = "row" dir = "ltr">
@@ -135,6 +139,12 @@
                 <!-- logo -->
                 <div> 
                     <img src = "{{asset('logo2.jpeg')}}" style = "width:150px;">
+                </div>
+
+                <div class="col-md-12 no-print">
+                    <button @click="updateData()" class="mr-4 float-right btn btn-primary noprint" {{ Laratrust::isAbleTo('edit-buy-order') ? '' : 'disabled' }} >
+                        {{__('words.edit')}}
+                    </button>
                 </div>
 
                 

@@ -63,6 +63,9 @@ Route::group([
         Route::get('prepare_orders'      , 'PrepareOrderController@index');
         Route::get('prepare_orders/show' , 'PrepareOrderController@show');
         Route::post('prepare_orders/store' , 'PrepareOrderController@store');
+
+        Route::get('shipping_orders'        , 'ShippingOrderController@index');
+        Route::post('shipping_orders/store' , 'ShippingOrderController@store');
  
 
     });

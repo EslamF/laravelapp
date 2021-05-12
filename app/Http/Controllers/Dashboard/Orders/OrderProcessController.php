@@ -113,10 +113,10 @@ class OrderProcessController extends Controller
             $product = Product::with('productType' , 'size' , 'material' , 'material.materialType')->where('produce_code' , $item->produce_code)->first();
             //$order->buyOrderProducts[$key]->put('type' , $product->productType->name);
             //$order->buyOrderProducts['type'] = $product->productType->name ;
-            $item->type      = $product->productType->name ;
-            $item->size      = $product->size->name ;
-            $item->mq_r_code = $product->material->mq_r_code ;
-            $item->material  = $product->material->materialType->name ;
+            $item->type      = $product && $product->productType ? $product->productType->name : '' ;
+            $item->size      = $product && $product->size ?  $product->size->name : '' ;
+            $item->mq_r_code = $product && $product->material ?  $product->material->mq_r_code : '' ;
+            $item->material  = $product && $product->material && $product->material->materialType ? $product->material->materialType->name : '' ;
             return $item;
 
         });
