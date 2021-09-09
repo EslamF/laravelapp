@@ -3,6 +3,7 @@
 namespace App\Models\Materials;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Vestment extends Model
 {
@@ -17,5 +18,19 @@ class Vestment extends Model
     public function spreadingOutMaterialOrder()
     {
         return $this->belongsTo('App\Models\Orders\SpreadingOutMaterialOrder');
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        if($value)
+        {
+            return Carbon::parse($value)
+                        ->addHours(2)
+                        ->format('Y-m-d h:i a');
+        }
+        else
+        {
+            return '';
+        }
     }
 }

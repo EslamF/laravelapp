@@ -67,6 +67,33 @@
                                 </li>
                                 @endpermission
 
+                                @permission('materials-inventory')
+                                <li class="nav-item">
+                                    <a href="{{Route('receiving.material.pending_vestments')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>جرد الخامات</p>
+                                    </a>
+                                </li>
+                                @endpermission
+
+                                @permission('shipping-following')
+                                <li class="nav-item">
+                                    <a href="{{Route('buy.shipping_following')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{__('words.shipping_following')}}</p>
+                                    </a>
+                                </li>
+                                @endpermission
+
+                                @permission('sales')
+                                <li class="nav-item">
+                                    <a href="{{Route('buy.sales')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>المبيعات</p>
+                                    </a>
+                                </li>
+                                @endpermission
+
                                 @permission('show-role')                     
                                 <li class="nav-item">
                                     <a href="{{Route('role.list')}}" class="nav-link">

@@ -16,6 +16,7 @@ use App\Exports\BuyOrdersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\User;
 use App\Models\Organization\ShippingCompany;
+use App\Models\Organization\Factory;
 
 class BuyOrderController extends Controller
 {
@@ -41,6 +42,16 @@ class BuyOrderController extends Controller
             if(request()->filled('confirmation'))
             {
                 $query->where('confirmation' , request()->confirmation);
+            }
+
+            if(request()->filled('status'))
+            {
+                $query->where('status' , request()->status);
+            }
+
+            if(request()->filled('preparation'))
+            {
+                $query->where('preparation' , request()->preparation);
             }
 
             if(request()->filled('from'))
@@ -418,5 +429,152 @@ class BuyOrderController extends Controller
         return view('dashboard.orders.buy_order.print' , compact('orders'));
    
 
+    }
+
+    public function sales()
+    {
+        $factories = Factory::get();
+
+        /*$buy_orders = BuyOrder::with('products')->where(function($query){
+
+            if(request()->filled('from'))
+            {
+                $query->where('created_at' , '>=' , request()->from); 
+            }
+
+            if(request()->filled('to'))
+            {
+                $query->where('created_at' , '<=' , request()->to);  
+            }
+
+            if(request()->filled('order_number'))
+            {
+                $query->where('order_number' , 'like' , '%' . request()->order_number . '%');
+            }
+
+            if(request()->filled('mq_r_code'))
+            {
+                $query->whereHas('products' , function($query2){
+
+                    $material_ids = Material::where('mq_r_code' , request()->mq_r_code)->pluck('id')->toArray();
+
+                    $query2->whereIn('material_id' , $material_ids);
+
+                });
+            }
+
+            if(request()->filled('factory_id'))
+            {
+                $query->whereHas('products' , function($query2){
+
+                    $query2->where('factory_id' , request()->factory_id);
+
+                });
+                
+            }
+        })->where('status' , 'done')->paginate(); 
+        */
+        
+
+
+        /*$products = BuyOrder::with('products')->where('status' , 'done')->get();
+
+        return $products;
+        */
+
+        $products = Product::with('buyOrders')->whereHas('buyOrders' , function($query){
+
+            $query->where('status' , 'done');
+
+        })->where(function($query){
+
+            if(request()->filled('from'))
+            {
+                $query->whereHas('buyOrders' , function($query2){
+                    $query2->whereDate('buy_orders.created_at' , '>=' , request()->from); 
+                });
+            }
+
+            else 
+            {
+                $query->whereHas('buyOrders' , function($query2){
+                    $query2->whereDate('buy_orders.created_at' , '>=' , date('Y-m-d')); 
+                });
+            }
+
+            if(request()->filled('to'))
+            {
+                $query->whereHas('buyOrders' , function($query2){
+                    $query2->whereDate('buy_orders.created_at' , '<=' , request()->to);  
+                });
+            }
+
+            else 
+            {
+                $query->whereHas('buyOrders' , function($query2){
+                    $query2->whereDate('buy_orders.created_at' , '<=' , date('Y-m-d'));  
+                });
+            }
+
+            
+
+            if(request()->filled('order_number'))
+            {
+                $query->whereHas('buyOrders' , function($query2){
+                    $query2->where('order_number' , 'like' , '%' . request()->order_number . '%');
+                });
+            }
+
+            if(request()->filled('mq_r_code'))
+            {
+                $material_ids = Material::where('mq_r_code' , request()->mq_r_code)->pluck('id')->toArray();
+                $query->whereIn('material_id' , $material_ids);
+            }
+
+            if(request()->filled('factory_id'))
+            {
+                $query->where('factory_id' , request()->factory_id);
+            }
+
+        })->paginate(25);
+
+        //return $products;
+
+        $employees = User::get();
+        $shipping_companies = ShippingCompany::get();
+
+        $factories = Factory::get();
+        return view('dashboard.orders.buy_order.sales', ['products' => $products , 'employees' => $employees , 'shipping_companies' => $shipping_companies , 'factories' => $factories]);
+        //return $buy_orders;
+    }
+
+    public function shipping_following()
+    {
+        $orders = BuyOrder::where(function($query){
+
+            if(request()->filled('shipping_company_id'))
+            {
+                $query->where('shipping_company_id' , request()->shipping_company_id);
+            }
+
+            if(request()->filled('status'))
+            {
+                $query->where('status' , request()->status);
+            }
+
+            if(request()->filled('from'))
+            {
+                $query->whereDate('created_at' , '>=' , request()->from); 
+            }
+
+            if(request()->filled('to'))
+            {
+                $query->whereDate('created_at' , '<=' , request()->to);  
+            }
+            
+        })->whereHas('shippingOrders')->paginate(25);
+
+        $shipping_companies = ShippingCompany::get();
+        return view('dashboard.orders.buy_order.shipping_following' , compact('orders' , 'shipping_companies'));
     }
 }

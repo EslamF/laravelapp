@@ -5,7 +5,11 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">{{__('words.store_order')}}</h3>
-                <a href="{{url()->previous()}}" class="btn btn-info float-right">{{__('words.back')}}</a>
+                {{-- <a href="{{url()->previous()}}" class="btn btn-info float-right">{{__('words.back')}}</a> --}}
+                <div class="float-right">
+                    <p class = "text-center">M.O.M Brand</p>
+                    <img src = "{{asset('logo2.jpeg')}}" style = "width:80px;">
+                </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -25,8 +29,8 @@
                             @foreach($products as $product)
                             <tr>
                                 <td>{{$product->prod_code}}</td>
-                                <td>{{$product->size->name}}</td>
                                 <td>{{$product->material->mq_r_code}}</td>
+                                <td>{{$product->size->name}}</td>
                             </tr>
                             @endforeach
                         </tbody>

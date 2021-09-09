@@ -5,6 +5,11 @@
         <div class="card ">
             <div class="card-header">
 
+                <div class="float-right">
+                    <p class = "text-center">M.O.M Brand</p>
+                    <img src = "{{asset('logo2.jpeg')}}" style = "width:80px;">
+                </div>
+
                 <div class = "text-center">
                     {{--<h3 >موظف الفرز : {{$data['sort_order']->sortinguser->name}}</h3>--}}
                     <h3>موظفين الفرز</h3>

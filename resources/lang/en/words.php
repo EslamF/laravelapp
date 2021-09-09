@@ -95,10 +95,11 @@ return [
     'ready_orders'              => 'الطلبات الجاهزة' , 
     'ready_to_shipping_orders'  => 'الطلبات الجاهزة للشحن' , 
     'done_orders'               => 'الطلبات المنتهية' ,
-    'returns'                   => 'المرتجعات' ,
+    'returns'                   => 'الطلبات المرتجعة' ,
     'more_info'                 => 'المزيد' ,
 
     'shipping_orders'           => 'أذونات الشحن' ,
+    'shipping_following'        => 'متابعة الشحنات',
 
     'prepare_order' => 'تحضير الطلب' , 
     'add_product'  => 'أضف منتج' ,
@@ -142,7 +143,7 @@ return [
     //
     'order_code' => 'رقم الإذن' , 
     'receving_products_in_company_orders' => 'أذونات إستلام منتجات في الشركة' ,
-    'shipping_employee' => 'موظف الشحن' ,
+    'shipping_employee' => 'مندوب الشركة' ,
     'cutting_employee' => 'موظف القص' ,
     'store_order' => 'إذن تخزين' ,
     'product_code' => 'كود المنتج' ,
@@ -166,5 +167,9 @@ return [
     'qunatity_en' => 'QUANTITY',
     'description_en' => 'DESCRIPTION',
     'cash_en' => 'CASH',
+
+    'created_at' => 'التاريخ',
+    'product_type' => 'نوع المنتج',
+    'number' => 'العدد',
     
  ];

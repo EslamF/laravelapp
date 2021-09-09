@@ -7,6 +7,7 @@ use App\Models\Products\Product;
 use App\Http\Controllers\Dashboard\Alarms\ProductsAlarmController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\BuyOrdersImport;
+use App\Models\Orders\BuyOrder;
 
 class HomeController extends Controller
 {
@@ -40,7 +41,8 @@ class HomeController extends Controller
         $about_to_run_products_count = 0;
         $low_sale_products_count = 0;
         $best_selling_products_count = count($object->get_best_selling_products());
+        $returns_count = BuyOrder::where('status' , 'rejected')->count();
 
-        return view('main_page' , compact('about_to_run_products_count' , 'low_sale_products_count' , 'best_selling_products_count'));
+        return view('main_page' , compact('about_to_run_products_count' , 'low_sale_products_count' , 'best_selling_products_count' , 'returns_count'));
     }
 }

@@ -216,4 +216,26 @@ class ReceivingMaterialController extends Controller
         return view('dashboard.orders.receiving_materials.vestment_print' , compact('vestments') );
     }
 
+    public function pending_vestments()
+    {
+        /*$vestments = Vestment::with('material')->where('status' , 'pending')->get()->groupBy('material_id');*/
+
+        $vestments = Vestment::join('materials' , 'vestments.material_id' , '=' , 'materials.id')
+                            ->select('vestments.material_id' , 'vestments.name' , 'vestments.barcode' , 'vestments.weight' , 'vestments.created_at' )
+                            ->with('material')
+                            ->where('status' , 'pending')->where(function($query){
+
+            if(request()->filled('mq_r_code'))
+            {
+                $materials_ids = Material::where('mq_r_code' , request()->mq_r_code)->pluck('id')->toArray();
+                $query->whereIn('material_id' , $materials_ids);
+            }
+
+        })->orderBy('materials.mq_r_code')->paginate();
+
+        //return $vestments;
+
+        return view('dashboard.orders.receiving_materials.pending_vestments' , compact('vestments'));
+    }
+
 }

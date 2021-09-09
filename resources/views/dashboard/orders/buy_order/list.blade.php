@@ -9,7 +9,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                @if($data->count())
+                
                 <div class="table-responsive-sm">
                     <form method = "post" action = "{{route('buy.export')}}">
                         @csrf 
@@ -65,13 +65,34 @@
                                 </div>
         
                                 <div class = "form-group" style = "margin: 10px;">
-                                    <label>حالة الطلب</label>
+                                    <label>{{__('words.confirmation')}}</label>
                                     <select class = "form-control" name = "confirmation">
                                         <option value = "">كل الحالات</option>
                                         <option value = "pending"  {{ request()->confirmation == 'pending'   ? 'selected' : '' }}> {{ __('words.pending_orders') }}</option>
                                         <option value = "delayed"  {{ request()->confirmation == 'delayed'   ? 'selected' : '' }}> {{ __('words.delayed_orders') }}</option>
                                         <option value = "confirmed"{{ request()->confirmation == 'confirmed' ? 'selected' : '' }}> {{ __('words.confirmed_orders') }}</option>
                                         <option value = "canceled" {{ request()->confirmation == 'canceled'  ? 'selected' : '' }}> {{ __('words.canceled_orders') }}</option>
+                                    </select>
+                                </div>
+
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>{{__('words.order_status')}}</label>
+                                    <select class = "form-control" name = "status">
+                                        <option value = "">كل الحالات</option>
+                                        <option value = "pending"   {{ request()->status == 'pending'   ? 'selected' : '' }}>قيد الإنتظار</option>
+                                        <option value = "done"      {{ request()->status == 'done'   ? 'selected' : '' }}>تم اكتمال الطلب</option>
+                                        <option value = "rejected"  {{ request()->status == 'rejected' ? 'selected' : '' }}> تم رفضه</option>
+                                        <option value = "returned"  {{ request()->status == 'returned'  ? 'selected' : '' }}> تم إرجاعه</option>
+                                    </select>
+                                </div>
+
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>{{__('words.order_preparation')}}</label>
+                                    <select class = "form-control" name = "preparation">
+                                        <option value = "">كل الحالات</option>
+                                        <option value = "need_prepare"   {{ request()->preparation == 'need_prepare'   ? 'selected' : '' }}>{{__('words.need_prepare')}}</option>
+                                        <option value = "prepared"       {{ request()->preparation == 'prepared'   ? 'selected' : '' }}>{{__('words.prepared')}}</option>
+                                        <option value = "shipped"        {{ request()->preparation == 'shipped' ? 'selected' : '' }}> {{__('words.shipped')}}</option>
                                     </select>
                                 </div>
         
@@ -85,6 +106,7 @@
                     </form>
 
                     <br>
+                    @if($data->count())
                     <table class="table">
                         <thead>
                             <tr>
@@ -136,12 +158,12 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    @else 
+                        <p class="text-center">لا يوجد بيانات</p>
+                    @endif
                 </div>
-                @else
-                <div class="table-responsive-sm">
-                    <p class="text-center">لا يوجد بيانات</p>
-                </div>
-                @endif
+               
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">

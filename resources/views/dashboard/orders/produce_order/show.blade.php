@@ -5,7 +5,11 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title"> المنتجات الخاصة بإذن التصنيع</h3>
-                <a href="{{Route('produce.order.create')}}" class="btn btn-success float-right">إضافة</a>
+                {{-- <a href="{{Route('produce.order.create')}}" class="btn btn-success float-right">إضافة</a> --}}
+                <div class="float-right">
+                    <p class = "text-center">M.O.M Brand</p>
+                    <img src = "{{asset('logo2.jpeg')}}" style = "width:80px;">
+                </div>
             </div>
             <h4 class="ml-3 mt-2">{{$order->factory ?' المصنع: '. $order->factory->name: ''}}</h3>
                 <!-- /.card-header -->

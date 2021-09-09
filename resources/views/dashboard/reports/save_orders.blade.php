@@ -32,7 +32,7 @@
                         </div>
 
                         <div class = "form-group" style = "margin: 10px;">
-                            <label>موظف الشحن</label>
+                            <label>مندوب الشركة</label>
                             <select class = "form-control" name = "shipping_employee_id">
                                     <option value = "">كل الموظفين</option>
                                 @foreach($shipping_employees as $shipping_employee)
@@ -55,7 +55,7 @@
                     <thead>
                         <tr>
                             <th>الموظف</th>
-                            <th>موظف الشحن</th>
+                            <th>مندوب الشركة</th>
                             <th>رقم الإذن </th>
                             <th>حالة التخزين </th>
                             <th>إجراءات</th>

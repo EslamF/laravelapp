@@ -191,6 +191,7 @@ Route::group([
                 Route::get('print_vestments/{id}', 'ReceivingMaterialController@print_vestments')->name('receiving.material.print_vestments');
                 Route::get('print_vestments2/{ids}', 'ReceivingMaterialController@print_vestments2')->name('receiving.material.print_vestments2');
                 Route::post('get_material_from_vestment', 'ReceivingMaterialController@get_material_from_vestment')->name('receiving.material.get_material_from_vestment');
+                Route::get('pending_vestments', 'ReceivingMaterialController@pending_vestments')->name('receiving.material.pending_vestments');
             });
 
             Route::group([
@@ -361,6 +362,10 @@ Route::group([
 
                 Route::post('export', 'BuyOrderController@export')->name('buy.export');
                 Route::get('print', 'BuyOrderController@print')->name('buy.print');
+
+                Route::get('sales', 'BuyOrderController@sales')->name('buy.sales');
+
+                Route::get('shipping_following', 'BuyOrderController@shipping_following')->name('buy.shipping_following');
                 
             });
 

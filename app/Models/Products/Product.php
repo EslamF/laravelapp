@@ -91,6 +91,11 @@ class Product extends Model
         return $this->belongsToMany(BuyOrder::class);
     }
 
+    public function buyOrder()
+    {
+        return $this->buyOrders()->first();
+    }
+
     public function produce_orders()
     {
         return $this->belongsTo('App\Models\Orders\ProduceOrder');

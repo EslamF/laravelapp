@@ -38,7 +38,7 @@
         <div> 
             <span class = "span-style">{{$product->size->name}}</span>
             <span class = "span-style">{{$product->material->mq_r_code}}</span>
-            <span class = "span-style">{{Str::limit($product->productType->name,50)}}</span>
+            {{-- <span class = "span-style">{{Str::limit($product->productType->name,50)}}</span> --}}
         </div>
 
         <div>

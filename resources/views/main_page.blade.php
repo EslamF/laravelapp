@@ -51,6 +51,21 @@
                 </div>
             </div>
 
+            <div class="col-lg-4 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{$returns_count}}</h3>
+        
+                        <p>لم تسترجع من شركات الشحن</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="{{Route('process.rejected_orders_list')}}" class="small-box-footer">{{__('words.more_info')}} <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
         </div>
         <!-- /.card -->
     </div>
