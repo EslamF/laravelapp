@@ -53,6 +53,7 @@
                 @if($products->count())
 
                 <p style = "font-size: 1.3em;color: #b82626;font-weight: bold;">عدد المنتجات : {{count($products)}} </p>
+                <p style = "font-size: 1.3em;color: #b82626;font-weight: bold;">عدد الطلبات : {{$number_of_buy_orders}} </p>
                 <div class="table-responsive-sm">
                   
                    

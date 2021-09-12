@@ -540,11 +540,12 @@ class BuyOrderController extends Controller
 
         //return $products;
 
+        $number_of_buy_orders = BuyOrder::where('status' , 'done')->count();
         $employees = User::get();
         $shipping_companies = ShippingCompany::get();
 
         $factories = Factory::get();
-        return view('dashboard.orders.buy_order.sales', ['products' => $products , 'employees' => $employees , 'shipping_companies' => $shipping_companies , 'factories' => $factories]);
+        return view('dashboard.orders.buy_order.sales', ['products' => $products , 'employees' => $employees , 'shipping_companies' => $shipping_companies , 'factories' => $factories , 'number_of_buy_orders' => $number_of_buy_orders]);
         //return $buy_orders;
     }
 
