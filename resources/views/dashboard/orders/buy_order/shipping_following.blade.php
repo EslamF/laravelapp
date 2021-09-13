@@ -39,10 +39,9 @@
                                     <label>{{__('words.order_status')}}</label>
                                     <select class = "form-control" name = "status">
                                         <option value = "">كل الحالات</option>
-                                        <option value = "pending"   {{ request()->status == 'pending'   ? 'selected' : '' }}>قيد الإنتظار</option>
-                                        <option value = "done"      {{ request()->status == 'done'   ? 'selected' : '' }}>تم اكتمال الطلب</option>
-                                        <option value = "rejected"  {{ request()->status == 'rejected' ? 'selected' : '' }}> تم رفضه</option>
-                                        <option value = "returned"  {{ request()->status == 'returned'  ? 'selected' : '' }}> تم إرجاعه</option>
+                                        @foreach(status_after_shipping() as $status)
+                                            <option value="{{$status}}"  {{ request()->status == $status   ? 'selected' : '' }}>{{__('words.status_after_shipping.' . $status)}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
         
