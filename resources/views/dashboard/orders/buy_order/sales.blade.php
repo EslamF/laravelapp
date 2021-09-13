@@ -52,8 +52,9 @@
                 </form>
                 @if($products->count())
 
-                <p style = "font-size: 1.3em;color: #b82626;font-weight: bold;">عدد المنتجات : {{count($products)}} </p>
                 <p style = "font-size: 1.3em;color: #b82626;font-weight: bold;">عدد الطلبات : {{$number_of_buy_orders}} </p>
+                <p style = "font-size: 1.3em;color: #b82626;font-weight: bold;">عدد المنتجات : {{count($products)}} </p>
+                
                 <div class="table-responsive-sm">
                   
                    
@@ -64,6 +65,7 @@
                             <tr>
                                 <th>{{__('words.order_number')}}</th>
                                 <th>{{__('words.created_at')}}</th>
+                                <th>{{__('words.order_status')}}</th>
                                 <th>{{__('words.mq_r_code')}}</th>
                                 <th>{{__('words.product_type')}}</th>
                                 <th>{{__('words.factory')}}</th>
@@ -89,6 +91,7 @@
                                 <tr> 
                                     <td><a href = "{{Route('buy.show_order', $product->buyOrder()->id)}}">{{$product->buyOrder()->order_number}}</a></td>
                                     <td dir = "ltr" class = "text-right">{{$product->buyOrder()->created_at}}</td>
+                                    <td><span class = "{{$product->buyOrder()->status_color}}" style = "padding:5px; border-radius:5px;">{{ $product->buyOrder()->translate_status }}</span></td>
                                     <td>{{$product->material ? $product->material->mq_r_code : ''}}</td>
                                     <td>{{$product->productType ? $product->productType->name : ''}}</td>
                                     <td>{{$product->factory ? $product->factory->name : ''}}</td>

@@ -35,7 +35,7 @@
                     <form method = "get">
                         <div class = "row">
                                 <div class = "form-group" style = "margin: 10px;">
-                                    <label>تاريخ التوصل من</label>
+                                    <label>تاريخ الإذن</label>
                                     <input type = "date" name = "from" class = "form-control" value = "{{request()->from}}">
                                 </div>
         
@@ -95,6 +95,11 @@
                                         <option value = "shipped"        {{ request()->preparation == 'shipped' ? 'selected' : '' }}> {{__('words.shipped')}}</option>
                                     </select>
                                 </div>
+
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>{{__('words.mq_r_code')}}</label>
+                                    <input class = "form-control" name = "mq_r_code" value = "{{request()->mq_r_code}}">
+                                </div>
         
                                 <div class = "form-group" style = "margin: 10px;">
                                     <label  style = "visibility:hidden;">بحث</label>
@@ -107,6 +112,11 @@
 
                     <br>
                     @if($data->count())
+
+                    <p style = "font-size: 1.3em;color: #b82626;font-weight: bold;">عدد الطلبات : {{$number_of_total_orders}} </p>
+                    <p style = "font-size: 1.3em;color: #b82626;font-weight: bold;">عدد المنتجات : {{$number_of_total_products}} </p>
+                    <p style = "font-size: 1.3em;color: #b82626;font-weight: bold;">الحساب الكلي : {{$total_price}} </p>
+ 
                     <table class="table">
                         <thead>
                             <tr>

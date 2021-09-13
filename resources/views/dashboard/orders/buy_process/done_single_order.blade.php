@@ -10,9 +10,14 @@
                         <label for="">{{__('words.order_status')}}</label>
                         <select id="order_status" class="form-control" v-if="data.order.status != 'returned'" v-model="order_status" id="">
                             <option value="" disabled>{{__('words.choose')}}</option> 
-                            <option value="pending" :selected="data.order.status == 'pending'">{{__('words.pending_order')}}</option>
+                            @foreach(status_after_shipping() as $status)
+                                @if($status != 'returned')
+                                    <option value="{{$status}}" :selected="data.order.status == '{{$status}}'">{{__('words.status_after_shipping.' . $status)}}</option>
+                                @endif
+                            @endforeach
+                            {{-- <option value="pending" :selected="data.order.status == 'pending'">{{__('words.pending_order')}}</option>
                             <option value="done" :selected="data.order.status == 'done'">{{__('words.done_order')}}</option>
-                            <option value="rejected" :selected="data.order.status == 'rejected'">{{__('words.rejected_order')}}</option>
+                            <option value="rejected" :selected="data.order.status == 'rejected'">{{__('words.rejected_order')}}</option> --}}
                         </select>
                     </div>
                 

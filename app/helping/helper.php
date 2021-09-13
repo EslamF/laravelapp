@@ -168,3 +168,16 @@ function generateEAN($number)
   $code .= (10 - ($sum % 10)) % 10;
   return $code;
 }
+
+function status_after_shipping()
+{
+    $arr = [
+        'pending',
+        'done' ,
+        'paid',
+        'rejected',
+        'returned',
+    ];
+
+    return $arr;
+}

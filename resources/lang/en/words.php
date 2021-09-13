@@ -171,5 +171,13 @@ return [
     'created_at' => 'التاريخ',
     'product_type' => 'نوع المنتج',
     'number' => 'العدد',
+
+    'status_after_shipping' => [
+        'pending'  => 'تحت التسليم',
+        'done'     => 'تم التسليم' ,
+        'paid'     => 'تم التحصيل',
+        'rejected' => 'مرتجع',
+        'returned' => 'تم إستلام المرتجع',
+    ],
     
  ];

@@ -141,6 +141,11 @@ class BuyOrder extends Model
             return 'bg-warning' ;
         }
 
+        else if($this->status == 'paid')
+        {
+            return 'bg-success' ;
+        }
+
         else 
         {
             return '';
@@ -159,7 +164,7 @@ class BuyOrder extends Model
 
     public function getTranslateStatusAttribute()
     {
-        return __('words.' . $this->status . '_order');
+        return __('words.status_after_shipping.' . $this->status);
     }
 
     public function getCreatedAtAttribute($value)

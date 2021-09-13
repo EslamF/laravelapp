@@ -271,7 +271,7 @@ class OrderProcessController extends Controller
     {
         $validator = validator()->make($request->all() , [
             'order_id'     => 'required|exists:buy_orders,id' ,
-            'order_status' => 'required|in:pending,rejected,done'
+            'order_status' => 'required|in:pending,rejected,done,paid'
         ]);
 
         if($validator->fails())

@@ -27,7 +27,7 @@ class BuyOrderController extends Controller
 
     public function getAllPaginate()
     {
-        $data = BuyOrder::where(function($query){
+        $orders = BuyOrder::where(function($query){
 
             if(request()->filled('employee_id'))
             {
@@ -56,18 +56,54 @@ class BuyOrderController extends Controller
 
             if(request()->filled('from'))
             {
-                $query->where('delivery_date' , '>=' , request()->from); 
+                $query->whereDate('created_at' , '>=' , request()->from); 
             }
 
             if(request()->filled('to'))
             {
-                $query->where('delivery_date' , '<=' , request()->to);  
+                $query->whereDate('created_at' , '<=' , request()->to);  
             }
 
-        })->with('customer:id,name,phone')->paginate();
+            if(request()->filled('mq_r_code'))
+            {
+                $query->whereHas('buyOrderProducts' , function($query2){
+                    $searching_value = 'no_there';
+
+                    $material = Material::where('mq_r_code' , request()->mq_r_code)->first();
+                    if($material)
+                    {
+                        $product = Product::where('material_id' , $material->id )->first();
+
+                        if($product)
+                        {
+                            $searching_value = $product->product_material_code;
+                        }
+
+                    }
+
+                        $query2->where('product_material_code' , $searching_value);
+                    
+                });
+            }
+        
+
+        })->with('customer:id,name,phone');
+
+        $data = $orders->paginate();
+
+        //return $orders->pluck('id')->toArray();
+        
         $employees = User::get();
         $shipping_companies = ShippingCompany::get();
-        return view('dashboard.orders.buy_order.list', ['data' => $data , 'employees' => $employees , 'shipping_companies' => $shipping_companies]);
+
+        //$number_of_total_products = Product
+        //$number_of_total_products = Product::with('buyOrders')->whereHas('buyOrders')->count();
+
+        $number_of_total_products = BuyOrderProduct::whereIn('buy_order_id' , $orders->pluck('id')->toArray())->sum('factory_qty') + BuyOrderProduct::whereIn('buy_order_id' , $orders->pluck('id')->toArray())->sum('company_qty') ;
+        $number_of_total_orders   = $data->total();
+        $total_price              = $orders->sum('price');
+
+        return view('dashboard.orders.buy_order.list', ['data' => $data , 'employees' => $employees , 'shipping_companies' => $shipping_companies , 'number_of_total_products' => $number_of_total_products , 'number_of_total_orders' => $number_of_total_orders , 'total_price' => $total_price]);
     }
 
     public function cuttingOrdersByMaterial($mq_r_code)
@@ -484,7 +520,7 @@ class BuyOrderController extends Controller
 
         $products = Product::with('buyOrders')->whereHas('buyOrders' , function($query){
 
-            $query->where('status' , 'done');
+            $query->whereIn('status' , ['done' , 'paid']);
 
         })->where(function($query){
 
