@@ -39,7 +39,13 @@
 
         {{--<img src = "{{asset(DNS1D::getBarcodePNGPath($material->barcode, 'C128' , 1.4 , 22 , array(0 , 0 , 0) , true))}}">--}}
         {!! DNS1D::getBarcodeSVG($material->barcode, 'EAN13',2.1,100,'black', true) !!}
+        <br>
+
+        <span class = "" style = "display:inline-block;margin-right:50px;;">M.O.M Brand</span>
+        
     </div>
+
+    
 
     <a href="{{Route('order.receiving.material')}}" class="btn btn-info no-print float-left" style = "margin-top:10px">رجوع</a>
 @endsection

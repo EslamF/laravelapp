@@ -45,6 +45,8 @@
             {!! DNS1D::getBarcodeSVG($vestment->barcode, 'EAN13',2.1,100,'black', true) !!}
 
         </div>
+
+        <span class = "" style = "display:inline-block;margin-right:50px;;">M.O.M Brand</span>
     </div>
     @endforeach
 

@@ -38,7 +38,7 @@
         <div> 
             <span class = "span-style">{{$product->size->name}}</span>
             <span class = "span-style">{{$product->material->mq_r_code}}</span>
-            {{-- <span class = "span-style">{{Str::limit($product->productType->name,50)}}</span> --}}
+            
         </div>
 
         <div>
@@ -50,7 +50,11 @@
             {!! DNS1D::getBarcodeSVG($product->prod_code, 'EAN13',2.1,100,'black', true) !!}
             {{-- DNS1D::getBarcodeHTML('9780691147727', 'C39+')--}}
 
+            
+
         </div>
+
+        <span class = "" style = "display:inline-block;margin-right:50px;;">M.O.M Brand</span>
     </div>
     @endforeach
 @endsection
