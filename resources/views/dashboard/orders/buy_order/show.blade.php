@@ -50,6 +50,15 @@
             
             <div class="card-body">
 
+                <!-- logo -->
+                <div style = "float:left;"> 
+                    <img src = "{{asset('logo2.jpeg')}}" style = "width:150px;">
+                </div>
+
+                <div style = "clear:both;">
+
+                </div>
+
                 <div class = "row">
                     <div class="col-sm-12 text-center">
                         {!! DNS1D::getBarcodeSVG($order->bar_code, 'EAN13',2.1,100,'black', true) !!}
@@ -136,10 +145,7 @@
                     </div>
                 </div>
             
-                <!-- logo -->
-                <div> 
-                    <img src = "{{asset('logo2.jpeg')}}" style = "width:150px;">
-                </div>
+                
 
                 <div class="col-md-12 no-print">
                     <button @click="updateData()" class="mr-4 float-right btn btn-primary noprint" {{ Laratrust::isAbleTo('edit-buy-order') ? '' : 'disabled' }} >
