@@ -117,7 +117,7 @@
                                                     
                                                         <input type = "hidden" name = "buy_order_id" value = "{{$order->id}}">
                                                         <label>{{__('words.shipping_fees')}}</label>
-                                                        <input type = "number" name = "shipping_fees" class = "form-control">
+                                                        <input type = "number" name = "shipping_fees" value = "{{$order->shipping_fees}}" class = "form-control">
                                                     
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
