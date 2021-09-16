@@ -89,6 +89,8 @@ return [
     'delivery_date' => 'تاريخ التوصيل' ,
     'confirmation' => 'تأكيد الطلب' ,
     'price' => 'السعر' , 
+    'shipping_fees' => 'مصاريف الشحن',
+    'net' => 'الصافي',
     'description' => 'الوصف' , 
 
     'new_orders'                => 'الطلبات الجديدة' , 

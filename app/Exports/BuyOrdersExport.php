@@ -66,7 +66,7 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             }
 
 
-        })->select('id' , 'delivery_date' , /*'bar_code',*/ 'order_number' , 'customer_id' , 'price' , 'description');
+        })->select('id' , 'delivery_date' , /*'bar_code',*/ 'order_number' , 'customer_id' , 'price' , 'shipping_fees' , 'description');
     }
 
     public function map($order): array
@@ -91,6 +91,8 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             $order->customer->address,
             $order->customer->phone,
             $order->price,
+            $order->shipping_fees,
+            $order->net,
             $order->description,
             $res,
             $total,
@@ -107,6 +109,8 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             'Address' ,
             'Mobile' ,
             'Cash' ,
+            'Shipping Fees' ,
+            'Net',
             'Notes' ,
             'Products' ,
             'N. pieces'

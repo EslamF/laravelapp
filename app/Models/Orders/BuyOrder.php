@@ -25,6 +25,7 @@ class BuyOrder extends Model
         'shipping_company_id',
         'price',
         'order_number',
+        'shipping_fees',
     ];
 
     protected $appends = ['confirmation_color' , 'status_color' , 'translate_confirmation' , 'translate_preparation' , 'translate_status']; 
@@ -63,7 +64,11 @@ class BuyOrder extends Model
                 return $item->price * $qty;
             })->sum();
         }
-      
+    }
+
+    public function getNetAttribute()
+    {
+        return $this->price - $this->shipping_fees;
     }
 
     public function productStatus()

@@ -614,4 +614,28 @@ class BuyOrderController extends Controller
         $shipping_companies = ShippingCompany::get();
         return view('dashboard.orders.buy_order.shipping_following' , compact('orders' , 'shipping_companies'));
     }
+
+    public function edit_shipping_fees(Request $request)
+    {
+        $rules = [
+            'buy_order_id'  => 'required|exists:buy_orders,id',
+            'shipping_fees' => 'required',
+        ];
+
+        $validator = validator()->make($request->all() , $rules);
+
+        if($validator->fails())
+        {
+            return back()->with('error' , $validator->errors()->first());
+        }
+
+        $order = BuyOrder::find($request->buy_order_id);
+
+        $order->shipping_fees = $request->shipping_fees;
+        $order->save();
+
+        return back()->with('success' , 'تم التعديل بنجاح');
+
+
+    }
 }

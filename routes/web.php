@@ -366,6 +366,7 @@ Route::group([
                 Route::get('sales', 'BuyOrderController@sales')->name('buy.sales');
 
                 Route::get('shipping_following', 'BuyOrderController@shipping_following')->name('buy.shipping_following');
+                Route::post('edit_shipping_fees', 'BuyOrderController@edit_shipping_fees')->name('buy.edit_shipping_fees');
                 
             });
 

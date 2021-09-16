@@ -65,7 +65,10 @@
                                 <th>{{__('words.customer')}}</th>
                                 <th>{{__('words.delivery_date')}}</th>
                                 <th>{{__('words.price')}}</th>
+                                <th>{{__('words.shipping_fees')}}</th>
+                                <th>{{__('words.net')}}</th>
                                 <th>{{__('words.shipping_company')}}</th>
+                                <th>{{__('words.actions')}}</th>
                             
                             </tr>
                         </thead>
@@ -91,7 +94,44 @@
                                     </td>
                                     <td>{{$order->delivery_date}}</td>
                                     <td>{{$order->orderTotal()}}</td>
+                                    <td>{{$order->shipping_fees ?? '-'}}</td>
+                                    <td>{{$order->net}}</td>
                                     <td>{{$order->shippingCompany ? $order->shippingCompany->name : ''}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default-{{$order->id}}">
+                                            <i class="fas fa-truck"></i>
+                                        </button>
+
+                                        <div class="modal fade" id="modal-default-{{$order->id}}">
+                                            <div class="modal-dialog">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h4 class="modal-title">{{$order->order_number}}</h4>
+                                                  {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button> --}}
+                                                </div>
+                                                <form method = "POST" action = "{{route('buy.edit_shipping_fees')}}">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                    
+                                                        <input type = "hidden" name = "buy_order_id" value = "{{$order->id}}">
+                                                        <label>{{__('words.shipping_fees')}}</label>
+                                                        <input type = "number" name = "shipping_fees" class = "form-control">
+                                                    
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">غلق</button>
+                                                    <button type="submit" class="btn btn-primary">تعديل</button>
+                                                    </div>
+                                                </form>
+                                              </div>
+                                              <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+                                        <!-- /.modal -->
+                                    </td>
                             </tr>
                             @endforeach
                         </tbody>
