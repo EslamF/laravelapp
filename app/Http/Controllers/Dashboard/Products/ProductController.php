@@ -271,8 +271,16 @@ class ProductController extends Controller
     public function import_sheet_excel(Request $request)
     {
         $rules = [
-            'file' => 'required|file|mimes:csv,xlsx,xls'
+            'file' => 'required|file' //|mimes:csv,xlsx,xls
         ];
+
+        $file = $request->file;
+        $extension =  $file->getClientOriginalExtension();
+        $available_extensions = ['csv','xlsx','xls']; 
+        if(! in_array($extension , $available_extensions ) )
+        {
+            return back()->with('error' , 'يجب أن يكون الملف csv أو xlsx أو xls');
+        }
 
         $request->validate($rules);
 

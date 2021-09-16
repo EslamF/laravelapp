@@ -7,6 +7,8 @@
                 <h3 class="card-title">رفع شيت للمنتجات</h3>
             </div>
             @include('includes.loading')
+
+            @include('includes.flash-message')
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" id = "myForm" action="{{Route('product.import_sheet_excel')}}" method="POST" enctype='multipart/form-data' >
