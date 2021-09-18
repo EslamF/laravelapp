@@ -136,7 +136,8 @@ class BuyOrderController extends Controller
         foreach ($products as $key => $product) {
             $old_factory_qty = 0;
             $old_company_qty = 0;
-            $oldOrders = BuyOrderProduct::where('produce_code', $key)->get();
+            //$oldOrders = BuyOrderProduct::where('produce_code', $key)->get();
+            $oldOrders = BuyOrderProduct::where('product_material_code', $key)->get();
 
             if ($oldOrders && $oldOrders->count() > 0) {
                 foreach ($oldOrders as $order) {
@@ -151,7 +152,9 @@ class BuyOrderController extends Controller
                 }
             }
 
-            $data[$key]['produce_code']  = $key;
+            //$data[$key]['produce_code']  = $key;
+            $data[$key]['product_material_code']  = $key;
+
             //$data[$key]['mq_r_code']     = Product::where('produce_code' , $key)->first()->material->mq_r_code ;
             $data[$key]['mq_r_code']     = Product::where('product_material_code' , $key)->first()->material->mq_r_code ;
             $data[$key]['factory_count'] = intval($product->where('status', 'available')->where('save_order_id', null)->count() / 100 * 90 - $old_factory_qty);

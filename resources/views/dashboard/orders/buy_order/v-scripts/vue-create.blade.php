@@ -112,7 +112,8 @@
                 
                 if (this.products.length > 0) {
                     for (var i = 0; i < this.products.length; i++) {
-                        if (this.products[i].produce_code == item.produce_code &&
+                        //if (this.products[i].produce_code == item.produce_code &&
+                        if (this.products[i].product_material_code == item.product_material_code &&
                             this.products[i].product_type == item.product_type &&
                             this.products[i].size == item.size) {
                             checker = false;
