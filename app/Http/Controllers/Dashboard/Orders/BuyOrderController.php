@@ -113,7 +113,8 @@ class BuyOrderController extends Controller
                 $q->where('mq_r_code', $mq_r_code);
             })
             ->where('received', 1)
-            ->get()->groupBy('produce_code');
+            //->get()->groupBy('produce_code');
+            ->get()->groupBy('product_material_code');
 
         //return response()->json($companyProducts, 200);
 
