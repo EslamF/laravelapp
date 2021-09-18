@@ -108,10 +108,18 @@ class BuyOrderController extends Controller
 
     public function cuttingOrdersByMaterial($mq_r_code)
     {
-        $companyProducts = Product::with('productType:id,name', 'size:id,name')
+        /*$companyProducts = Product::with('productType:id,name', 'size:id,name')
             ->whereHas('material', function ($q) use ($mq_r_code) {
                 $q->where('mq_r_code', $mq_r_code);
             })
+            ->where('received', 1)
+            //->get()->groupBy('produce_code');
+            ->get()->groupBy('product_material_code');*/
+
+        $material_ids = Material::where('mq_r_code' , $mq_r_code)->pluck('id')->toArray();
+
+        $companyProducts = Product::with('productType:id,name', 'size:id,name')
+            ->whereIn('material_id' , $material_ids)
             ->where('received', 1)
             //->get()->groupBy('produce_code');
             ->get()->groupBy('product_material_code');
