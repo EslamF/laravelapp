@@ -175,6 +175,7 @@ class ShippingOrderController extends Controller
     public function importShippingStatus(Request $request)
     {
 
-        return Excel::import(new OrderStatusImport, $request->file);
+        Excel::import(new OrderStatusImport, $request->file);
+        return redirect()->back()->with('success' , 'تم الرفع بنجاح');
     }
 }

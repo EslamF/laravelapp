@@ -8,6 +8,8 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+
+                @include('includes.flash-message')
                 
                 <div class="table-responsive-sm">
 
@@ -53,6 +55,16 @@
         
                         </div>
                     </form>
+
+                    <br>
+
+                    @permission('upload-file-shipping-order')
+                    <form action="{{Route('shipping.import_excel')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="file" value="fileupload" class="hidden" id="fileupload">
+                        <input type = "submit" class = "btn btn-primary" value = "{{__('words.upload')}}">
+                    </form>
+                    @endpermission
 
                     <br>
                     @if($orders->count())
