@@ -174,6 +174,7 @@
                         'Access-Control-Allow-Origin': '*',
                         'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
                     };
+                    
                     axios.post('{{route("buy.receive_order")}}', data).then(res => {
                         window.location.href = "{{Route('buy.list_page')}}";
                     }).catch(err => {

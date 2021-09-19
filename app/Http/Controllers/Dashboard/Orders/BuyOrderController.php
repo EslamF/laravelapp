@@ -195,8 +195,10 @@ class BuyOrderController extends Controller
             {
                 BuyOrderProduct::create([
                     'buy_order_id'             => $order->id,
-                    'product_material_code'    => Product::where('produce_code' , $product['produce_code'])->first()->product_material_code ,
-                    'produce_code'             => $product['produce_code'],
+                    //'product_material_code'    => Product::where('produce_code' , $product['produce_code'])->first()->product_material_code ,
+                    //'produce_code'             => $product['produce_code'],
+                    'product_material_code'    => $product['product_material_code'],
+                    'produce_code'             => Product::where('product_material_code' , $product['product_material_code'])->first()->produce_code ,
                     'factory_qty'              => $product['factory_qty'] ?? 0,
                     'company_qty'              => $product['company_qty'] ?? 0,
                     'price'                    => 0 //$product['price']
