@@ -26,7 +26,7 @@
                                 <select name = "shipping_company" class = "form-control">
                                     <option value = "">كل شركات الشحن</option>
                                     @foreach ($shipping_companies as $company)
-                                        <option value = "{{$company->id}}">{{$company->name}}</option>
+                                        <option value = "{{$company->id}}" {{$company->id == request()->shipping_company ? 'selected' : ''}} >{{$company->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
