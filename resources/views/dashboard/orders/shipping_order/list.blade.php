@@ -17,6 +17,25 @@
                     <input type = "submit" class = "btn btn-primary" value = "{{__('words.upload')}}">
                 </form>
                 @endpermission
+
+                <br><br>
+
+                    <form method = "GET">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <select name = "shipping_company" class = "form-control">
+                                    <option value = "">كل شركات الشحن</option>
+                                    @foreach ($shipping_companies as $company)
+                                        <option value = "{{$company->id}}">{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type = "submit" class = "btn btn-success" value = "search">
+    
+                            </div>
+                        </div>
+                    </form>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -55,7 +74,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                {{$orders->links()}}
+                {{$orders->appends($_GET)->links()}}
             </div>
         </div>
         <!-- /.card -->

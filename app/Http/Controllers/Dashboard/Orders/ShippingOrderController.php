@@ -7,6 +7,7 @@ use App\Imports\OrderStatusImport;
 use App\Models\Orders\BuyOrder;
 use App\Models\Orders\OrderStatus;
 use App\Models\Orders\ShippingOrder;
+use App\Models\Organization\ShippingCompany;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Validator;
@@ -15,8 +16,17 @@ class ShippingOrderController extends Controller
 {
     public function index()
     {
-        $orders = ShippingOrder::select('id', 'shipping_code', 'shipping_date')->paginate();
-        return view('dashboard.orders.shipping_order.list', ['orders' => $orders]);
+        $orders = ShippingOrder::select('id', 'shipping_code', 'shipping_date' , 'created_at')->where(function($query){
+
+            if(request()->filled('shipping_company'))
+            {
+                $query->where('shipping_company_id' , request()->shipping_company );
+            }
+            
+        })->paginate();
+
+        $shipping_companies = ShippingCompany::get();
+        return view('dashboard.orders.shipping_order.list', ['orders' => $orders , 'shipping_companies' => $shipping_companies]);
     }
 
     public function create()
