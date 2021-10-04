@@ -25,11 +25,14 @@ class OrderStatusImport implements ToCollection
             }
             else 
             {
-                $awb                = $value[1]; //AWB
-                $status             = $value[4] ;//status
+                $awb = preg_replace('/\s+/', ' ', $value[1]);
+                //$awb                = $value[1]; //AWB
+                
+                $status             = preg_replace('/\s+/', ' ', $value[4]) ;//status
                 $main_status        = '';
                 $status_description = $value[5]; //status description
                 $order = BuyOrder::where('order_number' , $awb)->first();
+                //dd($order);
                 if($order)
                 {
                     if($status == 'تم التحصيل')
