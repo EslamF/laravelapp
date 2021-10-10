@@ -215,10 +215,10 @@
                 this.productsValidate();
 
                 //price
-                if(!this.price || this.price < 1) {
+                /*if(!this.price || this.price < 1) {
                     this.price_error = "يجب إدخال السعر";
                     this.have_error = true;
-                }
+                }*/
 
             },
             productsValidate() {

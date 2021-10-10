@@ -175,7 +175,7 @@
                             <div class="form-group col-md-6" v-show="products.length > 0">
                                 <label for="">{{__('words.price')}}</label>
                                 <span style="color:red" v-if="price_error">@{{price_error}}</span>
-                                <input type = "number" min = "1" v-model="price" class="form-control">
+                                <input type = "number"  v-model="price" class="form-control">
                             </div>
 
                             <div class="form-group" v-show="products.length > 0">

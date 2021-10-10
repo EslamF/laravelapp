@@ -30,7 +30,8 @@ class Products2Import implements ToCollection
 
         //$save_order = null;
         $save_order = SaveOrder::create([
-            'code' => $this->generateOrderCode(),
+            //'code' => $this->generateOrderCode(),
+            'code' => generate_save_order_code(),
             'stored' => 1
         ]);
        
@@ -99,13 +100,15 @@ class Products2Import implements ToCollection
                             ->where('size_id', $size_id)
                             ->where('material_id', $material_id)
                             ->first();
-        $produce_code = $product->produce_code ?? $this->generateOrderCode();
+        //$produce_code = $product->produce_code ?? $this->generateOrderCode();
+        $produce_code = $product->produce_code ?? generate_product_produce_code();
 
 
         $product_material_code = Product::where('product_type_id' , $product_type_id)
                             ->where('material_id' , $material_id)
                             ->first();
-        $material_code = $product_material_code->product_material_code ?? $this->generateProductMaterialCode();
+        //$material_code = $product_material_code->product_material_code ?? $this->generateProductMaterialCode();
+        $material_code = $product_material_code->product_material_code ?? generate_product_material_code();
 
 
         $all_inserted_products = [];

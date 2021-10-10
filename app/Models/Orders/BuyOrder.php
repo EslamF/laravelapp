@@ -53,7 +53,9 @@ class BuyOrder extends Model
     
     public function orderTotal()
     {
-        if($this->price > 0)
+        return $this->price;
+
+        /*if($this->price > 0)
         {
             return $this->price;
         }
@@ -63,7 +65,7 @@ class BuyOrder extends Model
                 $qty = $item->company_qty +  $item->factory_qty;
                 return $item->price * $qty;
             })->sum();
-        }
+        }*/
     }
 
     public function getNetAttribute()
