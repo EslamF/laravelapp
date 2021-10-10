@@ -121,8 +121,8 @@ class BuyOrderController extends Controller
         $companyProducts = Product::with('productType:id,name', 'size:id,name')
             ->whereIn('material_id' , $material_ids)
             ->where('received', 1)
-            //->get()->groupBy('produce_code');
-            ->get()->groupBy('product_material_code');
+            ->get()->groupBy('produce_code');
+            //->get()->groupBy('product_material_code');
 
         //return response()->json($companyProducts, 200);
 
@@ -136,8 +136,8 @@ class BuyOrderController extends Controller
         foreach ($products as $key => $product) {
             $old_factory_qty = 0;
             $old_company_qty = 0;
-            //$oldOrders = BuyOrderProduct::where('produce_code', $key)->get();
-            $oldOrders = BuyOrderProduct::where('product_material_code', $key)->get();
+            $oldOrders = BuyOrderProduct::where('produce_code', $key)->get();
+            //$oldOrders = BuyOrderProduct::where('product_material_code', $key)->get();
 
             if ($oldOrders && $oldOrders->count() > 0) {
                 foreach ($oldOrders as $order) {
@@ -152,11 +152,11 @@ class BuyOrderController extends Controller
                 }
             }
 
-            //$data[$key]['produce_code']  = $key;
-            $data[$key]['product_material_code']  = $key;
+            $data[$key]['produce_code']  = $key;
+            //$data[$key]['product_material_code']  = $key;
 
-            //$data[$key]['mq_r_code']     = Product::where('produce_code' , $key)->first()->material->mq_r_code ;
-            $data[$key]['mq_r_code']     = Product::where('product_material_code' , $key)->first()->material->mq_r_code ;
+            $data[$key]['mq_r_code']     = Product::where('produce_code' , $key)->first()->material->mq_r_code ;
+            //$data[$key]['mq_r_code']     = Product::where('product_material_code' , $key)->first()->material->mq_r_code ;
             $data[$key]['factory_count'] = intval($product->where('status', 'available')->where('save_order_id', null)->count() / 100 * 90 - $old_factory_qty);
             $data[$key]['company_count'] = ($product->where('status', 'available')->where('save_order_id', '!=', null)->count() + $product->where('status', 'reserved')->where('save_order_id', '!=', null)->count()) - $old_company_qty;
             $data[$key]['size']          = $product->first()->size->name;
@@ -195,10 +195,10 @@ class BuyOrderController extends Controller
             {
                 BuyOrderProduct::create([
                     'buy_order_id'             => $order->id,
-                    //'product_material_code'    => Product::where('produce_code' , $product['produce_code'])->first()->product_material_code ,
-                    //'produce_code'             => $product['produce_code'],
-                    'product_material_code'    => $product['product_material_code'],
-                    'produce_code'             => Product::where('product_material_code' , $product['product_material_code'])->first()->produce_code ,
+                    'product_material_code'    => Product::where('produce_code' , $product['produce_code'])->first()->product_material_code ,
+                    'produce_code'             => $product['produce_code'],
+                    //'product_material_code'    => $product['product_material_code'],
+                    //'produce_code'             => Product::where('product_material_code' , $product['product_material_code'])->first()->produce_code ,
                     'factory_qty'              => $product['factory_qty'] ?? 0,
                     'company_qty'              => $product['company_qty'] ?? 0,
                     'price'                    => 0 //$product['price']
