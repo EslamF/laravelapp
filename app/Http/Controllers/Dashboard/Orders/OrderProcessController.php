@@ -79,7 +79,8 @@ class OrderProcessController extends Controller
                                             ->toArray();
 
                     $query->whereIn('customer_id' , $customers)
-                           ->orWhere('bar_code' , request()->search );
+                           ->orWhere('bar_code' , request()->search )
+                           ->orWhere('order_number' , request()->search);
                 }
             })
             ->where('confirmation', '!=', 'canceled')
