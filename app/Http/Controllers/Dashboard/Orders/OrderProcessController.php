@@ -181,7 +181,7 @@ class OrderProcessController extends Controller
                 'product'       => $type,
                 'size'          => $size,
                 'qty'           => intval($item->company_qty),
-                'material_code' => $material->mq_r_code
+                'material_code' => $material ? $material->mq_r_code : ''
             ];
         });
 
