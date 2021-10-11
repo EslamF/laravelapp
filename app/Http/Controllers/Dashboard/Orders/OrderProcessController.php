@@ -172,7 +172,7 @@ class OrderProcessController extends Controller
             $size = $size ? $size->name : '';
 
 
-            $material_id = Product::where('produce_code' , $item->produce_code)->first()->material_id;
+            $material_id = Product::where('produce_code' , $item->produce_code)->first() ? Product::where('produce_code' , $item->produce_code)->first()->material_id : '';
             $material = Material::where('id' , $material_id)->first();
 
             return [
