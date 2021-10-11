@@ -161,11 +161,16 @@ class OrderProcessController extends Controller
 
             $type = ProductType::whereHas('products', function ($q) use ($item) {
                 $q->where('produce_code', $item->produce_code);
-            })->first()->name;
+            })->first()/* ->name*/;
+
+            $type = $type  ? $type->name : '';
 
             $size = Size::whereHas('products', function ($q) use ($item) {
                 $q->where('produce_code', $item->produce_code);
-            })->first()->name;
+            })->first()/*->name*/;
+
+            $size = $size ? $size->name : '';
+
 
             $material_id = Product::where('produce_code' , $item->produce_code)->first()->material_id;
             $material = Material::where('id' , $material_id)->first();
