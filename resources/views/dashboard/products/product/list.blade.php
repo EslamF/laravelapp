@@ -4,8 +4,15 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
+                <form method = "post" action = "{{route('product.export')}}">
+                    @csrf 
+                    <input type = "submit" class = "btn btn-success" value = "شيت إكسيل" >
+                </form>
+                <br>
                 
                 <h3 class="card-title"> المنتجات</h3>
+
+               
                 
                 <a href="{{Route('product.create_page')}}" class="btn btn-success float-right {{ Laratrust::isAbleTo('add-product') ? '' : 'disabled' }}" >انشاء</a>
                 <button type="submit" class="btn btn-danger float-right"style = "margin: 0 5px;"  @click = "deleteAllProducts()" {{ Laratrust::isAbleTo('delete-all-products') ? '' : 'disabled' }} >حذف جميع المنتجات</button>
@@ -48,6 +55,18 @@
                                         @foreach($factories->get() as $factory)
                                             <option value = "{{$factory->id}}" {{$factory->id == request()->factory_id ? 'selected' : ''}}>{{$factory->name}}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class = "col-md-3">
+                                <div class = "form-group">
+                                    <label>{{__('words.product_availability')}}</label>
+                                    <select class = "form-control" name = "available_in_company">
+                                            <option value = "">الكل</option>
+                                            <option value = "available" {{request()->available_in_company == 'available' ? 'selected' : ''}} >متاح</option>
+                                            <option value = "not_available" {{request()->available_in_company == 'not_available' ? 'selected' : ''}}>غير متاح</option>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -191,5 +210,9 @@
     $("select[name='factory_id']").change(function(){
         $("#get_form").submit();
     });
+    $("select[name='available_in_company']").change(function(){
+        $("#get_form").submit();
+    });
+    //
 </script>
 @endsection

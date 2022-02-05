@@ -36,10 +36,10 @@ class HomeController extends Controller
     {
         $object = new ProductsAlarmController();
         
-        //$about_to_run_products_count = count($object->get_about_to_run_products());
-        //$low_sale_products_count     = count($object->get_low_sale_products());
-        $about_to_run_products_count = 0;
-        $low_sale_products_count = 0;
+        $about_to_run_products_count = $object->get_about_to_run_products()->total();
+        $low_sale_products_count     = count($object->get_low_sale_products());
+        //$about_to_run_products_count = 0;
+        //$low_sale_products_count = 0;
         $best_selling_products_count = count($object->get_best_selling_products());
         $returns_count = BuyOrder::where('status' , 'rejected')->count();
 

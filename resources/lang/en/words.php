@@ -182,4 +182,6 @@ return [
         'returned' => 'تم إستلام المرتجع',
     ],
     
+    'product_availability' => 'متاح في الشركة',
+    
  ];

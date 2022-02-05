@@ -14,9 +14,10 @@ use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Illuminate\Support\Facades\DB;
 
 
-class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadings ,WithCustomValueBinder,ShouldAutoSize, WithMapping,WithColumnWidths
+class ProductsExport extends DefaultValueBinder implements FromQuery ,WithHeadings ,WithCustomValueBinder,ShouldAutoSize, WithMapping,WithColumnWidths
 {
     use Exportable;
 
@@ -29,7 +30,7 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
     public function columnWidths(): array
     {
         return [
-            'D' => 55,   
+            'D' => 55,    
             'E' => 30,
             'H' => 50,
         ];
@@ -37,43 +38,17 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
 
     public function query()
     {
-        /*return BuyOrder::query()->whereIn('id', $this->orders)->select('delivery_date' , 'bar_code' , 'customer_id', 'price' , 'user_id');*/
-        return BuyOrder::query()->with(['customer','buyOrderProducts'])->where(function($query){
-
-            if(request()->filled('employee_id'))
-            {
-                $query->where('created_by' , request()->employee_id);
-            }
-
-            if(request()->filled('confirmation'))
-            {
-                $query->where('confirmation' , request()->confirmation);
-            }
-
-            if(request()->filled('from'))
-            {
-                $query->where('delivery_date' , '>=' , request()->from); 
-            }
-
-            if(request()->filled('to'))
-            {
-                $query->where('delivery_date' , '<=' , request()->to);  
-            }
-
-            if(request()->filled('shipping_company_id'))
-            {
-                $query->where('shipping_company_id' , request()->shipping_company_id);
-            }
-
-
-        })->select('id' , 'delivery_date' , /*'bar_code',*/ 'order_number' , 'customer_id' , 'price' , 'shipping_fees' , 'description');
+        return Product::with('productType:id,name', 'size:id,name' , 'material:id,mq_r_code')
+                        ->select('id' , 'produce_code', 'material_id' , 'product_type_id' , 'size_id' , 'status', DB::raw('count(*) as total'))
+                        ->where('status', 'available')
+                        ->orderBy('material_id')
+                        ->groupBy('produce_code');
     }
 
-    public function map($order): array
+    public function map($product_group): array
     {
-        $res = '';
-        $total = 0;
-        foreach($order->buyOrderProducts as $buy_product)
+
+        /*foreach($order->buyOrderProducts as $buy_product)
         {
             $product = Product::with('material:id,mq_r_code' , 'size:id,name')->where('produce_code' , $buy_product->produce_code)->first();
             if($product)
@@ -82,9 +57,14 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
                 $res = $res . ' - ' .   '[' . ($product->productType ? $product->productType->name : '')              . ']' . '[' .  $product->material->mq_r_code . '] [' . ($buy_product->company_qty + $buy_product->factory_qty) . '] [' . $product->size->name . ']' ; 
             }
             $total += $buy_product->company_qty + $buy_product->factory_qty;
-        }
+        }*/
         return [
-            $order->delivery_date,
+            //'fgfgfg'
+            $product_group->productType->name,
+            $product_group->material->mq_r_code,
+            $product_group->size->name,
+            $product_group->total,
+            /*$order->delivery_date,
             //$order->bar_code,
             $order->order_number,
             $order->customer->name,
@@ -95,37 +75,19 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             $order->net,
             $order->description,
             $res,
-            $total,
+            $total,*/
         ];
     }
 
     public function headings(): array
     {
         return [
-            'Date In' ,
-            //'AWB' ,
-            'AWB' ,
-            'Name' ,
-            'Address' ,
-            'Mobile' ,
-            'Cash' ,
-            'Shipping Fees' ,
-            'Net',
-            'Notes' ,
-            'Products' ,
-            'N. pieces'
+            'المنتج' ,
+            'الكود',
+            'المقاس' ,
+            'الكمية المتاحة'
+          
         ];
-        /*return [
-            'Date In' ,
-            'AWB' ,
-            'Name' ,
-            /*'Address' ,
-            'Mobile' ,
-            'Cash' ,
-            'Notes' ,
-            /*'Products' ,
-            'N. Pieses' ,
-        ];*/
     }
     /*public function bindValue(Cell $cell, $value)
     {

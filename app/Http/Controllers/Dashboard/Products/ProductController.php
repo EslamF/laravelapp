@@ -22,7 +22,7 @@ use App\Imports\Products2Import;
 use DateTime;
 use App\User;
 use App\Models\Organization\Supplier;
-
+use App\Exports\ProductsExport;
 
 ini_set('memory_limit', '1024M');
 
@@ -56,6 +56,19 @@ class ProductController extends Controller
             {
                 $query->where('factory_id' , request()->factory_id);
             }
+
+            if(request()->filled('available_in_company'))
+            {
+                if(request()->available_in_company == 'available')
+                {
+                    $query->where('save_order_id' , '!=' , null );
+                }
+                else 
+                {
+                    $query->where('save_order_id' , null );
+                }
+            }
+
             
         })->with('productType' , 'size')->paginate();
         return view('dashboard.products.product.list')->with('products', $products);
@@ -118,10 +131,34 @@ class ProductController extends Controller
             'stored' => 1
         ]);
 
+
+        //check if available_in_company , then update the products
+        $not_available_products = [];
+        $num_of_products_will_insert = 0;
+        if($request->has('available_in_company') && $request->available_in_company )
+        {
+            //number of reserved products
+            $num_of_products_will_insert = Product::where('product_type_id' , $request->product_type_id)
+                                                    ->where('material_id' , $request->material_id)
+                                                    ->where('size_id', $request->size_id)
+                                                    ->whereNull('save_order_id')
+                                                    ->count(); // 40
+            //select the products that has the same info and update the save order id such that the products be available
+            
+            $not_available_products = Product::where('product_type_id' , $request->product_type_id)
+                                                ->where('material_id' , $request->material_id)
+                                                ->where('size_id', $request->size_id)
+                                                ->whereNull('save_order_id')
+                                                ->take($request->qty) //10
+                                                ->update(['save_order_id' => $save_order->id ]);
+        }
+
+        $num_of_products_will_insert = $request->qty - $num_of_products_will_insert ; //50 -10 =40 
+    
         $all_inserted_products = [];
         $all_generated_codes = [];
         $dns1d = new DNS1D();
-        for ($i = 0; $i < $request->qty; $i++) 
+        for ($i = 0; $i < $num_of_products_will_insert; $i++) 
         {
             $code = generate_product_code_not_in_array($all_generated_codes);
         
@@ -135,7 +172,7 @@ class ProductController extends Controller
                     'product_type_id' => $request->product_type_id,
                     'received'  => 1,
                     'status'    => 'available',
-                    'save_order_id' => $save_order->id,
+                    'save_order_id' => $save_order->id ,
                     'product_material_code' => $material_code ,
                     'factory_id'    => $request->factory_id,
                     'description' => $request->description
@@ -151,7 +188,21 @@ class ProductController extends Controller
 
         Product::insert($all_inserted_products);
 
-        $products = Product::select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')->with('size', 'material', 'productType')->where('save_order_id' , $save_order->id)->get();
+        $products = Product::select('id' , 'prod_code' , 'size_id' , 'material_id' , 'product_type_id')
+                            ->with('size', 'material', 'productType')
+                            ->where('save_order_id' , $save_order->id)
+                            ->get();
+        
+        if(!$request->has('available_in_company'))
+        {
+            Product::where('save_order_id' , $save_order->id)->update(['save_order_id' => null]);
+            //$products_will_updated->update(['save_order_id' => null]);
+        }
+        else if($request->has('available_in_company') && $request->available_in_company  )
+        {
+            $obj = new \App\Http\Controllers\Dashboard\Orders\StoreProductOrderController();
+            $obj->addQtyToOrders($save_order->id);
+        }
 
 
         if(request()->has('print'))
@@ -310,6 +361,12 @@ class ProductController extends Controller
     
        
         return view('dashboard.products.product.print' , compact('products'));
+    }
+
+    public function export()
+    {
+        $export = new ProductsExport();
+        return Excel::download($export, 'products.xlsx');
     }
 
     

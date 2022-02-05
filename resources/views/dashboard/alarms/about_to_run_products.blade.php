@@ -14,19 +14,21 @@
                         <thead>
                             <tr>
                                 <th class = "text-center">نوع المنتج</th>
+                                {{-- <th class = "text-center">المقاس</th> --}}
                                 <th class = "text-center">كود الخامة</th>
                                 <th class = "text-center">الخامة</th>
                                 <th class = "text-center">الكمية المتاحة</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($about_to_run_products as $key => $product)
+                            @foreach($about_to_run_products as $product)
                             <tr>
-                                <td class = "text-center">{{$product->first()->productType->name}}</td>
-                                <td class = "text-center">{{$product->first()->material->mq_r_code}}</td>       
-                                <td class = "text-center">{{$product->first()->material->materialType->name}} - {{$product->first()->material->color}}</td>               
+                                <td class = "text-center">{{$product->productType->name}}</td>
+                                {{-- <td class = "text-center">{{$product->size->name}}</td> --}}
+                                <td class = "text-center">{{$product->material->mq_r_code}}</td>       
+                                <td class = "text-center">{{$product->material->materialType->name}} - {{$product->first()->material->color}}</td>               
                                 
-                                <td class = "text-center">{{count($product)}}</td>
+                                <td class = "text-center">{{$product->total}}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -38,6 +40,8 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
+                {!! $about_to_run_products->links() !!}
+
                 
             </div>
         </div>

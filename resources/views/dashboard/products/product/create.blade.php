@@ -110,6 +110,16 @@
                         </div>
                         
                     </div>
+
+                    <div class="row">
+                        <div class = "col-md-3">
+                            <div class="form-group">
+                                <label for = "available_in_company">المنتجات متاحة في الشركة  </label>
+                                <input type = "checkbox" name = "available_in_company" id = "available_in_company">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">

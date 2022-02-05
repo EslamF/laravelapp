@@ -435,6 +435,8 @@ Route::group([
             Route::get('import_sheet_excel_view' , 'ProductController@import_sheet_excel_view' )->name('product.import_sheet_excel_view');
             Route::post('import_sheet_excel' , 'ProductController@import_sheet_excel' )->name('product.import_sheet_excel');
 
+            Route::post('export', 'ProductController@export')->name('product.export');
+
             Route::group([
                 'prefix' => 'type'
             ], function () {
