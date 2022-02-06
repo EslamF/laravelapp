@@ -80,7 +80,7 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             if($product)
             {
                 //$res = $res . ' - [ $product->material->mq_r_code ] - [] '
-                $res = $res . ' - ' .   '[' . ($product->productType ? $product->productType->name : '')              . ']' . '[' .  $product->material->mq_r_code . '] [' . ($buy_product->company_qty + $buy_product->factory_qty) . '] [' . $product->size->name . ']' ;
+                $res = $res . ' - ' . '[' .  $product->material->mq_r_code . '] [' . ($buy_product->company_qty + $buy_product->factory_qty) . '] [' . $product->size->name . ']' ;
                 
                 $product_name = $product_name . ' - ' .   '[' . ($product->productType ? $product->productType->name : '')              . ']' . '[' . ($buy_product->company_qty + $buy_product->factory_qty) . ']' ;
             }
