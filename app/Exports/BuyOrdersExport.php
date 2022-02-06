@@ -79,10 +79,17 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             $product = Product::with('material:id,mq_r_code' , 'size:id,name')->where('produce_code' , $buy_product->produce_code)->first();
             if($product)
             {
-                //$res = $res . ' - [ $product->material->mq_r_code ] - [] '
-                $res = $res . ' - ' . '[' .  $product->material->mq_r_code . '] [' . ($buy_product->company_qty + $buy_product->factory_qty) . '] [' . $product->size->name . ']' ;
-                
-                $product_name = $product_name . ' - ' .   '[' . ($product->productType ? $product->productType->name : '')              . ']' . '[' . ($buy_product->company_qty + $buy_product->factory_qty) . ']' ;
+
+                $quantity  = $buy_product->company_qty + $buy_product->factory_qty;
+                $mq_r_code = $product->material->mq_r_code;
+                $size      = $product->size->name;
+                $type      = $product->productType->name;
+
+
+                $res = "$res - [$mq_r_code] [$quantity] [$size]";
+                //$res = $res . ' - ' . '[' .  $product->material->mq_r_code . '] [' . ($buy_product->company_qty + $buy_product->factory_qty) . '] [' . $product->size->name . ']' ;
+                $product_name = "$product_name  [$quantity $type] ";
+                //$product_name = $product_name . ' - ' .   '[' . ($product->productType ? $product->productType->name : '')              . ']' . '[' . () . ']' ;
             }
             $total += $buy_product->company_qty + $buy_product->factory_qty;
         }
