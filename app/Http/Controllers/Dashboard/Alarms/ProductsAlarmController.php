@@ -41,7 +41,9 @@ class ProductsAlarmController extends Controller
         $products = Product::where('status' , 'available')
                             ->with('material' , 'material.materialType' , 'productType' , 'size')
                             ->select('id' , 'material_id' , 'product_type_id' , 'size_id' , DB::raw('count(*) as total'))
-                            ->groupBy('product_material_code')
+                            ->orderBy('material_id')
+                            ->orderBy('product_type_id')
+                            ->groupBy('produce_code')
                             ->havingRaw('COUNT(*) <= ?', [5])
                             ->paginate(10);
         

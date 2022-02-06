@@ -20,14 +20,15 @@ class Products2Import implements ToCollection
     /**
      * @param Collection $collection
      */
+    /*public $available;
+
+    public function __construct($available)
+    {
+        $this->available = $available;
+    }*/
+
     public function collection(Collection $collection)
     {
-        /*$m_size = Size::where('name' , 'M')->first();
-        $l_size = Size::where('name' , 'L')->first();
-        $xl_size = Size::where('name' , 'XL')->first();
-        $xxl_size = Size::where('name' , 'XXL')->first();
-        $xxxl_size = Size::where('name' , 'XXXL')->first();*/
-
         //$save_order = null;
         $save_order = SaveOrder::create([
             //'code' => $this->generateOrderCode(),
@@ -51,6 +52,9 @@ class Products2Import implements ToCollection
                 // value[3] => quantity
                 // value[4] => bar code prod_code
                 // value[5] => product name
+                // value[6] => factory
+                // value[7] => brand
+                // value[8] => size
                
                 $codes_array = explode(" " , $value[2]);
                 $codes_array = array_filter($codes_array);
@@ -92,6 +96,12 @@ class Products2Import implements ToCollection
                 $this->store_products($product_type->id , $size->id    , $material->id ,  $quantity ,$save_order->id , $value[4] ); //Medium
             }
         }
+
+        if(request()->has('available_in_company') && request()->available_in_company  )
+        {
+            $obj = new \App\Http\Controllers\Dashboard\Orders\StoreProductOrderController();
+            $obj->addQtyToOrders($save_order->id);
+        }
     }
 
     public function store_products($product_type_id , $size_id , $material_id , $qty , $save_order_id , $bar_code)
@@ -112,8 +122,28 @@ class Products2Import implements ToCollection
 
 
         $all_inserted_products = [];
+        $real_qty = 0;
+        $available = request()->has('available_in_company') && request()->available_in_company ;
+        if($available)
+        {
+            //number of reserved products
+            $real_qty = Product::where('product_type_id' , $product_type_id)
+                                                    ->where('material_id' , $material_id)
+                                                    ->where('size_id', $size_id)
+                                                    ->whereNull('save_order_id')
+                                                    ->count(); // 40
+            //select the products that has the same info and update the save order id such that the products be available
+            $not_available_products = Product::where('product_type_id' , $product_type_id)
+                                                ->where('material_id' , $material_id)
+                                                ->where('size_id', $size_id)
+                                                ->whereNull('save_order_id')
+                                                ->take($qty) //50 [40]
+                                                ->update(['save_order_id' => $save_order_id ]);
+        }
 
-        for ($i = 0; $i < $qty; $i++) 
+        $real_qty = $qty - $real_qty ; //50 - 40
+
+        for ($i = 0; $i < $real_qty; $i++) 
         {
             array_push($all_inserted_products , [
 
@@ -125,7 +155,7 @@ class Products2Import implements ToCollection
                 'product_type_id' => $product_type_id,
                 'received'  => 1,
                 'status'    => 'available',
-                'save_order_id' => $save_order_id,
+                'save_order_id' => $available ? $save_order_id : null,
                 'product_material_code' => $material_code
             ]);
         }

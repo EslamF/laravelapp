@@ -73,13 +73,16 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
     {
         $res = '';
         $total = 0;
+        $product_name = '';
         foreach($order->buyOrderProducts as $buy_product)
         {
             $product = Product::with('material:id,mq_r_code' , 'size:id,name')->where('produce_code' , $buy_product->produce_code)->first();
             if($product)
             {
                 //$res = $res . ' - [ $product->material->mq_r_code ] - [] '
-                $res = $res . ' - ' .   '[' . ($product->productType ? $product->productType->name : '')              . ']' . '[' .  $product->material->mq_r_code . '] [' . ($buy_product->company_qty + $buy_product->factory_qty) . '] [' . $product->size->name . ']' ; 
+                $res = $res . ' - ' .   '[' . ($product->productType ? $product->productType->name : '')              . ']' . '[' .  $product->material->mq_r_code . '] [' . ($buy_product->company_qty + $buy_product->factory_qty) . '] [' . $product->size->name . ']' ;
+                
+                $product_name = $product_name . ' - ' .   '[' . ($product->productType ? $product->productType->name : '')              . ']' . '[' . ($buy_product->company_qty + $buy_product->factory_qty) . ']' ;
             }
             $total += $buy_product->company_qty + $buy_product->factory_qty;
         }
@@ -95,6 +98,7 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             $order->net,
             $order->description,
             $res,
+            $product_name,
             $total,
         ];
     }
@@ -113,6 +117,7 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             'Net',
             'Notes' ,
             'Products' ,
+            'Products names',
             'N. pieces'
         ];
         /*return [
