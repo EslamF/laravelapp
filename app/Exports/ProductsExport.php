@@ -52,12 +52,21 @@ class ProductsExport extends DefaultValueBinder implements FromQuery ,WithHeadin
         {
             $NewDate = date('Y-m-d', strtotime('-30 days'));
 
-            return  Product::whereHas('buyOrders' , function($query) use($NewDate) {
+            return  Product::with('productType:id,name', 'size:id,name' , 'material:id,mq_r_code')
+                            ->select('id' , 'produce_code', 'material_id' , 'product_type_id' , 'size_id' , 'status', DB::raw('count(*) as total'))
+                            ->whereHas('buyOrders' , function($query) use($NewDate) {
+                                    $query->where('buy_orders.created_at', '<=', $NewDate);
+                                    })
+                                ->orWhereDoesntHave('buyOrders')
+                                //->get()
+                                ->groupBy('produce_code');
+
+            /*return  Product::whereHas('buyOrders' , function($query) use($NewDate) {
                                 $query->where('buy_orders.created_at', '<=', $NewDate);
                                 })
                             ->orWhereDoesntHave('buyOrders')
                             //->get()
-                            ->groupBy('product_material_code');
+                            ->groupBy('product_material_code');*/
         }
         else 
         {

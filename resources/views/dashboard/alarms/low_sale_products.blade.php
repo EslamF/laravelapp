@@ -19,6 +19,7 @@
                         <thead>
                             <tr>
                                 <th class = "text-center">نوع المنتج</th>
+                                <th class = "text-center">المقاس</th>
                                 <th class = "text-center">كود الخامة</th>
                                 <th class = "text-center">الخامة</th>
                                 {{--<th class = "text-center">الكمية المتاحة</th>--}}
@@ -28,6 +29,7 @@
                             @foreach($low_sale_products as $key => $product)
                             <tr>
                                 <td class = "text-center">{{$product->first()->productType->name}}</td>
+                                <td class = "text-center">{{$product->first()->size ? $product->first()->size->name : '-'}}</td>
                                 <td class = "text-center">{{$product->first()->material->mq_r_code}}</td>       
                                 <td class = "text-center">{{$product->first()->material && $product->first()->material->materialType ? $product->first()->material->materialType->name : ''}} - {{$product->first()->material->color}}</td>               
                                 

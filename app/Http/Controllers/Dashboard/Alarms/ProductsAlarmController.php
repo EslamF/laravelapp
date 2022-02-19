@@ -83,7 +83,8 @@ class ProductsAlarmController extends Controller
                                 })
                             ->orWhereDoesntHave('buyOrders')
                             ->get()
-                            ->groupBy('product_material_code');
+                            ->groupBy('produce_code');
+                            //->groupBy('product_material_code');
 
 
 
