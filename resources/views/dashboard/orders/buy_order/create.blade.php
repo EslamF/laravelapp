@@ -27,6 +27,15 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="province_id">{{__('words.province')}}</label>
+                                <select class="form-control" v-model="province_id">
+                                    <option :value="province.id" v-for="province in provinces" :key="province.id">@{{province.name}}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
@@ -71,6 +80,8 @@
                                 <input type="text" v-model="customer.notes" class="form-control">
                             </div>
                         </div>
+
+                       
 
                     </div>
 
@@ -197,6 +208,10 @@
         
     </div>
 </div>
-@include('dashboard.orders.buy_order.v-scripts.vue-create')
+
 </div>
 @endsection
+
+@push('scripts')
+    @include('dashboard.orders.buy_order.v-scripts.vue-create')
+@endpush    

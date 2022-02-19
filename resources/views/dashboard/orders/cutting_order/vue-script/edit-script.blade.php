@@ -1,42 +1,44 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            type: "{{$data['type']}}",
-            total: 0,
-            cutting_order_id: "{{$data['order']->id}}",
-            users: [],
-            productTypes: [],
-            sizes: [],
-            factories: [],
-            errors: [{
-                product_id: '',
-                size_id: '',
-                qty: ''
-            }],
-            error: '',
-            have_error: false,
-            extra_returns_weight: "{{$data['order']->extra_returns_weight}}",
-            layers: "{{$data['order']->layers}}",
-            layers_weight: "{{$data['order']->layers_weight}}",
-            factory_error: '',
-            factory_id: '',
-            factoryTypes: [],
-            spreading_orders: [],
-            spreading_out_material_order_id: "{{$data['order']->spreading_out_material_order_id}}",
-            employee_error: '',
-            layer_error: '',
-            layers_weight_error: '',
-            spreading_order_error: '',
-            extra_return_error: '',
-            items: [],
-            submited: false,
-            factory_type_url: '{{Route("factory.type_all")}}',
-            employee_url: '{{route("getCuttingEmployees")}}',
-            employee_id: "{{$data['order']->user_id}}",
-            factory_type_id: ''
+    Vue.createApp({
+        data() {
+            return {
+                type: "{{$data['type']}}",
+                total: 0,
+                cutting_order_id: "{{$data['order']->id}}",
+                users: [],
+                productTypes: [],
+                sizes: [],
+                factories: [],
+                errors: [{
+                    product_id: '',
+                    size_id: '',
+                    qty: ''
+                }],
+                error: '',
+                have_error: false,
+                extra_returns_weight: "{{$data['order']->extra_returns_weight}}",
+                layers: "{{$data['order']->layers}}",
+                layers_weight: "{{$data['order']->layers_weight}}",
+                factory_error: '',
+                factory_id: '',
+                factoryTypes: [],
+                spreading_orders: [],
+                spreading_out_material_order_id: "{{$data['order']->spreading_out_material_order_id}}",
+                employee_error: '',
+                layer_error: '',
+                layers_weight_error: '',
+                spreading_order_error: '',
+                extra_return_error: '',
+                items: [],
+                submited: false,
+                factory_type_url: '{{Route("factory.type_all")}}',
+                employee_url: '{{route("getCuttingEmployees")}}',
+                employee_id: "{{$data['order']->user_id}}",
+                factory_type_id: ''
+            }
+           
         },
         mounted() {
             
@@ -319,5 +321,5 @@
                 }
             }
         }
-    })
+    }).mount("#app")
 </script>

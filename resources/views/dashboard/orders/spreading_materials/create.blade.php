@@ -179,23 +179,25 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            type: "{{old('type') ? old('type') : ''}}",
-            material_weight: '',
-            button: false,
-            material_code: '',
-            material_id: '',
-            error: '',
-            have_error: false,
-            have_value: false,
-            material_barcode: '',
-            material_barcode_error: '',
-            codes: [],
-            vestments: [],
-            vestment_barcode: '',
-            errors: {},
+    Vue.createApp({
+        data() {
+            return {
+                type: "{{old('type') ? old('type') : ''}}",
+                material_weight: '',
+                button: false,
+                material_code: '',
+                material_id: '',
+                error: '',
+                have_error: false,
+                have_value: false,
+                material_barcode: '',
+                material_barcode_error: '',
+                codes: [],
+                vestments: [],
+                vestment_barcode: '',
+                errors: {},
+            }
+           
 
         },
         mounted() {
@@ -370,6 +372,6 @@
             }
         }
 
-    })
+    }).mount("#app")
 </script>
 @endsection

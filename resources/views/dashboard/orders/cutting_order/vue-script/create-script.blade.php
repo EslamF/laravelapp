@@ -1,46 +1,48 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            type: '',
-            total: 0,
-            users: [],
-            productTypes: [],
-            sizes: [],
-            factories: [],
-            errors: [{
-                product_id: '',
-                size_id: '',
-                qty: ''
-            }],
-            error: '',
-            have_error: false,
-            extra_returns_weight: '',
-            layers: '',
-            layers_weight: '',
-            factory_error: '',
-            factory_id: '',
-            factoryTypes: [],
-            spreading_orders: [],
-            spreading_out_material_order_id: '',
-            employee_error: '',
-            layer_error: '',
-            layers_weight_error: '',
-            spreading_order_error: '',
-            extra_return_error: '',
-            items: [{
-                product_type_id: '',
-                size_id: '',
-                qty: ''
-            }],
-            submited: false,
-            factory_type_url: '{{Route("factory.type_all")}}',
-            //employee_url: '{{route("employee.get_all")}}',
-            employee_url: '{{route("getCuttingEmployees")}}' ,
-            employee_id: '',
-            factory_type_id: ''
+     Vue.createApp({
+        data() {
+            return {
+                type: '',
+                total: 0,
+                users: [],
+                productTypes: [],
+                sizes: [],
+                factories: [],
+                errors: [{
+                    product_id: '',
+                    size_id: '',
+                    qty: ''
+                }],
+                error: '',
+                have_error: false,
+                extra_returns_weight: '',
+                layers: '',
+                layers_weight: '',
+                factory_error: '',
+                factory_id: '',
+                factoryTypes: [],
+                spreading_orders: [],
+                spreading_out_material_order_id: '',
+                employee_error: '',
+                layer_error: '',
+                layers_weight_error: '',
+                spreading_order_error: '',
+                extra_return_error: '',
+                items: [{
+                    product_type_id: '',
+                    size_id: '',
+                    qty: ''
+                }],
+                submited: false,
+                factory_type_url: '{{Route("factory.type_all")}}',
+                //employee_url: '{{route("employee.get_all")}}',
+                employee_url: '{{route("getCuttingEmployees")}}' ,
+                employee_id: '',
+                factory_type_id: ''
+            }
+          
         },
         mounted() {
             this.getSpreadingOrders();
@@ -299,5 +301,5 @@
                 }
             }
         }
-    })
+    }).mount("#app")
 </script>

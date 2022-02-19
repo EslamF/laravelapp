@@ -4,21 +4,23 @@
 <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
 
 <script>
-    var app = new Vue({
-        el: '#app',
+    Vue.createApp({
         components: {
             Multiselect: window.VueMultiselect.default
         },
-        data: {
-            value: [],
-            options: [],
-            data: [],
-            shipping_companies: [],
-            shipping_company_id: '',
-            shipping_date: '',
-            errors: {},
-            have_error: false,
-            have_value: false
+        data() {
+            return {
+                value: [],
+                options: [],
+                data: [],
+                shipping_companies: [],
+                shipping_company_id: '',
+                shipping_date: '',
+                errors: {},
+                have_error: false,
+                have_value: false
+            }
+            
         },
         mounted() { 
             this.getOrderToShip();
@@ -105,5 +107,5 @@
 
             }
         }
-    })
+    }).mount("#app")
 </script>

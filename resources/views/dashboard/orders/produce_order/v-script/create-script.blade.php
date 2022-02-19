@@ -1,26 +1,28 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            cutting_orders: [],
-            available_products: [] ,
-            factories: [],
-            factory_id: '',
-            cutting_order_id: '',
-            receiving_date: '',
-            out_date: '',
-            factory_type_id: '',
-            error: {
+    Vue.createApp({
+        data() {
+            return {
+                cutting_orders: [],
+                available_products: [] ,
+                factories: [],
                 factory_id: '',
                 cutting_order_id: '',
                 receiving_date: '',
-                out_date: ''
-            },
-            factory_types: [],
-            have_error: false,
-            have_value: false,
+                out_date: '',
+                factory_type_id: '',
+                error: {
+                    factory_id: '',
+                    cutting_order_id: '',
+                    receiving_date: '',
+                    out_date: ''
+                },
+                factory_types: [],
+                have_error: false,
+                have_value: false,
+            }
+          
         },
         mounted() {
             this.getCuttingOrders();
@@ -282,5 +284,5 @@
             }
         }
 
-    })
+    }).mount("#app")
 </script>

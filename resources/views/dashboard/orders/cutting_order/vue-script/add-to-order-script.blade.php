@@ -1,27 +1,29 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            items: [{
+    Vue.createApp({
+        data() {
+            return {
+                items: [{
+                    product_type_id: '',
+                    size_id: '',
+                    qty: ''
+                }],
+                errors: [{
+                    product_id: '',
+                    size_id: '',
+                    qty: ''
+                }],
+                productTypes: [],
                 product_type_id: '',
+                sizes: [],
                 size_id: '',
-                qty: ''
-            }],
-            errors: [{
-                product_id: '',
-                size_id: '',
-                qty: ''
-            }],
-            productTypes: [],
-            product_type_id: '',
-            sizes: [],
-            size_id: '',
-            qty: '',
-            have_error: false,
-            layers: '',
-            extra_returns_weight: ''
+                qty: '',
+                have_error: false,
+                layers: '',
+                extra_returns_weight: ''
+            }
+           
         },
         mounted() {
             this.getProductType();
@@ -124,5 +126,5 @@
                 }
             },
         }
-    })
+    }).mount("#app")
 </script>

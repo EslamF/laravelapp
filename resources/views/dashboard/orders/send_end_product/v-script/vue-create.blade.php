@@ -2,16 +2,18 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            employees: [],
-            user_id: '',
-            errors: {},
-            codes: [],
-            products: [] ,
-            product_code: '',
-            have_error: false
+    Vue.createApp({
+        data() {
+            return {
+                employees: [],
+                user_id: '',
+                errors: {},
+                codes: [],
+                products: [] ,
+                product_code: '',
+                have_error: false
+            }
+         
         },
         mounted() {
             this.getEmployees()
@@ -89,5 +91,5 @@
                 }
             }
         }
-    })
+    }).mount("#app")
 </script>

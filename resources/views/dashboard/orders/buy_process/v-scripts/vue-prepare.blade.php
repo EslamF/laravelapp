@@ -6,20 +6,22 @@
 
 
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            items: [],
-            products_qty: [],
-            ids: [],
-            prod_code: '',
-            products_code: [],
-            item: {},
-            add_error: '',
-            invalid_error: '',
-            save_error: '',
-            count: 0, 
-            qty_sum: 0
+    Vue.createApp({
+        data() {
+            return {
+                items: [],
+                products_qty: [],
+                ids: [],
+                prod_code: '',
+                products_code: [],
+                item: {},
+                add_error: '',
+                invalid_error: '',
+                save_error: '',
+                count: 0, 
+                qty_sum: 0
+            }
+           
         },
         mounted() {
             this.getOrderToPrepare();
@@ -134,5 +136,5 @@
                 }
             }
         }
-    })
+    }).mount("#app")
 </script>

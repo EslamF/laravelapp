@@ -1,18 +1,20 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            produce_order_id: '',
-            produce_orders: [],
-            products: [],
-            received_products: [],
-            error: {
+    Vue.createApp({
+        data() {
+            return {
                 produce_order_id: '',
-            },
-            have_error: false ,
-            have_value: true
+                produce_orders: [],
+                products: [],
+                received_products: [],
+                error: {
+                    produce_order_id: '',
+                },
+                have_error: false ,
+                have_value: true
+            }
+        
         },
         mounted() {
             this.getProductOrders();
@@ -162,5 +164,5 @@
             }
         }
 
-    })
+    }).mount("#app")
 </script>

@@ -144,6 +144,19 @@ Route::group([
             });
 
             Route::group([
+                'prefix' => 'province'
+            ], function () {
+                Route::get('get', 'ProvinceController@getAll')->name('province.all');
+                Route::get('get-all', 'ProvinceController@getAllPaginate')->name('province.list');
+                Route::get('create', 'ProvinceController@createPage')->name('province.create_page');
+                Route::post('store', 'ProvinceController@create')->name('province.store');
+                Route::post('delete', 'ProvinceController@delete')->name('province.delete');
+                Route::get('edit/{type_id}', 'ProvinceController@editPage')->name('province.edit_page');
+                Route::post('update', 'ProvinceController@update')->name('province.update');
+            });
+
+
+            Route::group([
                 'prefix' => 'factory'
             ], function () {
                 Route::get('get-all', 'FactoryController@getAllPaginate')->name('factory.list');

@@ -152,24 +152,26 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            type: '{{$data["spreading"]->type == "inner" ? "employee" : "factory"}}',
-            material_weight: '{{$data["spreading"]->material->total_weight}}',
-            button: false,
-            material_code: '{{$data["spreading"]->material->mq_r_code}}', 
-            material_id: '{{$data["spreading"]->material_id}}',
-            error: '',
-            have_error: false,
-            have_value: false,
-            material_barcode: '',
-            material_barcode_error: '',
-            codes: [],
-            vestments: [],
-            vestment_barcode: '',
-            errors: {},
-            spreading_out_order_id: '{{$data["spreading"]->id}}',
+    Vue.createApp({
+        data() {
+            return {
+                type: '{{$data["spreading"]->type == "inner" ? "employee" : "factory"}}',
+                material_weight: '{{$data["spreading"]->material->total_weight}}',
+                button: false,
+                material_code: '{{$data["spreading"]->material->mq_r_code}}', 
+                material_id: '{{$data["spreading"]->material_id}}',
+                error: '',
+                have_error: false,
+                have_value: false,
+                material_barcode: '',
+                material_barcode_error: '',
+                codes: [],
+                vestments: [],
+                vestment_barcode: '',
+                errors: {},
+                spreading_out_order_id: '{{$data["spreading"]->id}}',
+            }
+          
 
         },
         mounted() {
@@ -344,6 +346,6 @@
             }
         }
 
-    })
+    }).mount("#app")
 </script>
 @endsection

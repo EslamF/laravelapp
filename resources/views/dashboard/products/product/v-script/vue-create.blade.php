@@ -1,10 +1,11 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            receiving_orders: [],
+   Vue.createApp({
+        data() {
+            return {
+                receiving_orders: [],
+            }
         },
         mounted() {
             this.getAllReceivingOrder();
@@ -76,5 +77,5 @@
             }
         }
 
-    })
+    }).mount("#app")
 </script>

@@ -10,6 +10,11 @@
             <div class="card-body">
                 @include('includes.flash-message')
                 @if($low_sale_products->count())
+                <form method = "post" action = "{{route('product.export')}}">
+                    @csrf 
+                    <input type="hidden" name = "low_sale_products" value = "1">
+                    <input type = "submit" class = "btn btn-success" value = "شيت إكسيل" >
+                </form>
                     <table class="table">
                         <thead>
                             <tr>
@@ -50,10 +55,11 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
+    Vue.createApp({
+        data() {
+            return {
 
+            }
         },
 
         methods: {
@@ -85,6 +91,6 @@
             }
         }
 
-    })
+    }).mount("#app")
 </script>
 @endsection

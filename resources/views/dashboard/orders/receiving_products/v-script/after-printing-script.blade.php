@@ -2,21 +2,23 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            errors: {} ,
-            ids: [],
-            products: [],
-            codes: [],
-            prod_code: '',
-            receiving_order_id: '{{$receiving_order_id}}' ,
-            number_of_products: '{{$number_of_products}}',
-            error: {
-                
-            },
-            have_error: false,
-            have_value: false
+    Vue.createApp({
+        data() {
+            return {
+                errors: {} ,
+                ids: [],
+                products: [],
+                codes: [],
+                prod_code: '',
+                receiving_order_id: '{{$receiving_order_id}}' ,
+                number_of_products: '{{$number_of_products}}',
+                error: {
+                    
+                },
+                have_error: false,
+                have_value: false
+            }
+         
         },
 
         mounted() {
@@ -105,5 +107,5 @@
                 }
             }
         }
-    })
+    }).mount("#app")
 </script>

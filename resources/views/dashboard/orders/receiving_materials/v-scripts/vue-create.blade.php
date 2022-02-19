@@ -1,13 +1,13 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            type: '',
-            clicked: false , 
-            mq_r_code: '' ,
-
+    Vue.createApp({
+        data() {
+            return {
+                type: '',
+                clicked: false , 
+                mq_r_code: '' ,
+            }
         },
         mounted() {
             this.loader();
@@ -27,5 +27,5 @@
 
         }
 
-    })
+    }).mount("#app")
 </script>

@@ -1,48 +1,67 @@
+
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script>
-    Vue.config.devtools = true
-    var app = new Vue({
-        el: '#app',
-        data: {
-            search_phone: '',
-            customers: [],
-            customer_id: '',
-            customer: {
-                id: '',
-                name: '',
-                notes: '',
-                address: '',
-                link: '',
-                phone: '',
-                source: '',
-                type: '',
-                buy_orders: []
-            },
-            product: {
-                qty: '',
-                err: '',
-                price: ''
-            },
-            description: '',
-            mq_r_code: '',
-            mq_r_code_err : '' ,
-            products: [],
-            data: [],
-            errors: [],
-            delivery_date: '',
-            error: '',
-            have_error: false,
-            customer_errors: {},
-            have_value: false,
-            price: 0,
-            price_error: '',
-            order_number: '',
+    Vue.createApp({
+        data() {
+            return {
+                search_phone: '',
+                customers: [],
+                customer_id: '',
+                provinces: [],
+                province_id: '',
+                customer: {
+                    id: '',
+                    name: '',
+                    notes: '',
+                    address: '',
+                    link: '',
+                    phone: '',
+                    source: '',
+                    type: '',
+                    buy_orders: []
+                },
+                product: {
+                    qty: '',
+                    err: '',
+                    price: ''
+                },
+                description: '',
+                mq_r_code: '',
+                mq_r_code_err : '' ,
+                products: [],
+                data: [],
+                errors: [],
+                delivery_date: '',
+                error: '',
+                have_error: false,
+                customer_errors: {},
+                have_value: false,
+                price: 0,
+                price_error: '',
+                order_number: '',
+            }
+           
         },
         mounted() {
             this.setDate(2);
+            this.getProvinces();
         },
         methods: {
+            getProvinces()  {
+                const metas = document.getElementsByTagName('meta');
+                axios.defaults.headers = {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
+                };
+                axios.get('{{url("province/get")}}').then(res => {
+                    this.provinces = res.data;
+                }).catch(err => {
+
+                });
+            },
             searchOnCustomer() {
                 this.customers = [];
                 const metas = document.getElementsByTagName('meta');
@@ -162,6 +181,7 @@
                     data.delivery_date = this.delivery_date;
                     data.price = this.price;
                     data.order_number = this.order_number;
+                    data.province_id = this.province_id;
                     console.log('products');
                     console.log(data.products);
                     console.log('data');
@@ -302,5 +322,7 @@
 
         }
 
-    })
+    }).mount('#app')
+
+   
 </script>

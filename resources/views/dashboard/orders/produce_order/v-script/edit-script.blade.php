@@ -1,27 +1,29 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            cutting_orders: [],
-            available_products: [] ,
-            factories: [],
-            factory_id: "{{$data['records']->factory_id}}",
-            cutting_order_id: "{{$data['records']->cutting_order_id}}",
-            receiving_date: "{{$data['records']->receiving_date}}",
-            out_date: "{{$data['records']->out_date}}",
-            factory_type_id: "{{$data['records']->factory->factory_type_id}}",
-            produce_order_id: "{{$data['records']->id}}",
-            error: {
-                factory_id: '',
-                cutting_order_id: '',
-                receiving_date: '',
-                out_date: ''
-            },
-            factory_types: [],
-            have_error: false,
-            have_value: false,
+    Vue.createApp({
+        data() {
+            return {
+                cutting_orders: [],
+                available_products: [] ,
+                factories: [],
+                factory_id: "{{$data['records']->factory_id}}",
+                cutting_order_id: "{{$data['records']->cutting_order_id}}",
+                receiving_date: "{{$data['records']->receiving_date}}",
+                out_date: "{{$data['records']->out_date}}",
+                factory_type_id: "{{$data['records']->factory->factory_type_id}}",
+                produce_order_id: "{{$data['records']->id}}",
+                error: {
+                    factory_id: '',
+                    cutting_order_id: '',
+                    receiving_date: '',
+                    out_date: ''
+                },
+                factory_types: [],
+                have_error: false,
+                have_value: false,
+            }
+           
         },
         mounted() {
             this.getCuttingOrders();
@@ -300,5 +302,5 @@
             }
         }
 
-    })
+    }).mount("#app")
 </script>

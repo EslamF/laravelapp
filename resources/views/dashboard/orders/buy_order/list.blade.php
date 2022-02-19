@@ -105,6 +105,16 @@
                                     <label>{{__('words.mq_r_code')}}</label>
                                     <input class = "form-control" name = "mq_r_code" value = "{{request()->mq_r_code}}">
                                 </div>
+
+                                <div class = "form-group" style = "margin: 10px;">
+                                    <label>المحافظة</label>
+                                    <select class = "form-control" name = "province_id">
+                                            <option value = "">كل المحافظات</option>
+                                        @foreach($provinces as $province)
+                                            <option value = "{{$province->id}}" {{ $province->id == request()->province_id ? 'selected' : '' }} >{{ $province->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
         
                                 <div class = "form-group" style = "margin: 10px;">
                                     <label  style = "visibility:hidden;">بحث</label>
@@ -152,6 +162,8 @@
                                         {{Str::limit($value->customer->name , 15)}}
                                         <br>
                                         {{$value->customer->phone}}
+                                        <br>
+                                        {{$value->province ? $value->province->name : ''}}
                                     </td>
                                     <td>{{$value->delivery_date}}</td>
                                     <td><span class = "{{$value->confirmation_color}}" style = "padding:5px; border-radius:5px;">{{ __('words.' . $value->confirmation)}}</span></td>
@@ -193,10 +205,11 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
+    Vue.createApp({
+        data() {
+            return {
 
+            }
         },
 
         methods: {
@@ -228,6 +241,6 @@
             }
         }
 
-    })
+    }).mount("#app")
 </script>
 @endsection

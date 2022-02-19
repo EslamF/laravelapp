@@ -1,52 +1,70 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    Vue.config.devtools = true
-    var app = new Vue({
-        el: '#app',
-        data: {
-            search_phone: '',
-            customers: [],
-            customer_id: '{{$order->customer_id}}',
-            buy_order_id: '{{$order->id}}',
-            customer: {
-                id: '',
-                name: '',
-                notes: '',
-                address: '',
-                link: '',
-                phone: '',
-                source: '',
-                type: '',
-                buy_orders: []
-            },
-            product: {
-                qty: '',
-                err: '',
-                price: ''
-            },
-            description: '{{$order->description}}',
-            mq_r_code: '',
-            mq_r_code_err : '' ,
-            products: [],
-            data: [],
-            errors: [],
-            delivery_date: '{{$order->delivery_date}}',
-            error: '',
-            have_error: false,
-            customer_errors: {},
-            have_value: true,
-            price: '{{$order->price}}',
-            price_error: '',
-            order_number: '{{$order->order_number}}',
+
+    Vue.createApp({
+        data() {
+            return {
+                search_phone: '',
+                customers: [],
+                customer_id: '{{$order->customer_id}}',
+                provinces: [],
+                province_id: '{{$order->province_id}}',
+                buy_order_id: '{{$order->id}}',
+                customer: {
+                    id: '',
+                    name: '',
+                    notes: '',
+                    address: '',
+                    link: '',
+                    phone: '',
+                    source: '',
+                    type: '',
+                    buy_orders: []
+                },
+                product: {
+                    qty: '',
+                    err: '',
+                    price: ''
+                },
+                description: '{{$order->description}}',
+                mq_r_code: '',
+                mq_r_code_err : '' ,
+                products: [],
+                data: [],
+                errors: [],
+                delivery_date: '{{$order->delivery_date}}',
+                error: '',
+                have_error: false,
+                customer_errors: {},
+                have_value: true,
+                price: '{{$order->price}}',
+                price_error: '',
+                order_number: '{{$order->order_number}}',
+            }
+           
         },
         mounted() {
             this.getCustomer();
             //this.getOrder();
             this.getOrderProducts();
+            this.getProvinces();
             //this.setDate(2);
         },
         methods: {
+            getProvinces()  {
+                const metas = document.getElementsByTagName('meta');
+                axios.defaults.headers = {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'X-CSRF-TOKEN': metas['csrf-token'].getAttribute('content')
+                };
+                axios.get('{{url("province/get")}}').then(res => {
+                    this.provinces = res.data;
+                }).catch(err => {
+
+                });
+            },
             getOrderProducts() {
                 const metas = document.getElementsByTagName('meta');
                 axios.defaults.headers = {
@@ -192,6 +210,7 @@
                     data.description = this.description;
                     data.delivery_date = this.delivery_date;
                     data.customer_id = this.customer_id;
+                    data.province_id = this.province_id;
                     data.price = this.price;
                     data.order_number = this.order_number;
                     const metas = document.getElementsByTagName('meta');
@@ -303,5 +322,5 @@
 
         }
 
-    })
+    }).mount("#app")
 </script>

@@ -25,6 +25,14 @@
                                 <input type="text" v-model="customer.phone" class="form-control" disabled>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="province_id">{{__('words.province')}}</label>
+                                <select class="form-control" v-model="province_id">
+                                    <option :value="province.id" v-for="province in provinces" :key="province.id">@{{province.name}}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <br>
 

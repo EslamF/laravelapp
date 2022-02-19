@@ -38,11 +38,36 @@ class ProductsExport extends DefaultValueBinder implements FromQuery ,WithHeadin
 
     public function query()
     {
-        return Product::with('productType:id,name', 'size:id,name' , 'material:id,mq_r_code')
+        if(request()->has('about_to_run_products'))
+        {
+            return  Product::where('status' , 'available')
+                            ->with('productType:id,name', 'size:id,name' , 'material:id,mq_r_code')
+                            ->select('id' , 'produce_code' , 'material_id' , 'product_type_id' , 'size_id' , 'status' , DB::raw('count(*) as total'))
+                            ->orderBy('material_id')
+                            ->orderBy('product_type_id')
+                            ->groupBy('produce_code')
+                            ->havingRaw('COUNT(*) <= ?', [5]);
+        }
+        else if(request()->has('low_sale_products'))
+        {
+            $NewDate = date('Y-m-d', strtotime('-30 days'));
+
+            return  Product::whereHas('buyOrders' , function($query) use($NewDate) {
+                                $query->where('buy_orders.created_at', '<=', $NewDate);
+                                })
+                            ->orWhereDoesntHave('buyOrders')
+                            //->get()
+                            ->groupBy('product_material_code');
+        }
+        else 
+        {
+            return Product::with('productType:id,name', 'size:id,name' , 'material:id,mq_r_code')
                         ->select('id' , 'produce_code', 'material_id' , 'product_type_id' , 'size_id' , 'status', DB::raw('count(*) as total'))
                         ->where('status', 'available')
                         ->orderBy('material_id')
                         ->groupBy('produce_code');
+        }
+      
     }
 
     public function map($product_group): array

@@ -38,7 +38,7 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
     public function query()
     {
         /*return BuyOrder::query()->whereIn('id', $this->orders)->select('delivery_date' , 'bar_code' , 'customer_id', 'price' , 'user_id');*/
-        return BuyOrder::query()->with(['customer','buyOrderProducts'])->where(function($query){
+        return BuyOrder::query()->with(['customer','buyOrderProducts' , 'province'])->where(function($query){
 
             if(request()->filled('employee_id'))
             {
@@ -65,8 +65,13 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
                 $query->where('shipping_company_id' , request()->shipping_company_id);
             }
 
+            if(request()->filled('province_id'))
+            {
+                $query->where('province_id' , request()->province_id);
+            }
 
-        })->select('id' , 'delivery_date' , /*'bar_code',*/ 'order_number' , 'customer_id' , 'price' , 'shipping_fees' , 'description');
+
+        })->select('id' , 'delivery_date' , 'province_id', /*'bar_code',*/ 'order_number' , 'customer_id' , 'price' , 'shipping_fees' , 'description');
     }
 
     public function map($order): array
@@ -100,6 +105,7 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             $order->customer->name,
             $order->customer->address,
             $order->customer->phone,
+            $order->province ? $order->province->name : '--', 
             $order->price,
             $order->shipping_fees,
             $order->net,
@@ -119,6 +125,7 @@ class BuyOrdersExport extends DefaultValueBinder implements FromQuery ,WithHeadi
             'Name' ,
             'Address' ,
             'Mobile' ,
+            'Province',
             'Cash' ,
             'Shipping Fees' ,
             'Net',

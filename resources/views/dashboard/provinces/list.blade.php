@@ -1,40 +1,37 @@
+
+
 @extends('index')
 @section('content')
 <div class="row" id = "app">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header bg-danger">
-                <h3 class="card-title">{{__('words.about_to_run_products')}}</h3>
-                <br>
+            <div class="card-header">
+                <h3 class="card-title">المحافظات</h3>
+                <a href="{{Route('province.create_page')}}" class="btn btn-success float-right {{-- Laratrust::isAbleTo('add-province') ? '' : 'disabled' --}} " >إضافة</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                @include('includes.flash-message')
-                @if($about_to_run_products->count())
-                    <form method = "post" action = "{{route('product.export')}}">
-                        @csrf 
-                        <input type="hidden" name = "about_to_run_products" value = "1">
-                        <input type = "submit" class = "btn btn-success" value = "شيت إكسيل" >
-                    </form>
+                @if($provinces->count())
+                    @include('includes.flash-message')
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class = "text-center">نوع المنتج</th>
-                                <th class = "text-center">المقاس</th>
-                                <th class = "text-center">كود الخامة</th>
-                                <th class = "text-center">الخامة</th>
-                                <th class = "text-center">الكمية المتاحة</th>
+                                <div>
+                                    <th>الإسم</th>
+                                    <th>الخيارات</th>
+                                </div>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($about_to_run_products as $product)
+                            @foreach($provinces as $province)
                             <tr>
-                                <td class = "text-center">{{$product->productType->name}}</td>
-                                <td class = "text-center">{{$product->size->name}}</td>
-                                <td class = "text-center">{{$product->material->mq_r_code}}</td>       
-                                <td class = "text-center">{{$product->material->materialType->name}} - {{$product->first()->material->color}}</td>               
+                                <td class="">{{$province->name}}</td>
+                                <td class="">
+                                    <a href="{{Route('province.edit_page', $province->id)}}" class="btn btn-primary {{-- Laratrust::isAbleTo('edit-province') ? '' : 'disabled' --}}"  >تعديل</a>
+                                    <button province="submit" @click="deleteItem({{$province->id}})" class="btn btn-danger" {{-- Laratrust::isAbleTo('delete-province') ? '' : 'disabled' --}} >حذف</button>
+                                </td>
                                 
-                                <td class = "text-center">{{$product->total}}</td>
+                                
                             </tr>
                             @endforeach
                         </tbody>
@@ -42,13 +39,10 @@
                 @else
                     <p class="text-center">لا يوجد بيانات</p>
                 @endif
-
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                {!! $about_to_run_products->links() !!}
-
-                
+                {{$provinces->links()}}
             </div>
         </div>
         <!-- /.card -->
@@ -56,11 +50,12 @@
 </div>
 @endsection
 
+
 @section('footer-script')
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    Vue.createApp({
+   Vue.createApp({
         data() {
             return {
 
@@ -69,6 +64,7 @@
 
         methods: {
             deleteItem(id) {
+                console.log('id : ' + id);
                 swal({
                         title: "هل انت متأكد؟",
                         text: "بمجرد مسح هذه البيانات لا يمكنك ارجعها مره اخري!",
@@ -79,8 +75,8 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             var data = {};
-                            data.product_id = id
-                            axios.post("{{Route('product.delete')}}", data)
+                            data.province_id = id
+                            axios.post("{{Route('province.delete')}}", data)
                                 .then(res => {
                                     swal("تم المسح بنجاح", {
                                         icon: "success",
@@ -92,10 +88,20 @@
 
                         }
                     });
-
             }
         }
 
     }).mount("#app")
 </script>
 @endsection
+
+
+
+
+
+
+
+
+
+
+

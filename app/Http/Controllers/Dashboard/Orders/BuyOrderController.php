@@ -17,6 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\User;
 use App\Models\Organization\ShippingCompany;
 use App\Models\Organization\Factory;
+use App\Models\Organization\Province;
 
 class BuyOrderController extends Controller
 {
@@ -37,6 +38,11 @@ class BuyOrderController extends Controller
             if(request()->filled('shipping_company_id'))
             {
                 $query->where('shipping_company_id' , request()->shipping_company_id);
+            }
+
+            if(request()->filled('province_id'))
+            {
+                $query->where('province_id' , request()->province_id);
             }
 
             if(request()->filled('confirmation'))
@@ -102,8 +108,9 @@ class BuyOrderController extends Controller
         $number_of_total_products = BuyOrderProduct::whereIn('buy_order_id' , $orders->pluck('id')->toArray())->sum('factory_qty') + BuyOrderProduct::whereIn('buy_order_id' , $orders->pluck('id')->toArray())->sum('company_qty') ;
         $number_of_total_orders   = $data->total();
         $total_price              = $orders->sum('price');
+        $provinces                = Province::get();
 
-        return view('dashboard.orders.buy_order.list', ['data' => $data , 'employees' => $employees , 'shipping_companies' => $shipping_companies , 'number_of_total_products' => $number_of_total_products , 'number_of_total_orders' => $number_of_total_orders , 'total_price' => $total_price]);
+        return view('dashboard.orders.buy_order.list', ['data' => $data , 'employees' => $employees , 'shipping_companies' => $shipping_companies , 'number_of_total_products' => $number_of_total_products , 'number_of_total_orders' => $number_of_total_orders , 'total_price' => $total_price , 'provinces' => $provinces]);
     }
 
     public function cuttingOrdersByMaterial($mq_r_code)
@@ -176,6 +183,7 @@ class BuyOrderController extends Controller
             'source'        => $customer->source,
             'price'         => $request->price,
             'order_number'  => $request->order_number ?? null,
+            'province_id'   => $request->province_id ?? null
         ]);
         foreach ($request->products as $product) {
             if (!isset($product['qty'])   ) {

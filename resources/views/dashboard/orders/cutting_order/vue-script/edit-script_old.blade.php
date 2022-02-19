@@ -1,32 +1,34 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            users: [],
-            productTypes: [],
-            sizes: [],
-            errors: [{
-                product_id: '',
-                size_id: '',
-                qty: ''
-            }],
-            error: '',
-            have_error: false,
-            extra_returns_weight: '',
-            cutting_order: {},
-            layers: '',
-            spreading_orders: [],
-            employee_error: '',
-            layer_error: '',
-            spreading_order_error: '',
-            extra_return_error: '',
-            products: [],
-            submited: false,
-            factory_type_url: '{{Route("factory.type_all")}}',
-            employee_url: '{{route("employee.get_all")}}',
-            employee_id: '',
+    Vue.createApp({
+        data() {
+            return {
+                users: [],
+                productTypes: [],
+                sizes: [],
+                errors: [{
+                    product_id: '',
+                    size_id: '',
+                    qty: ''
+                }],
+                error: '',
+                have_error: false,
+                extra_returns_weight: '',
+                cutting_order: {},
+                layers: '',
+                spreading_orders: [],
+                employee_error: '',
+                layer_error: '',
+                spreading_order_error: '',
+                extra_return_error: '',
+                products: [],
+                submited: false,
+                factory_type_url: '{{Route("factory.type_all")}}',
+                employee_url: '{{route("employee.get_all")}}',
+                employee_id: '',
+            }
+          
 
         },
         mounted() {
@@ -207,5 +209,5 @@
                 }
             }
         }
-    })
+    }).mount("#app")
 </script>

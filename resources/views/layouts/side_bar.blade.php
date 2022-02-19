@@ -112,6 +112,15 @@
                                 </li>
                                 @endpermission
 
+                                {{-- @permission('show-size') --}}
+                                <li class="nav-item has-treeview">
+                                    <a href="{{Route('province.list')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>المحافظات</p>
+                                    </a>
+                                </li>
+                                {{-- @endpermission --}}
+
                             </ul>
                         </li>
                     

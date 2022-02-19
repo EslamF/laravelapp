@@ -10,6 +10,8 @@ use App\Models\Orders\BuyOrder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
+ini_set('memory_limit', '1024M');
+
 class ProductsAlarmController extends Controller
 {
 

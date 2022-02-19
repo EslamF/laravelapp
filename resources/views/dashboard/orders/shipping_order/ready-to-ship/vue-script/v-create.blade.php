@@ -4,21 +4,23 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
-    var app = new Vue({
-        el: '#app',
+    Vue.createApp({
         components: {
             InputTag: window.vueInputTag.default
         },
-        data: {
-            tags: [],
-            order: {},
-            shipping_order_id: '',
-            order: {
-                id: ''
-            },
-            buy_orders: [],
-            errors: {},
-            have_err: ''
+        data() {
+            return {
+                tags: [],
+                order: {},
+                shipping_order_id: '',
+                order: {
+                    id: ''
+                },
+                buy_orders: [],
+                errors: {},
+                have_err: ''
+            }
+          
         },
         mounted() {
             this.getOrders()
@@ -97,5 +99,5 @@
 
             }
         }
-    })
+    }).mount("#app")
 </script>

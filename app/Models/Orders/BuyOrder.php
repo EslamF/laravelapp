@@ -26,6 +26,7 @@ class BuyOrder extends Model
         'price',
         'order_number',
         'shipping_fees',
+        'province_id',
     ];
 
     protected $appends = ['confirmation_color' , 'status_color' , 'translate_confirmation' , 'translate_preparation' , 'translate_status']; 
@@ -186,5 +187,9 @@ class BuyOrder extends Model
         {
             return '';
         }
+    }
+    public function province()
+    {
+        return $this->belongsTo('App\Models\Organization\Province');
     }
 }

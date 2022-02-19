@@ -183,5 +183,6 @@ return [
     ],
     
     'product_availability' => 'متاح في الشركة',
+    'province' => 'المحافظة'
     
  ];
