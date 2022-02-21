@@ -54,7 +54,7 @@
                         <h5>اتبع التعليمات بعناية قبل استيراد الملف.
                             يجب أن تكون الأعمدة في الملف  بالترتيب التالي.</h5>
                     
-                        <img src="{{asset('excel_sheet_format.png')}}" alt="">
+                        <img src="{{asset('excel_sheet_format.png')}}" style = "width: 100%;" alt="">
                   
             </div>
           
