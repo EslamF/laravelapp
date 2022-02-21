@@ -46,6 +46,19 @@
                     <a href="{{url()->previous()}}" class="btn btn-info">رجوع</a>
                 </div>
             </form>
+            <br>
+
+            <div style = "margin: 10px;">
+
+
+                        <h5>اتبع التعليمات بعناية قبل استيراد الملف.
+                            يجب أن تكون الأعمدة في الملف  بالترتيب التالي.</h5>
+                    
+                        <img src="{{asset('excel_sheet_format.png')}}" alt="">
+                  
+            </div>
+          
+
         </div>
     </div>
 </div>
