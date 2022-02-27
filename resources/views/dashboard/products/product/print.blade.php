@@ -9,9 +9,8 @@
                 margin: 0;
             }
             @page {
-                size: 38mm 25mm;
-               
-                /*size: A4 landscape;*/
+                /* size: 35mm 25mm;  */
+                /* size: A4 landscape; */
 
             }
         }
@@ -33,8 +32,9 @@
     </style>
 @endpush
 @section('content')
+<div id = "content_here">
     @foreach($products as $product)
-    <div style="page-break-after: always;margin:0;" class = "page">
+    <div style="page-break-after: always;margin:0;display:inline-block;" class = "page">
         <div> 
             <span class = "span-style">{{$product->size->name}}</span>
             <span class = "span-style">{{$product->material->mq_r_code}}</span>
@@ -56,11 +56,23 @@
 
         <span class = "" style = "display:inline-block;margin-right:50px;;">M.O.M Brand</span>
     </div>
+</div>
     @endforeach
 @endsection
 
 @push('scripts')
 <script>
-    window.print()
+    function printDiv() {
+            var divContents = document.getElementById("content_here").innerHTML;
+            var a = window.open('', '', 'height=500, width=500');
+            a.document.write('<html>');
+            a.document.write('<body >');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        }
+    // window.print()
+    printDiv();
 </script>
 @endpush
