@@ -67,7 +67,7 @@
 
         </div>
 
-        <span class = "" style = "display:block;margin-right:50px;">M.O.M Brand</span>
+        <span class = "" style = "display:block;margin-right:50px;font-size:1em;">M.O.M Brand</span>
 
     </div>
     @endforeach
