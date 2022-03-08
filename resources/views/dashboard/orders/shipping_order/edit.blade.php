@@ -2,13 +2,19 @@
 @section('content')
 <div id="app" class="row">
     @include('includes.loading')
+
     <div class="col-md-4">
         <div class="form-group">
             <label for="">{{__('words.choose_orders')}}</label>
             <span if="have_error" style="color:red;font-weight:700">@{{errors.value}}</span>
-            <multiselect v-model="value" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="{{__('words.choose_orders')}}" label="bar_code" track-by="bar_code" :preselect-first="true"></multiselect>
+
+            <select class = "select2" multiple>
+                <option :value="buy_order.bar_code" :key="buy_order.bar_code" v-for="buy_order.bar_code in value">@{{buy_order}} </option>
+            </select>
+            {{-- <multiselect v-model="value" :options="options" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="{{__('words.choose_orders')}}" label="bar_code" track-by="bar_code" :preselect-first="true"></multiselect> --}}
         </div>
     </div>
+
     <div class="col-md-4">
         <div class="form-group">
             <label for="">{{__('words.shipping_company')}}</label>

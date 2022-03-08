@@ -64,6 +64,10 @@
         <script src="{{asset('asset/jquery/jquery.min.js')}}"></script>
         <!-- Select2 -->
         <script src="{{asset('asset/select2/js/select2.full.min.js')}}"></script>
+        <script src = "{{asset('asset/tagselect/jquery.tagselect.js')}}"></script>
+        <script>
+            $('.select2').select2();
+        </script>
         <script>
             $('#submit').click(function() {
                 console.log('test');

@@ -1,13 +1,16 @@
 <!-- <script src="https://unpkg.com/vue"></script> -->
+{{-- <script src="https://unpkg.com/vue"></script> --}}
+{{-- <script src="https://unpkg.com/vue-input-tag"></script> --}}
+{{-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> --}}
+<script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/vue-input-tag"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{{-- <script src="https://unpkg.com/@johmun/vue-tags-input/dist/vue-tags-input.js"></script> --}}
 
 <script>
-    Vue.createApp({
-        components: {
-            InputTag: window.vueInputTag.default
-        },
+    var vm = Vue.createApp({
+      
         data() {
             return {
                 tags: [],
@@ -61,7 +64,7 @@
 
                         });
                 } else {
-                    console.log(this.errors);
+                    //console.log(this.errors);
                 }
             },
             arraysEqual(_arr1, _arr2) {
@@ -100,4 +103,21 @@
             }
         }
     }).mount("#app")
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+
+    $('#tags_selected').on('change', function (e) {
+        vm.$data.tags = $(this).val();
+   
+ });
+    
+});
+//$("#tags_selected").on("change", function () { console.log("hh"); });
+
+ 
+
 </script>

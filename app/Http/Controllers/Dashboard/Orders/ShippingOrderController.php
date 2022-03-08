@@ -36,6 +36,8 @@ class ShippingOrderController extends Controller
 
     public function get($id)
     {
+        $shipping = ShippingOrder::with('buyOrders:id,bar_code as id,bar_code')->where('id', $id)->first();
+        //return $shipping;
         return view('dashboard.orders.shipping_order.edit', ['id' => $id]);
     }
 
@@ -133,7 +135,11 @@ class ShippingOrderController extends Controller
     public function packagePage($shipping_order_id)
     {
         $shippingOrder = ShippingOrder::where('id', $shipping_order_id)->first();
-        return view('dashboard.orders.shipping_order.ready-to-ship.create', ['id' => $shippingOrder->id]);
+        $orders = BuyOrder::select('id', 'bar_code')->whereHas('shippingOrders', function ($q) use ($shipping_order_id) {
+            $q->where('shipping_orders.id', $shipping_order_id);
+        })->get();
+
+        return view('dashboard.orders.shipping_order.ready-to-ship.create', ['id' => $shippingOrder->id , 'orders' => $orders]);
     }
 
     public function canPackage()

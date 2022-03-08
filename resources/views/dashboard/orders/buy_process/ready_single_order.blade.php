@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title" style="display: block;">{{__('words.order_number')}} :  @{{orders[0].order_code}}</h3>
-                <h3 class="card-title float-right">{{__('words.delivery_date')}} : @{{orders[0].delivery_date}}</h3>
+                <h3 class="card-title" style="display: block;">{{__('words.order_number')}} :  @{{order_code}}</h3>
+                <h3 class="card-title float-right">{{__('words.delivery_date')}} : @{{delivery_date}}</h3>
             </div>
             <h4 class="ml-3 mt-2">
                 </h3>

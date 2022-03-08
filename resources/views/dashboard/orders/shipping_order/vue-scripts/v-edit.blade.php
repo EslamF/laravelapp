@@ -5,9 +5,9 @@
 
 <script>
      Vue.createApp({
-        components: {
-            Multiselect: window.VueMultiselect.default
-        },
+        // components: {
+        //     Multiselect: window.VueMultiselect.default
+        // },
         data() {
             return {
                 value: [],
@@ -32,6 +32,7 @@
                 axios.get('{{Route("shipping.ready_orders")}}')
                     .then(res => {
                         this.options = res.data;
+                        console.log(res.data);
                     }).catch(err => {
 
                     });
@@ -49,6 +50,10 @@
                     .then(res => {
                         this.order = res.data;
                         this.value = this.order.buy_orders;
+                        console.log('res.data');
+                        console.log(res.data);
+                        console.log('value');
+                        console.log(this.value);
                     }).catch(err => {
 
                     })

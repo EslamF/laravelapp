@@ -10,7 +10,12 @@
     <div class="col-md-6">
         <div class="form-group">
             <label for="">{{__('words.add_orders')}}</label>
-            <input-tag v-model="tags" @change="checkIfExist()"></input-tag>
+            {{-- <input-tag v-model="tags" @change="checkIfExist()"></input-tag> --}}
+            <select class = "select2" id = "tags_selected" multiple>
+
+                <option :value="buy_order" :key="buy_order" v-for="buy_order in buy_orders">@{{buy_order}} </option>
+             
+            </select>
         </div>
     </div>
     <div class="col-md-6">

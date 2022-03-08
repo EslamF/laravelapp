@@ -26,7 +26,7 @@
                             <tr>
                                 <td>{{$order->bar_code}}</td>
                                 <td>{{$order->order_number}}</td>
-                                <td>{{$order->shippingOrders->last()->shippingCompany->name}}</td>
+                                <td>{{$order->shippingOrders->last() ? $order->shippingOrders->last()->shippingCompany->name : ''}}</td>
                                 <td>{{$order->delivery_date}}</td>
                                 <td><span class = "{{$order->status_color}}" style = "padding:5px; border-radius:5px;">{{ $order->translate_status }}</span></td>
                                 <td>

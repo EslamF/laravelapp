@@ -38,6 +38,7 @@
     --}}
     <link rel="stylesheet" href="{{asset('asset/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/tagselect/jquery.tagselect.css')}}">
     @stack('styles')
 </head>
 
