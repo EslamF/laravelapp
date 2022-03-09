@@ -244,7 +244,8 @@ class ProductController extends Controller
         //return $request->product_material_code;
         $request->validate([
             'product_id'            => 'required|exists:products,id',
-            'prod_code'             => 'required|unique:products,prod_code,' . $request->product_id,
+            //'prod_code'             => 'required|unique:products,prod_code,' . $request->product_id,
+            'prod_code'             => 'required',
             //'product_material_code' => 'required|unique:products,product_material_code,' . $request->product_material_code,
 
             'product_type_id' => 'required|exists:product_types,id',
